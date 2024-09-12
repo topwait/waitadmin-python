@@ -1,0 +1,43 @@
+{
+    "name": "nuxt-app",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "nuxt dev --dotenv .env.development",
+        "build:ssr": "nuxt build --dotenv .env.production && node scripts/build.mjs",
+        "build:gen": "nuxt generate --dotenv .env.production && node scripts/build.mjs",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "lint:js": "eslint --ext .ts,.tsx,.js,.jsx,.vue src",
+        "lint:css": "stylelint ./**/*.{vue,htm,html,css,scss}"
+    },
+    "dependencies": {
+        "@chenfengyuan/vue-countdown": "^2.1.2",
+        "css-color-function": "^1.3.3",
+        "element-plus": "^2.7.5",
+        "ismobilejs": "^1.1.1",
+        "nuxt": "^3.11.2",
+        "pinia": "^2.1.7",
+        "vue": "^3.4.27",
+        "vue-cropper": "^1.0.5",
+        "vue-qr": "^4.0.9",
+        "vue-router": "^4.3.2"
+    },
+    "devDependencies": {
+        "@element-plus/nuxt": "^1.0.9",
+        "@nuxt/eslint": "^0.3.13",
+        "@nuxtjs/tailwindcss": "^6.12.0",
+        "@pinia/nuxt": "^0.5.1",
+        "dotenv": "^16.4.5",
+        "eslint": "^8.57.0",
+        "fs-extra": "^11.2.0",
+        "nuxt-icons": "^3.2.1",
+        "sass": "^1.77.5",
+        "stylelint": "^16.6.1",
+        "stylelint-config-recess-order": "^5.0.1",
+        "stylelint-config-recommended-vue": "^1.5.0",
+        "stylelint-config-standard-scss": "^13.1.0",
+        "vite-plugin-eslint2": "^4.4.0"
+    }
+}

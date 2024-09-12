@@ -1,0 +1,104 @@
+@import "element-plus/theme-chalk/index.css";
+
+:root {
+    // 弹窗样式
+    .el-overlay-dialog {
+        position: static;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100%;
+        .none-padding .el-dialog__header { padding: 0; }
+        .none-padding .el-dialog__body  { padding: 0; }
+        .el-dialog {
+            --el-dialog-content-font-size: var(--el-font-size-base);
+            --el-dialog-margin-top: 50px;
+            display: flex;
+            flex: none;
+            flex-direction: column;
+            max-width: calc(100vw - 30px);
+            overflow: hidden;
+            border-radius: 6px;
+            &.is-fullscreen {
+                --el-dialog-width: 100%;
+                --el-dialog-margin-top: 0;
+                max-width: 100%;
+                height: 100vh;
+                margin-bottom: 0;
+                overflow: auto;
+            }
+        }
+    }
+
+    // 卡片样式
+    .el-card {
+        &.card-padding0 {
+            .el-card__header { padding: 0; }
+            .el-card__body { padding: 0; }
+        }
+        &.card-padding-x0 {
+            .el-card__header { padding-right: 0; padding-left: 0; }
+            .el-card__body { padding-right: 0; padding-left: 0; }
+        }
+        &.card-padding-y0 {
+            .el-card__header { padding-top: 0; padding-bottom: 0; }
+            .el-card__body { padding-top: 0; padding-bottom: 0; }
+        }
+        &.card_body-padding-x0 .el-card__body,
+        &.card_header-padding-x0 .el-card__header {
+            padding-top: 0; padding-bottom: 0;
+        }
+        &.card_body-padding-y0 .el-card__body,
+        &.card_header-padding-y0 .el-card__header {
+            padding-top: 0; padding-bottom: 0;
+        }
+    }
+
+    // 抽屉样式
+    .el-drawer {
+        --el-drawer-padding-primary: 16px;
+        &__header {
+            padding: 13px 16px;
+            margin-bottom: 0;
+            border-bottom: 1px solid var(--el-border-color-lighter);
+        }
+        &__title {
+            color: var(--el-text-color-primary);
+        }
+    }
+
+    // 消息弹出
+    .el-message-box {
+        .el-message-box__header.show-close {
+            padding-right: 0;
+        }
+    }
+
+    // 按钮颜色
+    .el-button--primary { --el-button-hover-link-text-color: var(--el-color-primary-light-3); }
+    .el-button--success { --el-button-hover-link-text-color: var(--el-color-success-light-3); }
+    .el-button--info { --el-button-hover-link-text-color: var(--el-color-info-light-3); }
+    .el-button--warning { --el-button-hover-link-text-color: var(--el-color-warning-light-3); }
+    .el-button--danger { --el-button-hover-link-text-color: var(--el-color-danger-light-3); }
+}
+
+.el-button {
+    // 防止被tailwindcss默认样式覆盖
+    background-color: var(--el-button-bg-color, var(--el-color-white));
+
+    // 覆盖处理el-button的点击样式
+    &:focus {
+        color: var(--el-button-text-color);
+        background-color: var(--el-button-bg-color);
+        border-color: var(--el-button-border-color);
+    }
+    &:hover {
+        color: var(--el-button-hover-text-color);
+        background-color: var(--el-button-hover-bg-color);
+        border-color: var(--el-button-hover-border-color);
+    }
+    &.is-link {
+        background: 0 0;
+        border-color: transparent;
+    }
+}
