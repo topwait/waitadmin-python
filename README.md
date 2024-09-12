@@ -111,7 +111,7 @@ pip3 install -r requirements.txt
 
 **(4) 导入数据结构：**
 - 1、首先你先要创建一个数据库,字符集建议使用 `utf8mb4`, 如我创建的库是: `ts_wa`
-- 2、数据结构文件在 `server\sql\install.sql`
+- 2、数据结构文件在 `server/sql/install.sql`
 - 3、使用`Navicat`之类的工具, 把`install.sql`导入到创建的`ts_wa`数据库里。
 
 **(5) 修改配置文件：**
