@@ -26,12 +26,10 @@
 </p>
 
 **项目概述** <br/>
-::: tip
 WaitAdmin(Python)是一个采用现代技术栈构建的权限控制后台管理系统，旨在为企业提供高效、安全、易扩展的后台解决方案。
 该项目由个人开发者独立开发，无法与企业级团队开发的项目在规模和资源上相提并论，是否合适需自行衡量。
 系统前端采用Vue 3框架结合TypeScript，保证了界面的流畅性和代码的可维护性；
 后端则选用FastAPI，以其高性能和易开发的特点，为系统提供了强大的后端支持。
-:::
 
 **在线体验**
 - 官方网站：<a href="https://www.waitadmin.cn" target="_blank">https://www.waitadmin.cn</a>
@@ -155,23 +153,23 @@ python3 manager.py
 ## 演示图
 <table>
     <tr>
-        <td><img src="https://gitee.com/wafts/waitadmin_python/raw/develop/server/public/static/default/example/ys_001.png" height="200" width="400" alt="wa"/></td>
-        <td><img src="https://gitee.com/wafts/waitadmin_python/raw/develop/server/public/static/default/example/ys_002.png" height="200" width="400" alt="wa"/></td>
+        <td><img src="https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_001.png" height="200" width="400" alt="wa"/></td>
+        <td><img src="https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_002.png" height="200" width="400" alt="wa"/></td>
     </tr>
     <tr>
-        <td><img src="https://gitee.com/wafts/waitadmin_python/raw/develop/server/public/static/default/example/ys_003.png" height="200" width="400" alt="wa"/></td>
-        <td><img src="https://gitee.com/wafts/waitadmin_python/raw/develop/server/public/static/default/example/ys_004.png" height="200" width="400" alt="wa"/></td>
+        <td><img src="https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_003.png" height="200" width="400" alt="wa"/></td>
+        <td><img src="https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_004.png" height="200" width="400" alt="wa"/></td>
     </tr>
     <tr>
-        <td><img src="https://gitee.com/wafts/waitadmin_python/raw/develop/server/public/static/default/example/ys_005.png" height="200" width="400" alt="wa"/></td>
-        <td><img src=https://gitee.com/wafts/waitadmin_python/raw/develop/server/public/static/default/example/ys_006.png" height="200" width="400" alt="wa"/></td>
+        <td><img src="https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_005.png" height="200" width="400" alt="wa"/></td>
+        <td><img src=https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_006.png" height="200" width="400" alt="wa"/></td>
     </tr>
     <tr>
-        <td><img src="https://gitee.com/wafts/waitadmin_python/raw/develop/server/public/static/default/example/ys_007.png" height="200" width="400" alt="wa"/></td>
-        <td><img src="https://gitee.com/wafts/waitadmin_python/raw/develop/server/public/static/default/example/ys_008.png" height="200" width="400" alt="wa"/></td>
+        <td><img src="https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_007.png" height="200" width="400" alt="wa"/></td>
+        <td><img src="https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_008.png" height="200" width="400" alt="wa"/></td>
     </tr>
     <tr>
-        <td><img src="https://gitee.com/wafts/waitadmin_python/raw/develop/server/public/static/default/example/ys_009.png" height="200" width="400" alt="wa"/></td>
+        <td><img src="https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_009.png" height="200" width="400" alt="wa"/></td>
     </tr>
 </table>
 
