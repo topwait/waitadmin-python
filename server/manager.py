@@ -12,6 +12,7 @@
 # +----------------------------------------------------------------------
 from fastapi import FastAPI, APIRouter
 from fastapi.openapi.docs import get_swagger_ui_html
+from kernels.database import register_db
 from kernels.logger import configure_logger
 from kernels.events import configure_event
 from kernels.router import configure_router
@@ -39,6 +40,7 @@ def create_app() -> FastAPI:
     configure_middleware(application)
     configure_router(application)
     configure_static(application)
+    register_db(application)
     application.include_router(router)
 
     return application

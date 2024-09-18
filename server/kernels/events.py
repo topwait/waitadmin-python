@@ -13,9 +13,6 @@
 import os
 import importlib
 from fastapi import FastAPI
-from fastapi_cache import FastAPICache
-from kernels.database import register_db
-from kernels.cache import redis_be
 
 __all__ = ["configure_event"]
 
@@ -36,8 +33,6 @@ def configure_event(app: FastAPI):
     """ Configure events """
     @app.on_event("startup")
     async def startup():
-        await register_db(app)
-        FastAPICache.init(redis_be)
         await __dynamic_events(app, "startup")
 
     @app.on_event("shutdown")

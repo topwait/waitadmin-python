@@ -63,7 +63,7 @@ def __loading_model_files(path: str):
     return all_files
 
 
-async def register_db(app: FastAPI):
+def register_db(app: FastAPI):
     """ Connect Databases """
     register_tortoise(
         app,
