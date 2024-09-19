@@ -7,6 +7,5 @@
 /venv
 /runtime/
 /**/__pycache__
-/public/storage/
 /public/nginx.htaccess
 .qiniu_pythonsdk_hostscache.json
