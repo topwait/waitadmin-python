@@ -138,7 +138,7 @@ class DemoMiddleware(BaseHTTPMiddleware):
         # 演示拦截
         if get_settings().ENV_DEMO and request.method == "POST":
             admin_id = await SecurityDriver.module("admin").get_login_id()
-            if admin_id != 1:
+            if int(admin_id) != 1:
                 return JSONResponse({"code": 1, "msg": "演示环境不支持修改数据!", "data": []})
 
         # 执行逻辑
