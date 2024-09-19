@@ -80,6 +80,7 @@ class AdminService:
             item["role"] = "系统管理员" if item["id"] == 1 else role_.get(item["role_id"], "-")
             item["dept"] = dept_.get(item["dept_id"], "-")
             item["mobile"] = item["mobile"] or "-"
+            item["avatar"] = await UrlUtil.to_absolute_url(item["avatar"])
             item["last_login_ip"] = item["last_login_ip"] or "-"
             item["last_login_time"] = item["last_login_time"] or "-"
 
