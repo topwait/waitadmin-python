@@ -1,5 +1,6 @@
 const cacheUtil: any = {
     namespace: 'wait_',
+
     /**
      * 设置缓存
      *
@@ -30,6 +31,7 @@ const cacheUtil: any = {
             return false
         }
     },
+
     /**
      * 获取缓存
      *
@@ -72,6 +74,7 @@ const cacheUtil: any = {
             return data
         }
     },
+
     /**
      * 移除缓存
      *
@@ -82,6 +85,7 @@ const cacheUtil: any = {
         key = this.namespace + key
         window.localStorage.removeItem(key)
     },
+
     /**
      * 清空缓存
      */
