@@ -26,7 +26,8 @@ class AdminConfig:
         "auth:admin:set_info",
         "auth:role:whole",
         "auth:dept:whole",
-        "auth:post:whole"
+        "auth:post:whole",
+        "content:category:whole"
     ]
 
     # 登录验证码
