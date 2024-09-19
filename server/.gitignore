@@ -6,6 +6,9 @@
 /.vscode
 /venv
 /runtime/
+/public/mobile/
+/public/admin/
+/public/pc/
 /**/__pycache__
 /public/nginx.htaccess
 .qiniu_pythonsdk_hostscache.json
