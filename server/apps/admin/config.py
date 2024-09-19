@@ -20,6 +20,7 @@ class AdminConfig:
 
     # 免权限验证
     not_need_perms = [
+        "login:logout",
         "attach:cate_lists",
         "attach:album_lists",
         "auth:admin:oneself",
