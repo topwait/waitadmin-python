@@ -49,7 +49,7 @@ class LogsMiddleware(BaseHTTPMiddleware):
 
         # 无需记录
         uri: str = request.url.path.replace(f"/{module}/", "").replace("/", ":")
-        if uri not in ApiConfig.add_record_log:
+        if ApiConfig.add_record_log and uri not in ApiConfig.add_record_log:
             return await call_next(request)
 
         # 异常信息
