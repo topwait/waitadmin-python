@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     ssr: !!envConfig.ssr,
     spaLoadingTemplate: false,
     css: ['@/assets/styles/index.scss'],
+
     modules: [
         'nuxt-icons',
         '@pinia/nuxt',
@@ -15,15 +16,20 @@ export default defineNuxtConfig({
         '@nuxtjs/tailwindcss',
         '@element-plus/nuxt'
     ],
+
     eslint: {
         checker: true
     },
+
     app: {
         baseURL: envConfig.baseUrl
     },
+
     runtimeConfig: {
         public: {
             ...envConfig
         }
-    }
+    },
+
+    compatibilityDate: '2024-09-19'
 })

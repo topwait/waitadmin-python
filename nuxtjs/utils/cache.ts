@@ -1,5 +1,6 @@
 const cacheUtil = {
     namespace: 'wap_',
+
     /**
      * 设置缓存
      *
@@ -26,10 +27,11 @@ const cacheUtil = {
         try {
             window.localStorage.setItem(key, data)
             return true
-        } catch (e) {
+        } catch {
             return false
         }
     },
+
     /**
      * 获取缓存
      *
@@ -68,10 +70,11 @@ const cacheUtil = {
             }
 
             return data
-        } catch (e) {
+        } catch {
             return data
         }
     },
+
     /**
      * 移除缓存
      *
@@ -82,6 +85,7 @@ const cacheUtil = {
         key = this.namespace + key
         window.localStorage.removeItem(key)
     },
+
     /**
      * 清空缓存
      */

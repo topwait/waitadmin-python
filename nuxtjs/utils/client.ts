@@ -14,12 +14,14 @@ const clientUtil = {
     isMobile(): boolean {
         return isMobileJs().any
     },
+
     /**
      * 是否为微信环境
      */
     isWeixin(): boolean {
         return /MicroMessenger/i.test(navigator.userAgent)
     },
+
     /**
      * 取当前的客户端
      */
@@ -32,6 +34,7 @@ const clientUtil = {
         }
         return ClientEnum.PC
     },
+
     /**
      * 根据客户端执行
      */

@@ -40,6 +40,7 @@ const themeUtil = {
         }
         return colors
     },
+
     /**
      * 生成主题
      *
@@ -57,6 +58,7 @@ const themeUtil = {
             return `${prev}${key}:${color};`
         }, '')
     },
+
     /**
      * 设置主题
      *

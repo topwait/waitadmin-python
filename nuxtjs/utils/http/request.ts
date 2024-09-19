@@ -122,7 +122,7 @@ export class Request {
                         controller.enqueue(value)
                         await push(controller, reader)
                     }
-                } catch (error) {
+                } catch {
                     onclose?.()
                 }
             }

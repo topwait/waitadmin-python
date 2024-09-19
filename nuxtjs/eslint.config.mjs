@@ -59,6 +59,7 @@ export default withNuxt([
             '@typescript-eslint/ban-ts-comment': 'off',
             '@typescript-eslint/no-unused-vars': 'warn',
             '@typescript-eslint/no-explicit-any': 'off',
+            'vue/attribute-hyphenation': 0,
             'vue/require-default-prop': 0,
             'vue/multi-word-component-names': 0,
             'vue/singleline-html-element-content-newline': 0,

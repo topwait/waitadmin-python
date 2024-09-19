@@ -14,7 +14,9 @@ export const useConfStore = defineStore({
             ...defaultSetting
         }
 
-        isObject(cacheSetting) && Object.assign(state, cacheSetting)
+        if (isObject(cacheSetting)) {
+            Object.assign(state, cacheSetting)
+        }
         return state
     },
     actions: {

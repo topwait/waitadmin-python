@@ -89,8 +89,8 @@ export function createRequest(opt?: Partial<FetchOptions>): Request {
                 const { code, msg, data } = response._data
                 switch (code) {
                     case errorEnum.SUCCESS:
-                        if (withHints) {
-                            msg && feedback.msgSuccess(msg)
+                        if (withHints && msg) {
+                            feedback.msgSuccess(msg)
                         }
                         return data
                     case errorEnum.FAILED:
@@ -108,7 +108,7 @@ export function createRequest(opt?: Partial<FetchOptions>): Request {
                         return Promise.reject(response._data)
                     case errorEnum.TOKEN_EMPTY:
                     case errorEnum.TOKEN_VALID:
-                        userStore.logout()
+                        await userStore.logout()
                         return Promise.reject(data)
                     default:
                         return data
