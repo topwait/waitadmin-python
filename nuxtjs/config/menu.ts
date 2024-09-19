@@ -11,7 +11,7 @@ const menus: any = [
     },
     {
         'name': '开发手册',
-        'path': 'https://www.waitadmin.cn/docs/python/',
+        'path': 'https://www.waitadmin.cn/docs/python',
         'target': '_blank'
     },
     {
@@ -20,12 +20,12 @@ const menus: any = [
         'children': [
             {
                 'name': 'Github',
-                'path': 'https://www.waitadmin.cn',
+                'path': 'https://github.com/topwait/waitadmin-python',
                 'target': '_blank'
             },
             {
                 'name': 'Gitee',
-                'path': 'https://www.waitadmin.cn',
+                'path': 'https://gitee.com/wafts/waitadmin-python',
                 'target': '_blank'
             },
         ]
