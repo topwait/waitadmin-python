@@ -158,6 +158,7 @@ class AdminService:
             zero
         """
         admin = await AuthAdminModel.get(id=id_)
+        admin.avatar = await UrlUtil.to_absolute_url(admin.avatar)
         return TypeAdapter(schema.AuthAdminDetailVo).validate_python(admin.__dict__)
 
     @classmethod
