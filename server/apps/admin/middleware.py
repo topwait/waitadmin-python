@@ -16,7 +16,7 @@ import typing
 import xmltodict
 from fastapi import FastAPI, Request
 from starlette.types import ASGIApp
-from starlette.responses import Response
+from starlette.responses import Response, JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from config import get_settings
 from common.utils.tools import ToolsUtil
@@ -26,7 +26,9 @@ from plugins.safe.driver import SecurityDriver
 
 def init_middlewares(app: FastAPI):
     logs_middleware: typing.Type[any] = LogsMiddleware
+    demo_middleware: typing.Type[any] = DemoMiddleware
     app.add_middleware(logs_middleware)
+    app.add_middleware(demo_middleware)
 
 
 class LogsMiddleware(BaseHTTPMiddleware):
@@ -118,3 +120,26 @@ class LogsMiddleware(BaseHTTPMiddleware):
 
         # 执行完成
         return response
+
+
+class DemoMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
+        # 模块验证
+        module: str = get_settings().ROUTER_ALIAS.get("admin", "admin")
+        endpoint: any = request.scope.get("endpoint", lambda: None)
+        if request.state.module != module or endpoint.__module__ == "starlette.staticfiles":
+            return await call_next(request)
+
+        # 允许通过
+        uri: str = request.url.path.replace(f"/{module}/", "").replace("/", ":")
+        if uri in ["login:check", "login:logout"]:
+            return await call_next(request)
+
+        # 演示拦截
+        if get_settings().ENV_DEMO and request.method == "POST":
+            admin_id = await SecurityDriver.module("admin").get_login_id()
+            if admin_id != 1:
+                return JSONResponse({"code": 1, "msg": "演示环境不支持修改数据!", "data": []})
+
+        # 执行逻辑
+        return await call_next(request)

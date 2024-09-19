@@ -22,6 +22,9 @@ __all__ = ["get_settings"]
 class GlobalSetting(BaseSettings):
     load_dotenv(find_dotenv(), override=True)
 
+    # 演示环境
+    ENV_DEMO: bool = os.getenv("ENV_DEMO", False)
+
     # 调试模式
     APP_DEBUG: bool = os.getenv("APP_DEBUG", False)
 
