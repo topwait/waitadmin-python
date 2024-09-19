@@ -16,7 +16,10 @@ from common.models.sys import SysCrontabModel
 
 async def execute(**kwargs):
     start_time = time.time()
-    crontab_id: int = int(kwargs["w_id"])
-    # print("任务")
+    crontab_id: int = int(kwargs["w_id"])  # 任务ID
+    # process_id: int = int(kwargs["w_ix"])  # 任务编号
+    # command_job: str = kwargs["w_job"]     # 任务指令
+    # print(kwargs) #其它附带参数
+
     await SysCrontabModel.compute(crontab_id, start_time)
-    return {"msg": "任务启动成功"}
+    return {"msg": "垃圾清理完成"}
