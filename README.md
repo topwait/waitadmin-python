@@ -31,10 +31,13 @@ WaitAdmin(Python)是一个采用现代技术栈构建的权限控制后台管理
 系统前端采用Vue 3框架结合TypeScript，保证了界面的流畅性和代码的可维护性；
 后端则选用FastAPI，以其高性能和易开发的特点，为系统提供了强大的后端支持。
 
+**商用说明** <br/>
+- MIT开源协议, 允许免费商用。
+
 **在线体验**
 - 官方网站：<a href="https://www.waitadmin.cn" target="_blank">https://www.waitadmin.cn</a>
-- 前台演示：<a href="https://python.waitadmin.cn" target="_blank">https://python.waitadmin.cn</a>
-- 后台演示：<a href="https://python.waitadmin.cn/admin" target="_blank">https://python.waitadmin.cn/admin</a>
+- 前台演示：<a href="https://python-demo.waitadmin.cn" target="_blank">https://python-demo.waitadmin.cn</a>
+- 后台演示：<a href="https://python-demo.waitadmin.cn/admin" target="_blank">https://python-demo.waitadmin.cn/admin</a>
 
 **后台账号**
 - 登录账号：test
@@ -42,11 +45,12 @@ WaitAdmin(Python)是一个采用现代技术栈构建的权限控制后台管理
 
 **环境要求**
 
-| 运行环境   | 要求版本    | 推荐版本   |
-|:-------|:--------|:-------|
-| Python | >=3.8.* | 3.10.* |
-| Mysql  | >=5.7   | 5.7    |
-| nginx  | 无限制     | nginx  |
+| 运行环境   | 要求版本     | 推荐版本     |
+|:-------|:---------|:---------|
+| Python | >=3.8.*  | 3.10.*   |
+| Mysql  | >=5.7    | 5.7      |
+| Nginx  | 无限制      | 最新LTS版   |
+| Node   | >=20.*.* | v20.14.0 |
 
 
 ## 技术架构
@@ -128,16 +132,16 @@ SERVER_PORT=8200                # 服务监听端口
 SERVER_RELOAD=True              # 服务监听重启
 SERVER_WORKERS=4                # 服务的进程数
 
-DB_MYSQL_HOST=127.0.0.1         # Mysql地址
-DB_MYSQL_PORT=3306              # Mysql端口
-DB_MYSQL_USERNAME=root          # Mysql账号
-DB_MYSQL_PASSWORD=root          # Mysql密码
-DB_MYSQL_DATABASE=ts_wa         # Mysql数据库
-DB_MYSQL_PREFIX=wait_           # Mysql表前缀
-DB_MYSQL_MINSIZE=1              # 最少链接数
-DB_MYSQL_MAXSIZE=100            # 最大链接数
-DB_MYSQL_CHARSET=utf8mb4        # 字符编码
-DB_MYSQL_ECHO=False             # 打印SQL
+MYSQL_HOST=127.0.0.1         # Mysql地址
+MYSQL_PORT=3306              # Mysql端口
+MYSQL_USERNAME=root          # Mysql账号
+MYSQL_PASSWORD=root          # Mysql密码
+MYSQL_DATABASE=ts_wa         # Mysql数据库
+MYSQL_PREFIX=wait_           # Mysql表前缀
+MYSQL_MINSIZE=1              # 最少链接数
+MYSQL_MAXSIZE=100            # 最大链接数
+MYSQL_CHARSET=utf8mb4        # 字符编码
+MYSQL_ECHO=False             # 打印SQL
 
 REDIS_HOST=127.0.0.1            # Redis地址
 REDIS_PORT=6379                 # Redis端口
@@ -162,7 +166,7 @@ python3 manager.py
     </tr>
     <tr>
         <td><img src="https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_005.png" height="200" width="400" alt="wa"/></td>
-        <td><img src=https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_006.png" height="200" width="400" alt="wa"/></td>
+        <td><img src="https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_006.png" height="200" width="400" alt="wa"/></td>
     </tr>
     <tr>
         <td><img src="https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_007.png" height="200" width="400" alt="wa"/></td>
