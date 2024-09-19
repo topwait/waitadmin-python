@@ -62,26 +62,26 @@ class GlobalSetting(BaseSettings):
         "connections": {
             "mysql": {
                 "engine": "tortoise.backends.mysql",
-                "prefix": os.getenv("DB_MYSQL_PREFIX", ""),
+                "prefix": os.getenv("MYSQL_PREFIX", ""),
                 "credentials": {
                     # 服务器地
-                    "host": os.getenv("DB_MYSQL_HOST", "127.0.0.1"),
+                    "host": os.getenv("MYSQL_HOST", "127.0.0.1"),
                     # 服务器端口
-                    "port": int(os.getenv("DB_MYSQL_PORT", 3306)),
+                    "port": int(os.getenv("MYSQL_PORT", 3306)),
                     # 数据库用户
-                    "user": os.getenv("DB_MYSQL_USERNAME", "root"),
+                    "user": os.getenv("MYSQL_USERNAME", "root"),
                     # 数据库密码
-                    "password": os.getenv("DB_MYSQL_PASSWORD", "root"),
+                    "password": os.getenv("MYSQL_PASSWORD", "root"),
                     # 数据库名称
-                    "database": os.getenv("DB_MYSQL_DATABASE", ""),
+                    "database": os.getenv("MYSQL_DATABASE", ""),
                     # 最少连接数
-                    "minsize": int(os.getenv("DB_MYSQL_MINSIZE", 1)),
+                    "minsize": int(os.getenv("MYSQL_MINSIZE", 1)),
                     # 最大连接数
-                    "maxsize": int(os.getenv("DB_MYSQL_MAXSIZE", 100)),
+                    "maxsize": int(os.getenv("MYSQL_MAXSIZE", 100)),
                     # 数据库编码
-                    "charset": os.getenv("DB_MYSQL_CHARSET", "utf8mb4"),
+                    "charset": os.getenv("MYSQL_CHARSET", "utf8mb4"),
                     # 打印SQL
-                    "echo": True if os.getenv("DB_MYSQL_ECHO", "False") == "True" else False
+                    "echo": True if os.getenv("MYSQL_ECHO", "False") == "True" else False
                 }
             }
         },
@@ -112,7 +112,7 @@ class GlobalSetting(BaseSettings):
         # 数据库
         "db": int(os.getenv("REDIS_DB", 0)),
         # 连接池的最大连接数
-        "max_connections": int(os.getenv("REDIS_MAX_CONNECTIONS", 20)),
+        "max_connections": int(os.getenv("REDIS_MAX_CONNECTIONS", 800)),
         # 将响应解码为字符串
         "decode_responses": bool(os.getenv("REDIS_DECODE_RESPONSES", True))
     }
