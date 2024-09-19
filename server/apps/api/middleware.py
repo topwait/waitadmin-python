@@ -19,6 +19,7 @@ from starlette.types import ASGIApp
 from starlette.responses import Response
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from config import get_settings
+from .config import ApiConfig
 from common.utils.tools import ToolsUtil
 from common.models.users import UserVisitorModel
 from plugins.safe.driver import SecurityDriver
@@ -45,6 +46,11 @@ class LogsMiddleware(BaseHTTPMiddleware):
         # 登录信息
         request.state.user_id = await SecurityDriver.module("api").get_login_id()
         request.state.terminal = int(request.headers.get("Terminal") or 0)
+
+        # 无需记录
+        uri: str = request.url.path.replace(f"/{module}/", "").replace("/", ":")
+        if uri not in ApiConfig.add_record_log:
+            return await call_next(request)
 
         # 异常信息
         error: str = ""

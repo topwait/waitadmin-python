@@ -32,7 +32,17 @@ class ApiConfig:
         "index:send_email",
         "article:lists",
         "article:pages",
-        "article:detail",
+        "article:detail"
+    ]
+
+    # 需记日志
+    add_record_log = [
+        "login:account_login",
+        "login:mobile_login",
+        "login:oa_login",
+        "index:homing",
+        "article:lists",
+        "article:detail"
     ]
 
     # 安全配置项
