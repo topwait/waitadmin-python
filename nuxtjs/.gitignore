@@ -20,7 +20,7 @@ logs
 .idea
 
 # Local env files
-.env.template
+.env
 .env.development
 .env.production
 !.env.template.*
