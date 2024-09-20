@@ -1,4 +1,4 @@
-- ****
+****
 <h1 align="center">WaitAdmin (Python) 通用管理系统</h1>
 
 <p align="center">
