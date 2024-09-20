@@ -52,23 +52,18 @@ const tabsMap = [
 <style scoped lang="scss">
 .materials {
     min-width: 700px;
-    height: 100%;
-    :deep(.el-card__body) {
-        padding-bottom: 10px;
+    height: calc(100vh - 117px);
+    :deep(.el-card) {
+      height: 100%;
+      .el-card__body {
+          padding-bottom: 10px;
+          height: 100%;
+      }
     }
     :deep(.el-tabs) {
-        display: flex;
-        flex-direction: column;
-        height: calc(100vh - 180px);
-        .el-tabs__header {
-            margin-bottom: 0 !important;
-        }
-        .el-tabs__content,
+        height: 100%;
         .el-tab-pane {
-            display: flex;
-            flex: 1;
-            flex-direction: column;
-            min-height: 0;
+          height: 100%;
         }
     }
 }

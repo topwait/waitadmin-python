@@ -5,7 +5,7 @@
             v-model:pageSize="pager.size"
             :background="background"
             :layout="layout"
-            :small="small"
+            :size="size"
             :pager-count="pageCount"
             :page-sizes="pageSizes"
             :total="pager.total"
@@ -20,8 +20,8 @@
 interface Props {
     modelValue?: Record<string, any>
     pageSizes?: number[]
+    size?: string,
     layout?: string,
-    small?: boolean,
     pageCount?: number,
     background?: boolean
 }
@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<Props>(), {
     modelValue: () => ({}),
     pageSizes: () => [15, 20, 30, 40],
     layout: 'total, sizes, prev, pager, next, jumper',
-    small: false,
+    size: 'default',
     pageCount: 5,
     background: true
 })

@@ -159,7 +159,7 @@
             <div class="material-center__footer">
                 <paging
                     v-model="pager"
-                    :small="true"
+                    size="small"
                     layout="total, prev, pager, next, jumper"
                 />
             </div>
