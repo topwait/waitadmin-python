@@ -34,6 +34,7 @@
                         :rows="5"
                         v-model.trim="formData.website.analyse"
                         show-word-limit
+                        placeholder="https://hm.baidu.com/hm.js?d16da1a2f..."
                     />
                 </div>
             </el-form-item>
