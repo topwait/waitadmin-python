@@ -91,8 +91,6 @@ aioredis
     Redis数据库的异步客户端
 redis
     Redis数据库的同步客户端
-PyMySQL
-    MySQL数据库的同步客户端
 
 oss2
     阿里云OSS(对象存储服务)的Python SDK, 用于与阿里云OSS进行交互。

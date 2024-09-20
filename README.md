@@ -47,7 +47,7 @@ WaitAdmin(Python)是一个采用现代技术栈构建的权限控制后台管理
 
 | 运行环境   | 要求版本     | 推荐版本     |
 |:-------|:---------|:---------|
-| Python | >=3.8.*  | 3.10.*   |
+| Python | >=3.10.* | 3.10.*   |
 | Mysql  | >=5.7    | 5.7      |
 | Nginx  | 无限制      | 最新LTS版   |
 | Node   | >=20.*.* | v20.14.0 |
@@ -125,12 +125,12 @@ pip3 install -r requirements.txt
 ```
 # .env文件的内容示例
 
-APP_DEBUG=False                 # 调试模式,生成环境建议关闭
+APP_DEBUG=False              # 调试模式,生成环境建议关闭
 
-SERVER_HOST=0.0.0.0             # 服务监听地址
-SERVER_PORT=8200                # 服务监听端口
-SERVER_RELOAD=True              # 服务监听重启
-SERVER_WORKERS=4                # 服务的进程数
+SERVER_HOST=0.0.0.0          # 服务监听地址
+SERVER_PORT=8200             # 服务监听端口
+SERVER_RELOAD=True           # 服务监听重启
+SERVER_WORKERS=4             # 服务的进程数
 
 MYSQL_HOST=127.0.0.1         # Mysql地址
 MYSQL_PORT=3306              # Mysql端口
@@ -143,10 +143,10 @@ MYSQL_MAXSIZE=100            # 最大链接数
 MYSQL_CHARSET=utf8mb4        # 字符编码
 MYSQL_ECHO=False             # 打印SQL
 
-REDIS_HOST=127.0.0.1            # Redis地址
-REDIS_PORT=6379                 # Redis端口
-REDIS_USERNAME=''               # Redis账号
-REDIS_PASSWORD=''               # Redis密码
+REDIS_HOST=127.0.0.1         # Redis地址
+REDIS_PORT=6379              # Redis端口
+REDIS_USERNAME=''            # Redis账号
+REDIS_PASSWORD=''            # Redis密码
 ```
 
 **(6) 运行项目：**
@@ -174,6 +174,7 @@ python3 manager.py
     </tr>
     <tr>
         <td><img src="https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_009.png" height="200" width="400" alt="wa"/></td>
+        <td><img src="https://gitee.com/wafts/waitadmin-python/raw/develop/server/public/static/default/example/ys_010.png" height="200" width="400" alt="wa"/></td>
     </tr>
 </table>
 
