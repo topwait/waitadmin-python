@@ -10,7 +10,7 @@
 # +----------------------------------------------------------------------
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from hypertext import R, response_json
 from apps.api.schemas import index_schema as schema
 from apps.api.service.index_service import IndexService
@@ -32,7 +32,7 @@ async def config():
 
 @router.get("/policy", summary="协议政策", response_model=R[schema.PolicyVo])
 @response_json
-async def policy(params: schema.QueryPolicyIn):
+async def policy(params: schema.QueryPolicyIn = Depends()):
     return await IndexService.policy(params.type)
 
 
