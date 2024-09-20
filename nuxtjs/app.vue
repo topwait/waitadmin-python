@@ -14,6 +14,7 @@ import useConfStore from './stores/conf'
 const appStore = useAppStore()
 const confStore = useConfStore()
 const pcConfig = appStore.getPcConfig
+const websiteConfig = appStore.getWebsiteConfig
 
 const elConfig = {
     zIndex: 3000,
@@ -47,6 +48,7 @@ useHead({
             name: 'description',
             content: pcConfig.description
         }
-    ]
+    ],
+    script: websiteConfig.analyse ? [{src: websiteConfig.analyse}] : []
 })
 </script>
