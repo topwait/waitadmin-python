@@ -178,6 +178,14 @@ class AdminService:
         if await AuthAdminModel.filter(username=post.nickname, is_delete=0).first().only("id"):
             raise AppException("账号已被占用")
 
+        if post.mobile:
+            if await AuthAdminModel.filter(mobile=post.mobile, is_delete=0).first().only("id"):
+                raise AppException("手机号已被占用")
+
+        if post.email:
+            if await AuthAdminModel.filter(email=post.email, is_delete=0).first().only("id"):
+                raise AppException("邮箱号已被占用")
+
         params = post.dict()
         params["salt"] = ToolsUtil.make_rand_char(6)
         params["avatar"] = UrlUtil.to_relative_url(post.avatar)
@@ -208,12 +216,20 @@ class AdminService:
             raise AppException("您无权限操作")
 
         if admin.nickname != post.nickname:
-            if await AuthAdminModel.filter(nickname=post.nickname, is_delete=0).first().only("id"):
+            if await AuthAdminModel.filter(id__not=admin.id, nickname=post.nickname, is_delete=0).first().only("id"):
                 raise AppException("昵称已被占用")
 
         if admin.username != post.username:
-            if await AuthAdminModel.filter(username=post.nickname, is_delete=0).first().only("id"):
+            if await AuthAdminModel.filter(id__not=admin.id, username=post.nickname, is_delete=0).first().only("id"):
                 raise AppException("账号已被占用")
+
+        if post.mobile:
+            if await AuthAdminModel.filter(id__not=admin.id, mobile=post.mobile, is_delete=0).first().only("id"):
+                raise AppException("手机号已被占用")
+
+        if post.email:
+            if await AuthAdminModel.filter(id__not=admin.id, email=post.email, is_delete=0).first().only("id"):
+                raise AppException("邮箱号已被占用")
 
         params = post.dict()
         params["avatar"] = UrlUtil.to_relative_url(post.avatar)
