@@ -55,7 +55,7 @@ PS: 业余Python开发者, 项目采用PHP常见的MVC结构, 如觉得不合适
 | Node   | >=20.*   | v20.14.0 |
 
 
-## 技术架构
+## 🐹 技术架构
 - **后台端：** Vue3 + TypeScript + Pinia + Element Plus
 - **前台端：** NuxtJs3 + TypeScript + Pinia + Element Plus
 - **接口端：** FastAPI + Pydantic + Tortoise-orm
@@ -63,13 +63,13 @@ PS: 业余Python开发者, 项目采用PHP常见的MVC结构, 如觉得不合适
 - **缓存层：** Redis
 - **服务部署：** Nginx
 
-## 主要特性
+## 🧐 主要特性
 - 路由自动根据目录自动注册
 - 采用常见的MVC结构(上手更容易)
 - 内置基于RBAC的权限管理的功能
 - 开箱即用,内置常用的工具和组件
 
-## 内置功能
+## 👀 内置功能
 - 用户管理：该功能主要完成系统用户配置。
 - 部门管理：配置系统组织机构(公司、部门、小组)
 - 岗位管理：配置系统用户所属担任职务。
