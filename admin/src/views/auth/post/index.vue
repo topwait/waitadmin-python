@@ -49,7 +49,12 @@
                 <el-table-column label="岗位名称" prop="name" min-width="100" />
                 <el-table-column label="岗位备注" prop="remarks" min-width="150" show-tooltip-when-overflow />
                 <el-table-column label="排序" prop="sort" min-width="100" />
-                <el-table-column label="状态" prop="is_disable" min-width="180" />
+                <el-table-column label="状态" prop="is_disable" min-width="80">
+                    <template #default="{ row }">
+                        <el-tag v-if="row.is_disable === 0">正常</el-tag>
+                        <el-tag v-else type="danger">禁用</el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column label="创建时间" prop="create_time" min-width="170" />
                 <el-table-column label="操作" width="120" fixed="right">
                     <template #default="{ row }">
