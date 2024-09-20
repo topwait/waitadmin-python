@@ -133,7 +133,7 @@ class AuthAdminInfoIn(BaseModel):
     mobile: str = Field(pattern=r"^(1[3-9]\d{9})?$", default="", description="联系电话")
     email: str = Field(pattern=r"^[\w\.-]+@[\w\.-]+\.\w+$", default="", description="电子邮箱")
     password: str = Field(max_length=20, default="", description="新密码")
-    old_password: str = Field(max_length=20, default="", description="旧密码")
+    password_old: str = Field(max_length=20, default="", description="旧密码")
 
     @classmethod
     def messages(cls):
@@ -143,7 +143,7 @@ class AuthAdminInfoIn(BaseModel):
             "nickname.min_length": "用户昵称不能少于2个字符",
             "nickname.max_length": "用户昵称不能超出10个字符",
             "password.max_length": "新密码不能超出20个字符",
-            "old_password.max_length": "旧密码错误了",
+            "password_old.max_length": "旧密码错误了",
             "mobile.pattern": "联系电话格式不正确",
             "email.pattern": "电子邮箱格式不正确"
         }
@@ -154,7 +154,7 @@ class AuthAdminInfoIn(BaseModel):
                 "avatar": "https://xx.cn/avatar.png",
                 "nickname": "wait",
                 "password": "123456",
-                "old_password": "025365",
+                "password_old": "025365",
                 "mobile": "13800138000",
                 "email": "13800138000@163.com"
             }

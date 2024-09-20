@@ -268,8 +268,8 @@ class AdminService:
 
         update_dict = {"update_time": int(time.time())}
         if post.password:
-            old_password = ToolsUtil.make_md5_str(post.old_password, admin.salt)
-            if admin.password != old_password:
+            password_old = ToolsUtil.make_md5_str(post.password_old, admin.salt)
+            if admin.password != password_old:
                 raise AppException("旧密码不正确")
             if len(post.password) < 6:
                 raise AppException("新密码不能少于6位数")
