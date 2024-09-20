@@ -76,6 +76,9 @@ class LogsMiddleware(BaseHTTPMiddleware):
                 args = json.dumps([dict_params], ensure_ascii=False)
             else:
                 form_params = await request.json()
+                for key in ["password", "password_confirm", "password_old"]:
+                    if form_params.get(key):
+                        form_params[key] = "******"
                 args = json.dumps([form_params], ensure_ascii=False)
         else:
             args = str(request.query_params)
