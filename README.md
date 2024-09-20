@@ -153,6 +153,24 @@ REDIS_PASSWORD=''            # Redis密码
 ```shell
 python3 manager.py
 ```
+```shell
+# 看到以下信息则表示运行成功了
+INFO:     Will watch for changes in these directories: ['/Applications/waitadmin-python/server']
+INFO:     Uvicorn running on http://0.0.0.0:8100 (Press CTRL+C to quit)
+INFO:     Started reloader process [4614] using StatReload
+INFO:     Started server process [4617]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+```
+
+**(7) 完毕：**
+```
+1、以上就是服务端的启动方式 (server)。
+2、后台(admin) 与 前台(nuxtjs), 请自行按照 vue 那一套流程进行启动。
+    cd admin
+    npm install
+    npm run dev
+```
 
 ## 演示图
 <table>
