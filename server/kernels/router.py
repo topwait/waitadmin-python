@@ -191,7 +191,7 @@ class AutomaticRegRouter:
 
     def __recursion_controller(self, scene, module, catalogue, data):
         """
-        Recursively traverse the specified directory, collect the full names of controller classes, and add them to the data list.
+        Recursively traverse the directory, collect controller class names, and add them to the data list.
 
         Args:
             scene (str): The name of the application scene [addons, apps, ...].
@@ -200,13 +200,13 @@ class AutomaticRegRouter:
             data (List[str]): The list used to store the collected full names of controller classes.
 
         Returns:
-            None: This method does not return a result directly, but collects information by modifying the passed-in data list.
+            None: This method does not directly return the result.
 
         Author:
             zero
         """
         for modular in os.listdir(catalogue):
-            if not modular.startswith("__"):
+            if not modular.startswith("__") and not modular.startswith("."):
                 if os.path.isdir(catalogue + os.sep + modular):
                     self.__recursion_controller(scene, module, catalogue + os.sep + modular, data)
                 else:
@@ -232,7 +232,7 @@ class AutomaticRegRouter:
             bool: Returns True if interceptors were successfully loaded and configured, False otherwise.
 
         Raises:
-            Exception: If the interceptor"s "obstruction" attribute is not a dictionary or if the interceptor class does not exist.
+            Exception: If the interceptor class does not exist.
         """
         if self.router_interceptor.get(app_name) is not None:
             return False
