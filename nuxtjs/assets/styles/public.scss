@@ -1,0 +1,40 @@
+body {
+    min-width: 1300px;
+    font-family: "PingFang SC", Arial, "Microsoft YaHei", sans-serif;
+    font-size: var(--el-font-size-base);
+    color: var(--el-text-color-primary);
+    .hover-opacity:hover { cursor: pointer; opacity: 0.85; }
+    .hover-primary:hover { color: var(--el-color-primary); cursor: pointer; }
+    .hover-success:hover { color: var(--el-color-success); cursor: pointer; }
+    .hover-warning:hover { color: var(--el-color-warning); cursor: pointer; }
+    .hover-danger:hover { color: var(--el-color-danger); cursor: pointer; }
+    .hover-error:hover { color: var(--el-color-error); cursor: pointer; }
+}
+
+:focus-visible {
+    outline: none;
+}
+
+.clearfix::after {
+    display: block;
+    clear: both;
+    visibility: hidden;
+    content: '';
+}
+
+.form-tips {
+    margin-top: 4px;
+    font-size: var(--el-font-size-small);
+    line-height: 24px;
+    color: var(--el-text-color-secondary);
+}
+
+#nprogress .bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4000;
+    width: 100%;
+    height: 2px;
+    background-color: var(--el-color-primary) !important;
+}

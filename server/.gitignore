@@ -1,0 +1,17 @@
+*.log
+.env
+.htaccess
+.install.lock
+/.idea
+/.vscode
+/venv
+/runtime/
+/public/mobile/
+/public/admin/
+/public/pc/
+/public/mobile.zip
+/public/admin.zip
+/public/pc.zip
+/**/__pycache__
+/public/nginx.htaccess
+.qiniu_pythonsdk_hostscache.json
