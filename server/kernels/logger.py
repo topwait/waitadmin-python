@@ -80,8 +80,10 @@ def configure_logger():
     level_sole: int = _LEVEL_NUM[config.get("level_sole") or "info"]
     enable_file: bool = config.get("enable_file") or True
     enable_sole: bool = config.get("enable_sole") or True
-    format_file: str = config.get("format_file") or "[%(asctime)s][%(levelname)s] [%(filename)s:%(lineno)d] [%(thread)d] - %(message)s"
-    format_sole: str = config.get("format_sole") or "[%(levelname)s]: [%(filename)s:%(lineno)d] [%(thread)d] - %(message)s"
+    format_file: str = (config.get("format_file")
+                        or "[%(asctime)s][%(levelname)s] [%(filename)s:%(lineno)d] [%(thread)d] - %(message)s")
+    format_sole: str = (config.get("format_sole")
+                        or "[%(levelname)s]: [%(filename)s:%(lineno)d] [%(thread)d] - %(message)s")
     format_date: str = config.get("format_date") or "%Y-%m-%d %H:%M:%S %p"
     rely_levels: Dict[str, List[str]] = config.get("rely_levels") or {}
 
