@@ -13,11 +13,11 @@
 import time
 from typing import List
 from fastapi import Request
-from simpel_captcha import b64_captcha
 from exception import AppException
 from common.utils.urls import UrlUtil
 from common.utils.tools import ToolsUtil
 from common.models.auth import AuthAdminModel
+from plugins.captcha.src import b64_captcha
 from apps.admin.cache.login_cache import LoginCache
 from apps.admin.schemas import login_schema as schema
 from apps.admin.config import AdminConfig
