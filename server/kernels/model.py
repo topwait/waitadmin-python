@@ -156,9 +156,9 @@ class DbModel(Model):
                         break
             if engine is None:
                 caller_file_path = inspect.stack()[1].filename
-                caller_pack_path = caller_file_path.replace("/" + caller_file_path.split("/")[-1], "")
-                system_root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/"
-                module_apps_path = caller_pack_path.replace(system_root_path, "").replace("/", ".")
+                caller_pack_path = caller_file_path.replace(os.sep + caller_file_path.split(os.sep)[-1], "")
+                system_root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + os.sep
+                module_apps_path = caller_pack_path.replace(system_root_path, "").replace(os.sep, ".")
                 engine = next((key for key in apps.keys() if apps[key].get("models") == module_apps_path), None)
 
         conn = cls.DB_CONFIGS.get("connections", {}).get(engine, {})

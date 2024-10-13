@@ -1,7 +1,6 @@
 pillow==10.4.0
 python-dotenv==1.0.1
 python-multipart==0.0.9
-simpel_captcha==0.1.4
 APScheduler==3.10.4
 
 fastapi==0.115.0
