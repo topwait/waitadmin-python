@@ -11,7 +11,7 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 import importlib
-import aioredis
+from redis import asyncio
 from fastapi_cache.backends.redis import RedisBackend
 
 __all__ = ["redis_be"]
@@ -39,7 +39,7 @@ def register_redis():
     host: str = c.get("host", "127.0.0.1")
     port: int = int(c.get("port", 6379))
 
-    return aioredis.from_url(
+    return asyncio.from_url(
         f"redis://{host}:{port}",
         db=int(c.get("db", 0)),
         encoding=c.get("encoding", "utf-8"),

@@ -213,11 +213,10 @@ class AutomaticRegRouter:
                     app_module_package = ("." + module) if module else ""
                     app_module_package = scene + app_module_package + "." + self.controller + "."
                     controller_class_name = os.path.splitext(modular)[0]
-
-                    sub_package = catalogue.split(app_module_package.replace(".", "/"))
+                    sub_package = catalogue.split(app_module_package.replace(".", os.sep))
                     sub_package = sub_package[len(sub_package)-1] if len(sub_package) >= 2 else ""
                     if sub_package:
-                        controller_class_name = (sub_package + "." + controller_class_name).replace("/", ".")
+                        controller_class_name = (sub_package + "." + controller_class_name).replace(os.sep, ".")
                     data.append(app_module_package + controller_class_name)
 
     def __router_interceptor(self, app_name) -> bool:
@@ -238,7 +237,7 @@ class AutomaticRegRouter:
             return False
 
         inter_pack: str = self.app_module + "." + app_name + ".interceptor"
-        file_path: str = self.root_path + inter_pack.replace(".", "/") + ".py"
+        file_path: str = self.root_path + inter_pack.replace(".", os.sep) + ".py"
         if not os.path.exists(file_path):
             return False
 

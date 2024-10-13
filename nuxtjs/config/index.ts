@@ -1,6 +1,6 @@
 const config: any = {
     // 版本编号
-    version: '1.0.0',
+    version: '1.1.0',
     // 请求域名
     baseUrl: `${import.meta.env.VITE_API_URL || ''}`,
     // 来源终端
