@@ -17,6 +17,10 @@ export default defineNuxtConfig({
         '@element-plus/nuxt'
     ],
 
+    elementPlus: {
+        defaultLocale: 'zh-cn'
+    },
+
     eslint: {
         checker: true
     },
