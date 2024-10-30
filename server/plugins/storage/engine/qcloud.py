@@ -33,7 +33,7 @@ class QCloudStorage:
 
         self.client = CosS3Client(self.conf)
 
-    def upload(self, file_in: UploadFile, key: str):
+    async def upload(self, file_in: UploadFile, key: str):
         """
         文件数据上传到七牛云。
 

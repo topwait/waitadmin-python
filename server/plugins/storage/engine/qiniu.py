@@ -26,7 +26,7 @@ class QiniuStorage:
         self.sk = config.get("secret_key", "")
         self.auth = Auth(self.ak, self.sk)
 
-    def upload(self, file_in: UploadFile, key: str) -> Union[str, None]:
+    async def upload(self, file_in: UploadFile, key: str) -> Union[str, None]:
         """
         文件数据上传到七牛云OSS。
 
