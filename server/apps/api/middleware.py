@@ -44,7 +44,7 @@ class LogsMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
 
         # 登录信息
-        request.state.user_id = await SecurityDriver.module("api").get_login_id()
+        request.state.user_id = int(await SecurityDriver.module("api").get_login_id())
         request.state.terminal = int(request.headers.get("Terminal") or 0)
 
         # 无需记录
