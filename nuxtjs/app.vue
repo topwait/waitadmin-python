@@ -1,5 +1,5 @@
 <template>
-    <ElConfigProvider v-bind="elConfig">
+    <ElConfigProvider>
         <NuxtLoadingIndicator color="#0f70d8" :height="2" />
         <NuxtPage />
     </ElConfigProvider>
@@ -7,7 +7,6 @@
 
 <script setup lang="ts">
 import { ID_INJECTION_KEY, ElConfigProvider } from 'element-plus'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import useAppStore from './stores/app'
 import useConfStore from './stores/conf'
 
@@ -15,11 +14,6 @@ const appStore = useAppStore()
 const confStore = useConfStore()
 const pcConfig = appStore.getPcConfig
 const websiteConfig = appStore.getWebsiteConfig
-
-const elConfig = {
-    zIndex: 3000,
-    locale: zhCn
-}
 
 confStore.setTheme(
     confStore.primaryTheme,

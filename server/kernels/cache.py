@@ -21,7 +21,7 @@ def __loading_redis_configs():
     """ Load Redis configuration """
     configs = {}
     try:
-        package = importlib.import_module("configs")
+        package = importlib.import_module("config")
         clz = getattr(package, "GlobalSetting", None)
         if not clz:
             return configs

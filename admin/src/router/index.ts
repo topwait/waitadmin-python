@@ -51,7 +51,7 @@ export function filterRoutes(routes: any[], firstRoute: boolean = true): RouteRe
 
         switch (route.type) {
             case 'M':
-                routeRecord.component = firstRoute ? shallowRef(Layout) : RouterView
+                routeRecord.component = firstRoute ? markRaw(Layout) : markRaw(RouterView)
                 if (!route.children) {
                     routeRecord.component = RouterView
                 }

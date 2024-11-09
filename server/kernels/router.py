@@ -11,7 +11,6 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 import os
-import re
 import importlib
 from typing import List, Dict
 from fastapi import APIRouter, FastAPI, Depends
@@ -28,90 +27,86 @@ class AutomaticRegRouter:
         self.root_path: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + os.sep
         self.apps_path: str = os.path.join(self.root_path, self.app_module)
 
-        self.router_filters: Dict[str, Dict[str, List[str]]] = {}
+        self.router_filters: Dict[str, any] = {}
         self.router_interceptor: Dict[str, any] = {}
 
         self.single_app_flag: bool = os.path.exists(os.path.join(self.apps_path, self.controller))
 
     def load_reg_api(self):
         """ Load and register routes """
+        setting = self.__get_config()
+
+        apps = []
+        for app in self.__get_apps():
+            self.__router_interceptor(app)
+            apps.append(app)
+
         for module_name in self.__get_controller():
             module = importlib.import_module(module_name)
-            if "router" in module.__dict__:
-                # Extracting information from the request path
-                pathinfo = module_name.split(".")
-                app_name = pathinfo[1]
-                url_prefix = "/" + "/".join(pathinfo[3:-1]) if pathinfo[3:-1] else ""
-                contr_name = re.sub(r"Controller$", "", pathinfo[-1])
-                contr_name = contr_name[0].lower() + contr_name[1:]
+            if "router" not in module.__dict__:
+                continue
 
-                # Obtain routing related configuration parameters
-                setting = self.__get_config()
+            # Extracting information from the request path
+            pathinfo = module_name.split(".")
+            app_name: str = pathinfo[1]
+            url_prefix: str = "/" + "/".join(pathinfo[3:-1]) if pathinfo[3:-1] else ""
 
-                # Get if there is a routing interceptor present
-                self.__router_interceptor(app_name)
-                _lz_url = self.router_filters.get(app_name, {})
-                _lz_clz = self.router_interceptor.get(app_name, {})
+            # Determine whether to register application routing
+            if not router_register.get(app_name):
+                prefix = setting.get("ROUTER_ALIAS").get(app_name)  # Set alias
+                prefix = "" if prefix == "" else ("/"+prefix if prefix else "/"+app_name)
+                router_register[app_name] = APIRouter(prefix=prefix)
 
-                # Obtain the group note name for the path
-                tags = setting.get("ROUTER_REMARK").get(app_name)
+            # Inject the processed route
+            route = module.__dict__["router"]
+            router_register[app_name].include_router(route, prefix=url_prefix)
 
-                # Determine whether to register application routing
-                if not router_register.get(app_name):
-                    # Routing alias
-                    prefix = setting.get("ROUTER_ALIAS").get(app_name)
-                    prefix = "" if prefix == "" else ("/"+prefix if prefix else "/"+app_name)
-                    # Routing style
-                    if setting.get("ROUTER_STYLES") == "dot" and url_prefix:
-                        url_prefix = url_prefix.replace("/", ".")
-                        url_prefix = ("/"+url_prefix[1:]) if url_prefix.startswith(".") else url_prefix
+        for app in apps:
+            swagger_tags = setting.get("ROUTER_REMARK").get(app)
+            _lz_url = self.router_filters.get(app, {})
+            _lz_clz = self.router_interceptor.get(app, {})
 
-                    router_register[app_name] = APIRouter(prefix=prefix)
+            absolute_routers = []
+            routes = router_register[app].__dict__.get("routes", [])
+            for route in routes:
+                # Routing prefix and style
+                if route.path and setting.get("ROUTER_STYLES") == "dot":
+                    urls = route.path.lstrip("/").split("/")
+                    name = urls.pop(0)
+                    if len(urls) >= 2:
+                        route.path = "/" + name + "/" + ".".join(urls[0:-1]) + "/" + urls[-1]
 
-                # Loop processing path style and interception
-                route = module.__dict__["router"]
-                for i in range(len(route.routes)):
-                    # Routing prefix and style
-                    if url_prefix and (setting.get("ROUTER_PREFIX") or setting.get("ROUTER_STYLES") == "dot"):
-                        paths = route.routes[i].path.split("/")
-                        contr = paths.pop()
-                        if not route.prefix and setting.get("ROUTER_PREFIX"):
-                            route.prefix = "/" + contr_name
-                            paths.append(contr_name)
-                        symbol = "." if setting.get("ROUTER_STYLES") == "dot" else "/"
-                        route.routes[i].path = symbol.join(paths) + "/" + contr
-
-                    # Filter routing interceptors
-                    intercept_obj_depends = []
-                    for obs, clz in _lz_clz.items():
-                        _routers_perms: str = route.routes[i].path.replace("/", ":").lstrip(":")
-                        _filters_url_arr = _lz_url.get(obs, [])
-                        if _routers_perms not in _filters_url_arr:
-                            intercept_obj_depends.append(clz)
-
-                    # Load routing interceptor
-                    if intercept_obj_depends:
-                        route.routes[i].dependencies = intercept_obj_depends
-
-                    # Handling of routing packets
-                    if setting.get("ROUTER_GROUPS") == "app":
-                        route.routes[i].tags = [tags if tags else app_name]
-                    else:
-                        if route.routes[i].tags:
-                            route.routes[i].tags = [f"【{tags}】- {tag}" for tag in route.routes[i].tags]
-                        else:
-                            route.routes[i].tags = [tags if tags else app_name]
+                # Absolute custom routing
+                if "$" in route.path:
+                    _abs = route.path[route.path.index("$") + 1:]
+                    if _abs:
+                        absolute_routers.append(_abs)
+                        route.path = _abs
 
                 # Handling of routing packets
-                if route.tags:
-                    route.tags = [f"【{tags}】- {tag}" for tag in route.tags]
+                if setting.get("ROUTER_GROUPS") == "app":
+                    route.tags = [swagger_tags if swagger_tags else app]
                 else:
-                    route.tags = [tags if tags else app_name]
+                    if route.tags:
+                        route.tags = [f"【{swagger_tags}】- {tag}" for tag in route.tags]
+                    else:
+                        route.tags = [swagger_tags if swagger_tags else app]
 
-                # Inject the processed route
-                router_register[app_name].include_router(route, prefix=url_prefix)
+                # Filter routing interceptors
+                intercept_obj_depends = []
+                for obs, clz in _lz_clz.items():
+                    i = 0 if route.path in absolute_routers else 1
+                    urls = route.path.lstrip("/").split("/")
+                    path: str = "/".join(urls[i:]).replace(".", "/")
+                    _routers_perms: str = path.replace("/", ":").lstrip(":")
+                    _filters_url_arr = _lz_url.get(obs, [])
+                    if _routers_perms not in _filters_url_arr:
+                        intercept_obj_depends.append(clz)
 
-        # Release unnecessary parameters that have been exhausted
+                # Load routing interceptor
+                if intercept_obj_depends:
+                    route.dependencies = intercept_obj_depends
+
         self.router_filters = {}
         self.router_interceptor = {}
 
@@ -126,9 +121,7 @@ class AutomaticRegRouter:
             # Routing grouping: [app, module]
             "ROUTER_GROUPS": "app",
             # Routing style: [line, dot]
-            "ROUTER_STYLES": "line",
-            # Routing prefix: [Automatic completion]
-            "ROUTER_PREFIX": True
+            "ROUTER_STYLES": "line"
         }
 
         try:
@@ -142,7 +135,7 @@ class AutomaticRegRouter:
             configs["ROUTER_REMARK"] = obj.get("ROUTER_REMARK") or {}
             configs["ROUTER_GROUPS"] = obj.get("ROUTER_GROUPS") or "app"
             configs["ROUTER_STYLES"] = obj.get("ROUTER_STYLES") or "line"
-            configs["ROUTER_PREFIX"] = obj.get("ROUTER_STYLES") or True
+            configs["ROUTER_REPAIR"] = obj.get("ROUTER_REPAIR") or True
             return configs
         except ModuleNotFoundError:
             return configs

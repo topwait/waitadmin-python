@@ -37,7 +37,7 @@ class AliyunStorage:
         except OssError as e:
             raise Exception(f"{e.status}: {e.body}")
 
-    def upload(self, file_in: UploadFile, key: str) -> Union[str, None]:
+    async def upload(self, file_in: UploadFile, key: str) -> Union[str, None]:
         """
         文件数据上传到阿里云OSS。
 

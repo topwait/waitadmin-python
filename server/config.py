@@ -32,7 +32,7 @@ class GlobalSetting(BaseSettings):
     APPS_NAME: str = "apps"
 
     # 项目信息
-    VERSION: str = "1.1.0"
+    VERSION: str = "1.1.1"
     PROJECT_NAME: str = "WaitAdmin(Python)开源后台系统"
     DESCRIPTION: str = "Fastapi + Vue3 + NuxtJs + TypeScript"
 
@@ -52,7 +52,6 @@ class GlobalSetting(BaseSettings):
     ROUTER_ALIAS: Dict[str, str] = {"admin": "spi", "api": "api"}
     ROUTER_REMARK: Dict[str, str] = {"admin": "后台接口", "api": "前台接口"}
     ROUTER_STYLES: str = "line"
-    ROUTER_PREFIX: bool = True
 
     # 静态资源目录
     STATIC_DIR: List[tuple] = [

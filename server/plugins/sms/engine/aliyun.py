@@ -18,7 +18,7 @@ from aliyunsdkcore.request import CommonRequest
 class AliyunSms:
     def __init__(self, config: dict):
         self.status = 0
-        self.sign = config.get("sign", ""),
+        self.sign = config.get("sign", "")
         self.APP_KEY = config.get("acc_key", "")
         self.SECRET = config.get("acc_secret", "")
 
