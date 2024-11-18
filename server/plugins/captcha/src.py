@@ -30,10 +30,10 @@ def color():
 
 def get_xy(width, height):
     return [
-        random.randint(width / 2, width),
-        random.randint(height / 2, height),
-        random.randint(0, width),
-        random.randint(0, height),
+        random.randint(int(width / 2), int(width)),
+        random.randint(int(height / 2), int(height)),
+        random.randint(0, int(width)),
+        random.randint(0, int(height))
     ]
 
 
