@@ -35,7 +35,7 @@ class CrontabAddIn(BaseModel):
     rules: List[dict] = Field(..., min_length=1, max_length=65535, description="运行规则")
     concurrent: int = Field(ge=1, le=10, default=0, description="并发数量")
     remarks: str = Field(max_length=255, default="", description="备注信息")
-    status: int = Field(ge=0, le=1, default=0, description="执行状态: [1=运行, 2=暂停, 3=错误]")
+    status: int = Field(ge=1, le=2, default=0, description="执行状态: [1=运行, 2=暂停]")
 
     @classmethod
     def messages(cls):
@@ -51,8 +51,8 @@ class CrontabAddIn(BaseModel):
             "concurrent.ge": "并发数量最少不能少于1",
             "concurrent.le": "并发数量最大不能超出10",
             "remarks.max_length": "备注信息备注信息不能超出255个字符",
-            "status.ge": "运行状态不符合规则: [1, 2, 3]",
-            "status.le": "运行状态不符合规则: [1, 2, 3]"
+            "status.ge": "运行状态不符合规则: [1, 2]",
+            "status.le": "运行状态不符合规则: [1, 2]"
         }
 
     class Config:
@@ -80,7 +80,7 @@ class CrontabEditIn(BaseModel):
     rules: List[dict] = Field(..., min_length=1, max_length=65535, description="运行规则")
     concurrent: int = Field(ge=1, le=10, default=0, description="并发数量")
     remarks: str = Field(max_length=255, default="", description="备注信息")
-    status: int = Field(ge=0, le=1, default=0, description="执行状态: [1=运行, 2=暂停, 3=错误]")
+    status: int = Field(ge=1, le=2, default=0, description="执行状态: [1=运行, 2=暂停]")
 
     @classmethod
     def messages(cls):

@@ -386,7 +386,7 @@ CREATE TABLE `wait_sys_crontab` (
   `concurrent` tinyint(2) unsigned NOT NULL DEFAULT '1' COMMENT '并发数量',
   `remarks` varchar(300) NOT NULL DEFAULT '' COMMENT '备注信息',
   `error` text COMMENT '错误提示',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '执行状态: [1=运行, 2=暂停, 3=错误]',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '执行状态: [1=运行, 2=暂停]',
   `exe_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '执行时长',
   `max_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最大执行时长',
   `last_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后执行时间',

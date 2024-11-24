@@ -131,6 +131,12 @@ class CrontabService:
                     params["w_ix"] = crontab.concurrent + i
                     params["w_job"] = job
                     scheduler.add_job(func, trigger_fun, name=crontab.name, id=job, kwargs=params)
+                # 如果是暂时中
+                if post.status == 2:
+                    for i in range(crontab.concurrent):
+                        job = crontab.command + "." + str(1 + i)
+                        scheduler.pause_job(job_id=job)
+                        scheduler.remove_job(job_id=job)
         except Exception as e:
             raise AppException(str(e))
 
@@ -148,10 +154,10 @@ class CrontabService:
         # 查询验证数据
         cron = await SysCrontabModel.filter(id=post.id, is_delete=0).get()
         cls.__check_rules(post.trigger, post.rules)
-        cls.__check_module(cron.command)
+        cls.__check_module(post.command)
 
         # 处理数据格式
-        params = post.dict()
+        params = post.model_dump()
         params["rules"] = json.dumps(post.rules)
         del params["id"]
         if params.get("params"):
@@ -161,15 +167,26 @@ class CrontabService:
                 raise AppException(f"附带参数格式异常: {e}")
 
         try:
+            old_command: str = cron.command
+            old_concurrent: int = cron.concurrent
+
             async with in_transaction("mysql"):
                 # 更新到数据库
                 await SysCrontabModel.filter(id=post.id).update(
                     **params,
                     update_time=int(time.time())
                 )
+
                 # 更新任务信息
-                crontab = await SysCrontabModel.filter(id=post.id).first()
-                cls.__update_job(crontab, cron.command, cron.concurrent)
+                if post.status == 1:
+                    cron.command = post.command
+                    cron.concurrent = post.concurrent
+                    cls.__update_job(cron, old_command, old_concurrent)
+                elif post.status == 2:
+                    for i in range(old_concurrent):
+                        job = cron.command + "." + str(1 + i)
+                        scheduler.pause_job(job_id=job)
+                        scheduler.remove_job(job_id=job)
         except Exception as e:
             raise AppException(str(e))
 
@@ -372,7 +389,7 @@ class CrontabService:
         if crontab.concurrent < old_concurrent and not change:
             beyond: int = old_concurrent - crontab.concurrent
             for i in range(beyond):
-                job = crontab.command + "." + str(crontab.concurrent + 1 + i)
+                job = crontab.command + "." + str(1 + i)
                 scheduler.remove_job(job_id=job)
 
         # 增加执行并发

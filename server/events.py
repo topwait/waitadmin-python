@@ -37,7 +37,7 @@ class AppEvents:
 
     @classmethod
     async def _inject_crontab(cls):
-        crontab_lists = await SysCrontabModel.filter(is_delete=0).order_by("-id").all()
+        crontab_lists = await SysCrontabModel.filter(status=1, is_delete=0).order_by("-id").all()
         for crontab in crontab_lists:
             try:
                 module = importlib.import_module(crontab.command)
@@ -78,3 +78,6 @@ class AppEvents:
                 params["w_ix"] = int(i + 1)
                 params["w_job"] = job
                 scheduler.add_job(func, _trigger_fun, id=job, name=crontab.name, kwargs=params)
+
+            # 启动成功提示
+            print(f"计划任务启动成功: {crontab.name}|{crontab.concurrent}|{crontab.command}")
