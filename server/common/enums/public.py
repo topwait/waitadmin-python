@@ -13,6 +13,13 @@
 from typing import Dict
 
 
+class CrontabEnum:
+    """ 计划任务枚举 """
+    CRON_ING = 1    # 运行中
+    CRON_STOP = 2   # 已暂停
+    CRON_ERROR = 3  # 错误的
+
+
 class BannerEnum:
     HOME = 10  # 首页轮播
     SIDE = 20  # 侧边广告
