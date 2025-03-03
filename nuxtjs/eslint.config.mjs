@@ -6,7 +6,7 @@ export default withNuxt([
         rules: {
             'semi': ['warn', 'never'],
             'no-var': 'warn',
-            'no-empty': 'warn',
+            'no-empty': 'off',
             'no-undef': 'off',
             'no-shadow': 'off',
             'no-console': ['warn', { 'allow': ['error'] }],
@@ -59,6 +59,8 @@ export default withNuxt([
             '@typescript-eslint/ban-ts-comment': 'off',
             '@typescript-eslint/no-unused-vars': 'warn',
             '@typescript-eslint/no-explicit-any': 'off',
+            '@typescript-eslint/no-empty-object-type': 'off',
+            '@typescript-eslint/no-unused-expressions': 'off',
             'vue/attribute-hyphenation': 0,
             'vue/require-default-prop': 0,
             'vue/multi-word-component-names': 0,
