@@ -42,7 +42,18 @@ export default defineNuxtConfig({
                     api: 'modern-compiler'
                 }
             }
-        }
+        },
+        plugins: [
+            {
+                name: 'vite-plugin-glob-transform',
+                transform(code: string, id: string) {
+                    if (id.includes('nuxt-icons')) {
+                        return code.replace(/as:\s*['"]raw['"]/g, 'query: "?raw", import: "default"')
+                    }
+                    return code
+                }
+            }
+        ]
     },
 
     compatibilityDate: '2024-09-19'
