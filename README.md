@@ -201,6 +201,8 @@ INFO:     Application startup complete.
 </table>
 
 ## 交流群
+- 加群时请备注是Python版
+
 QQ群：
 <a href="https://gitee.com/link?target=https://jq.qq.com/?_wv=1027&k=TRrklD6W">
     <img src="https://img.shields.io/badge/1019900755-blue.svg" alt="加入QQ群">
