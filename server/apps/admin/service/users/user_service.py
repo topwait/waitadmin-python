@@ -201,6 +201,7 @@ class UserService:
         """
         data = await UserModel.get(id=id_)
         result = data.__dict__
+        result["avatar"] = UrlUtil.to_absolute_url(result["avatar"])
         result["gender"] = GenderEnum.get_msg_by_code(result["gender"])
         result["create_time"] = TimeUtil.timestamp_to_date(data.create_time)
         result["last_login_time"] = TimeUtil.timestamp_to_date(data.last_login_time)
