@@ -66,6 +66,17 @@ def configure_exception(app: FastAPI):
                 msg=ErrorEnum.SYSTEM_UNKNOWN_ERROR.msg
             ).__dict__)
 
+    @app.exception_handler(ValueError)
+    async def value_exception_handler(request: Request, exc: ValueError):
+        """ 无效参数值异常 """
+        logger.error("ValueError: url=[%s]", request.url.path)
+        return JSONResponse(
+            status_code=200,
+            content=R.fail(
+                code=ErrorEnum.SYSTEM_PARAMS_ERROR.code,
+                msg=str(exc)
+            ).__dict__)
+
     @app.exception_handler(StarletteHTTPException)
     async def http_exception_handler(request: Request, exc: StarletteHTTPException):
         """ 处理客户端请求异常 """

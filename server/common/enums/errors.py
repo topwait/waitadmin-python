@@ -34,6 +34,7 @@ class ErrorEnum:
 
     SYSTEM_UNKNOWN_ERROR = Enums(500, "系统错误")
     SYSTEM_TIMEOUT_ERROR = Enums(504, "请求超时")
+    SYSTEM_PARAMS_ERROR = Enums(505, "无效参数值错误")
 
     DB_OPERATIONS_ERROR = Enums(600, "数据库操作异常")
     DB_EMPTY_DATA_ERROR = Enums(601, "查询数据不存在")

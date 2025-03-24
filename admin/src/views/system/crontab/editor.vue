@@ -99,7 +99,7 @@
                         clearable
                     >
                         <el-option
-                            v-for="(item, index) in 10"
+                            v-for="(item, index) in 50"
                             :key="index"
                             :label="item"
                             :value="item"
@@ -117,7 +117,7 @@
                 <el-form-item label="运行状态" prop="status">
                     <el-radio-group v-model="formData.status">
                         <el-radio :value="1">立即启动</el-radio>
-                        <el-radio :value="0">暂停执行</el-radio>
+                        <el-radio :value="2">暂停执行</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="任务列表" v-if="formData.tasks.length > 0">
