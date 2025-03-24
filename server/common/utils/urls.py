@@ -10,12 +10,38 @@
 # +----------------------------------------------------------------------
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
-from common.utils.config import ConfigUtil
+from config import get_settings
 from kernels.utils import RequestUtil
+from common.utils.config import ConfigUtil
 
 
 class UrlUtil:
     """ Url工具 """
+
+    @classmethod
+    async def get_storage_domain(cls) -> str:
+        """
+        获取当前存储域名
+
+        Returns:
+            str: domain
+        """
+        engine: str = await ConfigUtil.get("storage", "engine", "local")
+        if engine == "local":
+            return RequestUtil.domain
+        else:
+            _config: dict = await ConfigUtil.get("storage", engine, {})
+            return _config.get("domain", "").strip()
+
+    @classmethod
+    async def get_storage_engine(cls) -> str:
+        """
+        获取当前存储引擎
+
+        Returns:
+            str: [local,qiniu,aliyun,qcloud]
+        """
+        return await ConfigUtil.get("storage", "engine", "local")
 
     @staticmethod
     async def to_absolute_url(url) -> str:
@@ -60,3 +86,41 @@ class UrlUtil:
             return str("/".join(arr))
         else:
             return url
+
+    @staticmethod
+    def to_root_path(path: str = "") -> str:
+        """
+        将相对PATH转换为绝对路径。
+
+        Args:
+            path (str): 待转换的URL。
+
+        Returns:
+            str: 转换后的绝对PATH。
+        """
+        if not path:
+            return get_settings().APP_PATH
+
+        if path.startswith("http:" + "//") or path.startswith("https://"):
+            path = UrlUtil.to_relative_url(path)
+
+        root_app = get_settings().APP_PATH
+        entrance = get_settings().UPLOAD["root"]
+        return f"{root_app}/{entrance}/" + path.strip("/")
+
+    @staticmethod
+    def to_runtime_path(path) -> str:
+        """
+        将相对PATH转换为绝对路径。
+
+        Args:
+            path (str): 待转换的URL。
+
+        Returns:
+            str: 转换后的绝对PATH。
+        """
+        if path.startswith("http:" + "//") or path.startswith("https://"):
+            path = UrlUtil.to_relative_url(path)
+
+        root_app = get_settings().APP_PATH
+        return f"{root_app}/runtime/" + path.strip("/")
