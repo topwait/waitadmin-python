@@ -667,7 +667,7 @@ INSERT INTO `wait_auth_menu` VALUES (82, 80, 'A', '岗位新增', '', 0, 'auth:p
 INSERT INTO `wait_auth_menu` VALUES (83, 80, 'A', '岗位编辑', '', 0, 'auth:post:edit', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (84, 80, 'A', '岗位删除', '', 0, 'auth:post:delete', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (500, 0, 'M', '设置', 'el-icon-setting', 9300, '', '', '', 'setting', 1, 0, 0, 1716170400, 1716170400, 0);
-INSERT INTO `wait_auth_menu` VALUES (510, 500, 'C', '后台设置', '', 0, 'setting:backs:lists', '', 'setting/backs', 'backs', 1, 0, 0, 1716170400, 1716170400, 0);
+INSERT INTO `wait_auth_menu` VALUES (510, 500, 'C', '后台设置', '', 0, 'setting:backs:detail', '', 'setting/backs', 'backs', 1, 0, 0, 1716170400, 1742810236, 0);
 INSERT INTO `wait_auth_menu` VALUES (512, 510, 'A', '网站配置保存', '', 0, 'setting:backs:save', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (520, 500, 'C', '网站设置', '', 0, 'setting:basics:detail', '', 'setting/basics', 'basics', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (522, 520, 'A', '网站配置保存', '', 0, 'setting:basics:save', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
@@ -684,11 +684,11 @@ INSERT INTO `wait_auth_menu` VALUES (572, 570, 'A', '邮件配置保存', '', 0,
 INSERT INTO `wait_auth_menu` VALUES (580, 500, 'C', '短信设置', '', 0, 'setting:sms:lists', '', 'setting/sms/index', 'sms', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (581, 580, 'A', '短信配置详情', '', 0, 'setting:sms:detail', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (582, 580, 'A', '短信配置保存', '', 0, 'setting:sms:save', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
-INSERT INTO `wait_auth_menu` VALUES (590, 500, 'C', '通知设置', '', 0, 'setting:notice:detail', '', 'setting/notice/index', 'notice', 1, 0, 0, 1716170400, 1716170400, 0);
+INSERT INTO `wait_auth_menu` VALUES (590, 500, 'C', '通知设置', '', 0, 'setting:notice:lists', '', 'setting/notice/index', 'notice', 1, 0, 0, 1716170400, 1742810269, 0);
 INSERT INTO `wait_auth_menu` VALUES (592, 590, 'A', '通知配置保存', '', 0, 'setting:notice:save', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (610, 500, 'C', '支付设置', '', 0, 'setting:payment:lists', '', 'setting/payment/index', 'payment', 1, 0, 0, 1716170400, 1716170400, 0);
-INSERT INTO `wait_auth_menu` VALUES (611, 550, 'A', '支付配置详情', '', 0, 'setting:payment:detail', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
-INSERT INTO `wait_auth_menu` VALUES (612, 550, 'A', '支付配置保存', '', 0, 'setting:payment:save', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
+INSERT INTO `wait_auth_menu` VALUES (611, 610, 'A', '支付配置详情', '', 0, 'setting:payment:detail', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
+INSERT INTO `wait_auth_menu` VALUES (612, 610, 'A', '支付配置保存', '', 0, 'setting:payment:save', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (620, 500, 'C', '轮播海报', '', 0, 'setting:banner:lists', '', 'setting/banner/index', 'banner', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (621, 620, 'A', '轮播详情', '', 0, 'setting:banner:detail', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (622, 620, 'A', '轮播新增', '', 0, 'setting:banner:add', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
@@ -741,8 +741,8 @@ INSERT INTO `wait_auth_menu` VALUES (7024, 7020, 'A', '分组删除', '', 0, 'us
 INSERT INTO `wait_auth_menu` VALUES (7030, 7000, 'C', '用户足迹', '', 0, 'users:visitor:lists', '', 'user/visitor/index', 'visitor', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (7031, 7030, 'A', '足迹详情', '', 0, 'users:visitor:detail', '', 'setting/journal', '', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (8000, 0, 'M', '财务', 'el-icon-SetUp', 9500, '', '', '', 'finance', 1, 0, 0, 1716170400, 1716170400, 0);
-INSERT INTO `wait_auth_menu` VALUES (8010, 8000, 'C', '余额明细', '', 0, '', '', 'finance/balance', 'balance', 1, 0, 0, 1716170400, 1716170400, 0);
-INSERT INTO `wait_auth_menu` VALUES (8011, 8000, 'C', '充值记录', '', 0, '', '', 'finance/recharge', 'recharge', 1, 0, 0, 1716170400, 1716170400, 0);
+INSERT INTO `wait_auth_menu` VALUES (8010, 8000, 'C', '余额明细', '', 0, 'finance:balance:lists', '', 'finance/balance', 'balance', 1, 0, 0, 1716170400, 1742810373, 0);
+INSERT INTO `wait_auth_menu` VALUES (8011, 8000, 'C', '充值记录', '', 0, 'finance:recharge:lists', '', 'finance/recharge', 'recharge', 1, 0, 0, 1716170400, 1742810382, 0);
 INSERT INTO `wait_auth_menu` VALUES (9000, 0, 'M', '营销', 'el-icon-MessageBox', 9600, '', '', '', 'market', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (9010, 9000, 'C', '充值套餐', '', 0, 'market:recharge:lists', '', 'market/recharge/index', 'recharge', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (9011, 9010, 'A', '充值套餐详情', '', 0, 'market:recharge:detail', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
@@ -751,5 +751,3 @@ INSERT INTO `wait_auth_menu` VALUES (9013, 9010, 'A', '充值套餐编辑', '', 
 INSERT INTO `wait_auth_menu` VALUES (9014, 9010, 'A', '充值套餐删除', '', 0, 'market:recharge:delete', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_menu` VALUES (9017, 9010, 'A', '充值参数设置', '', 0, 'market:recharge:config', '', '', '', 1, 0, 0, 1716170400, 1716170400, 0);
 COMMIT;
-
-SET FOREIGN_KEY_CHECKS = 1;
