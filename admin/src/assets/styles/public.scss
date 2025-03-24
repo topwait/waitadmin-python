@@ -11,6 +11,7 @@ body {
     outline: none;
 }
 
+// 清除浮动
 .clearfix::after {
     display: block;
     clear: both;
@@ -18,6 +19,7 @@ body {
     content: '';
 }
 
+// 表单提示
 .form-tips {
     margin-top: 4px;
     font-size: var(--el-font-size-small);
@@ -25,6 +27,7 @@ body {
     color: var(--el-text-color-secondary);
 }
 
+// 加载进度条
 #nprogress .bar {
     position: fixed;
     top: 0;

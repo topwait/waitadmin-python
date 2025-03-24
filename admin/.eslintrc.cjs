@@ -33,7 +33,7 @@ module.exports = {
     ],
     'rules': {
         'no-var': 'warn',
-        'no-empty': 'warn',
+        'no-empty': 'off',
         'no-undef': 'off',
         'no-shadow': 'off',
         'no-console': 'warn',
@@ -88,6 +88,7 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': 'warn',
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-unused-expressions': 'off',
 
         'vue/require-default-prop': 'off',
         'vue/prefer-import-from-vue': 'off',

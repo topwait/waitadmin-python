@@ -9,6 +9,7 @@
             v-model="visible"
             :width="width"
             :center="center"
+            :show-close="showClose"
             :append-to-body="appendToBody"
             :close-on-click-modal="clickModalClose"
             :before-close="handleClose"
@@ -93,6 +94,11 @@ const props = defineProps({
     content: {
         type: String,
         default: ''
+    },
+    // 显示关闭按钮
+    showClose: {
+        type: Boolean,
+        default: true
     },
     // 确认按钮内容
     confirmButtonText: {
@@ -193,7 +199,8 @@ watch(
     () => props.show,
     (val) => {
         visible.value = val
-    }
+    },
+    { immediate: true }
 )
 
 watch(
@@ -215,7 +222,7 @@ provide('visible', visible)
         font-size: 16px;
         font-weight: 500;
         color: var(--el-text-color-regular);
-        background-color: var(--el-bg-color-light);
+        background-color: var(--el-bg-color-lighter);
         border-bottom: 1px solid var(--el-border-color-extra-light);
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
@@ -226,8 +233,9 @@ provide('visible', visible)
         border-bottom-right-radius: 6px;
         border-bottom-left-radius: 6px;
         &.top-br {
+            background-color: var(--el-bg-color-lighter);
             border-top: 1px solid var(--el-border-color-extra-light);
-        } 
+        }
     }
 }
 </style>
