@@ -1,5 +1,27 @@
 <template>
     <el-form ref="formRef" :rules="rules" :model="formData" label-width="120px">
+        <!-- 提示栏 -->
+        <el-card class="!border-none" shadow="never">
+            <el-alert class="text-xxl" type="warning" :closable="false">
+                <template v-slot:title>
+                    <div class="py-[3px] font-bold">QQ邮箱</div>
+                    <div class="py-[3px] ml-4">
+                        <p>1、授权码获取: [邮箱设置]-[IMAP/SMTP服务]-[管理服务]-[设备管理]-[授权码管理]</p>
+                        <p>2、SMTP验证: SSL</p>
+                        <p>3、服务器端口: 465或587</p>
+                        <p>4、服务器地址: smtp.qq.com</p>
+                    </div>
+                    <div class="py-[3px] font-bold">136邮箱</div>
+                    <div class="py-[3px] ml-4">
+                        <p>1、授权码获取: [设置]-[IMAP/SMTP服务]-[新增授权码]]</p>
+                        <p>2、SMTP验证: 默认</p>
+                        <p>3、服务器端口: 25</p>
+                        <p>4、服务器地址: smtp.163.com</p>
+                    </div>
+                </template>
+            </el-alert>
+        </el-card>
+
         <!-- 邮件配置 -->
         <el-card shadow="never" class="!border-none">
             <div class="text-xl font-medium mb-[20px]">邮件设置</div>
