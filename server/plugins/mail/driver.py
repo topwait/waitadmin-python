@@ -79,13 +79,20 @@ class MailDriver:
         result = await aiosmtplib.send(
             self.messages,
             hostname=self.host,
-            port=25,
+            port=self.port,
             username=self.username,
             password=self.password,
             use_tls=True if self.verify_type == "ssl" else False
         )
 
-        if not result[1].startswith("Mail OK"):
+        success_status = False
+        success_prefixes = ["Mail OK", "OK:", "250", "2.0.0"]
+        for prefix in success_prefixes:
+            if result[1].startswith(prefix):
+                success_status = True
+                break
+
+        if not success_status:
             raise Exception(result[1])
 
     def subject(self, title: str):

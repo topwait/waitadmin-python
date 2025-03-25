@@ -1,6 +1,6 @@
 <template>
-    <div class="w-[360px] px-2">
-        <div class="font-semibold mb-4">
+    <div class="w-[360px] px-4">
+        <div class="text-lg font-semibold my-3">
             {{ users?.mobile ? '变更手机' : '绑定手机' }}
         </div>
         <el-form ref="formRef" size="large" :model="formData" :rules="formRules">

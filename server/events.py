@@ -11,7 +11,9 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 import json
+import aiofiles
 import importlib
+from aiofiles import os
 from typing import List, Dict
 from datetime import datetime
 from fastapi import FastAPI
@@ -37,8 +39,15 @@ class AppEvents:
 
     @classmethod
     async def _inject_crontab(cls):
+        crontab_tips = ""
         crontab_lists = await SysCrontabModel.filter(is_delete=0).order_by("-id").all()
         for crontab in crontab_lists:
+            s = {1: "Success", 2: "Stop", 3: "Error"}
+            if crontab.status != 1:
+                e = s.get(crontab.status)
+                crontab_tips += f"| {crontab.name} | {crontab.command} | {crontab.concurrent}    | {e} \n"
+                continue
+
             try:
                 module = importlib.import_module(crontab.command)
             except ModuleNotFoundError:
@@ -73,8 +82,18 @@ class AppEvents:
 
             # 加入到任务中
             for i in range(crontab.concurrent):
-                job = crontab.command + "." + str(i+1)
+                job = crontab.command + "." + str(i + 1)
                 params["w_id"] = crontab.id
                 params["w_ix"] = int(i + 1)
                 params["w_job"] = job
                 scheduler.add_job(func, _trigger_fun, id=job, name=crontab.name, kwargs=params)
+
+            # 启动成功提示
+            e = s.get(crontab.status)
+            crontab_tips += f"| {crontab.name} | {crontab.command} | {crontab.concurrent}    | {e}  \n"
+
+        if await os.path.exists("./banner.txt"):
+            async with aiofiles.open("./banner.txt", mode="r", encoding="utf-8") as f:
+                content = await f.read()
+            crontab_tips = crontab_tips if crontab_tips else "|"
+            print(content.replace("{{crontab}}", crontab_tips.rstrip("\n")))

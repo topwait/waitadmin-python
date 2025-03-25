@@ -171,6 +171,9 @@ INFO:     Application startup complete.
     cd admin
     npm install
     npm run dev
+    # PS: 注意调整 .env 配置文件
+3、更详细的部署文档:
+    https://www.waitadmin.cn/docs/python/nuxt.html
 ```
 
 ## 演示图
@@ -198,7 +201,9 @@ INFO:     Application startup complete.
 </table>
 
 ## 交流群
+- 加群时请备注是Python版
+
 QQ群：
 <a href="https://gitee.com/link?target=https://jq.qq.com/?_wv=1027&k=TRrklD6W">
-    <img src="https://img.shields.io/badge/613667155-blue.svg" alt="加入QQ群">
+    <img src="https://img.shields.io/badge/1019900755-blue.svg" alt="加入QQ群">
 </a>

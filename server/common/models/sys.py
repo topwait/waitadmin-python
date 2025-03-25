@@ -55,15 +55,16 @@ class SysCrontabModel(DbModel):
     @classmethod
     async def compute(cls, id_: int, start_time: float, status: int = 1, error: str = ""):
         cron: cls = await cls.filter(id=id_).first()
-        end_time: int = int(str((time.time() - start_time)).split(".")[0])
-        max_time: int = cron.max_time if cron.max_time > end_time else end_time
-        await cls.filter(id=id_).update(
-            exe_time=end_time,
-            max_time=max_time,
-            last_time=int(time.time()),
-            status=status,
-            error=error
-        )
+        if cron:
+            exe_time: int = int(str((time.time() - start_time)).split(".")[0])
+            max_time: int = cron.max_time if cron.max_time > exe_time else exe_time
+            await cls.filter(id=id_).update(
+                exe_time=exe_time,
+                max_time=max_time,
+                last_time=int(time.time()),
+                status=status,
+                error=error
+            )
 
 
 class SysLogModel(DbModel):

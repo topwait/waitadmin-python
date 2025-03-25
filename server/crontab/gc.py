@@ -11,15 +11,20 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 import time
+from common.enums.public import CrontabEnum
 from common.models.sys import SysCrontabModel
 
 
 async def execute(**kwargs):
     start_time = time.time()
-    crontab_id: int = int(kwargs["w_id"])  # 任务ID
-    # process_id: int = int(kwargs["w_ix"])  # 任务编号
-    # command_job: str = kwargs["w_job"]     # 任务指令
-    # print(kwargs) #其它附带参数
+    crontab_id: int = int(kwargs["w_id"])   # 任务ID
+    # process_id: int = int(kwargs["w_ix"]) # 任务编号
+    # command_job: str = kwargs["w_job"]    # 任务指令
+    # print(kwargs) # 其它附带参数
 
-    await SysCrontabModel.compute(crontab_id, start_time)
-    return {"msg": "垃圾清理完成"}
+    try:
+        await SysCrontabModel.compute(crontab_id, start_time)
+        return {"msg": "垃圾清理完成"}
+    except Exception as e:
+        print(str(e))
+        await SysCrontabModel.compute(crontab_id, start_time, status=CrontabEnum.CRON_ERROR, error=str(e))

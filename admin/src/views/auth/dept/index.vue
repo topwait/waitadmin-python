@@ -67,16 +67,16 @@
                     <template #default="{ row }">
                         <el-button
                             v-perms="['auth:dept:edit']"
-                            type="primary" 
-                            link 
+                            type="primary"
+                            link
                             @click="handleEditor('edit', row)"
                         >
                             编辑
                         </el-button>
-                        <el-button 
+                        <el-button
                             v-perms="['auth:dept:delete']"
-                            type="danger" 
-                            link 
+                            type="danger"
+                            link
                             @click="handleDelete(row.id)"
                         >
                             删除

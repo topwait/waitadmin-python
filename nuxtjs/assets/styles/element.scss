@@ -8,8 +8,14 @@
         align-items: center;
         justify-content: center;
         min-height: 100%;
-        .none-padding .el-dialog__header { padding: 0; }
-        .none-padding .el-dialog__body  { padding: 0; }
+        .el-dialog.none-padding {
+            padding: 0;
+            .el-dialog__header,
+            .el-dialog__footer, 
+            .el-dialog__body {
+                padding: 0;
+            }
+        }
         .el-dialog {
             --el-dialog-content-font-size: var(--el-font-size-base);
             --el-dialog-margin-top: 50px;
@@ -19,6 +25,9 @@
             max-width: calc(100vw - 30px);
             overflow: hidden;
             border-radius: 6px;
+            .el-dialog__headerbtn {
+                z-index: 1;
+            }
             &.is-fullscreen {
                 --el-dialog-width: 100%;
                 --el-dialog-margin-top: 0;

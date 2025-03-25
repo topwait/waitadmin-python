@@ -40,7 +40,7 @@
                             <span>上一篇：</span>
                             <NuxtLink
                                 v-if="details.prev.id"
-                                class="flex-1 text-primary-default hover-opacity"
+                                class="flex-1 text-primary hover:opacity-75"
                                 :to="`/article/detail/${details.prev?.id}`"
                             >
                                 {{ details.prev?.title }}
@@ -51,7 +51,7 @@
                             <span>下一篇：</span>
                             <NuxtLink
                                 v-if="details.next.id"
-                                class="flex-1 text-primary-default hover-opacity"
+                                class="flex-1 text-primary hover:opacity-75"
                                 :to="`/article/detail/${details.next?.id}`"
                             >
                                 {{ details.next?.title }}

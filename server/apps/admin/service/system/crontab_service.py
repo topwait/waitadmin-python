@@ -77,7 +77,7 @@ class CrontabService:
         """
         data = await SysCrontabModel.filter(id=id_, is_delete=0).get()
         tasks = []
-        for i in range(50):
+        for i in range(70):
             _id = data.command + "." + str(i+1)
             task = scheduler.get_job(job_id=_id)
             if not task:
@@ -104,7 +104,7 @@ class CrontabService:
         # 验证任务数据
         cls.__check_rules(post.trigger, post.rules)
         cls.__check_module(post.command)
-        params = post.dict()
+        params = post.__dict__
         params["rules"] = json.dumps(post.rules)
         if params.get("id"):
             del params["id"]
@@ -126,11 +126,17 @@ class CrontabService:
                 params: Dict[str, any] = json.loads(crontab.params) if crontab.params else {}
                 func, trigger_fun = cls.__cron_trigger(crontab.trigger, crontab.command, crontab.rules)
                 for i in range(crontab.concurrent):
-                    job = crontab.command + "." + str(crontab.concurrent + i)
+                    job = crontab.command + "." + str(i + 1)
                     params["w_id"] = crontab.id
-                    params["w_ix"] = crontab.concurrent + i
+                    params["w_ix"] = i + 1
                     params["w_job"] = job
                     scheduler.add_job(func, trigger_fun, name=crontab.name, id=job, kwargs=params)
+                # 如果是暂时中
+                if post.status == 2:
+                    for i in range(crontab.concurrent):
+                        job = crontab.command + "." + str(1 + i)
+                        scheduler.pause_job(job_id=job)
+                        scheduler.remove_job(job_id=job)
         except Exception as e:
             raise AppException(str(e))
 
@@ -148,10 +154,10 @@ class CrontabService:
         # 查询验证数据
         cron = await SysCrontabModel.filter(id=post.id, is_delete=0).get()
         cls.__check_rules(post.trigger, post.rules)
-        cls.__check_module(cron.command)
+        cls.__check_module(post.command)
 
         # 处理数据格式
-        params = post.dict()
+        params = post.model_dump()
         params["rules"] = json.dumps(post.rules)
         del params["id"]
         if params.get("params"):
@@ -161,15 +167,44 @@ class CrontabService:
                 raise AppException(f"附带参数格式异常: {e}")
 
         try:
+            old_command: str = cron.command
+            old_concurrent: int = cron.concurrent
+
             async with in_transaction("mysql"):
                 # 更新到数据库
                 await SysCrontabModel.filter(id=post.id).update(
                     **params,
                     update_time=int(time.time())
                 )
-                # 更新任务信息
-                crontab = await SysCrontabModel.filter(id=post.id).first()
-                cls.__update_job(crontab, cron.command, cron.concurrent)
+
+                # 清空旧的任务
+                for i in range(old_concurrent):
+                    try:
+                        job = old_command + "." + str(1 + i)
+                        if scheduler.get_job(job_id=job):
+                            scheduler.pause_job(job_id=job)
+                            scheduler.remove_job(job_id=job)
+                    except Exception as e:
+                        print(str(e))
+
+                # 加入到任务中
+                if post.status == 1:
+                    params: Dict[str, any] = json.loads(post.params) if post.params else {}
+                    func, trigger_fun = cls.__cron_trigger(post.trigger, post.command, json.dumps(post.rules))
+                    for i in range(post.concurrent):
+                        job = post.command + "." + str(i+1)
+                        params["w_id"] = int(post.id)
+                        params["w_ix"] = i+1
+                        params["w_job"] = job
+                        scheduler.add_job(func, trigger_fun, name=post.name, id=job, kwargs=params)
+
+                # 如果是暂停中
+                # if post.status == 2:
+                #     for i in range(post.concurrent):
+                #         job = post.command + "." + str(1 + i)
+                #         if scheduler.get_job(job_id=job):
+                #             scheduler.pause_job(job_id=job)
+                #             scheduler.remove_job(job_id=job)
         except Exception as e:
             raise AppException(str(e))
 
@@ -191,7 +226,8 @@ class CrontabService:
                 await SysCrontabModel.filter(id=id_).update(is_delete=1, delete_time=int(time.time()))
                 # 从任务中删除
                 for i in range(cron.concurrent):
-                    job = cron.command + "." + str(cron.concurrent + 1 + i)
+                    job = cron.command + "." + str(1 + i)
+                    scheduler.pause_job(job_id=job)
                     scheduler.remove_job(job_id=job)
         except Exception as e:
             raise AppException(str(e))
@@ -214,7 +250,7 @@ class CrontabService:
                 await SysCrontabModel.filter(id=id_).update(status=2, update_time=int(time.time()))
                 # 从任务中暂停
                 for i in range(cron.concurrent):
-                    job = cron.command + "." + str(cron.concurrent + 1 + i)
+                    job = cron.command + "." + str(1 + i)
                     scheduler.pause_job(job_id=job)
         except Exception as e:
             raise AppException(str(e))
@@ -238,7 +274,7 @@ class CrontabService:
                 await SysCrontabModel.filter(id=id_).update(status=1, update_time=int(time.time()))
                 # 从任务中恢复
                 for i in range(cron.concurrent):
-                    job = cron.command + "." + str(cron.concurrent + 1 + i)
+                    job = cron.command + "." + str(1 + i)
                     scheduler.resume_job(job_id=job)
         except Exception as e:
             raise AppException(str(e))
@@ -339,73 +375,3 @@ class CrontabService:
             trigger_fun = DateTrigger(**condition)
 
         return [func, trigger_fun]
-
-    @classmethod
-    def __update_job(cls, crontab: SysCrontabModel, old_command: str, old_concurrent: int):
-        """
-        根据最新的规则重载任务配置。
-        但最新数据与旧数据不一致时采取更新添加等操作。
-
-        Args:
-           crontab (SysCrontabModel): 任务实体对象。
-           old_command (str): 旧的包路径。
-           old_concurrent (int): 旧的并发数。
-
-        Author:
-            zero
-        """
-        # 获取任务参数
-        params: Dict[str, any] = json.loads(crontab.params) if crontab.params else {}
-
-        # 获取触发条件
-        func, trigger_fun = cls.__cron_trigger(crontab.trigger, crontab.command, crontab.rules)
-
-        # 指令被改变了
-        change: bool = False
-        if crontab.command != old_command:
-            change = True
-            for i in range(old_concurrent):
-                job = old_command + "." + str(crontab.concurrent + 1 + i)
-                scheduler.remove_job(job_id=job)
-
-        # 删除超出并发
-        if crontab.concurrent < old_concurrent and not change:
-            beyond: int = old_concurrent - crontab.concurrent
-            for i in range(beyond):
-                job = crontab.command + "." + str(crontab.concurrent + 1 + i)
-                scheduler.remove_job(job_id=job)
-
-        # 增加执行并发
-        if crontab.concurrent > old_concurrent and not change:
-            for i in range(crontab.concurrent + 10):
-                job = crontab.command + "." + str(i + 1)
-                task = scheduler.get_job(job_id=job)
-                if not task:
-                    break
-                scheduler.reschedule_job(job_id=job, trigger=trigger_fun)
-
-            beyond: int = crontab.concurrent - old_concurrent
-            for i in range(beyond):
-                job = crontab.command + "." + str(beyond + i)
-                params["w_id"] = crontab.id
-                params["w_ix"] = beyond + i
-                params["w_job"] = job
-                scheduler.add_job(func, trigger_fun, id=job, name=crontab.name, kwargs=params)
-
-        # 更新执行规则
-        if not change:
-            for i in range(crontab.concurrent):
-                job = crontab.command + "." + str(i + 1)
-                params["w_id"] = crontab.id
-                params["w_ix"] = i + 1
-                params["w_job"] = job
-                scheduler.modify_job(job_id=job, trigger=trigger_fun, kwargs=params)
-
-        # 载入新的执行
-        if change:
-            for i in range(crontab.concurrent):
-                job = crontab.command + "." + str(crontab.concurrent + i)
-                params["w_id"] = crontab.id
-                params["w_ix"] = crontab.concurrent + i
-                params["w_job"] = job
-                scheduler.add_job(func, trigger_fun, id=job, name=crontab.name, kwargs=params)

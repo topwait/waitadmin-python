@@ -1,7 +1,7 @@
 <template>
     <div class="forgot-popup-container">
         <div class="px-[20px]">
-            <h3 class="text-2xl font-semibold mb-3">找回密码</h3>
+            <h3 class="text-2xl font-semibold mt-3">找回密码</h3>
             <el-form ref="formRef" class="mt-[30px]" size="large" :model="formData" :rules="formRules">
                 <el-form-item prop="account">
                     <el-input v-model="formData.account" placeholder="请输入账号">
@@ -52,7 +52,7 @@
         </div>
         <div class="flex justify-center mb-[20px]">
             <NuxtLink
-                class="text-primary-default cursor-pointer"
+                class="text-primary cursor-pointer"
                 @click="appStore.setPopup(popupEnum.LOGIN)"
             >
                 返回登录

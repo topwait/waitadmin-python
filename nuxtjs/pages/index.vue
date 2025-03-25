@@ -42,7 +42,7 @@
                             <div class="w-[560px] ml-4">
                                 <NuxtLink
                                     :to="'/article/detail/' + item.id"
-                                    class="block hover-primary"
+                                    class="block hover:text-primary"
                                 >
                                     <h3 class="text-lg font-bold line-clamp-1">{{ item.title }}</h3>
                                 </NuxtLink>

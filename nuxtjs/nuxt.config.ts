@@ -1,12 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { getEnvConfig } from './nuxt/env'
+import { loadEnv } from 'vite'
 
-const envConfig: Record<string, any> = getEnvConfig()
+const envData = loadEnv(process.env.NODE_ENV!, './')
 
 export default defineNuxtConfig({
-    devtools: { enabled: true },
-    ssr: !!envConfig.ssr,
+    devtools: {
+        enabled: true
+    },
+
+    ssr: !!envData.VITE_SSR,
     spaLoadingTemplate: false,
+
     css: ['@/assets/styles/index.scss'],
 
     modules: [
@@ -26,12 +30,12 @@ export default defineNuxtConfig({
     },
 
     app: {
-        baseURL: envConfig.baseUrl
+        baseURL: envData.VITE_BASE_URL
     },
 
     runtimeConfig: {
         public: {
-            ...envConfig
+            ...envData
         }
     },
 
@@ -42,7 +46,18 @@ export default defineNuxtConfig({
                     api: 'modern-compiler'
                 }
             }
-        }
+        },
+        plugins: [
+            {
+                name: 'vite-plugin-glob-transform',
+                transform(code: string, id: string) {
+                    if (id.includes('nuxt-icons')) {
+                        return code.replace(/as:\s*['"]raw['"]/g, 'query: "?raw", import: "default"')
+                    }
+                    return code
+                }
+            }
+        ]
     },
 
     compatibilityDate: '2024-09-19'
