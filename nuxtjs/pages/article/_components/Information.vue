@@ -12,7 +12,7 @@
                 >
                     <NuxtLink
                         :to="'/article/detail/' + item.id"
-                        class="text-base line-clamp-1 hover-primary"
+                        class="text-base line-clamp-1 hover:text-primary"
                     >
                         <span class="text-[#dab26b]">[{{ item.category }}] · </span>
                         {{ item.title }}
@@ -33,7 +33,7 @@
                 >
                     <span>{{ index < 9 ? '0' : ''}}{{ index + 1 }}</span>
                     <NuxtLink :to="'/article/detail/' + item.id" class="block w-[560px]">
-                        <h3 class="text-lg font-bold line-clamp-1 hover-primary">
+                        <h3 class="text-lg font-bold line-clamp-1 hover:text-primary">
                             {{ item.title }}
                         </h3>
                         <div class="text-sm text-tx-secondary line-clamp-2 mt-[5px]">

@@ -14,7 +14,7 @@
                     </p>
                 </div>
                 <div class="contact">
-                    <img src="https://www.waitadmin.cn/static/frontend/images/qr_qq.png" alt="" />
+                    <img src="https://www.waitadmin.cn/static/frontend/images/qr_gr.png" alt="" />
                     <p>官方Q群</p>
                 </div>
             </div>

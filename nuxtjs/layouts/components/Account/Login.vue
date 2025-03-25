@@ -151,7 +151,7 @@
                 </div>
             </div>
             <div v-if="meansChannel.length" class="oauth">
-                <div class="flex justify-center items-center text-primary-default cursor-pointer hover-opacity">
+                <div class="flex justify-center items-center text-primary cursor-pointer hover-opacity">
                     <icon name="el-icon-Iphone" size="18" />
                     <div class="button" @click="currentLogin = meansChannel[0]">
                         <span class="ml-[6px]">账号登录</span>

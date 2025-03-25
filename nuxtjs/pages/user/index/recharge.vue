@@ -3,7 +3,7 @@
         <el-card class="!border-none" shadow="never">
             <div class="grid grid-cols-3 md:grid-cols-3 gap-4">
                 <div class="flex flex-col items-center justify-center">
-                    <div class="font-medium text-[25px] text-primary-default">
+                    <div class="font-medium text-[25px] text-primary">
                         {{ userInfo.balance }}
                     </div>
                     <div class="mt-[4px] font-bold">当前余额</div>

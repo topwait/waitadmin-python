@@ -25,6 +25,7 @@ export default withNuxt([
             'no-self-compare': 'warn',
             'no-useless-catch': 'warn',
             'no-useless-return': 'warn',
+            'no-case-declarations': 'off',
             'no-mixed-spaces-and-tabs': 'warn',
             'no-multiple-empty-lines': 'warn',
             'no-trailing-spaces': 'warn',

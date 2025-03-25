@@ -4,8 +4,8 @@
     "type": "module",
     "scripts": {
         "dev": "nuxt dev --dotenv .env.development",
+        "build": "nuxt generate --dotenv .env.production && node scripts/build.mjs",
         "build:ssr": "nuxt build --dotenv .env.production && node scripts/build.mjs",
-        "build:gen": "nuxt generate --dotenv .env.production && node scripts/build.mjs",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare",

@@ -1,6 +1,6 @@
 <template>
-    <div class="w-[360px] px-2">
-        <div class="font-semibold mb-4">
+    <div class="w-[360px] px-4">
+        <div class="text-lg font-semibold my-3">
             {{ users?.email ? '变更邮箱' : '绑定邮箱' }}
         </div>
         <el-form ref="formRef" size="large" :model="formData" :rules="formRules">
@@ -19,16 +19,16 @@
                     </template>
                 </el-input>
             </el-form-item>
-            <ElFormItem>
-                <ElButton
+            <el-form-item>
+                <el-button
                     type="primary"
                     class="w-full h-42"
                     :loading="isLock"
                     @click="handleSubmit"
                 >
                     确认
-                </ElButton>
-            </ElFormItem>
+                </el-button>
+            </el-form-item>
         </el-form>
     </div>
 </template>

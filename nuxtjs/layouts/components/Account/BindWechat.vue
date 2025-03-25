@@ -1,6 +1,6 @@
 <template>
-    <div class="w-[360px] px-2">
-        <div class="font-semibold mb-4">
+    <div class="w-[360px] px-4">
+        <div class="text-lg font-semibold my-3">
             {{ users?.is_wechat ? '换绑微信' : '绑定微信' }}
         </div>
         <div class="flex flex-col items-center">
