@@ -6,7 +6,7 @@
                 <el-form-item label="用户信息">
                     <el-input
                         v-model="queryParams.keyword"
-                        class="w-[250px]"
+                        class="!w-[250px]"
                         placeholder="请输入用户编号/昵称/手机"
                         clearable
                         @keyup.enter="resetPaging"
