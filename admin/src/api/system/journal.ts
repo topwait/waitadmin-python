@@ -4,7 +4,15 @@ const journalApi = {
     /**
      * 系统日志列表
      */
-    lists(params: any): Promise<any> {
+    lists(params: {
+        page_no?: number;
+        page_size?: number;
+        method?: string;
+        url?: string;
+        ip?: string;
+        start_time?: string;
+        end_time?: string;
+    }): Promise<any> {
         return request.get({
             url: '/system/journal/lists',
             params

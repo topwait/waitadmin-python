@@ -4,7 +4,13 @@ const authAdminApi = {
     /**
      * 管理员列表
      */
-    lists(params: any): Promise<any> {
+    lists(params: {
+        page_no?: number;
+        page_size?: number;
+        username?: string;
+        mobile?: string;
+        role?: number;
+    }): Promise<any> {
         return request.get({
             url: '/auth/admin/lists',
             params
@@ -33,7 +39,18 @@ const authAdminApi = {
     /**
      * 管理员新增
      */
-    add(params: any): Promise<any> {
+    add(params: {
+        role_id: number;
+        dept_id?: number;
+        post_id?: number;
+        nickname: string;
+        username: string;
+        password: string;
+        avatar: string;
+        mobile?: string;
+        email?: string;
+        is_disable?: number;
+    }): Promise<any> {
         params.dept_id = params.dept_id ? params.dept_id : 0
         params.post_id = params.post_id ? params.post_id : 0
         return request.post({
@@ -45,7 +62,19 @@ const authAdminApi = {
     /**
      * 管理员编辑
      */
-    edit(params: any): Promise<any> {
+    edit(params: {
+        id: number,
+        role_id: number,
+        dept_id?: number,
+        post_id?: number,
+        nickname: string,
+        username: string,
+        password: string,
+        avatar: string,
+        mobile?: string,
+        email?: string,
+        is_disable?: number
+    }): Promise<any> {
         params.dept_id = params.dept_id ? params.dept_id : 0
         params.post_id = params.post_id ? params.post_id : 0
         return request.post({
@@ -57,7 +86,14 @@ const authAdminApi = {
     /**
     * 管理员设置
     */
-    setInfo(params: any): Promise<any> {
+    setInfo(params: {
+        avatar: string,
+        nickname: string,
+        mobile?: string
+        email?: string
+        password?: string
+        password_old?: string
+    }): Promise<any> {
         return request.post({
             url: '/auth/admin/set_info',
             params

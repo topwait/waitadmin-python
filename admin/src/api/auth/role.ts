@@ -13,9 +13,14 @@ const authRoleApi = {
     /**
      * 角色列表
      */
-    lists(): Promise<any> {
+    lists(params: {
+        page_no?: number;
+        page_size?: number;
+        name?: string;
+    }): Promise<any> {
         return request.get({
-            url: '/auth/role/lists'
+            url: '/auth/role/lists',
+            params
         })
     },
 
@@ -32,7 +37,13 @@ const authRoleApi = {
     /**
      * 角色新增
      */
-    add(params: any): Promise<any> {
+    add(params: {
+        name: string;
+        describe?: string;
+        sort?: number;
+        is_disable?: number;
+        menu_ids?: number[];
+    }): Promise<any> {
         return request.post({
             url: '/auth/role/add',
             params
@@ -42,7 +53,14 @@ const authRoleApi = {
     /**
      * 角色编辑
      */
-    edit(params: any): Promise<any> {
+    edit(params: {
+        id: number;
+        name: string;
+        describe?: string;
+        sort?: number;
+        is_disable?: number;
+        menu_ids?: number[];
+    }): Promise<any> {
         return request.post({
             url: '/auth/role/edit',
             params

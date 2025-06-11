@@ -13,7 +13,11 @@ const basicsApi = {
     /**
      * 网站配置保存
      */
-    save(params: any): Promise<any> {
+    save(params: {
+        website?: any;
+        h5?: any;
+        pc?: any;
+    }): Promise<any> {
         return request.post({
             url: '/setting/basics/save',
             params

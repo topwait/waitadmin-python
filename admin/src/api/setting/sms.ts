@@ -23,7 +23,12 @@ const smsApi = {
     /**
      * 短信配置保存
      */
-    save(params: any): Promise<any> {
+    save(params: {
+        alias: string;
+        name: string;
+        status: number;
+        params: any;
+    }): Promise<any> {
         return request.post({
             url: '/setting/sms/save',
             params

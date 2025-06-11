@@ -23,7 +23,16 @@ const paymentApi = {
     /**
      * 支付配置保存
      */
-    save(params: any): Promise<any> {
+    save(params: {
+        id: number;
+        channel: number;
+        shorter: string;
+        name: string;
+        icon: string;
+        sort: number;
+        status: number;
+        params: any;
+    }): Promise<any> {
         return request.post({
             url: '/setting/payment/save',
             params

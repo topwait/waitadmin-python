@@ -13,7 +13,11 @@ const policyApi = {
     /**
      * 协议配置保存
      */
-    save(params: any): Promise<any> {
+    save(params: {
+        service: string;
+        private: string;
+        payment: string;
+    }): Promise<any> {
         return request.post({
             url: '/setting/policy/save',
             params

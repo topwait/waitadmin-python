@@ -13,9 +13,16 @@ const authPostApi = {
     /**
      * 岗位列表
      */
-    lists(): Promise<any> {
+    lists(params: {
+        page_no?: number;
+        page_size?: number;
+        code?: string;
+        name?: string;
+        is_disable?: number;
+    }): Promise<any> {
         return request.get({
-            url: '/auth/post/lists'
+            url: '/auth/post/lists',
+            params
         })
     },
 
@@ -32,7 +39,13 @@ const authPostApi = {
     /**
      * 岗位新增
      */
-    add(params: any): Promise<any> {
+    add(params: {
+        code: string;
+        name: string;
+        remarks?: string;
+        sort?: string;
+        is_disable?: number;
+    }): Promise<any> {
         return request.post({
             url: '/auth/post/add',
             params
@@ -42,7 +55,14 @@ const authPostApi = {
     /**
      * 岗位编辑
      */
-    edit(params: any): Promise<any> {
+    edit(params: {
+        id: number;
+        code: string;
+        name: string;
+        remarks?: string;
+        sort?: string;
+        is_disable?: number;
+    }): Promise<any> {
         return request.post({
             url: '/auth/post/edit',
             params

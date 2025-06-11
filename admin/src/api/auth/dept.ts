@@ -13,7 +13,11 @@ const authDeptApi = {
     /**
      * 部门列表
      */
-    lists(params: any): Promise<any> {
+    lists(params: {
+        name?: string;
+        mobile?: string;
+        is_disable?: number;
+    }): Promise<any> {
         return request.get({
             url: '/auth/dept/lists',
             params
@@ -33,7 +37,14 @@ const authDeptApi = {
     /**
      * 部门新增
      */
-    add(params: any): Promise<any> {
+    add(params: {
+        pid: number;
+        name: string;
+        duty: string;
+        mobile: string;
+        sort?: number;
+        is_disable?: number;
+    }): Promise<any> {
         return request.post({
             url: '/auth/dept/add',
             params
@@ -43,7 +54,15 @@ const authDeptApi = {
     /**
      * 部门编辑
      */
-    edit(params: any): Promise<any> {
+    edit(params: {
+        id: number;
+        pid: number;
+        name: string;
+        duty: string;
+        mobile: string;
+        sort?: number;
+        is_disable?: number;
+    }): Promise<any> {
         return request.post({
             url: '/auth/dept/edit',
             params

@@ -4,7 +4,12 @@ const userApi = {
     /**
      * 用户列表
      */
-    lists(params: any): Promise<any> {
+    lists(params: {
+        page_no?: number;
+        page_size?: number;
+        keyword?: string;
+        is_disable?: number;
+    }): Promise<any> {
         return request.get({
             url: '/users/user/lists',
             params
@@ -91,7 +96,11 @@ const userApi = {
     /**
      * 账户日志
      */
-    walletLogs(params: any): Promise<any> {
+    walletLogs(params: {
+        page_no?: number;
+        page_size?: number;
+        user_id: string;
+    }): Promise<any> {
         return request.get({
             url: '/users/user/wallet_logs',
             params: {
@@ -105,7 +114,11 @@ const userApi = {
     /**
      * 会话列表
      */
-    sessions(params: any): Promise<any> {
+    sessions(params: {
+        user_id: number;
+        page_no?: number;
+        page_size?: number;
+    }): Promise<any> {
         return request.get({
             url: '/users/user/sessions',
             params: {

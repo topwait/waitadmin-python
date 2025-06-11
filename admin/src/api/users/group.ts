@@ -4,7 +4,11 @@ const userGroupApi = {
     /**
      * 用户分组列表
      */
-    lists(params: any): Promise<any> {
+    lists(params: {
+        page_no?: number;
+        page_size?: number;
+        name?: string;
+    }): Promise<any> {
         return request.get({
             url: '/users/group/lists',
             params
@@ -24,7 +28,11 @@ const userGroupApi = {
     /**
      * 用户分组新增
      */
-    add(params: any): Promise<any> {
+    add(params: {
+        name: string;
+        remarks: string;
+        sort?: number;
+    }): Promise<any> {
         return request.post({
             url: '/users/group/add',
             params
@@ -34,7 +42,12 @@ const userGroupApi = {
     /**
      * 用户分组编辑
      */
-    edit(params: any): Promise<any> {
+    edit(params: {
+        id: number;
+        name: string;
+        remarks: string;
+        sort?: number;
+    }): Promise<any> {
         return request.post({
             url: '/users/group/edit',
             params

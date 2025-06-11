@@ -48,8 +48,8 @@ const loading = ref<boolean>(false)
 const formData: any = reactive({
     id: 0,           // 套餐ID
     money: '',       // 充值金额
-    give_money: '',  // 赠送金额
-    sort: 0,        // 排序编号
+    give_money: 0,   // 赠送金额
+    sort: 0,         // 排序编号
     is_show: 0       // 是否显示:[0=否, 1=是]
 })
 

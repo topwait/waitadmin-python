@@ -13,7 +13,18 @@ const basicsApi = {
     /**
      * 后台配置保存
      */
-    save(params: any): Promise<any> {
+    save(params: {
+        name?: string;
+        title?: string;
+        cover?: string;
+        favicon?: string;
+        logo_black_big?: string;
+        logo_black_small?: string;
+        logo_white_big?: string;
+        logo_white_small?: string;
+        contacts?: string;
+        mobile?: string;
+    }): Promise<any> {
         return request.post({
             url: '/setting/backs/save',
             params

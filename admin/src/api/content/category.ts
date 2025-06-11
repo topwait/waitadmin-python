@@ -13,7 +13,12 @@ const articleCateApi = {
     /**
      * 文章分类列表
      */
-    lists(params: any): Promise<any> {
+    lists(params: {
+        page_no?: number;
+        page_size?: number;
+        name?: string;
+        is_disable?: number;
+    }): Promise<any> {
         return request.get({
             url: '/content/category/lists',
             params
@@ -33,7 +38,11 @@ const articleCateApi = {
     /**
      * 文章分类新增
      */
-    add(params: any): Promise<any> {
+    add(params: {
+        name: string;
+        sort?: number;
+        is_disable: number;
+    }): Promise<any> {
         return request.post({
             url: '/content/category/add',
             params
@@ -43,7 +52,12 @@ const articleCateApi = {
     /**
      * 文章分类编辑
      */
-    edit(params: any): Promise<any> {
+    edit(params: {
+        id: number;
+        name: string;
+        sort?: number;
+        is_disable: number;
+    }): Promise<any> {
         return request.post({
             url: '/content/category/edit',
             params

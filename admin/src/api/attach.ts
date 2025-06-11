@@ -4,7 +4,13 @@ const attachApi = {
     /**
      * 附件列表
      */
-    albumLists(params: any): Promise<any> {
+    albumLists(params: {
+        page_no?: number;
+        page_size?: number;
+        cid?: number;
+        type?: number;
+        keyword?: string;
+    }): Promise<any> {
         return request.get({
             url: '/attach/album_lists',
             params

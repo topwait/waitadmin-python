@@ -24,7 +24,12 @@ const rechargePackApi = {
     /**
      * 充值套餐新增
      */
-    add(params: any): Promise<any> {
+    add(params: {
+        money: number;
+        give_money: number;
+        sort: number;
+        is_show: number;
+    }): Promise<any> {
         return request.post({
             url: '/market/recharge/add',
             params
@@ -34,7 +39,13 @@ const rechargePackApi = {
     /**
      * 充值套餐编辑
      */
-    edit(params: any): Promise<any> {
+    edit(params: {
+        id: number;
+        money: number;
+        give_money: number;
+        sort: number;
+        is_show: number;
+    }): Promise<any> {
         return request.post({
             url: '/market/recharge/edit',
             params

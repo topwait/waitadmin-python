@@ -13,7 +13,13 @@ const storageApi = {
     /**
      * 存储配置保存
      */
-    save(params: any): Promise<any> {
+    save(params: {
+        drive: string;
+        local: any;
+        qiniu: any;
+        aliyun: any;
+        qcloud: any;
+    }): Promise<any> {
         return request.post({
             url: '/setting/storage/save',
             params

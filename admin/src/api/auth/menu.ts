@@ -41,7 +41,19 @@ const authMenuApi = {
     /**
      * 菜单新增
      */
-    add(params: any): Promise<any> {
+    add(params: {
+        pid: number;
+        type: string;
+        name: string;
+        icon?: string;
+        sort?: number;
+        perms?: string;
+        params?: string;
+        component?: string;
+        path?: string;
+        is_show?: number;
+        is_disable?: number;
+    }): Promise<any> {
         return request.post({
             url: '/auth/menu/add',
             params
@@ -51,7 +63,20 @@ const authMenuApi = {
     /**
      * 菜单编辑
      */
-    edit(params: any): Promise<any> {
+    edit(params: {
+        id: number;
+        pid: number;
+        type: string;
+        name: string;
+        icon?: string;
+        sort?: number;
+        perms?: string;
+        params?: string;
+        component?: string;
+        path?: string;
+        is_show?: number;
+        is_disable?: number;
+    }): Promise<any> {
         return request.post({
             url: '/auth/menu/edit',
             params

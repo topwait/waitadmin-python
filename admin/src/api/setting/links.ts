@@ -4,7 +4,12 @@ const linksApi = {
     /**
      * 友链列表
      */
-    lists(params: any): Promise<any> {
+    lists(params: {
+        page_no?: number;
+        page_size?: number;
+        title?: string;
+        is_disable?: number;
+    }): Promise<any> {
         return request.get({
             url: '/setting/links/lists',
             params
@@ -24,7 +29,14 @@ const linksApi = {
     /**
      * 友链新增
      */
-    add(params: any): Promise<any> {
+    add(params: {
+        title: string;
+        image?: string;
+        target: string;
+        url?: string;
+        sort?: number;
+        is_disable?: number;
+    }): Promise<any> {
         return request.post({
             url: '/setting/links/add',
             params
@@ -34,7 +46,15 @@ const linksApi = {
     /**
      * 友链编辑
      */
-    edit(params: any): Promise<any> {
+    edit(params: {
+        id: number;
+        title: string;
+        image?: string;
+        target: string;
+        url?: string;
+        sort?: number;
+        is_disable?: number;
+    }): Promise<any> {
         return request.post({
             url: '/setting/links/edit',
             params

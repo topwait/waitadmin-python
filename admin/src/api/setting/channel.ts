@@ -13,7 +13,11 @@ const channelApi = {
     /**
      * 渠道配置保存
      */
-    save(params: any): Promise<any> {
+    save(params: {
+        wx?: any;
+        oa?: any;
+        op?: any;
+    }): Promise<any> {
         return request.post({
             url: '/setting/channel/save',
             params

@@ -4,7 +4,10 @@ const crontabApi = {
     /**
      * 定时任务列表
      */
-    lists(params: any): Promise<any> {
+    lists(params: {
+        page_no?: number;
+        page_size?: number;
+    }): Promise<any> {
         return request.get({
             url: '/system/crontab/lists',
             params
@@ -24,7 +27,16 @@ const crontabApi = {
     /**
      * 定时任务新增
      */
-    add(params: any): Promise<any> {
+    add(params: {
+        name: string;
+        command: string;
+        params?: string;
+        trigger?: string;
+        rules?: any[];
+        concurrent?: number;
+        remarks?: string;
+        status?: number;
+    }): Promise<any> {
         return request.post({
             url: '/system/crontab/add',
             params
@@ -34,7 +46,17 @@ const crontabApi = {
     /**
      * 定时任务编辑
      */
-    edit(params: any): Promise<any> {
+    edit(params: {
+        id: number;
+        name: string;
+        command: string;
+        params?: string;
+        trigger?: string;
+        rules?: any[];
+        concurrent?: number;
+        remarks?: string;
+        status?: number;
+    }): Promise<any> {
         return request.post({
             url: '/system/crontab/edit',
             params
