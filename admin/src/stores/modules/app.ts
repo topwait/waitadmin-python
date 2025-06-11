@@ -9,8 +9,7 @@ interface AppSate {
     layoutHeight: number,
 }
 
-const useAppStore = defineStore({
-    id: 'app',
+const useAppStore = defineStore('app', {
     state: (): AppSate => ({
         config: {},
         isMobile: true,

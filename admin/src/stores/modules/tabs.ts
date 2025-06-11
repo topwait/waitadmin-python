@@ -28,8 +28,7 @@ const __findTabsIndexNum = (fullPath: string, tabList: TabItem[]) => {
     return tabList.findIndex((item: TabItem): boolean => item.fullPath === fullPath)
 }
 
-const useTabsStore = defineStore({
-    id: 'tabs',
+const useTabsStore = defineStore('tabs', {
     state: (): TabsSate => ({
         isAnimation: false,
         tagsViewList: [],

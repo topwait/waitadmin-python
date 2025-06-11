@@ -7,8 +7,7 @@ import defaultSetting from '@/config/setting'
 
 const cacheSetting: object = cacheUtil.get(cacheEnum.SETTING_KEY)
 
-export const useConfStore = defineStore({
-    id: 'conf',
+export const useConfStore = defineStore('conf', {
     state: () => {
         const state: any = {
             settingShow: false,

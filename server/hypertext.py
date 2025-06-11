@@ -26,7 +26,7 @@ class R(BaseModel, Generic[T]):
     """ 响应工具类 """
     code: int = Field(default=ErrorEnum.SUCCESS.code, description="状态")
     msg: str = Field(default=ErrorEnum.SUCCESS.msg, description="提示")
-    data: T = Field(default=[T], description="数据")
+    data: T = Field(default_factory=list, description="数据")
 
     @classmethod
     def success(cls, msg: str = "OK", data: Any = None, code: int = 0):
