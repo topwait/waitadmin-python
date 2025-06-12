@@ -105,10 +105,10 @@ defineProps({
         display: block;
          height: 20px;
          overflow: hidden;
+         text-overflow: ellipsis;
          font-size: 14px;
          line-height: 20px;
          color: #333333;
-         text-overflow: ellipsis;
          white-space: nowrap;
         span {
             color: #dab26b;

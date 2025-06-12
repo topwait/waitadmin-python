@@ -65,9 +65,9 @@ queryPayWay()
             justify-content: center;
             width: 26px;
             height: 26px;
-            clip-path: polygon(0 100%, 100% 0, 100% 100%);
             color: var(--color-white);
             background-color: var(--el-color-primary);
+            clip-path: polygon(0 100%, 100% 0, 100% 100%);
             :deep() .el-icon-select {
                 transform: translate(35%, 35%);
                 transform-origin: center center;

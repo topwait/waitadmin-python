@@ -2,11 +2,11 @@ import { reactive, toRaw } from 'vue'
 
 // 分页钩子函数
 interface Options {
-    page?: number
-    limit?: number
-    params?: Record<string, any>
-    firstLoading?: boolean
-    fetchFun: (_arg: any) => Promise<any>
+    page?: number;
+    limit?: number;
+    params?: Record<string, any>;
+    firstLoading?: boolean;
+    fetchFun: (_arg: any) => Promise<any>;
 }
 
 export function usePaging<T = any>(options: Options) {

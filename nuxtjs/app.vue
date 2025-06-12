@@ -1,5 +1,5 @@
 <template>
-    <ElConfigProvider>
+    <ElConfigProvider :z-index="3000">
         <NuxtLoadingIndicator color="#0f70d8" :height="2" />
         <NuxtPage />
     </ElConfigProvider>

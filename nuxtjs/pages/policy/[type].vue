@@ -72,7 +72,7 @@ const { data: pageData } = await useAsyncData(
         margin-right: 20px;
         font-size: 14px;
         text-align: center;
-        background-color: #fff;
+        background-color: #ffffff;
         border: 1px solid #f0f0f0;
         border-radius: 8px;
         .menu-item {
@@ -81,7 +81,7 @@ const { data: pageData } = await useAsyncData(
             font-weight: bold;
             color: #101010;
             cursor: pointer;
-            border-bottom: 1px #eee solid;
+            border-bottom: 1px #eeeeee solid;
             border-radius: 8px;
             &:last-child {
                 border-bottom: none;
@@ -91,7 +91,7 @@ const { data: pageData } = await useAsyncData(
                 opacity: .8;
             }
             &.active {
-                color: #fff;
+                color: #ffffff;
                 background-color: var(--el-color-primary);
             }
         }

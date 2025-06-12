@@ -1,9 +1,9 @@
 interface Options {
-    key: string,
-    time?: number
-    totalTime?: number
-    count?: number
-    callback?(): void
+    key: string;
+    time?: number;
+    totalTime?: number;
+    count?: number;
+    callback?(): void;
 }
 
 const pollingDict: any = {}
