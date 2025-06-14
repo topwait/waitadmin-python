@@ -101,7 +101,7 @@ class RechargeConfigIn(BaseModel):
         }
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class RechargePackageListVo(BaseModel):

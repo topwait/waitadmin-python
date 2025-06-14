@@ -92,7 +92,7 @@ class ArticleCateDeleteIn(BaseModel):
         }
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class ArticleCateWholeVo(BaseModel):

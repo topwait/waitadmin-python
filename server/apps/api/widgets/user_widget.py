@@ -77,7 +77,7 @@ class UserWidget:
                 nickname=nickname,
                 gender=gender,
                 salt=salt,
-                last_login_ip="",
+                last_login_ip="127.0.0.1",
                 last_login_time=int(time.time()),
                 create_time=int(time.time()),
                 update_time=int(time.time())

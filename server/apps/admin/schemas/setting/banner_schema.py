@@ -124,7 +124,7 @@ class BannerDeleteIn(BaseModel):
         }
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class BannerSiteVo(BaseModel):

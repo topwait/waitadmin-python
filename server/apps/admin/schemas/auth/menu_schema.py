@@ -98,7 +98,7 @@ class AuthMenuDeleteIn(BaseModel):
         }
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class AuthMenuWholeVo(BaseModel):

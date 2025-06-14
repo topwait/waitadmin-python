@@ -42,7 +42,7 @@ class LoginCheckIn(BaseModel):
         }
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class LoginCaptchaVo(BaseModel):

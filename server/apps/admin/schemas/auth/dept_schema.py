@@ -106,7 +106,7 @@ class AuthDeptDeleteIn(BaseModel):
         }
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class AuthDeptWholeVo(BaseModel):
