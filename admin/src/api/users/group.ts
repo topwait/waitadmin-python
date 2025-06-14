@@ -3,6 +3,11 @@ import request from '@/utils/request'
 const userGroupApi = {
     /**
      * 用户分组列表
+     *
+     * @param {Object} params
+     * @param {number} [params.page_no]
+     * @param {number} [params.page_size]
+     * @param {string} [params.name]
      */
     lists(params: {
         page_no?: number;
@@ -17,6 +22,8 @@ const userGroupApi = {
 
     /**
      * 用户分组详情
+     *
+     * @param {number} id
      */
     detail(id: number): Promise<any> {
         return request.get({
@@ -27,6 +34,11 @@ const userGroupApi = {
 
     /**
      * 用户分组新增
+     *
+     * @param {Object} params
+     * @param {string} params.name
+     * @param {string} params.remarks
+     * @param {number} params.sort
      */
     add(params: {
         name: string;
@@ -41,6 +53,12 @@ const userGroupApi = {
 
     /**
      * 用户分组编辑
+     *
+     * @param {Object} params
+     * @param {number} params.id
+     * @param {string} params.name
+     * @param {string} params.remarks
+     * @param {number} params.sort
      */
     edit(params: {
         id: number;
@@ -56,6 +74,8 @@ const userGroupApi = {
 
     /**
      * 用户分组删除
+     *
+     * @param {number} id
      */
     delete(id: number): Promise<any> {
         return request.post({

@@ -12,6 +12,14 @@ const emailApi = {
 
     /**
      * 邮箱配置保存
+     *
+     * @param {Object} params
+     * @param {string} params.smtp_type
+     * @param {string} params.smtp_host
+     * @param {string} params.smtp_port
+     * @param {string} params.smtp_user
+     * @param {string} params.smtp_pass
+     * @param {string} params.verify_type
      */
     save(params: {
         smtp_type: string;

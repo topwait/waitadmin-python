@@ -12,6 +12,13 @@ const storageApi = {
 
     /**
      * 存储配置保存
+     *
+     * @param {Object} params
+     * @param {string} params.drive
+     * @param {any} params.local
+     * @param {any} params.qiniu
+     * @param {any} params.aliyun
+     * @param {any} params.qcloud
      */
     save(params: {
         drive: string;

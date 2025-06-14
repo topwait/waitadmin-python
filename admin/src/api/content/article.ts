@@ -3,6 +3,14 @@ import request from '@/utils/request'
 const articleApi = {
     /**
      * 文章列表
+     *
+     * @param {Object} params
+     * @param {number} [params.page_no]
+     * @param {number} [params.page_size]
+     * @param {string} [params.title]
+     * @param {number} [params.status]
+     * @param {string} [params.start_time]
+     * @param {string} [params.end_time]
      */
     lists(params: {
         page_no?: number;
@@ -20,6 +28,8 @@ const articleApi = {
 
     /**
      * 文章详情
+     *
+     * @param {number} id
      */
     detail(id: number): Promise<any> {
         return request.get({
@@ -30,6 +40,17 @@ const articleApi = {
 
     /**
      * 文章新增
+     *
+     * @param {Object} params
+     * @param {number} params.cid
+     * @param {string} params.title
+     * @param {string} [params.image]
+     * @param {string} [params.intro]
+     * @param {string} [params.content]
+     * @param {number} [params.sort]
+     * @param {number} [params.is_topping]
+     * @param {number} [params.is_recommend]
+     * @param {number} [params.is_show]
      */
     add(params: {
         cid: number;
@@ -50,6 +71,18 @@ const articleApi = {
 
     /**
      * 文章编辑
+     *
+     * @param {Object} params
+     * @param {number} params.id
+     * @param {number} params.cid
+     * @param {string} params.title
+     * @param {string} [params.image]
+     * @param {string} [params.intro]
+     * @param {string} [params.content]
+     * @param {number} [params.sort]
+     * @param {number} [params.is_topping]
+     * @param {number} [params.is_recommend]
+     * @param {number} [params.is_show]
      */
     edit(params: {
         id: number;
@@ -71,6 +104,8 @@ const articleApi = {
 
     /**
      * 文章删除
+     *
+     * @param {number} id
      */
     delete(id: number): Promise<any> {
         return request.post({

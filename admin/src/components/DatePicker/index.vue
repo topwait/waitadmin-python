@@ -13,13 +13,13 @@
 <script setup lang="ts">
 const props = withDefaults(
     defineProps<{
-        startTime?: string
-        endTime?: string
-        type?: any
-        rangeSeparator?: string
-        startPlaceholder?: string
-        endPlaceholder?: string
-        valueFormat?: string
+        startTime?: string;
+        endTime?: string;
+        type?: any;
+        rangeSeparator?: string;
+        startPlaceholder?: string;
+        endPlaceholder?: string;
+        valueFormat?: string;
     }>(),
     {
         startTime: '',

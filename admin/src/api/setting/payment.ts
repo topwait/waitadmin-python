@@ -12,6 +12,8 @@ const paymentApi = {
 
     /**
      * 支付配置详情
+     *
+     * @param {number} id
      */
     detail(id: number): Promise<any> {
         return request.get({
@@ -22,6 +24,16 @@ const paymentApi = {
 
     /**
      * 支付配置保存
+     *
+     * @param {Object} params
+     * @param {number} params.id
+     * @param {number} params.channel
+     * @param {string} params.shorter
+     * @param {string} params.name
+     * @param {string} params.icon
+     * @param {number} params.sort
+     * @param {number} params.status
+     * @param {any} params.params
      */
     save(params: {
         id: number;

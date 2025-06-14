@@ -12,6 +12,12 @@ const loginApi = {
 
     /**
      * 登录系统
+     *
+     * @param {Object} params
+     * @param {string} params.username
+     * @param {string} params.password
+     * @param {string} [params.uuid]
+     * @param {string} [params.code]
      */
     login(params: {
         username: string;

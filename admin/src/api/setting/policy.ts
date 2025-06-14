@@ -12,6 +12,11 @@ const policyApi = {
 
     /**
      * 协议配置保存
+     *
+     * @param {Object} params
+     * @param {string} params.service
+     * @param {string} params.private
+     * @param {string} params.payment
      */
     save(params: {
         service: string;

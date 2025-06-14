@@ -12,6 +12,18 @@ const basicsApi = {
 
     /**
      * 后台配置保存
+     *
+     * @param {Object} params
+     * @param {string} [params.name]
+     * @param {string} [params.title]
+     * @param {string} [params.cover]
+     * @param {string} [params.favicon]
+     * @param {string} [params.logo_black_big]
+     * @param {string} [params.logo_black_small]
+     * @param {string} [params.logo_white_big]
+     * @param {string} [params.logo_white_small]
+     * @param {string} [params.contacts]
+     * @param {string} [params.mobile]
      */
     save(params: {
         name?: string;

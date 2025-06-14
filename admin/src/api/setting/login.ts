@@ -12,6 +12,13 @@ const loginApi = {
 
     /**
      * 登录配置保存
+     *
+     * @param {Object} params
+     * @param {number} params.is_agreement
+     * @param {string} params.defaults
+     * @param {string[]} params.registers
+     * @param {string[]} params.login_modes
+     * @param {string[]} params.login_other
      */
     save(params: {
         is_agreement: number;

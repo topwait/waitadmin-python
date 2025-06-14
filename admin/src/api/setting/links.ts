@@ -3,6 +3,12 @@ import request from '@/utils/request'
 const linksApi = {
     /**
      * 友链列表
+     *
+     * @param {Object} params
+     * @param {number} [params.page_no]
+     * @param {number} [params.page_size]
+     * @param {string} [params.title]
+     * @param {number} [params.is_disable]
      */
     lists(params: {
         page_no?: number;
@@ -18,6 +24,8 @@ const linksApi = {
 
     /**
      * 友链详情
+     *
+     * @param {number} id
      */
     detail(id: number): Promise<any> {
         return request.get({
@@ -28,6 +36,14 @@ const linksApi = {
 
     /**
      * 友链新增
+     *
+     * @param {Object} params
+     * @param {string} params.title
+     * @param {string} [params.image]
+     * @param {string} [params.target]
+     * @param {string} [params.url]
+     * @param {number} [params.sort]
+     * @param {number} [params.is_disable]
      */
     add(params: {
         title: string;
@@ -45,6 +61,15 @@ const linksApi = {
 
     /**
      * 友链编辑
+     *
+     * @param {Object} params
+     * @param {number} params.id
+     * @param {string} params.title
+     * @param {string} [params.image]
+     * @param {string} [params.target]
+     * @param {string} [params.url]
+     * @param {number} [params.sort]
+     * @param {number} [params.is_disable]
      */
     edit(params: {
         id: number;
@@ -63,6 +88,8 @@ const linksApi = {
 
     /**
      * 友链删除
+     *
+     * @param {number} id
      */
     delete(id: number): Promise<any> {
         return request.post({

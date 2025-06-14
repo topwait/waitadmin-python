@@ -12,6 +12,11 @@ const channelApi = {
 
     /**
      * 渠道配置保存
+     *
+     * @param {Object} params
+     * @param {any} [params.wx]
+     * @param {any} [params.oa]
+     * @param {any} [params.op]
      */
     save(params: {
         wx?: any;

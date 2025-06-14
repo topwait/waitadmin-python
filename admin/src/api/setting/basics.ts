@@ -12,6 +12,11 @@ const basicsApi = {
 
     /**
      * 网站配置保存
+     *
+     * @param {Object} params
+     * @param {any} [params.website]
+     * @param {any} [params.h5]
+     * @param {any} [params.pc]
      */
     save(params: {
         website?: any;

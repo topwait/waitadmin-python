@@ -3,6 +3,15 @@ import request from '@/utils/request'
 const journalApi = {
     /**
      * 系统日志列表
+     *
+     * @param {Object} params
+     * @param {number} [params.page_no]
+     * @param {number} [params.page_size]
+     * @param {string} [params.method]
+     * @param {string} [params.url]
+     * @param {string} [params.ip]
+     * @param {string} [params.start_time]
+     * @param {string} [params.end_time]
      */
     lists(params: {
         page_no?: number;
@@ -21,6 +30,8 @@ const journalApi = {
 
     /**
      * 系统日志详情
+     *
+     * @param {number} id
      */
     detail(id: number): Promise<any> {
         return request.get({

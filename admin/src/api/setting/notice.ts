@@ -3,6 +3,11 @@ import request from '@/utils/request'
 const noticeApi = {
     /**
      * 通知配置列表
+     *
+     * @param {Object} params
+     * @param {number} [params.page_no]
+     * @param {number} [params.page_size]
+     * @param {number} params.client
      */
     lists(params: {
         page_no?: number;
@@ -17,6 +22,8 @@ const noticeApi = {
 
     /**
      * 通知配置详情
+     *
+     * @param {number} id
      */
     detail(id: number): Promise<any> {
         return request.get({
@@ -27,6 +34,18 @@ const noticeApi = {
 
     /**
      * 通知配置保存
+     *
+     * @param {Object} params
+     * @param {number} params.id
+     * @param {number} params.scene
+     * @param {string} params.name
+     * @param {string} params.type
+     * @param {string} params.client
+     * @param {string} [params.remarks]
+     * @param {any} params.variable
+     * @param {any} params.sys_template
+     * @param {any} params.ems_template
+     * @param {any} params.sms_template
      */
     save(params: {
         id: number;

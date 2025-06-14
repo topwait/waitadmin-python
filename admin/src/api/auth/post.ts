@@ -12,6 +12,13 @@ const authPostApi = {
 
     /**
      * 岗位列表
+     *
+     * @param {Object} params
+     * @param {number} [params.page_no]
+     * @param {number} [params.page_size]
+     * @param {string} [params.code]
+     * @param {string} [params.name]
+     * @param {number} [params.is_disable]
      */
     lists(params: {
         page_no?: number;
@@ -28,6 +35,8 @@ const authPostApi = {
 
     /**
      * 岗位详情
+     *
+     * @param {number} id
      */
     detail(id: number): Promise<any> {
         return request.get({
@@ -38,12 +47,19 @@ const authPostApi = {
 
     /**
      * 岗位新增
+     *
+     * @param {Object} params
+     * @param {string} params.code
+     * @param {string} params.name
+     * @param {string} [params.remarks]
+     * @param {number} [params.sort]
+     * @param {number} [params.is_disable]
      */
     add(params: {
         code: string;
         name: string;
         remarks?: string;
-        sort?: string;
+        sort?: number;
         is_disable?: number;
     }): Promise<any> {
         return request.post({
@@ -54,13 +70,22 @@ const authPostApi = {
 
     /**
      * 岗位编辑
+     *
+     * @param {Object} params
+     * @param {number} params.id
+     * @param {string} params.code
+     * @param {string} params.name
+     * @param {string} [params.remarks]
+     * @param {number} [params.sort]
+     * @param {number} [params.is_disable]
+     *
      */
     edit(params: {
         id: number;
         code: string;
         name: string;
         remarks?: string;
-        sort?: string;
+        sort?: number;
         is_disable?: number;
     }): Promise<any> {
         return request.post({
@@ -71,6 +96,8 @@ const authPostApi = {
 
     /**
      * 岗位删除
+     *
+     * @param {number} id
      */
     delete(id: number): Promise<any> {
         return request.post({

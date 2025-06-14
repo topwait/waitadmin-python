@@ -12,6 +12,11 @@ const authRoleApi = {
 
     /**
      * 角色列表
+     *
+     * @param {Object} params
+     * @param {number} [params.page_no]
+     * @param {number} [params.page_size]
+     * @param {string} params.name
      */
     lists(params: {
         page_no?: number;
@@ -26,6 +31,8 @@ const authRoleApi = {
 
     /**
      * 角色详情
+     *
+     * @param {number} id
      */
     detail(id: number): Promise<any> {
         return request.get({
@@ -36,6 +43,13 @@ const authRoleApi = {
 
     /**
      * 角色新增
+     *
+     * @param {Object} params
+     * @param {string} params.name
+     * @param {string} [params.describe]
+     * @param {number} [params.sort]
+     * @param {number} [params.is_disable]
+     * @param {number[]} [params.menu_ids]
      */
     add(params: {
         name: string;
@@ -52,6 +66,14 @@ const authRoleApi = {
 
     /**
      * 角色编辑
+     *
+     * @param {Object} params
+     * @param {number} params.id
+     * @param {string} params.name
+     * @param {string} [params.describe]
+     * @param {number} [params.sort]
+     * @param {number} [params.is_disable]
+     * @param {number[]} [params.menu_ids]
      */
     edit(params: {
         id: number;
@@ -69,6 +91,8 @@ const authRoleApi = {
 
     /**
      * 角色删除
+     *
+     * @param {number} id
      */
     delete(id: number): Promise<any> {
         return request.post({
