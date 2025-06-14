@@ -21,6 +21,9 @@ class SmsParams(BaseModel):
     acc_secret: str = Field(default="", description="secret")
 
 
+"""--------------- Separator ---------------"""
+
+
 class SmsListVo(BaseModel):
     """ 短信列表Vo """
     alias: str = Field(description="短信别名")

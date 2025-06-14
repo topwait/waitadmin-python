@@ -39,6 +39,9 @@ class PcParams(BaseModel):
     description: str = Field(default="", max_length=500, description="关键词组")
 
 
+"""--------------- Separator ---------------"""
+
+
 class BasicsDetailVo(BaseModel):
     """ 网站配置Vo """
     website: WebsiteParams = Field(..., description="网站配置")

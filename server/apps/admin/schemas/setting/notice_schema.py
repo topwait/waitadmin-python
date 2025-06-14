@@ -18,6 +18,9 @@ class NoticeDetailIn(BaseModel):
     id: int = Field(gt=0, description="ID")
 
 
+"""--------------- Separator ---------------"""
+
+
 class NoticeListVo(BaseModel):
     """ 通知配置列表参数 """
     id: int = Field(description="ID")

@@ -22,6 +22,9 @@ class StorageParams(BaseModel):
     region: str = Field(default="", description="REGION")
 
 
+"""--------------- Separator ---------------"""
+
+
 class StorageDetailVo(BaseModel):
     """ 存储配置详情Vo """
     drive: str = Field(..., description="存储渠道")

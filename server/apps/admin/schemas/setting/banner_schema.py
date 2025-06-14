@@ -131,6 +131,14 @@ class BannerSiteVo(BaseModel):
     id: int = Field(description="位置坐标")
     name: str = Field(description="位置名称")
 
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "id": 1,
+                "name": "home"
+            }
+        }
+
 
 class BannerListVo(BaseModel):
     """ 轮播图列表Vo """
@@ -157,10 +165,7 @@ class BannerListVo(BaseModel):
                 "sort": 0,
                 "is_disable": 0,
                 "create_time": "2023-03-12 00:32:13",
-                "update_time": "2023-03-18 15:29:50",
-                "location": [
-                    {}
-                ]
+                "update_time": "2023-03-18 15:29:50"
             }
         }
 
