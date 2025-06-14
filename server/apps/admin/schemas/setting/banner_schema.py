@@ -20,7 +20,7 @@ class BannerSearchIn(BaseModel):
     page_no: int = Query(gt=0, default=1, description="当前页码")
     page_size: int = Query(gt=0, le=200, default=15, description="每页条数")
     title: Union[str, None] = Query(default=None, description="登录账号")
-    is_disable: Union[str, None] = Query(default=None, description="联系电话")
+    is_disable: Union[int, str, None] = Query(default=None, description="是否禁用: [0=否, 1=是]")
 
 
 class BannerDetailIn(BaseModel):
@@ -124,12 +124,20 @@ class BannerDeleteIn(BaseModel):
         }
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class BannerSiteVo(BaseModel):
     id: int = Field(description="位置坐标")
     name: str = Field(description="位置名称")
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "id": 1,
+                "name": "home"
+            }
+        }
 
 
 class BannerListVo(BaseModel):
@@ -157,10 +165,7 @@ class BannerListVo(BaseModel):
                 "sort": 0,
                 "is_disable": 0,
                 "create_time": "2023-03-12 00:32:13",
-                "update_time": "2023-03-18 15:29:50",
-                "location": [
-                    {}
-                ]
+                "update_time": "2023-03-18 15:29:50"
             }
         }
 

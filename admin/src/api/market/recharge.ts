@@ -4,15 +4,16 @@ const rechargePackApi = {
     /**
      * 充值套餐列表
      */
-    lists(params: any): Promise<any> {
+    lists(): Promise<any> {
         return request.get({
-            url: '/market/recharge/lists',
-            params
+            url: '/market/recharge/lists'
         })
     },
 
     /**
      * 充值套餐详情
+     *
+     * @param {number} id
      */
     detail(id: number): Promise<any> {
         return request.get({
@@ -23,8 +24,19 @@ const rechargePackApi = {
 
     /**
      * 充值套餐新增
+     *
+     * @param {Object} params
+     * @param {number} params.money
+     * @param {number} params.give_money
+     * @param {number} params.sort
+     * @param {number} params.is_show
      */
-    add(params: any): Promise<any> {
+    add(params: {
+        money: number;
+        give_money: number;
+        sort: number;
+        is_show: number;
+    }): Promise<any> {
         return request.post({
             url: '/market/recharge/add',
             params
@@ -33,8 +45,21 @@ const rechargePackApi = {
 
     /**
      * 充值套餐编辑
+     *
+     * @param {Object} params
+     * @param {number} params.id
+     * @param {number} params.money
+     * @param {number} params.give_money
+     * @param {number} params.sort
+     * @param {number} params.is_show
      */
-    edit(params: any): Promise<any> {
+    edit(params: {
+        id: number;
+        money: number;
+        give_money: number;
+        sort: number;
+        is_show: number;
+    }): Promise<any> {
         return request.post({
             url: '/market/recharge/edit',
             params
@@ -43,6 +68,8 @@ const rechargePackApi = {
 
     /**
      * 充值套餐删除
+     *
+     * @param {number} id
      */
     delete(id: number): Promise<any> {
         return request.post({
@@ -53,8 +80,15 @@ const rechargePackApi = {
 
     /**
      * 充值参数配置
+     *
+     * @param {Object} params
+     * @param {number} params.status
+     * @param {number} params.min_recharge
      */
-    config(params: any) {
+    config(params: {
+        status: number;
+        min_recharge: number;
+    }) {
         return request.post({
             url: '/market/recharge/config',
             params

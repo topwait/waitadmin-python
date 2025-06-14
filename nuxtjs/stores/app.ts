@@ -7,8 +7,7 @@ interface AppSate {
     config: Record<string, any>
 }
 
-const useAppStore = defineStore({
-    id: 'appStore',
+const useAppStore = defineStore('appStore', {
     state: (): AppSate => ({
         popupType: popupEnum.NULL,
         config: {}

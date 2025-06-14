@@ -19,7 +19,7 @@ class PaymentDetailIn(BaseModel):
     id: int = Query(..., gt=0, description="支付配置ID")
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class PaymentListVo(BaseModel):

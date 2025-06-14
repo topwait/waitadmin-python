@@ -17,13 +17,15 @@
 </template>
 
 <script setup lang="ts">
+import type { EpPropMergeType } from 'element-plus/es/utils/index.mjs'
+
 interface Props {
-    modelValue?: Record<string, any>
-    pageSizes?: number[]
-    layout?: string,
-    size?: string,
-    pageCount?: number,
-    background?: boolean
+    modelValue?: Record<string, any>;
+    pageSizes?: number[];
+    layout?: string;
+    size?: EpPropMergeType<StringConstructor, '' | 'default' | 'small' | 'large', never>;
+    pageCount?: number;
+    background?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {

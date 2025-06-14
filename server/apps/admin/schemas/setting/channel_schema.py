@@ -49,6 +49,9 @@ class OpParams(BaseModel):
     app_secret: str = Field(default="", max_length=500, description="AppSecret")
 
 
+"""--------------- Separator ---------------"""
+
+
 class ChannelDetailVo(BaseModel):
     """ 渠道配置详情Vo """
     wx: WxParams = Field(..., description="微信参数")

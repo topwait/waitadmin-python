@@ -39,7 +39,7 @@
                         <div class="flex text-base text-tx-regular">
                             <span>上一篇：</span>
                             <NuxtLink
-                                v-if="details.prev.id"
+                                v-if="details.prev?.id"
                                 class="flex-1 text-primary hover:opacity-75"
                                 :to="`/article/detail/${details.prev?.id}`"
                             >
@@ -50,7 +50,7 @@
                         <div class="flex mt-2.5 text-base text-tx-regular">
                             <span>下一篇：</span>
                             <NuxtLink
-                                v-if="details.next.id"
+                                v-if="details.next?.id"
                                 class="flex-1 text-primary hover:opacity-75"
                                 :to="`/article/detail/${details.next?.id}`"
                             >
@@ -92,31 +92,12 @@ import articleApi from '~/api/article'
 import Information from '../_components/Information.vue'
 
 const route = useRoute()
-const articleId = parseInt(String(route.params.id))
+const articleId = parseInt(String(route.params?.id))
 
-/**
- * 文章数据
- */
-const { data: details, refresh } = useAsyncData(
-    () => articleApi.detail(articleId),
-    {
-        default() {
-            return {} as ArticleDetailResponse
-        }
-    }
-)
-
-/**
- * 页面数据
- */
-const { data: pageData } = await useAsyncData(
-    () => articleApi.pages(),
-    {
-        default() {
-            return {} as ArticlePagesResponse
-        }
-    }
-)
+// 文章数据
+const details = ref({} as ArticleDetailResponse)
+// 页面数据
+const pageData = ref({} as ArticlePagesResponse)
 
 /**
  * 文章收藏
@@ -129,6 +110,20 @@ const handleCollect = async () => {
         await articleApi.collect(articleId)
         feedback.msgSuccess('收藏成功')
     }
-    await refresh()
+    details.value = await articleApi.detail(articleId)
 }
+
+// watch(
+//     () => route.params?.id, // 监听路由参数中的 id
+//     (newId, oldId) => {
+//         console.log(`路由 ID 从 ${oldId} 变为 ${newId}`);
+//         // 执行数据重新获取等操作
+//         // fetchArticleData(newId);
+//     }
+// )
+
+onMounted(async () => {
+    details.value = await articleApi.detail(articleId)
+    pageData.value = await articleApi.pages()
+})
 </script>

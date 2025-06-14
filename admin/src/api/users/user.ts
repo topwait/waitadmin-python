@@ -3,8 +3,19 @@ import request from '@/utils/request'
 const userApi = {
     /**
      * 用户列表
+     *
+     * @param {Object} params
+     * @param {number} [params.page_no]
+     * @param {number} [params.page_size]
+     * @param {string} [params.keyword]
+     * @param {number} [params.is_disable]
      */
-    lists(params: any): Promise<any> {
+    lists(params: {
+        page_no?: number;
+        page_size?: number;
+        keyword?: string;
+        is_disable?: number;
+    }): Promise<any> {
         return request.get({
             url: '/users/user/lists',
             params
@@ -13,6 +24,8 @@ const userApi = {
 
     /**
      * 用户详情
+     *
+     * @param {number} id
      */
     detail(id: number): Promise<any> {
         return request.get({
@@ -22,7 +35,34 @@ const userApi = {
     },
 
     /**
+     * 用户创建
+     *
+     * @param {Object} params
+     * @param {string} params.account
+     * @param {string} params.email
+     * @param {string} params.mobile
+     * @param {string} params.nickname
+     * @param {string} params.password
+     */
+    create(params: {
+        account: string;
+        email: string;
+        mobile: string;
+        nickname: string;
+        password: string;
+    }): Promise<any> {
+        return request.post({
+            url: '/users/user/create',
+            params
+        })
+    },
+
+    /**
      * 用户编辑
+     *
+     * @param {number} user_id
+     * @param {string} field
+     * @param {string} value
      */
     edit(user_id: number, field: string, value: string): Promise<any> {
         return request.post({
@@ -37,6 +77,8 @@ const userApi = {
 
     /**
      * 拉黑名单
+     *
+     * @param {number} user_id
      */
     blacklist(user_id: number): Promise<any> {
         return request.post({
@@ -49,6 +91,9 @@ const userApi = {
 
     /**
      * 修改分组
+     *
+     * @param {number} user_id
+     * @param {number} group_id
      */
     changeGroup(user_id: number, group_id: number): Promise<any> {
         return request.post({
@@ -62,6 +107,9 @@ const userApi = {
 
     /**
      * 重置密码
+     *
+     * @param {number} user_id
+     * @param {string} password
      */
     resetPassword(user_id: number, password: string): Promise<any> {
         return request.post({
@@ -76,7 +124,12 @@ const userApi = {
     /**
      * 调整账户
      */
-    adjustAccount(params: any): Promise<any> {
+    adjustAccount(params: {
+        user_id: number;
+        action: string;
+        amount: number;
+        remark?: string;
+    }): Promise<any> {
         return request.post({
             url: '/users/user/adjust_account',
             params: {
@@ -90,8 +143,17 @@ const userApi = {
 
     /**
      * 账户日志
+     *
+     * @param {Object} params
+     * @param {number} [params.page_no]
+     * @param {number} [params.page_size]
+     * @param {number} params.user_id
      */
-    walletLogs(params: any): Promise<any> {
+    walletLogs(params: {
+        page_no?: number;
+        page_size?: number;
+        user_id: string;
+    }): Promise<any> {
         return request.get({
             url: '/users/user/wallet_logs',
             params: {
@@ -104,8 +166,17 @@ const userApi = {
 
     /**
      * 会话列表
+     *
+     * @param {Object} params
+     * @param {number} params.user_id
+     * @param {number} [params.page_no]
+     * @param {number} [params.page_size]
      */
-    sessions(params: any): Promise<any> {
+    sessions(params: {
+        user_id: number;
+        page_no?: number;
+        page_size?: number;
+    }): Promise<any> {
         return request.get({
             url: '/users/user/sessions',
             params: {
@@ -118,6 +189,9 @@ const userApi = {
 
     /**
      * 强制下线
+     *
+     * @param {number} user_id
+     * @param {string} uuid
      */
     kickOut(user_id: number, uuid: string): Promise<any> {
         return request.post({

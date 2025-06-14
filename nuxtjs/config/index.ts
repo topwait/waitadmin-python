@@ -1,6 +1,15 @@
-const config: any = {
+interface SysConfigType {
+    version: string;
+    baseUrl: string;
+    terminal: number;
+    urlPrefix: string;
+    reqRetry: number;
+    timeout: number;
+}
+
+const config: SysConfigType = {
     // 版本编号
-    version: '1.1.2',
+    version: '1.1.3',
     // 请求域名
     baseUrl: `${import.meta.env.VITE_API_URL || ''}`,
     // 来源终端

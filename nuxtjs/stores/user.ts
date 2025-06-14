@@ -10,8 +10,7 @@ interface UserSate {
     users: UserCenterResponse
 }
 
-const useUserStore = defineStore({
-    id: 'userStore',
+const useUserStore = defineStore('userStore', {
     state: (): UserSate => {
         return {
             token: cacheUtil.get(cacheEnum.TOKEN_KEY) || '',

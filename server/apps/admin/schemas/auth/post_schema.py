@@ -83,7 +83,7 @@ class AuthPostDeleteIn(BaseModel):
         }
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class AuthPostWholeVo(BaseModel):

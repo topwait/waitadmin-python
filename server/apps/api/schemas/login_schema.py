@@ -152,7 +152,7 @@ class ScanLoginIn(BaseModel):
         }
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class LoginTokenVo(BaseModel):

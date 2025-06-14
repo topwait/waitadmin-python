@@ -32,7 +32,7 @@ class ArticleCollectIn(BaseModel):
     id: int = Field(..., gt=0, description="文章ID")
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class ArticleCategoryVo(BaseModel):

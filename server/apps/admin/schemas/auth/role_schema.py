@@ -81,7 +81,7 @@ class AuthRoleDeleteIn(BaseModel):
         }
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class AuthRoleWholeVo(BaseModel):

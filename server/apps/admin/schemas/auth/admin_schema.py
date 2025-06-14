@@ -161,7 +161,7 @@ class AuthAdminInfoIn(BaseModel):
         }
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class AuthAdminListVo(BaseModel):

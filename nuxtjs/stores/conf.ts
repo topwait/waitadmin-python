@@ -5,8 +5,7 @@ import cacheUtil from '~/utils/cache'
 import themeUtil from '~/utils/theme'
 import defaultSetting from '~/config/setting'
 
-export const useConfStore = defineStore({
-    id: 'conf',
+export const useConfStore = defineStore('confStore', {
     state: () => {
         const cacheSetting: object = cacheUtil.get(cacheEnum.SETTING_KEY)
         const state: any = {

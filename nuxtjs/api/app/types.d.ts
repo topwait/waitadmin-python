@@ -1,12 +1,12 @@
 /** ------ [全局配置] ------ */
 interface AppConfigResponse {
-    login: _AppConfigLogin;
-    website: _AppConfigWebsite;
-    recharge: _AppConfigRecharge,
-    pc: _AppConfigPc;
+    login: AppConfigLogin;
+    website: AppConfigWebsite;
+    recharge: AppConfigRecharge;
+    pc: AppConfigPc;
 }
 
-interface _AppConfigLogin {
+interface AppConfigLogin {
     is_agreement: number;
     defaults: string;
     register: any[];
@@ -14,12 +14,12 @@ interface _AppConfigLogin {
     oauth: string[];
 }
 
-interface _AppConfigRecharge {
+interface AppConfigRecharge {
     status: number;
     min_recharge: number;
 }
 
-interface _AppConfigWebsite {
+interface AppConfigWebsite {
     icp: string;
     pcp: string;
     domain: string;
@@ -27,7 +27,7 @@ interface _AppConfigWebsite {
     copyright: string;
 }
 
-interface _AppConfigPc {
+interface AppConfigPc {
     favicon: string;
     logo: string;
     name: string;
@@ -38,22 +38,22 @@ interface _AppConfigPc {
 
 /** ------ [网站首页] ------ */
 interface AppHomingResponse {
-    adv: _AppHomingAdv[];
-    banner: _AppHomingAdv[];
-    lately: _AppHomingArticles[];
-    ranking: _AppHomingArticles[];
-    topping: _AppHomingArticles[];
-    everyday: _AppHomingArticles[];
+    adv: AppHomingAdv[];
+    banner: AppHomingAdv[];
+    lately: AppHomingArticles[];
+    ranking: AppHomingArticles[];
+    topping: AppHomingArticles[];
+    everyday: AppHomingArticles[];
 }
 
-interface _AppHomingAdv {
+interface AppHomingAdv {
     title: string;
     image: string;
     target: string;
     url: string;
 }
 
-interface _AppHomingArticles {
+interface AppHomingArticles {
     id: number;
     category: string;
     image: string;

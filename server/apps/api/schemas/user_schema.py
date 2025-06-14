@@ -167,7 +167,7 @@ class UserBindWechatIn(BaseModel):
         }
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class UserCenterVo(BaseModel):

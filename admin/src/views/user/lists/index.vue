@@ -6,7 +6,7 @@
                 <el-form-item label="用户信息">
                     <el-input
                         v-model="queryParams.keyword"
-                        class="w-[250px]"
+                        class="!w-[250px]"
                         placeholder="请输入用户编号/昵称/手机"
                         clearable
                         @keyup.enter="resetPaging"
@@ -28,6 +28,12 @@
 
         <!-- 表格栏 -->
         <el-card v-loading="pager.loading" class="!border-none" shadow="never">
+            <el-button v-perms="['users:user:create']" type="primary" @click="handleEditor('create')">
+                <template #icon>
+                    <icon name="el-icon-Plus" />
+                </template>
+                <span>创建用户</span>
+            </el-button>
             <el-table :data="pager.lists" size="large" class="mt-4">
                 <el-table-column label="编号" prop="sn" min-width="100" />
                 <el-table-column label="头像" prop="avatar" min-width="80">
@@ -59,6 +65,9 @@
 
         <!-- 编辑器 -->
         <detail v-if="showDetail" ref="detailRef" @success="queryLists" @close="showDetail = false" />
+
+        <!-- 创建用户 -->
+        <create v-if="showCreate" ref="createRef" @success="queryLists" @close="showCreate = false" />
     </div>
 </template>
 
@@ -66,9 +75,12 @@
 import { usePaging } from '@/hooks/usePaging'
 import userApi from '@/api/users/user'
 import Detail from './detail.vue'
+import Create from './create.vue'
 
 const showDetail = ref(false)
+const showCreate = ref(false)
 const detailRef = shallowRef<InstanceType<typeof Detail>>()
+const createRef = shallowRef<InstanceType<typeof Create>>()
 
 // 查询参数
 const queryParams = reactive({
@@ -90,9 +102,15 @@ const { pager, queryLists, resetParams, resetPaging } = usePaging({
  * @returns {Promise<void>}
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
-    showDetail.value = true
-    await nextTick()
-    detailRef.value?.open(type, row)
+    if (type === 'create') {
+        showCreate.value = true
+        await nextTick()
+        createRef.value?.open()
+    } else {
+        showDetail.value = true
+        await nextTick()
+        detailRef.value?.open(type, row)
+    }
 }
 
 onMounted(async () => {

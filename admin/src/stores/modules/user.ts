@@ -15,8 +15,7 @@ interface UserSate {
     routes: RouteRecordRaw[]
 }
 
-const useUserStore = defineStore({
-    id: 'user',
+const useUserStore = defineStore('user', {
     state: (): UserSate => ({
         // 令牌
         token: cacheUtil.get(cacheEnum.TOKEN_KEY) || '',

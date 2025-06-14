@@ -114,7 +114,7 @@ class LinksDeleteIn(BaseModel):
         }
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class LinksListVo(BaseModel):

@@ -26,7 +26,7 @@ class BalanceSearchIn(BaseModel):
     end_time: Union[int, str, None] = Query(default=None, description="结束时间")
 
 
-"""---------------❤︎华丽分割线❤︎---------------"""
+"""--------------- Separator ---------------"""
 
 
 class BalanceListVo(BaseModel):

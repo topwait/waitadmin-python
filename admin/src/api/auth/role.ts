@@ -12,15 +12,27 @@ const authRoleApi = {
 
     /**
      * 角色列表
+     *
+     * @param {Object} params
+     * @param {number} [params.page_no]
+     * @param {number} [params.page_size]
+     * @param {string} params.name
      */
-    lists(): Promise<any> {
+    lists(params: {
+        page_no?: number;
+        page_size?: number;
+        name?: string;
+    }): Promise<any> {
         return request.get({
-            url: '/auth/role/lists'
+            url: '/auth/role/lists',
+            params
         })
     },
 
     /**
      * 角色详情
+     *
+     * @param {number} id
      */
     detail(id: number): Promise<any> {
         return request.get({
@@ -31,8 +43,21 @@ const authRoleApi = {
 
     /**
      * 角色新增
+     *
+     * @param {Object} params
+     * @param {string} params.name
+     * @param {string} [params.describe]
+     * @param {number} [params.sort]
+     * @param {number} [params.is_disable]
+     * @param {number[]} [params.menu_ids]
      */
-    add(params: any): Promise<any> {
+    add(params: {
+        name: string;
+        describe?: string;
+        sort?: number;
+        is_disable?: number;
+        menu_ids?: number[];
+    }): Promise<any> {
         return request.post({
             url: '/auth/role/add',
             params
@@ -41,8 +66,23 @@ const authRoleApi = {
 
     /**
      * 角色编辑
+     *
+     * @param {Object} params
+     * @param {number} params.id
+     * @param {string} params.name
+     * @param {string} [params.describe]
+     * @param {number} [params.sort]
+     * @param {number} [params.is_disable]
+     * @param {number[]} [params.menu_ids]
      */
-    edit(params: any): Promise<any> {
+    edit(params: {
+        id: number;
+        name: string;
+        describe?: string;
+        sort?: number;
+        is_disable?: number;
+        menu_ids?: number[];
+    }): Promise<any> {
         return request.post({
             url: '/auth/role/edit',
             params
@@ -51,6 +91,8 @@ const authRoleApi = {
 
     /**
      * 角色删除
+     *
+     * @param {number} id
      */
     delete(id: number): Promise<any> {
         return request.post({

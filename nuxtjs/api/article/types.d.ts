@@ -22,23 +22,23 @@ interface ArticleDetailResponse {
     is_collect: number;
     create_time: string;
     update_time: string;
-    prev: _ArticleDetailNext;
-    next: _ArticleDetailNext;
+    prev: ArticleDetailNext;
+    next: ArticleDetailNext;
 }
 
-interface _ArticleDetailNext {
+interface ArticleDetailNext {
     id: number;
     title: string;
 }
 
 /** ------ [文章页面] ------ */
 interface ArticlePagesResponse {
-    adv: _ArticlePagesAdv[];
+    adv: ArticlePagesAdv[];
     topping: ArticleListsResponse[];
     ranking: ArticleListsResponse[];
 }
 
-interface _ArticlePagesAdv {
+interface ArticlePagesAdv {
     title: string;
     image: string;
     target: string;

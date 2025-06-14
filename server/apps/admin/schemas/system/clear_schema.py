@@ -18,4 +18,10 @@ class CleanIn(BaseModel):
     system: bool = Field(..., description="系统缓存")
     login: bool = Field(..., description="登录缓存")
 
-
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "system": True,
+                "login": False
+            }
+        }

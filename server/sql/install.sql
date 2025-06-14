@@ -531,6 +531,7 @@ CREATE TABLE `wait_user_wallet` (
 BEGIN;
 INSERT INTO `wait_auth_admin` VALUES (1, 0, 0, 0, '超级管理员', 'admin', '441c9249be23cb0f884c0d6a08983174', 'zIk6qh', 'static/images/avatar.png', '13800138000', 'admin@qq.com', '127.0.0.1', 1716170400, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_dept` VALUES (1, 0, '陌子科技有限公司', '李墨', '13800138000', 0, 1, '0', 0, 0, 1716170400, 1716170400, 0);
+INSERT INTO `wait_sys_crontab` VALUES (1, '垃圾清理器', 'crontab.gc', '', 'interval', '[{\"key\": \"minutes\", \"value\": \"10\"}]', 1, '', '', 1, 0, 0, 0, 0, 1749881484, 1749881484, 0);
 COMMIT;
 
 BEGIN;

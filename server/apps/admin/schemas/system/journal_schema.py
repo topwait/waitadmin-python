@@ -31,6 +31,9 @@ class JournalDetailIn(BaseModel):
     id: int = Query(..., gt=0, description="日志ID")
 
 
+"""--------------- Separator ---------------"""
+
+
 class JournalListVo(BaseModel):
     """ 系统日志列表Vo """
     id: int = Field(description="任务ID")
