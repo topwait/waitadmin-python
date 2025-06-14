@@ -27,6 +27,22 @@ const userApi = {
     },
 
     /**
+     * 用户创建
+     */
+    create(params: {
+        account: string;
+        email: string;
+        mobile: string;
+        nickname: string;
+        password: string;
+    }): Promise<any> {
+        return request.post({
+            url: '/users/user/create',
+            params
+        })
+    },
+
+    /**
      * 用户编辑
      */
     edit(user_id: number, field: string, value: string): Promise<any> {

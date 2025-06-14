@@ -16,7 +16,6 @@ from pydantic import TypeAdapter
 from exception import AppException
 from hypertext import PagingResult
 from tortoise.transactions import in_transaction
-from apps.admin.schemas.users import user_schema as schema
 from common.enums.client import ClientEnum
 from common.enums.gender import GenderEnum
 from common.enums.wallet import WalletEnum
@@ -29,6 +28,8 @@ from common.models.users import UserGroupModel
 from common.models.users import UserWalletModel
 from common.models.auth import AuthAdminModel
 from plugins.safe.driver import SecurityDriver
+from apps.admin.schemas.users import user_schema as schema
+from apps.api.widgets.user_widget import UserWidget
 
 
 class UserService:
@@ -112,7 +113,10 @@ class UserService:
         admins_ = {}
         admin_ids = [item["admin_id"] for item in _pager.lists if item["admin_id"]]
         if admin_ids:
-            admins = await AuthAdminModel.filter(id__in=list(set(admin_ids))).all().values_list("id", "nickname")
+            admins = await (AuthAdminModel
+                            .filter(id__in=list(set(admin_ids)))
+                            .all()
+                            .values_list("id", "nickname"))
             admins_ = {k: v for k, v in admins}
 
         _data = []
@@ -206,6 +210,25 @@ class UserService:
         result["create_time"] = TimeUtil.timestamp_to_date(data.create_time)
         result["last_login_time"] = TimeUtil.timestamp_to_date(data.last_login_time)
         return TypeAdapter(schema.UserDetailVo).validate_python(data.__dict__)
+
+    @classmethod
+    async def create(cls, post: schema.UserCreateIn):
+        """
+        用户创建。
+
+        Args:
+            post (schema.UserCreateIn): 用户创建参数。
+
+        Author:
+            zero
+        """
+        # 创建账号
+        await UserWidget.create_user({
+            "account": post.account,
+            "mobile": post.account,
+            "password": post.password,
+            "terminal": ClientEnum.PC
+        })
 
     @classmethod
     async def edit(cls, user_id: int, field: str, value: str):

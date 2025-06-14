@@ -42,6 +42,12 @@ async def detail(params: schema.UserDetailIn = Depends()):
     return await UserService.detail(params.id)
 
 
+@router.post("/create", summary="用户创建", response_model=R)
+@response_json
+async def create(params: schema.UserCreateIn):
+    return await UserService.create(params)
+
+
 @router.post("/edit", summary="用户编辑", response_model=R)
 @response_json
 async def edit(params: schema.UserEditIn):

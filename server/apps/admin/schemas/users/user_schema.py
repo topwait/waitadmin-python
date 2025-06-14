@@ -62,6 +62,39 @@ class UserIdIn(BaseModel):
         }
 
 
+class UserCreateIn(BaseModel):
+    """ 用户创建参数 """
+    account: str = Field(..., min_length=4, max_length=20, description="登录账号")
+    password: str = Field(..., min_length=6, max_length=20, description="登录密码")
+    nickname: str = Field(..., min_length=4, max_length=20, description="用户昵称")
+    avatar: str = Field(default="", max_length=250, description="用户头像")
+    mobile: str = Field(default="", max_length=11, description="联系电话")
+    email: str = Field(default="", max_length=100, description="电子邮箱")
+
+    @classmethod
+    def messages(cls):
+        return {
+            "nickname.min_length": "用户昵称不能少于4个字符",
+            "nickname.max_length": "用户昵称不能大于20个字符",
+            "account.min_length": "登录账号不能少于4个字符",
+            "account.max_length": "登录账号不能大于20个字符",
+            "password.min_length": "密码不能少于6个字符",
+            "password.max_length": "密码不能大于20个字符"
+        }
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "account": "wait",
+                "nickname": "wait",
+                "password": "123456",
+                "avatar": "",
+                "mobile": "13800138000",
+                "email": "13800138000@163.com"
+            }
+        }
+
+
 class UserEditIn(BaseModel):
     """ 编辑信息参数 """
     user_id: int = Field(..., gt=0, description="用户ID")
