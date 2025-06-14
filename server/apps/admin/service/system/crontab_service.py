@@ -123,7 +123,7 @@ class CrontabService:
                     update_time=int(time.time())
                 )
                 # 加入到任务中
-                params: Dict[str, any] = json.loads(crontab.params) if crontab.params else {}
+                params: Dict[str, any] = json.loads(crontab.params or "{}") if crontab.params else {}
                 func, trigger_fun = cls.__cron_trigger(crontab.trigger, crontab.command, crontab.rules)
                 for i in range(crontab.concurrent):
                     job = crontab.command + "." + str(i + 1)
@@ -189,7 +189,7 @@ class CrontabService:
 
                 # 加入到任务中
                 if post.status == 1:
-                    params: Dict[str, any] = json.loads(post.params) if post.params else {}
+                    params: Dict[str, any] = json.loads(post.params or "{}") if post.params else {}
                     func, trigger_fun = cls.__cron_trigger(post.trigger, post.command, json.dumps(post.rules))
                     for i in range(post.concurrent):
                         job = post.command + "." + str(i+1)
