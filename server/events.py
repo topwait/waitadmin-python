@@ -58,7 +58,7 @@ class AppEvents:
                 raise Exception(f"Task execution method does not exist: {crontab.command}")
 
             # 获取任务参数
-            params: Dict[str, any] = json.loads(crontab.params) if crontab.params else {}
+            params: Dict[str, any] = json.loads(crontab.params or "{}") if crontab.params else {}
 
             # 获取任务规则
             rules: List[dict] = json.loads(crontab.rules)
@@ -72,7 +72,7 @@ class AppEvents:
                     condition[item.get("key")] = item.get("value")
 
             # 配置触发条件
-            _trigger_fun: any = None
+            _trigger_fun = None
             if crontab.trigger == "interval":
                 _trigger_fun = IntervalTrigger(**condition)
             elif crontab.trigger == "cron":
