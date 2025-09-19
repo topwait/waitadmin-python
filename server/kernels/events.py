@@ -13,6 +13,7 @@
 import os
 import importlib
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 
 __all__ = ["configure_event"]
 
@@ -29,12 +30,11 @@ async def __dynamic_events(app: FastAPI, event: str):
                 await function(app)
 
 
-def configure_event(app: FastAPI):
-    """ Configure events """
-    @app.on_event("startup")
-    async def startup():
-        await __dynamic_events(app, "startup")
-
-    @app.on_event("shutdown")
-    async def shutdown():
-        await __dynamic_events(app, "shutdown")
+@asynccontextmanager
+async def configure_event(app: FastAPI):
+    """ Configure events lifespan """
+    # startup
+    await __dynamic_events(app, "startup")
+    yield
+    # shutdown
+    await __dynamic_events(app, "shutdown")
