@@ -13,7 +13,7 @@
 import json
 import aiofiles
 import importlib
-from aiofiles import os
+from aiofiles import os as aio_os
 from typing import List, Dict
 from datetime import datetime
 from fastapi import FastAPI
@@ -92,7 +92,7 @@ class AppEvents:
             e = s.get(crontab.status)
             crontab_tips += f"| {crontab.name} | {crontab.command} | {crontab.concurrent}    | {e}  \n"
 
-        if await os.path.exists("./banner.txt"):
+        if await aio_os.path.exists("./banner.txt"):
             async with aiofiles.open("./banner.txt", mode="r", encoding="utf-8") as f:
                 content = await f.read()
             crontab_tips = crontab_tips if crontab_tips else "|"
