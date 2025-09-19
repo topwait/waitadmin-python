@@ -1042,19 +1042,21 @@ class RedisUtil:
 
     # =============== 【发布订阅】 ===============
     @classmethod
-    async def publish(cls, channel: str, message: any, **kwargs):
+    async def publish(cls, channel: str, scene: str, data: any = None, **kwargs):
         """
         向指定频道发布消息
 
         Args:
             channel (str): 要发布的频道名称
-            message (Any): 要发布的消息
+            scene (str): 场景类型
+            data (Any): 发布数据
             **kwargs: 额外的参数
 
         Returns:
             返回消息被投递到的订阅者数量
         """
         key = cls.get_key(channel)
+        message = json.dumps({"scene": scene, "data": data})
         return await cls.redis.publish(key, message, **kwargs)
 
     @classmethod

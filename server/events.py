@@ -10,18 +10,23 @@
 # +----------------------------------------------------------------------
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
+import asyncio
+import os
 import json
-import aiofiles
+import time
 import importlib
-from aiofiles import os as aio_os
 from typing import List, Dict
-from datetime import datetime
+from datetime import datetime, timedelta
 from fastapi import FastAPI
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.date import DateTrigger
 from common.models.sys import SysCrontabModel
+from common.enums.public import CrontabEnum
+from common.utils.cache import RedisUtil
+from common.utils.times import TimeUtil
+
 
 
 scheduler = AsyncIOScheduler()
@@ -30,7 +35,12 @@ scheduler = AsyncIOScheduler()
 class AppEvents:
     @classmethod
     async def startup(cls, _app: FastAPI):
-        scheduler.add_job(cls._inject_crontab, DateTrigger(run_date=datetime.now()))
+        with open("scheduler.pid", "w") as f:
+            f.write(str(os.getpid()))
+
+        asyncio.create_task(cls._redis_subscribe())
+        run_date = datetime.now() + timedelta(seconds=5)
+        scheduler.add_job(cls._init_crontab, DateTrigger(run_date=run_date))
         scheduler.start()
 
     @classmethod
@@ -38,32 +48,42 @@ class AppEvents:
         scheduler.shutdown()
 
     @classmethod
-    async def _inject_crontab(cls):
-        crontab_tips = ""
-        crontab_lists = await SysCrontabModel.filter(is_delete=0).order_by("-id").all()
-        for crontab in crontab_lists:
-            s = {1: "Success", 2: "Stop", 3: "Error"}
-            if crontab.status != 1:
-                e = s.get(crontab.status)
-                crontab_tips += f"| {crontab.name} | {crontab.command} | {crontab.concurrent}    | {e} \n"
+    async def _init_crontab(cls):
+        """ Initialize scheduled """
+        with open("scheduler.pid", "r") as f:
+            pid = f.read()
+            if pid != str(os.getpid()):
+                return False
+
+        tasks = []
+        enums = {1: "Success", 2: "Stop", 3: "Error"}
+        crontabs = await SysCrontabModel.filter(is_delete=0).order_by("-id").all()
+        for crontab in crontabs:
+            task = [crontab.id, crontab.name, crontab.command, crontab.concurrent]
+            if crontab.status != CrontabEnum.CRON_ING:
                 continue
 
             try:
-                module = importlib.import_module(crontab.command)
+                module = importlib.import_module("crontab.gc")
+                print(module)
             except ModuleNotFoundError:
-                raise Exception(f"The scheduled task module does not exist: {crontab.command}")
+                crontab.status = CrontabEnum.CRON_ERROR
+                crontab.error = "The scheduled task module does not exist"
+                tasks.append(task + [crontab.status])
+                await crontab.save()
+                continue
 
             func = getattr(module, "execute", None)
             if not func:
-                raise Exception(f"Task execution method does not exist: {crontab.command}")
+                crontab.status = CrontabEnum.CRON_ERROR
+                crontab.error = "Task execution method does not exist"
+                tasks.append(task + [crontab.status])
+                await crontab.save()
+                continue
 
-            # 获取任务参数
-            params: Dict[str, any] = json.loads(crontab.params) if crontab.params else {}
+            rules: List[dict] = json.loads(crontab.rules or "[]")
+            params: Dict[str, any] = json.loads(crontab.params or "{}")
 
-            # 获取任务规则
-            rules: List[dict] = json.loads(crontab.rules)
-
-            # 处理触发条件
             condition = {}
             for item in rules:
                 if crontab.trigger == "interval" and item.get("key") not in ["start_date", "end_date"]:
@@ -71,7 +91,6 @@ class AppEvents:
                 else:
                     condition[item.get("key")] = item.get("value")
 
-            # 配置触发条件
             _trigger_fun: any = None
             if crontab.trigger == "interval":
                 _trigger_fun = IntervalTrigger(**condition)
@@ -80,20 +99,46 @@ class AppEvents:
             elif crontab.trigger == "date":
                 _trigger_fun = DateTrigger(**condition)
 
-            # 加入到任务中
+            tasks.append(task + [crontab.status])
             for i in range(crontab.concurrent):
                 job = crontab.command + "." + str(i + 1)
                 params["w_id"] = crontab.id
                 params["w_ix"] = int(i + 1)
+                params["w_pid"] = int(os.getpid())
                 params["w_job"] = job
                 scheduler.add_job(func, _trigger_fun, id=job, name=crontab.name, kwargs=params)
 
-            # 启动成功提示
-            e = s.get(crontab.status)
-            crontab_tips += f"| {crontab.name} | {crontab.command} | {crontab.concurrent}    | {e}  \n"
+        if os.path.exists("./banner.txt"):
+            startup_time = TimeUtil.timestamp_to_date(int(time.time()))
+            with open("./banner.txt", "r") as f:
+                template = f.read()
+                template = template.replace("{{startup_time}}", startup_time)
+                template = template.replace("{{process_id}}", str(os.getpid()))
+                print(template)
 
-        if await aio_os.path.exists("./banner.txt"):
-            async with aiofiles.open("./banner.txt", mode="r", encoding="utf-8") as f:
-                content = await f.read()
-            crontab_tips = crontab_tips if crontab_tips else "|"
-            print(content.replace("{{crontab}}", crontab_tips.rstrip("\n")))
+        for job in tasks:
+            job[4] = enums[job[4]]
+            print(job)
+
+        print("-" * 57)
+        return True
+
+    @classmethod
+    async def _redis_subscribe(cls):
+        """ Redis/Push/Sub"""
+        try:
+            pubsub = await RedisUtil.subscribe("topical")
+            async for message in pubsub.listen():
+                if message["type"] != "message":
+                    continue
+
+                event = json.loads(str(message["data"] or "{}"))
+                scene = event.get("scene")
+                if scene == "cron":
+                    from apps.admin.service.system.crontab_service import CrontabService
+                    await CrontabService.cron_subscribe(str(event["data"]))
+        except Exception as e:
+            print(str(e))
+
+
+
