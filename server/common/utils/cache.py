@@ -272,13 +272,13 @@ class RedisUtil:
         """
         return await cls.redis.decr(cls.get_key(key), amount)
 
-    # =============== 【List指令】  ===============
+    # =============== 【List指令】 ===============
     @classmethod
     async def BlPop(cls, key: str, field: str):
         # await cls.redis.blpop()
         pass
 
-    # =============== 【Hash指令】  ===============
+    # =============== 【Hash指令】 ===============
     @classmethod
     async def hExists(cls, key: str, field: str) -> bool:
         """
@@ -481,7 +481,7 @@ class RedisUtil:
         """
         return await cls.redis.hincrbyfloat(cls.get_key(key), field, amount)
 
-    # =============== 【Set指令: 无序集合】  ===============
+    # =============== 【Set指令: 无序集合】 ===============
     @classmethod
     async def sAdd(cls, key: str, *values: Union[int, float, str]) -> int:
         """
@@ -703,7 +703,7 @@ class RedisUtil:
         ks = [cls.get_key(k) for k in keys]
         return await cls.redis.sunionstore(dest, ks, *args)
 
-    # =============== 【Set指令: 有序集合】  ===============
+    # =============== 【Set指令: 有序集合】 ===============
     @classmethod
     async def zAdd(cls,
                    key: str,
@@ -1039,3 +1039,46 @@ class RedisUtil:
         args.extend(["COUNT", count])
 
         return await cls.redis.execute_command("BZM_POP".replace("_", ""), *args)
+
+    # =============== 【发布订阅】 ===============
+    @classmethod
+    async def publish(cls, channel: str, message: any, **kwargs):
+        """
+        向指定频道发布消息
+
+        Args:
+            channel (str): 要发布的频道名称
+            message (Any): 要发布的消息
+            **kwargs: 额外的参数
+
+        Returns:
+            返回消息被投递到的订阅者数量
+        """
+        key = cls.get_key(channel)
+        return await cls.redis.publish(key, message, **kwargs)
+
+    @classmethod
+    async def subscribe(cls, channel: str):
+        """
+        订阅指定频道并返回 PubSub 对象用于监听消息。
+
+        Args:
+            channel (str): 要订阅的频道名称
+
+        Returns:
+            redis.client.PubSub:
+                返回 PubSub 对象，调用方需维护其生命周期。
+            Demo：
+                 pubsub = await subscribe("my_channel")
+                 async for message in pubsub.listen():
+                     print(message)
+
+        PubSub对象：
+            1. 调用 pubsub.listen() 接收消息
+            2. 调用 pubsub.unsubscribe() 取消订阅
+            3. 调用 pubsub.close() 释放资源
+        """
+        key = cls.get_key(channel)
+        pubsub = cls.redis.pubsub()
+        await pubsub.subscribe(key)
+        return pubsub
