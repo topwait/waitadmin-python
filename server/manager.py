@@ -31,11 +31,11 @@ def create_app() -> FastAPI:
         version=get_settings().VERSION,
         name=get_settings().PROJECT_NAME,
         description=get_settings().DESCRIPTION,
+        lifespan=configure_event,
         docs_url=None
     )
 
     configure_logger()
-    configure_event(application)
     configure_exception(application)
     configure_middleware(application)
     configure_router(application)
