@@ -10,10 +10,12 @@
 # +----------------------------------------------------------------------
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
-import asyncio
 import os
-import json
+import sys
 import time
+import json
+import asyncio
+import logging
 import importlib
 from typing import List, Dict
 from datetime import datetime, timedelta
@@ -24,12 +26,13 @@ from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.date import DateTrigger
 from common.models.sys import SysCrontabModel
 from common.enums.public import CrontabEnum
+from common.utils.config import ConfigUtil
 from common.utils.cache import RedisUtil
 from common.utils.times import TimeUtil
 
 
-
 scheduler = AsyncIOScheduler()
+logger = logging.getLogger(__name__)
 
 
 class AppEvents:
@@ -55,8 +58,10 @@ class AppEvents:
             if pid != str(os.getpid()):
                 return False
 
+        await ConfigUtil.set("sys", "process_id", pid)
+
         tasks = []
-        enums = {1: "Success", 2: "Stop", 3: "Error"}
+        enums = {1: "Success", 2: "Stop", 3: "kError"}
         crontabs = await SysCrontabModel.filter(is_delete=0).order_by("-id").all()
         for crontab in crontabs:
             task = [crontab.id, crontab.name, crontab.command, crontab.concurrent]
@@ -64,19 +69,27 @@ class AppEvents:
                 continue
 
             try:
-                module = importlib.import_module("crontab.gc")
-                print(module)
+                module = importlib.import_module(crontab.command)
+                clz = getattr(module, "Command", None)
+                if not clz:
+                    raise AttributeError(f"Cron: '{crontab.command}' has no 'Command' class")
+                fun = getattr(clz, "execute", None)
+                if not fun:
+                    raise AttributeError(f"Cron: '{crontab.command}' has no 'execute' method")
             except ModuleNotFoundError:
+                wrong: str = f"Crontab 'module' not found '{crontab.command}'"
+                logger.error(wrong)
+                crontab.error = wrong
                 crontab.status = CrontabEnum.CRON_ERROR
-                crontab.error = "The scheduled task module does not exist"
                 tasks.append(task + [crontab.status])
                 await crontab.save()
                 continue
-
-            func = getattr(module, "execute", None)
-            if not func:
+            except AttributeError as e:
+                if crontab.command in sys.modules:
+                    del sys.modules[crontab.command]
+                logger.error(str(e))
+                crontab.error = str(e)
                 crontab.status = CrontabEnum.CRON_ERROR
-                crontab.error = "Task execution method does not exist"
                 tasks.append(task + [crontab.status])
                 await crontab.save()
                 continue
@@ -91,7 +104,7 @@ class AppEvents:
                 else:
                     condition[item.get("key")] = item.get("value")
 
-            _trigger_fun: any = None
+            _trigger_fun = None
             if crontab.trigger == "interval":
                 _trigger_fun = IntervalTrigger(**condition)
             elif crontab.trigger == "cron":
@@ -106,7 +119,7 @@ class AppEvents:
                 params["w_ix"] = int(i + 1)
                 params["w_pid"] = int(os.getpid())
                 params["w_job"] = job
-                scheduler.add_job(func, _trigger_fun, id=job, name=crontab.name, kwargs=params)
+                scheduler.add_job(fun, _trigger_fun, id=job, name=crontab.name, kwargs=params)
 
         if os.path.exists("./banner.txt"):
             startup_time = TimeUtil.timestamp_to_date(int(time.time()))

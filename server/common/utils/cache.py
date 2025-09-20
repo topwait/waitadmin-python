@@ -11,7 +11,7 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 import json
-from typing import Union, List, Dict, Tuple, Set, Optional, Mapping
+from typing import Union, List, Dict, Tuple, Set, Optional, Mapping, Any
 from redis import Redis
 from kernels.cache import redis_be
 from redis.exceptions import DataError
@@ -230,19 +230,21 @@ class RedisUtil:
         return json.loads(val) if val else val
 
     @classmethod
-    async def set(cls, key: str, value: any, time: int = None) -> bool:
+    async def set(cls, key: str, value: Any, ex: int = None, nx: bool = False, xx: bool = False) -> bool:
         """
         将键值对设置到Redis数据库中。
 
         Args:
             key (str): 要设置的键名。
             value (Any): 要设置的值, 可以是任何类型。
-            time (int): 键的过期时间(秒), 默认为None, 表示不过期。
+            ex (int): 键的过期时间(秒), 默认为None, 表示不过期。
+            nx (bool): 只在键不存在是创建
+            xx (bool): 只在键存在是执行
 
         Returns:
             bool: 如果设置成功则返回True, 否则返回False。
         """
-        return await cls.redis.set(cls.get_key(key), value=value, ex=time)
+        return await cls.redis.set(cls.get_key(key), value=value, ex=ex, nx=nx, xx=xx)
 
     @classmethod
     async def incr(cls, key: str, amount: int) -> int:
@@ -274,7 +276,7 @@ class RedisUtil:
 
     # =============== 【List指令】 ===============
     @classmethod
-    async def BlPop(cls, key: str, field: str):
+    async def blPop(cls, key: str, field: str):
         # await cls.redis.blpop()
         pass
 
@@ -1042,7 +1044,7 @@ class RedisUtil:
 
     # =============== 【发布订阅】 ===============
     @classmethod
-    async def publish(cls, channel: str, scene: str, data: any = None, **kwargs):
+    async def publish(cls, channel: str, scene: str, data: Any = None, **kwargs):
         """
         向指定频道发布消息
 

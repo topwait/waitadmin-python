@@ -10,6 +10,8 @@
 # +----------------------------------------------------------------------
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
+from typing import Any
+
 class RequestUtil:
     ua: str
     host: str
@@ -26,6 +28,6 @@ class RequestUtil:
     path: str
     pathParams: dict
     queryParams: dict
-    state: any
+    state: Any
     headers: dict
     cookies: dict

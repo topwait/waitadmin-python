@@ -20,7 +20,6 @@ from common.utils.config import ConfigUtil
 from common.utils.tools import ToolsUtil
 from common.utils.urls import UrlUtil
 from plugins.msg.driver import MsgDriver
-from common.utils.cache import RedisUtil
 
 
 class IndexService:
@@ -81,9 +80,6 @@ class IndexService:
         Author:
             zero
         """
-        for i in range(100):
-            await RedisUtil.sAdd("queues", i)
-
         pc = await ConfigUtil.get("pc") or {}
         login = await ConfigUtil.get("login") or {}
         website = await ConfigUtil.get("website") or {}
