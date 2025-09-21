@@ -68,7 +68,7 @@
                         <el-tag v-else type="danger">停用</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="联系电话" prop="mobile" min-width="100" />
+                <el-table-column label="联系电话" prop="mobile" min-width="110" />
                 <el-table-column label="最近登录IP" prop="last_login_ip" min-width="180" />
                 <el-table-column label="最近登录时间" prop="last_login_time" min-width="180" />
                 <el-table-column label="创建时间" prop="create_time" min-width="180" />
