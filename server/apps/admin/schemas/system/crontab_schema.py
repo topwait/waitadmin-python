@@ -113,6 +113,7 @@ class CrontabListVo(BaseModel):
     params: str = Field(description="参数")
     error: str = Field(description="错误原因")
     remarks: str = Field(description="备注信息")
+    condition: List[str] = Field(description="运行规则")
     concurrent: int = Field(description="并发数量")
     status: int = Field(description="执行状态: [1=运行, 2=暂停, 3=错误]")
     exe_time: float = Field(description="执行时长")
@@ -124,9 +125,10 @@ class CrontabListVo(BaseModel):
                 "id": 1,
                 "name": "垃圾清理",
                 "command": "gc",
-                "params": "0 2 * * *",
+                "params": "{'name': 'wa'}",
                 "error": "-",
                 "remarks": "-",
+                "condition": ["每3秒"],
                 "concurrent": 1,
                 "status": 1,
                 "exe_time": 0.003,

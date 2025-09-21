@@ -37,7 +37,6 @@ class SysCrontabModel(DbModel):
     trigger = fields.CharField(null=False, max_length=200, default="", description="触发类型")
     rules = fields.TextField(null=False, default="", description="运行规则")
     remarks = fields.CharField(null=False, max_length=300, default="", description="备注信息")
-    tasks = fields.TextField(default="", description="任务进程")
     error = fields.TextField(default="", description="错误提示")
     concurrent = fields.SmallIntField(null=False, default=1, description="并发数量")
     status = fields.SmallIntField(null=False, default=1, description="执行状态: [1=运行, 2=暂停, 3=错误]")

@@ -62,17 +62,58 @@ class CrontabService:
             model=_model,
             page_no=params.page_no,
             page_size=params.page_size,
-            schema=schema.CrontabListVo,
             datetime_field=["last_time"],
             fields=SysCrontabModel.without_field("is_delete,delete_time")
         )
 
-        for item in _pager.lists:
-            item.params = item.params if item.params else "{ }"
-            item.error = item.error if item.error else "-"
-            item.remarks = item.remarks if item.remarks else "-"
-            item.last_time = item.last_time if item.last_time else "-"
+        interval = {
+            "weeks": "间隔{n}周",
+            "days": "间隔{n}天",
+            "hours": "间隔{n}小时",
+            "minutes": "间隔{n}分钟",
+            "seconds": "间隔{n}秒",
+            "start_date": "开始日期: {n}",
+            "end_date": "结束日期: {n}",
+        }
 
+        period = {
+            "year": "{n}年",
+            "month": "{n}月",
+            "day": "{n}日",
+            "week": "第{n}周",
+            "day_of_week": "星期{n}",
+            "hour": "{n}时",
+            "minute": "{n}分",
+            "start_date": "最早触发: {n}",
+            "end_date": "最晚触发: {n}",
+        }
+
+        lists = []
+        for item in _pager.lists:
+            condition = []
+            rules_lists = json.loads(item["rules"])
+            for rule in rules_lists:
+                if item["trigger"] == "interval":
+                    template = interval[rule["key"]]
+                    template = template.replace("{n}", str(rule["value"]))
+                    condition.append(template)
+                elif item["trigger"] == "cron":
+                    template = period[rule["key"]]
+                    template = template.replace("{n}", str(rule["value"]))
+                    condition.append(template)
+                elif item["trigger"] == "date":
+                    template = str(rule["value"]) + "(触发)"
+                    condition.append(template)
+
+            item["condition"] = condition
+            item["params"] = item["params"] or "{ }"
+            item["error"] = item["error"] or "-"
+            item["remarks"] = item.get("remarks") or "-"
+            item["last_time"] = item.get("last_time") or "-"
+            vo = TypeAdapter(schema.CrontabListVo).validate_python(item)
+            lists.append(vo)
+
+        _pager.lists = lists
         return _pager
 
     @classmethod
@@ -283,7 +324,11 @@ class CrontabService:
         try:
             async with in_transaction("mysql"):
                 # 从数据库恢复
-                await SysCrontabModel.filter(id=id_).update(status=1, update_time=int(time.time()))
+                await SysCrontabModel.filter(id=id_).update(
+                    error="",
+                    status=CrontabEnum.CRON_ING,
+                    update_time=int(time.time())
+                )
                 # 从新启动任务
                 await RedisUtil.publish(cls.REDIS_CHANNEL, scene="cron", data=json.dumps({
                     "op": "create",
