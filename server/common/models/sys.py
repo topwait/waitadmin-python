@@ -40,8 +40,7 @@ class SysCrontabModel(DbModel):
     error = fields.TextField(default="", description="错误提示")
     concurrent = fields.SmallIntField(null=False, default=1, description="并发数量")
     status = fields.SmallIntField(null=False, default=1, description="执行状态: [1=运行, 2=暂停, 3=错误]")
-    exe_time = fields.IntField(null=False, default=0, description="执行时长")
-    max_time = fields.IntField(null=False, default=0, description="最大执行时长")
+    exe_time = fields.FloatField(null=False, default=0, description="执行时长")
     last_time = fields.IntField(null=False, default=0, description="最后执行时间")
     is_delete = fields.SmallIntField(null=False, default=0, description="是否删除: [0=否, 1=是]")
     create_time = fields.IntField(null=False, default=0, description="创建时间")
@@ -51,20 +50,6 @@ class SysCrontabModel(DbModel):
     class Meta:
         table_description = "系统任务表"
         table = DbModel.table_prefix("sys_crontab")
-
-    @classmethod
-    async def compute(cls, id_: int, start_time: float, status: int = 1, error: str = ""):
-        cron: cls = await cls.filter(id=id_).first()
-        if cron:
-            exe_time: int = int(str((time.time() - start_time)).split(".")[0])
-            max_time: int = cron.max_time if cron.max_time > exe_time else exe_time
-            await cls.filter(id=id_).update(
-                exe_time=exe_time,
-                max_time=max_time,
-                last_time=int(time.time()),
-                status=status,
-                error=error
-            )
 
 
 class SysLogModel(DbModel):

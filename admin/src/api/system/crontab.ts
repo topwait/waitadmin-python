@@ -100,6 +100,30 @@ const crontabApi = {
             url: '/system/crontab/delete',
             params: { id: id }
         })
+    },
+
+    /**
+     * 定时任务停止
+     *
+     * @param {number} id
+     */
+    stop(id: number): Promise<any> {
+        return request.post({
+            url: '/system/crontab/stop',
+            params: { id: id }
+        })
+    },
+
+    /**
+     * 定时任务运行
+     *
+     * @param {number} id
+     */
+    run(id: number): Promise<any> {
+        return request.post({
+            url: '/system/crontab/run',
+            params: { id: id }
+        })
     }
 }
 

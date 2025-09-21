@@ -51,11 +51,11 @@ async def delete(params: schema.CrontabDetailIn):
 @router.post("/stop", summary="定时任务停止", response_model=R)
 @response_json
 async def stop(params: schema.CrontabDetailIn):
-    await CrontabService.delete(params.id)
+    await CrontabService.stop(params.id)
 
 
 @router.post("/run", summary="定时任务运行", response_model=R)
 @response_json
 async def run(params: schema.CrontabDetailIn):
-    await CrontabService.delete(params.id)
+    await CrontabService.run(params.id)
 

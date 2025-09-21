@@ -33,7 +33,7 @@ class CrontabAddIn(BaseModel):
     params: str = Field(max_length=200, default="", description="附带参数")
     trigger: str = Field(max_length=100, default="", description="触发类型")
     rules: List[dict] = Field(..., min_length=1, max_length=65535, description="运行规则")
-    concurrent: int = Field(ge=1, le=10, default=0, description="并发数量")
+    concurrent: int = Field(ge=1, le=50, default=0, description="并发数量")
     remarks: str = Field(max_length=255, default="", description="备注信息")
     status: int = Field(ge=1, le=2, default=0, description="执行状态: [1=运行, 2=暂停]")
 
@@ -49,7 +49,7 @@ class CrontabAddIn(BaseModel):
             "rules.min_length": "请填写完善触发规则",
             "rules.max_length": "触发规则的长度不能超出65535个字符",
             "concurrent.ge": "并发数量最少不能少于1",
-            "concurrent.le": "并发数量最大不能超出10",
+            "concurrent.le": "并发数量最大不能超出50",
             "remarks.max_length": "备注信息备注信息不能超出255个字符",
             "status.ge": "运行状态不符合规则: [1, 2]",
             "status.le": "运行状态不符合规则: [1, 2]"
@@ -78,7 +78,7 @@ class CrontabEditIn(BaseModel):
     params: str = Field(max_length=200, default="", description="附带参数")
     trigger: str = Field(max_length=100, default="", description="触发类型")
     rules: List[dict] = Field(..., min_length=1, max_length=65535, description="运行规则")
-    concurrent: int = Field(ge=1, le=10, default=0, description="并发数量")
+    concurrent: int = Field(ge=1, le=50, default=0, description="并发数量")
     remarks: str = Field(max_length=255, default="", description="备注信息")
     status: int = Field(ge=1, le=2, default=0, description="执行状态: [1=运行, 2=暂停]")
 
@@ -113,10 +113,10 @@ class CrontabListVo(BaseModel):
     params: str = Field(description="参数")
     error: str = Field(description="错误原因")
     remarks: str = Field(description="备注信息")
+    condition: List[str] = Field(description="运行规则")
     concurrent: int = Field(description="并发数量")
     status: int = Field(description="执行状态: [1=运行, 2=暂停, 3=错误]")
-    exe_time: int = Field(description="执行时长")
-    max_time: int = Field(description="最大执行时长")
+    exe_time: float = Field(description="执行时长")
     last_time: str = Field(description="最后执行时间")
 
     class Config:
@@ -125,13 +125,13 @@ class CrontabListVo(BaseModel):
                 "id": 1,
                 "name": "垃圾清理",
                 "command": "gc",
-                "params": "0 2 * * *",
+                "params": "{'name': 'wa'}",
                 "error": "-",
                 "remarks": "-",
+                "condition": ["每3秒"],
                 "concurrent": 1,
                 "status": 1,
-                "exe_time": 6,
-                "max_time": 6,
+                "exe_time": 0.003,
                 "last_time": "2024-04-18 11:22:33"
             }
         }

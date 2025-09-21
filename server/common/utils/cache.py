@@ -11,7 +11,7 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 import json
-from typing import Union, List, Dict, Tuple, Set, Optional, Mapping
+from typing import Union, List, Dict, Tuple, Set, Optional, Mapping, Any
 from redis import Redis
 from kernels.cache import redis_be
 from redis.exceptions import DataError
@@ -230,19 +230,21 @@ class RedisUtil:
         return json.loads(val) if val else val
 
     @classmethod
-    async def set(cls, key: str, value: any, time: int = None) -> bool:
+    async def set(cls, key: str, value: Any, ex: int = None, nx: bool = False, xx: bool = False) -> bool:
         """
         将键值对设置到Redis数据库中。
 
         Args:
             key (str): 要设置的键名。
             value (Any): 要设置的值, 可以是任何类型。
-            time (int): 键的过期时间(秒), 默认为None, 表示不过期。
+            ex (int): 键的过期时间(秒), 默认为None, 表示不过期。
+            nx (bool): 只在键不存在是创建
+            xx (bool): 只在键存在是执行
 
         Returns:
             bool: 如果设置成功则返回True, 否则返回False。
         """
-        return await cls.redis.set(cls.get_key(key), value=value, ex=time)
+        return await cls.redis.set(cls.get_key(key), value=value, ex=ex, nx=nx, xx=xx)
 
     @classmethod
     async def incr(cls, key: str, amount: int) -> int:
@@ -272,13 +274,13 @@ class RedisUtil:
         """
         return await cls.redis.decr(cls.get_key(key), amount)
 
-    # =============== 【List指令】  ===============
+    # =============== 【List指令】 ===============
     @classmethod
-    async def BlPop(cls, key: str, field: str):
+    async def blPop(cls, key: str, field: str):
         # await cls.redis.blpop()
         pass
 
-    # =============== 【Hash指令】  ===============
+    # =============== 【Hash指令】 ===============
     @classmethod
     async def hExists(cls, key: str, field: str) -> bool:
         """
@@ -481,7 +483,7 @@ class RedisUtil:
         """
         return await cls.redis.hincrbyfloat(cls.get_key(key), field, amount)
 
-    # =============== 【Set指令: 无序集合】  ===============
+    # =============== 【Set指令: 无序集合】 ===============
     @classmethod
     async def sAdd(cls, key: str, *values: Union[int, float, str]) -> int:
         """
@@ -703,7 +705,7 @@ class RedisUtil:
         ks = [cls.get_key(k) for k in keys]
         return await cls.redis.sunionstore(dest, ks, *args)
 
-    # =============== 【Set指令: 有序集合】  ===============
+    # =============== 【Set指令: 有序集合】 ===============
     @classmethod
     async def zAdd(cls,
                    key: str,
@@ -1039,3 +1041,48 @@ class RedisUtil:
         args.extend(["COUNT", count])
 
         return await cls.redis.execute_command("BZM_POP".replace("_", ""), *args)
+
+    # =============== 【发布订阅】 ===============
+    @classmethod
+    async def publish(cls, channel: str, scene: str, data: Any = None, **kwargs):
+        """
+        向指定频道发布消息
+
+        Args:
+            channel (str): 要发布的频道名称
+            scene (str): 场景类型
+            data (Any): 发布数据
+            **kwargs: 额外的参数
+
+        Returns:
+            返回消息被投递到的订阅者数量
+        """
+        key = cls.get_key(channel)
+        message = json.dumps({"scene": scene, "data": data})
+        return await cls.redis.publish(key, message, **kwargs)
+
+    @classmethod
+    async def subscribe(cls, channel: str):
+        """
+        订阅指定频道并返回 PubSub 对象用于监听消息。
+
+        Args:
+            channel (str): 要订阅的频道名称
+
+        Returns:
+            redis.client.PubSub:
+                返回 PubSub 对象，调用方需维护其生命周期。
+            Demo：
+                 pubsub = await subscribe("my_channel")
+                 async for message in pubsub.listen():
+                     print(message)
+
+        PubSub对象：
+            1. 调用 pubsub.listen() 接收消息
+            2. 调用 pubsub.unsubscribe() 取消订阅
+            3. 调用 pubsub.close() 释放资源
+        """
+        key = cls.get_key(channel)
+        pubsub = cls.redis.pubsub()
+        await pubsub.subscribe(key)
+        return pubsub

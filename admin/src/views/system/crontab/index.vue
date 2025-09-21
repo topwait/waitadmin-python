@@ -19,20 +19,54 @@
                 <span>新增</span>
             </el-button>
             <el-table :data="pager.lists" size="large" class="mt-4">
-                <el-table-column label="任务名称" prop="name" min-width="130" show-tooltip-when-overflow />
+                <el-table-column
+                    label="任务名称"
+                    prop="name"
+                    min-width="130"
+                    show-tooltip-when-overflow
+                >
+                    <template #default="{ row }">
+                        <el-tooltip effect="dark" :content="row.remarks">
+                            {{ row.name }}
+                        </el-tooltip>
+                    </template>
+                </el-table-column>
                 <el-table-column label="命令" prop="command" min-width="160" show-tooltip-when-overflow />
                 <el-table-column label="参数" prop="params" min-width="150" show-tooltip-when-overflow />
-                <el-table-column label="备注信息" prop="remarks" min-width="130" show-tooltip-when-overflow />
+                <el-table-column label="触发规则" prop="condition" min-width="150" >
+                    <template #default="{ row }">
+                        <el-tag v-for="(item, index) in row.condition" :key="index" type="info">
+                            {{ item }}
+                        </el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column label="运行状态" prop="status" min-width="90">
                     <template #default="{ row }">
-                        <el-tag v-if="row.status === 1">运行中</el-tag>
-                        <el-tag v-else-if="row.status === 2" type="danger">已停止</el-tag>
+                        <el-tag
+                            v-if="row.status === 1"
+                            class="cursor-pointer"
+                            @click="handleCrontab(row.id, row.status)"
+                        >
+                            运行中
+                        </el-tag>
+                        <el-tag
+                            v-else-if="row.status === 2"
+                            type="danger"
+                            class="cursor-pointer"
+                            @click="handleCrontab(row.id, row.status)"
+                        >
+                            已停止
+                        </el-tag>
                         <el-tooltip
                             v-else-if="row.status === 3"
                             effect="dark"
                             :content="row.error"
                         >
-                            <el-tag type="danger">错误</el-tag>
+                            <el-tag
+                                type="danger"
+                                class="cursor-pointer"
+                                @click="handleCrontab(row.id, row.status)"
+                            >错误</el-tag>
                         </el-tooltip>
                     </template>
                 </el-table-column>
@@ -44,11 +78,6 @@
                 <el-table-column label="执行时长" prop="exe_time" min-width="90">
                     <template #default="{ row }">
                         {{ row.exe_time }}ms
-                    </template>
-                </el-table-column>
-                <el-table-column label="最大时长" prop="max_time" min-width="90">
-                    <template #default="{ row }">
-                        {{ row.max_time }}ms
                     </template>
                 </el-table-column>
                 <el-table-column label="最后执行时间" prop="last_time" min-width="175" />
@@ -121,6 +150,40 @@ const handleDelete = async (id: number): Promise<void> => {
         .then(async () => {
             await crontabApi.delete(id)
             feedback.msgSuccess('删除成功')
+            await queryLists()
+        }).catch(() => {})
+}
+
+/**
+ * 处理任务
+ *
+ * @param id
+ * @param status
+ * @returns {Promise<void>}
+ */
+const handleCrontab = async (id: number, status: number): Promise<void> => {
+    let message = '您确定要「停止」当前服务吗?'
+    switch (status) {
+        case 2:
+            message = '您确定要「启动」当前服务吗?'
+            break
+        case 3:
+            message = '您确定要将异常服务转为「停止」状态?'
+            break
+    }
+
+    feedback.confirm(message)
+        .then(async () => {
+            switch (status) {
+                case 1:
+                case 3:
+                    await crontabApi.stop(id)
+                    break
+                case 2:
+                    await crontabApi.run(id)
+                    break
+            }
+            feedback.msgSuccess('操作成功')
             await queryLists()
         }).catch(() => {})
 }

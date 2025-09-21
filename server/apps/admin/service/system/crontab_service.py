@@ -10,24 +10,38 @@
 # +----------------------------------------------------------------------
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
-import json
+import logging
+import os
+import sys
 import time
+import json
+import asyncio
 import importlib
-from events import scheduler
-from typing import List, Dict
+from typing import List, Dict, Any
 from pydantic import TypeAdapter
 from tortoise.models import in_transaction
 from apscheduler.triggers.interval import IntervalTrigger
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.date import DateTrigger
+from events import scheduler
 from exception import AppException
+from common.enums.public import CrontabEnum
+from common.utils.config import ConfigUtil
 from common.utils.valid import ValidUtils
+from common.utils.cache import RedisUtil
 from common.models.sys import SysCrontabModel
 from apps.admin.schemas.system import crontab_schema as schema
+
+logger = logging.getLogger(__name__)
 
 
 class CrontabService:
     """ 定时任务服务类 """
+
+    # REDIS消息订阅KEY
+    REDIS_CHANNEL: str = "topical"
+    # REDIS计划任务KEY
+    REDIS_CRON_TASKS: str = "crontab:jobs_"
 
     @classmethod
     async def lists(cls, params: schema.CrontabSearchIn) -> List[schema.CrontabListVo]:
@@ -48,17 +62,58 @@ class CrontabService:
             model=_model,
             page_no=params.page_no,
             page_size=params.page_size,
-            schema=schema.CrontabListVo,
             datetime_field=["last_time"],
             fields=SysCrontabModel.without_field("is_delete,delete_time")
         )
 
-        for item in _pager.lists:
-            item.params = item.params if item.params else "{ }"
-            item.error = item.error if item.error else "-"
-            item.remarks = item.remarks if item.remarks else "-"
-            item.last_time = item.last_time if item.last_time else "-"
+        interval = {
+            "weeks": "间隔{n}周",
+            "days": "间隔{n}天",
+            "hours": "间隔{n}小时",
+            "minutes": "间隔{n}分钟",
+            "seconds": "间隔{n}秒",
+            "start_date": "开始日期: {n}",
+            "end_date": "结束日期: {n}",
+        }
 
+        period = {
+            "year": "{n}年",
+            "month": "{n}月",
+            "day": "{n}日",
+            "week": "第{n}周",
+            "day_of_week": "星期{n}",
+            "hour": "{n}时",
+            "minute": "{n}分",
+            "start_date": "最早触发: {n}",
+            "end_date": "最晚触发: {n}",
+        }
+
+        lists = []
+        for item in _pager.lists:
+            condition = []
+            rules_lists = json.loads(item["rules"])
+            for rule in rules_lists:
+                if item["trigger"] == "interval":
+                    template = interval[rule["key"]]
+                    template = template.replace("{n}", str(rule["value"]))
+                    condition.append(template)
+                elif item["trigger"] == "cron":
+                    template = period[rule["key"]]
+                    template = template.replace("{n}", str(rule["value"]))
+                    condition.append(template)
+                elif item["trigger"] == "date":
+                    template = str(rule["value"]) + "(触发)"
+                    condition.append(template)
+
+            item["condition"] = condition
+            item["params"] = item["params"] or "{ }"
+            item["error"] = item["error"] or "-"
+            item["remarks"] = item.get("remarks") or "-"
+            item["last_time"] = item.get("last_time") or "-"
+            vo = TypeAdapter(schema.CrontabListVo).validate_python(item)
+            lists.append(vo)
+
+        _pager.lists = lists
         return _pager
 
     @classmethod
@@ -75,17 +130,31 @@ class CrontabService:
         Author:
             zero
         """
-        data = await SysCrontabModel.filter(id=id_, is_delete=0).get()
-        tasks = []
-        for i in range(70):
-            _id = data.command + "." + str(i+1)
-            task = scheduler.get_job(job_id=_id)
-            if not task:
-                break
-            next_run_time = task.next_run_time.strftime("%Y-%m-%d %H:%M:%S")
-            tasks.append({"id": _id, "next_run_time": next_run_time})
+        # 获取任务信息
+        cron = await SysCrontabModel.filter(id=id_, is_delete=0).get()
 
-        result = data.__dict__
+        # 通知获取进程任务
+        await RedisUtil.publish(cls.REDIS_CHANNEL, scene="cron", data=json.dumps({
+            "op": "process",
+            "cron_id": cron.id,
+            "status": cron.status,
+            "command": cron.command,
+            "concurrent": cron.concurrent
+        }))
+
+        # 从Redis中读取进程
+        index: int = 0
+        while True:
+            await asyncio.sleep(0.01)
+            key: str = f"{cls.REDIS_CRON_TASKS}{str(cron.id)}@{cron.command}"
+            res: str = await RedisUtil.get(key)
+            if res is not None or index >= 10:
+                tasks = json.loads(res or "[]")
+                await RedisUtil.delete(key)
+                break
+
+        # 任计划任务信息
+        result = cron.__dict__
         result["rules"] = json.loads(result["rules"])
         result["tasks"] = tasks
         return TypeAdapter(schema.CrontabDetailVo).validate_python(result)
@@ -117,26 +186,20 @@ class CrontabService:
         try:
             async with in_transaction("mysql"):
                 # 保存到数据库
-                crontab = await SysCrontabModel.create(
+                cron = await SysCrontabModel.create(
                     **params,
                     create_time=int(time.time()),
                     update_time=int(time.time())
                 )
                 # 加入到任务中
-                params: Dict[str, any] = json.loads(crontab.params or "{}") if crontab.params else {}
-                func, trigger_fun = cls.__cron_trigger(crontab.trigger, crontab.command, crontab.rules)
-                for i in range(crontab.concurrent):
-                    job = crontab.command + "." + str(i + 1)
-                    params["w_id"] = crontab.id
-                    params["w_ix"] = i + 1
-                    params["w_job"] = job
-                    scheduler.add_job(func, trigger_fun, name=crontab.name, id=job, kwargs=params)
-                # 如果是暂时中
-                if post.status == 2:
-                    for i in range(crontab.concurrent):
-                        job = crontab.command + "." + str(1 + i)
-                        scheduler.pause_job(job_id=job)
-                        scheduler.remove_job(job_id=job)
+                if post.status == CrontabEnum.CRON_ING:
+                    await RedisUtil.publish(cls.REDIS_CHANNEL, scene="cron", data=json.dumps({
+                        "op": "create",
+                        "cron_id": cron.id,
+                        "status": post.status,
+                        "command": cron.command,
+                        "concurrent": cron.concurrent
+                    }))
         except Exception as e:
             raise AppException(str(e))
 
@@ -177,34 +240,14 @@ class CrontabService:
                     update_time=int(time.time())
                 )
 
-                # 清空旧的任务
-                for i in range(old_concurrent):
-                    try:
-                        job = old_command + "." + str(1 + i)
-                        if scheduler.get_job(job_id=job):
-                            scheduler.pause_job(job_id=job)
-                            scheduler.remove_job(job_id=job)
-                    except Exception as e:
-                        print(str(e))
-
-                # 加入到任务中
-                if post.status == 1:
-                    params: Dict[str, any] = json.loads(post.params or "{}") if post.params else {}
-                    func, trigger_fun = cls.__cron_trigger(post.trigger, post.command, json.dumps(post.rules))
-                    for i in range(post.concurrent):
-                        job = post.command + "." + str(i+1)
-                        params["w_id"] = int(post.id)
-                        params["w_ix"] = i+1
-                        params["w_job"] = job
-                        scheduler.add_job(func, trigger_fun, name=post.name, id=job, kwargs=params)
-
-                # 如果是暂停中
-                # if post.status == 2:
-                #     for i in range(post.concurrent):
-                #         job = post.command + "." + str(1 + i)
-                #         if scheduler.get_job(job_id=job):
-                #             scheduler.pause_job(job_id=job)
-                #             scheduler.remove_job(job_id=job)
+                # 通知更新任务
+                await RedisUtil.publish(cls.REDIS_CHANNEL, scene="cron", data=json.dumps({
+                    "op": "update",
+                    "cron_id": cron.id,
+                    "status": post.status,
+                    "command": old_command,
+                    "concurrent": old_concurrent
+                }))
         except Exception as e:
             raise AppException(str(e))
 
@@ -225,10 +268,13 @@ class CrontabService:
                 # 从数据库删除
                 await SysCrontabModel.filter(id=id_).update(is_delete=1, delete_time=int(time.time()))
                 # 从任务中删除
-                for i in range(cron.concurrent):
-                    job = cron.command + "." + str(1 + i)
-                    scheduler.pause_job(job_id=job)
-                    scheduler.remove_job(job_id=job)
+                await RedisUtil.publish(cls.REDIS_CHANNEL, scene="cron", data=json.dumps({
+                    "op": "delete",
+                    "cron_id": cron.id,
+                    "status": cron.status,
+                    "command": cron.command,
+                    "concurrent": cron.concurrent
+                }))
         except Exception as e:
             raise AppException(str(e))
 
@@ -247,11 +293,18 @@ class CrontabService:
         try:
             async with in_transaction("mysql"):
                 # 从数据库暂停
-                await SysCrontabModel.filter(id=id_).update(status=2, update_time=int(time.time()))
-                # 从任务中暂停
-                for i in range(cron.concurrent):
-                    job = cron.command + "." + str(1 + i)
-                    scheduler.pause_job(job_id=job)
+                await SysCrontabModel.filter(id=id_).update(
+                    status=CrontabEnum.CRON_STOP,
+                    update_time=int(time.time())
+                )
+                # 从任务中删除
+                await RedisUtil.publish(cls.REDIS_CHANNEL, scene="cron", data=json.dumps({
+                    "op": "delete",
+                    "cron_id": cron.id,
+                    "status": cron.status,
+                    "command": cron.command,
+                    "concurrent": cron.concurrent
+                }))
         except Exception as e:
             raise AppException(str(e))
 
@@ -271,13 +324,85 @@ class CrontabService:
         try:
             async with in_transaction("mysql"):
                 # 从数据库恢复
-                await SysCrontabModel.filter(id=id_).update(status=1, update_time=int(time.time()))
-                # 从任务中恢复
-                for i in range(cron.concurrent):
-                    job = cron.command + "." + str(1 + i)
-                    scheduler.resume_job(job_id=job)
+                await SysCrontabModel.filter(id=id_).update(
+                    error="",
+                    status=CrontabEnum.CRON_ING,
+                    update_time=int(time.time())
+                )
+                # 从新启动任务
+                await RedisUtil.publish(cls.REDIS_CHANNEL, scene="cron", data=json.dumps({
+                    "op": "create",
+                    "cron_id": cron.id,
+                    "status": cron.status,
+                    "command": cron.command,
+                    "concurrent": cron.concurrent
+                }))
         except Exception as e:
             raise AppException(str(e))
+
+    @classmethod
+    async def cron_subscribe(cls, data: str):
+        """
+        基于Redis的消息订阅处理计划任务
+        原因:
+            fastapi开启多进程模式后,实际上每个进程都独立运行了一套计划任务(会存在重复消费)。
+            为了解决这个问题，我们通过技术手段，在多进程下，保证只有1个进程运行计划任务，其它进程则不运行。
+            那么问题就出现了，后台请求接口调整计划任务信息时，调用的进程是随机的，那访问的进程没有运行任务，
+            那岂不是会报错吗？所以我们采用Redis的消息订阅模式，让所有进程都监听一个特定的消息，只有运行了
+            计划任务的进程去处理该做的事情，没有运行的进程则忽消息。
+        订阅监听代码在哪里呢?
+            server/events.py 下 startup() -> _redis_subscribe
+        """
+        try:
+            pid = await ConfigUtil.get("sys", "process_id", "0")
+            if str(pid) != str(os.getpid()):
+                return False
+
+            params = json.loads(data or "{}")
+            operate: str = params.get("op", "")
+            cron_id: int = int(params.get("cron_id", 0))
+            command: str = str(params.get("command", ""))
+            concurrent: int = int(params.get("concurrent", 0))
+
+            if operate == "update":
+                for i in range(concurrent):
+                    job = command + "." + str(1 + i)
+                    if scheduler.get_job(job) is not None:
+                        scheduler.remove_job(job_id=job)
+
+            if operate in ["create", "update"]:
+                crontab = await SysCrontabModel.filter(id=cron_id).first()
+                if not crontab or crontab.status != CrontabEnum.CRON_ING:
+                    return False
+                params: Dict[str, any] = json.loads(crontab.params or "{}") if crontab.params else {}
+                func, trigger_fun = cls.__cron_trigger(crontab.trigger, crontab.command, crontab.rules)
+                for i in range(crontab.concurrent):
+                    job = crontab.command + "." + str(i + 1)
+                    params["w_id"] = int(crontab.id)
+                    params["w_ix"] = int(i + 1)
+                    params["w_pid"] = int(os.getpid())
+                    params["w_job"] = job
+                    scheduler.add_job(func, trigger_fun, name=crontab.name, id=job, kwargs=params)
+            elif operate == "delete":
+                for i in range(concurrent):
+                    job = command + "." + str(1 + i)
+                    if scheduler.get_job(job) is not None:
+                        scheduler.remove_job(job_id=job)
+            elif operate == "process":
+                tasks = []
+                for i in range(70):
+                    _id = command + "." + str(i + 1)
+                    task = scheduler.get_job(job_id=_id)
+                    if not task:
+                        break
+                    next_run_time = task.next_run_time.strftime("%Y-%m-%d %H:%M:%S")
+                    tasks.append({"id": _id, "next_run_time": next_run_time})
+
+                key: str = f"{cls.REDIS_CRON_TASKS}{str(cron_id)}@{command}"
+                val: str = json.dumps(tasks, ensure_ascii=False)
+                await RedisUtil.set(key, val, 10)
+        except Exception as e:
+            logger.error("Error: cron_subscribe " + str(e))
 
     @classmethod
     def __check_rules(cls, trigger: str, rules: List[Dict[str, any]]):
@@ -331,14 +456,22 @@ class CrontabService:
         """
         try:
             module = importlib.import_module(command)
+
+            clz = getattr(module, "Command", None)
+            if not clz:
+                raise AttributeError("任务执行的类不存在: " + command)
+
+            fun = getattr(clz, "execute", None)
+            if not fun:
+                raise AttributeError("任务执行方法不存在: " + command)
+
+            return fun
         except ModuleNotFoundError:
             raise AppException("定时任务模块不存在: " + command)
-
-        func = getattr(module, "execute", None)
-        if not func:
-            raise AppException("任务执行方法不存在: " + command)
-
-        return func
+        except AttributeError as e:
+            if command in sys.modules:
+                del sys.modules[command]
+            raise AppException(str(e))
 
     @classmethod
     def __cron_trigger(cls, trigger: str, command: str, rules: str):
@@ -366,7 +499,7 @@ class CrontabService:
                 condition[item.get("key")] = item.get("value")
 
         # 配置触发条件
-        trigger_fun: any = None
+        trigger_fun: Any = None
         if trigger == "interval":
             trigger_fun = IntervalTrigger(**condition)
         elif trigger == "cron":

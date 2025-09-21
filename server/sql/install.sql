@@ -387,8 +387,7 @@ CREATE TABLE `wait_sys_crontab` (
   `remarks` varchar(300) NOT NULL DEFAULT '' COMMENT '备注信息',
   `error` text COMMENT '错误提示',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '执行状态: [1=运行, 2=暂停]',
-  `exe_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '执行时长',
-  `max_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最大执行时长',
+  `exe_time` float(10, 3) unsigned NOT NULL DEFAULT '0' COMMENT '执行时长',
   `last_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后执行时间',
   `is_delete` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除: [0=否, 1=是]',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
@@ -531,7 +530,7 @@ CREATE TABLE `wait_user_wallet` (
 BEGIN;
 INSERT INTO `wait_auth_admin` VALUES (1, 0, 0, 0, '超级管理员', 'admin', '441c9249be23cb0f884c0d6a08983174', 'zIk6qh', 'static/images/avatar.png', '13800138000', 'admin@qq.com', '127.0.0.1', 1716170400, 0, 0, 1716170400, 1716170400, 0);
 INSERT INTO `wait_auth_dept` VALUES (1, 0, '陌子科技有限公司', '李墨', '13800138000', 0, 1, '0', 0, 0, 1716170400, 1716170400, 0);
-INSERT INTO `wait_sys_crontab` VALUES (1, '垃圾清理器', 'crontab.gc', '', 'interval', '[{\"key\": \"minutes\", \"value\": \"10\"}]', 1, '', '', 1, 0, 0, 0, 0, 1749881484, 1749881484, 0);
+INSERT INTO `wait_sys_crontab` VALUES (1, '垃圾清理器', 'crontab.gc', '', 'interval', '[{\"key\": \"minutes\", \"value\": \"10\"}]', 1, '', '', 1, 0,  0, 0, 1749881484, 1749881484, 0);
 COMMIT;
 
 BEGIN;
@@ -577,6 +576,7 @@ INSERT INTO `wait_dev_pay_config` VALUES (3, 3, '支付宝支付', '支付宝支
 COMMIT;
 
 BEGIN;
+INSERT INTO `wait_sys_config` VALUES (1, 'sys', 'process_id', '0', '', 1716170400, 1716170400);
 INSERT INTO `wait_sys_config` VALUES (10, 'backs', 'name', 'WaitAdmin(python)管理系统', '', 1716170400, 1716170400);
 INSERT INTO `wait_sys_config` VALUES (11, 'backs', 'title', 'WaitAdmin(python)管理系统', '', 1716170400, 1716170400);
 INSERT INTO `wait_sys_config` VALUES (12, 'backs', 'cover', '', '', 1716170400, 1716170400);

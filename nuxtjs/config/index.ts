@@ -9,7 +9,7 @@ interface SysConfigType {
 
 const config: SysConfigType = {
     // 版本编号
-    version: '1.1.3',
+    version: '1.1.4',
     // 请求域名
     baseUrl: `${import.meta.env.VITE_API_URL || ''}`,
     // 来源终端

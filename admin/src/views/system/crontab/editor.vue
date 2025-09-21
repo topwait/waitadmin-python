@@ -112,6 +112,7 @@
                         :rows="4"
                         v-model.trim="formData.remarks"
                         show-word-limit
+                        :maxlength="300"
                     />
                 </el-form-item>
                 <el-form-item label="运行状态" prop="status">
@@ -123,7 +124,8 @@
                 <el-form-item label="任务列表" v-if="formData.tasks.length > 0">
                     <el-table :data="formData.tasks" size="large">
                         <el-table-column label="名称" prop="id" min-width="150" show-tooltip-when-overflow />
-                        <el-table-column label="下次执行时间" prop="next_run_time" min-width="175" show-tooltip-when-overflow />
+                        <el-table-column label="下次执行时间" prop="next_run_time" min-width="175"
+                                         show-tooltip-when-overflow />
                     </el-table>
                 </el-form-item>
             </el-form>
