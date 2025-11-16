@@ -12,6 +12,8 @@
     },
     "dependencies": {
         "@element-plus/icons-vue": "^2.3.1",
+        "@vue/shared": "^3.5.22",
+        "@vueuse/core": "^13.9.0",
         "@wangeditor/editor": "^5.1.23",
         "@wangeditor/editor-for-vue": "^5.1.12",
         "axios": "^1.9.0",
@@ -19,8 +21,9 @@
         "default-passive-events": "^4.0.0",
         "echarts": "^5.6.0",
         "element-plus": "^2.9.11",
+        "lodash-es": "^4.17.21",
         "nprogress": "^0.2.0",
-        "pinia": "^3.0.2",
+        "pinia": "^3.0.3",
         "vue": "^3.5.16",
         "vue-clipboard3": "^2.0.0",
         "vue-cropper": "^1.1.4",
@@ -30,6 +33,7 @@
         "vuedraggable": "^4.1.0"
     },
     "devDependencies": {
+        "@types/lodash-es": "^4.17.12",
         "@types/node": "^22.15.27",
         "@types/nprogress": "^0.2.3",
         "@typescript-eslint/eslint-plugin": "^8.33.0",
@@ -39,6 +43,7 @@
         "consola": "^3.4.2",
         "eslint": "^9.27.0",
         "eslint-plugin-vue": "^10.1.0",
+        "fs-extra": "^11.3.2",
         "postcss": "^8.5.4",
         "sass": "1.79.6",
         "stylelint": "^16.20.0",

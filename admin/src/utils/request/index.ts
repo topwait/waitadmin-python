@@ -1,5 +1,5 @@
 import NProgress from 'nprogress'
-import { merge } from 'lodash'
+import { merge } from 'lodash-es'
 import { ElMessage } from 'element-plus'
 import { type AxiosRequestConfig, AxiosError, RawAxiosRequestHeaders, AxiosHeaders } from 'axios'
 import { type AxiosHooks } from './type'

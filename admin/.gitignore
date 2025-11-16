@@ -16,6 +16,7 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 package-lock.json
+pnpm-lock.yaml
 .idea
 .DS_Store
 *.suo

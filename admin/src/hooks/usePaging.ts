@@ -9,6 +9,12 @@ interface Options {
     fetchFun: (_arg: any) => Promise<any>
 }
 
+/**
+ * 分页数据处理器
+ *
+ * @param options
+ * @author zero
+ */
 export function usePaging(options: Options): any {
     // 读取参数
     const { page = 1, size = 15, fetchFun, params = {}, firstLoading = false } = options

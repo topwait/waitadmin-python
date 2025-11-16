@@ -4,7 +4,7 @@ import fsExtra from 'fs-extra'
 const { existsSync, remove, copy } = fsExtra
 const cwd = process.cwd()
 
-//打包发布路径，谨慎改动
+// 打包发布路径,谨慎改动
 const releaseRelativePath = '../server/public/admin'
 const distPath = path.resolve(cwd, 'dist')
 const releasePath = path.resolve(cwd, releaseRelativePath)
@@ -34,4 +34,4 @@ function copyFile(sourceDir, targetDir) {
     })
 }
 
-build()
+build().then()

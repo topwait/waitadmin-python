@@ -132,7 +132,7 @@ const formData = reactive<any>({
     username: '',         // 登录账号
     password: '',         // 登录密码
     password_confirm: '', // 确认密码
-    mobile: '',            // 联系电话
+    mobile: '',           // 联系电话
     email: '',            // 电子邮箱
     is_disable: 0         // 是否禁用:[0=否, 1=是]
 })

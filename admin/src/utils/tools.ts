@@ -1,5 +1,5 @@
 import { isObject } from '@vue/shared'
-import { cloneDeep } from 'lodash'
+import { cloneDeep } from 'lodash-es'
 
 const toolsUtil: any = {
     /**
