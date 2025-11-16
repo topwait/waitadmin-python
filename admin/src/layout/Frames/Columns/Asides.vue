@@ -10,8 +10,8 @@
                         :class="menusIndex === index ? 'active' : ''"
                         @click="onSwitchMenu(route, index)"
                     >
-                        <icon :name="route.meta.icon" :size="14" />
-                        <cite>{{  route.meta.title }}</cite>
+                        <icon :name="String(route.meta?.icon)" :size="14" />
+                        <cite>{{  route.meta?.title }}</cite>
                     </li>
                 </ul>
             </el-scrollbar>
