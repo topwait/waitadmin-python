@@ -42,8 +42,8 @@
                 </template>
             </el-form-item>
             <el-form-item prop="logo_black_big" required>
-                <material-picker tipsBtn="选大图" v-model="formData.logo_black_big" />
-                <material-picker tipsBtn="选小图" v-model="formData.logo_black_small" />
+                <material-picker v-model="formData.logo_black_big" tips-btn="选大图" />
+                <material-picker v-model="formData.logo_black_small" tips-btn="选小图" />
                 <template v-slot:label>
                     <el-tooltip
                         placement="right"
@@ -55,8 +55,8 @@
                 </template>
             </el-form-item>
             <el-form-item prop="logo_white_big" required>
-                <material-picker tipsBtn="选大图" v-model="formData.logo_white_big" />
-                <material-picker tipsBtn="选小图" v-model="formData.logo_white_small" />
+                <material-picker v-model="formData.logo_white_big" tips-btn="选大图" />
+                <material-picker v-model="formData.logo_white_small" tips-btn="选小图" />
                 <template v-slot:label>
                     <el-tooltip
                         placement="right"
@@ -151,18 +151,18 @@ const formData = reactive({
 const rules = {
     'name': [
         { required: true, message: '请填写网站名称', trigger: ['blur'] },
-        { max: 30, message: '网站名称不能超出30个字符', trigger: ['blur'] },
+        { max: 30, message: '网站名称不能超出30个字符', trigger: ['blur'] }
     ],
     'title': [
         { required: true, message: '请填写网站标题', trigger: ['blur'] },
-        { max: 30, message: '网站标题不能超出30个字符', trigger: ['blur'] },
+        { max: 30, message: '网站标题不能超出30个字符', trigger: ['blur'] }
     ],
     'cover': [
-        { max: 500, message: '网站封面链接不能超出500个字符', trigger: ['blur'] },
+        { max: 500, message: '网站封面链接不能超出500个字符', trigger: ['blur'] }
     ],
     'favicon': [
         { required: true, message: '请设置网站图标', trigger: ['blur'] },
-        { max: 500, message: '网站图标链接不能超出500个字符', trigger: ['blur'] },
+        { max: 500, message: '网站图标链接不能超出500个字符', trigger: ['blur'] }
     ],
     'logo_black_big': [
         { required: true, message: '请选择深色logo', trigger: ['blur'] }
@@ -171,10 +171,10 @@ const rules = {
         { required: true, message: '请选择浅色', trigger: ['blur'] }
     ],
     'contacts': [
-        { max: 20, message: '联系人姓名不能超出20个字符', trigger: ['blur'] },
+        { max: 20, message: '联系人姓名不能超出20个字符', trigger: ['blur'] }
     ],
     'mobile': [
-        { max: 20, message: '联系电话不能超出200个字符', trigger: ['blur'] },
+        { max: 20, message: '联系电话不能超出200个字符', trigger: ['blur'] }
     ]
 }
 

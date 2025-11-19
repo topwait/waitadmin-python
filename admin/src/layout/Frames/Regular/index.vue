@@ -1,12 +1,12 @@
 <template>
     <div class="layout-container">
         <drawers />
-        <layout-header :defaultIndex="menusIndex" @change="onOpenSubmenu" />
+        <layout-header :default-index="menusIndex" @change="onOpenSubmenu" />
         <div class="layout-main">
             <layout-asides
                 v-if="subRouters?.length > 0 && !isMobile"
-                :firstsMenu="firstsMenu"
-                :subRouters="subRouters"
+                :firsts-menu="firstsMenu"
+                :sub-routers="subRouters"
             />
             <div class="w-full">
                 <tags-view v-if="isTabMultiple" />
@@ -54,7 +54,7 @@ const initChoiceMenu = (isJump: boolean = true): void => {
         const path = routes.value[i].path
         if (activeMenu.value.startsWith(path)) {
             menusIndex.value = i
-            firstsMenu.value = path + '/'
+            firstsMenu.value = `${path}/`
             subRouters.value = routes.value[i].children
             if (isJump) {
                 router.push(activeMenu.value)
@@ -73,7 +73,7 @@ const initChoiceMenu = (isJump: boolean = true): void => {
 const onOpenSubmenu = (route: RouteRecordRaw, index: number): void => {
     if (!validateUtil.isExternal(route.path)) {
         menusIndex.value = index
-        firstsMenu.value = route.path + '/'
+        firstsMenu.value = `${route.path}/`
         router.push(firstRoutes(route))
         subRouters.value = routes.value[index].children
     } else {
@@ -89,7 +89,7 @@ const onOpenSubmenu = (route: RouteRecordRaw, index: number): void => {
  */
 const firstRoutes = (route: any, path: string = ''): any => {
     if (route.path) {
-        path += path ? '/' + route.path : route.path
+        path += path ? `/${route.path}` : route.path
     }
 
     if (route.children && route.children.length > 0) {

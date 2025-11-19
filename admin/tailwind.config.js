@@ -3,7 +3,7 @@ export default {
     darkMode: 'class',
     content: [
         './index.html',
-        './src/**/*.{vue,js,ts,jsx,tsx}',
+        './src/**/*.{vue,js,ts,jsx,tsx}'
     ],
     theme: {
         extend: {
@@ -41,7 +41,7 @@ export default {
 
                 'fill': 'var(--el-fill-color)',
                 'fill-light': 'var(--el-fill-color-light)',
-                'fill-lighter': 'var(--el-fill-color-lighter)',
+                'fill-lighter': 'var(--el-fill-color-lighter)'
             },
             fontFamily: {
                 'sans': [

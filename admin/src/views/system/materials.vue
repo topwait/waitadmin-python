@@ -4,10 +4,10 @@
             <el-tabs v-model="activeTab">
                 <el-tab-pane
                     v-for="item in tabsMap"
+                    :key="item.type"
                     :label="item.name"
                     :name="item.type"
                     :index="item.type"
-                    :key="item.type"
                     lazy
                 >
                     <material

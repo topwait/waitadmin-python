@@ -4,8 +4,8 @@
         :title="popTitle"
         :async-close="true"
         width="800px"
-        :confirmButtonText="false"
-        :cancelButtonText="false"
+        :confirm-button-text="false"
+        :cancel-button-text="false"
         @close="emits('close')"
     >
         <div class="p-6 pb-0">

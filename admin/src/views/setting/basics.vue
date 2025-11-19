@@ -30,9 +30,9 @@
             <el-form-item label="统计代码" prop="website.analyse">
                 <div class="w-[380px]">
                     <el-input
+                        v-model.trim="formData.website.analyse"
                         type="textarea"
                         :rows="5"
-                        v-model.trim="formData.website.analyse"
                         show-word-limit
                         placeholder="https://hm.baidu.com/hm.js?d16da1a2f..."
                     />
@@ -121,9 +121,9 @@
             <el-form-item prop="pc.description">
                 <div class="w-[380px]">
                     <el-input
+                        v-model.trim="formData.pc.description"
                         type="textarea"
                         :rows="5"
-                        v-model.trim="formData.pc.description"
                         show-word-limit
                     />
                 </div>
@@ -161,7 +161,7 @@
                     </el-radio-group>
                 </div>
             </el-form-item>
-            <el-form-item label="关闭访问" prop="h5.close_url" v-if="formData.h5.status === 1">
+            <el-form-item v-if="formData.h5.status === 1" label="关闭访问" prop="h5.close_url">
                 <div class="w-80">
                     <el-input v-model="formData.h5.close_url" placeholder="请输入自定义链接" />
                 </div>
@@ -205,7 +205,7 @@ const formData = reactive({
         name: '',
         title: '',
         keywords: '',
-        description: '',
+        description: ''
     }
 })
 
@@ -213,30 +213,30 @@ const formData = reactive({
 const rules = {
     // Base
     'website.icp': [
-        { max: 500, message: 'ICP备案不能超出500个字符', trigger: ['blur'] },
+        { max: 500, message: 'ICP备案不能超出500个字符', trigger: ['blur'] }
     ],
     'website.pcp': [
-        { max: 500, message: '公安备案不能超出500个字符', trigger: ['blur'] },
+        { max: 500, message: '公安备案不能超出500个字符', trigger: ['blur'] }
     ],
     // H5
     'h5.title': [
-        { max: 200, message: 'H5端标题不能超出200个字符', trigger: ['blur'] },
+        { max: 200, message: 'H5端标题不能超出200个字符', trigger: ['blur'] }
     ],
     'h5.close_url': [
-        { max: 500, message: 'H5端关闭访问地址不能超出500个字符', trigger: ['blur'] },
+        { max: 500, message: 'H5端关闭访问地址不能超出500个字符', trigger: ['blur'] }
     ],
     // PC
     'pc.name': [
-        { max: 200, message: '网站名称不能超出200个字符', trigger: ['blur'] },
+        { max: 200, message: '网站名称不能超出200个字符', trigger: ['blur'] }
     ],
     'pc.title': [
-        { max: 200, message: '网站标题不能超出200个字符', trigger: ['blur'] },
+        { max: 200, message: '网站标题不能超出200个字符', trigger: ['blur'] }
     ],
     'pc.keyword': [
-        { max: 200, message: '网站关键词不能超出200个字符', trigger: ['blur'] },
+        { max: 200, message: '网站关键词不能超出200个字符', trigger: ['blur'] }
     ],
     'pc.description': [
-        { max: 500, message: '网站描述不能超出500个字符', trigger: ['blur'] },
+        { max: 500, message: '网站描述不能超出500个字符', trigger: ['blur'] }
     ]
 }
 

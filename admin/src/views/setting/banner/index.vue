@@ -30,7 +30,7 @@
 
         <!-- 表格栏 -->
         <el-card v-loading="pager.loading" class="!border-none" shadow="never">
-            <el-button type="primary" v-perms="['setting:banner:add']" @click="handleEditor('add')">
+            <el-button v-perms="['setting:banner:add']" type="primary" @click="handleEditor('add')">
                 <template #icon>
                     <icon name="el-icon-Plus" />
                 </template>

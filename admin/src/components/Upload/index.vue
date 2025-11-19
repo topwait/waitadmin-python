@@ -1,8 +1,8 @@
 <template>
     <div class="upload">
         <el-upload
-            v-model:file-list="fileList"
             ref="uploadRefs"
+            v-model:file-list="fileList"
             v-bind="$attrs"
             :multiple="multiple"
             :limit="limit"

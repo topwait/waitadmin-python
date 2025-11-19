@@ -15,8 +15,8 @@
                 </el-form-item>
                 <el-form-item label="所属部门" prop="dept_id">
                     <el-tree-select
-                        class="flex-1"
                         v-model="formData.dept_id"
+                        class="flex-1"
                         :data="optionsData.dept"
                         clearable
                         node-key="id"
@@ -70,8 +70,8 @@
                 </el-form-item>
                 <el-form-item label="登录密码" prop="password">
                     <el-input
-                        type="password"
                         v-model="formData.password"
+                        type="password"
                         placeholder="请输入登录密码"
                         maxlength="20"
                         show-password
@@ -79,8 +79,8 @@
                 </el-form-item>
                 <el-form-item label="确认密码" prop="password_confirm">
                     <el-input
-                        type="password"
                         v-model="formData.password_confirm"
+                        type="password"
                         placeholder="请输入确认密码"
                         maxlength="20"
                         show-password

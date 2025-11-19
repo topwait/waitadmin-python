@@ -1,8 +1,8 @@
 <template>
     <div>
         <el-upload
-            class="flex flex-col"
             ref="uploadRef"
+            class="flex flex-col"
             :limit="1"
             :show-file-list="false"
             :auto-upload="false"

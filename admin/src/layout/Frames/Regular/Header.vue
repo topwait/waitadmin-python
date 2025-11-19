@@ -2,7 +2,7 @@
     <div class="layout-header">
         <logo v-if="!isMobile && isLayoutLogo" />
 
-        <ul class="navbar-left" v-if="isMobile">
+        <ul v-if="isMobile" class="navbar-left">
             <li><stretch /></li>
         </ul>
 

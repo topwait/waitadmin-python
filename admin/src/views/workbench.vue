@@ -1,14 +1,14 @@
 <template>
     <div v-loading="pageLoading">
         <el-row :gutter="20">
-            <el-col :xs="24"
-                    :sm="12"
-                    :md="6"
-                    :lg="6"
-                    :xl="6"
-                    :span="6"
-                    v-for="(item, index) in workbenchData.today"
-                    :key="index"
+            <el-col v-for="(item, index) in workbenchData.today"
+                :key="index"
+                :xs="24"
+                :sm="12"
+                :md="6"
+                :lg="6"
+                :xl="6"
+                :span="6"
             >
                 <el-card class="mb-4 !border-none" shadow="never">
                     <template #header>
@@ -140,7 +140,7 @@ const workbenchData: Ref<any> = ref({
     today: [],    // 今日数据
     shortcut: [], // 快捷方式
     backlogs: [], // 待办事项
-    version: {},  // 版本信息
+    version: {}  // 版本信息
 })
 
 // 趋势图配置
@@ -152,9 +152,9 @@ const chartOption = ref({
             axisPointer: {
                 lineStyle: {
                     width: 1,
-                    color: '#019680',
-                },
-            },
+                    color: '#019680'
+                }
+            }
         },
         xAxis: {
             type: 'category',
@@ -165,27 +165,27 @@ const chartOption = ref({
                 lineStyle: {
                     width: 1,
                     type: 'solid',
-                    color: 'rgba(226,226,226,0.5)',
-                },
+                    color: 'rgba(226,226,226,0.5)'
+                }
             },
             axisTick: {
-                show: false,
-            },
+                show: false
+            }
         },
         yAxis: [
             {
                 type: 'value',
                 splitNumber: 4,
                 axisTick: {
-                    show: false,
+                    show: false
                 },
                 splitArea: {
                     show: true,
                     areaStyle: {
-                        color: ['rgba(255,255,255,0.2)', 'rgba(226,226,226,0.2)'],
-                    },
-                },
-            },
+                        color: ['rgba(255,255,255,0.2)', 'rgba(226,226,226,0.2)']
+                    }
+                }
+            }
         ],
         grid: { left: '1%', right: '1%', top: '2  %', bottom: 0, containLabel: true },
         series: [
@@ -195,11 +195,11 @@ const chartOption = ref({
                 type: 'line',
                 areaStyle: {},
                 itemStyle: {
-                    color: '#5ab1ef',
-                },
+                    color: '#5ab1ef'
+                }
             }
 
-        ],
+        ]
     },
     // 浏览器趋势图
     website: {

@@ -4,10 +4,10 @@
         <el-card shadow="never" class="!border-none">
             <el-tabs v-model="currentTab">
                 <el-tab-pane
-                    :label="item.label"
-                    :name="item.value.toString()"
                     v-for="(item, index) in headerList"
                     :key="index"
+                    :label="item.label"
+                    :name="item.value.toString()"
                 />
             </el-tabs>
             <el-alert
@@ -202,8 +202,8 @@
                 <el-form-item label="消息加密方式" required prop="oa.encryption_type">
                     <div class="flex-1 min-w-0">
                         <el-radio-group
-                            class="flex-col !items-start min-w-0"
                             v-model="formData.oa.encryption_type"
+                            class="flex-col !items-start min-w-0"
                         >
                             <el-radio :value="1">明文模式 (不使用消息体加解密功能，安全系数较低)</el-radio>
                             <el-radio :value="2">兼容模式 (明文、密文将共存，方便开发者调试和维护)</el-radio>
@@ -309,7 +309,7 @@ const formData = reactive({
         socket_domain: '',
         upload_file_domain: '',
         download_file_domain: '',
-        udp_domain: '',
+        udp_domain: ''
     },
     // 微信公众号
     oa: {

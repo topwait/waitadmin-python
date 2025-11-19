@@ -6,8 +6,8 @@
                     :src="config.cover"
                     :width="400"
                     height="100%"
-                    borderTopLeftRadius="8px"
-                    borderBottomLeftRadius="8px"
+                    border-top-left-radius="8px"
+                    border-bottom-left-radius="8px"
                 />
             </div>
             <div class="login-card" :class="config.cover ? 'cover-style': ''">
@@ -27,8 +27,8 @@
                     <el-form-item prop="password">
                         <el-input
                             ref="passwordRef"
-                            show-password
                             v-model="formData.password"
+                            show-password
                             placeholder="请输入密码"
                             @keyup.enter="handleEnter"
                         >
@@ -51,8 +51,8 @@
                             </el-input>
                             <div class="captcha" @click="getCaptcha">
                                 <img class="w-full h-full"
-                                     :src="captcha"
-                                     alt="code"
+                                    :src="captcha"
+                                    alt="code"
                                 />
                             </div>
                         </div>
@@ -162,7 +162,7 @@ const handleLogin = async (): Promise<void> => {
         const { query: { redirect } } = route
         const path = typeof redirect === 'string' ? redirect : '/'
         await router.push(path)
-    }  catch (err) {
+    }  catch {
         await getCaptcha()
     }
 }

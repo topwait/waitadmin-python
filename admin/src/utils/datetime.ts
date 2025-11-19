@@ -15,7 +15,7 @@ const datetimeUtil: any = {
         const opt: any = {
             'YYYY': String(date.getFullYear()),         // 年
             'YY': String(date.getFullYear()).slice(-2), // 年
-            'M+': String((date.getMonth() + 1)),        // 月
+            'M+': String(date.getMonth() + 1),        // 月
             'D+': date.getDate().toString(),            // 日
             'h+': date.getHours().toString(),           // 时
             'm+': date.getMinutes().toString(),         // 分
@@ -24,7 +24,7 @@ const datetimeUtil: any = {
 
         let ret
         for (const k in opt) {
-            ret = new RegExp('(' + k + ')').exec(format)
+            ret = new RegExp(`(${k})`).exec(format)
             if (ret) {
                 const replaceValue: string = ret[1].length == 1 ? opt[k] : opt[k].padStart(ret[1].length, '0')
                 format = format.replace(ret[1], String(replaceValue))
@@ -64,7 +64,7 @@ const datetimeUtil: any = {
 
         let ret
         for (const k in opt) {
-            ret = new RegExp('(' + k + ')').exec(format)
+            ret = new RegExp(`(${k})`).exec(format)
             if (ret) {
                 const replaceValue: string = ret[1].length == 1 ? opt[k] : opt[k].padStart(ret[1].length, '0')
                 format = format.replace(ret[1], replaceValue)

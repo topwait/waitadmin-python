@@ -40,7 +40,7 @@ const addRoutesRecursively = (routes: any, parentPath = '') => {
 
             // 递归处理子路由
             if (route.children && route.children.length > 0) {
-                addRoutesRecursively(route.children, fullPath + '/')
+                addRoutesRecursively(route.children, `${fullPath}/`)
             }
         })
     } catch (e) {

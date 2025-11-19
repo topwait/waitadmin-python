@@ -29,9 +29,9 @@
                 </el-form-item>
                 <el-form-item label="文章简介" prop="intro">
                     <el-input
+                        v-model.trim="formData.intro"
                         type="textarea"
                         :rows="4"
-                        v-model.trim="formData.intro"
                         show-word-limit
                     />
                 </el-form-item>

@@ -53,8 +53,8 @@
                 </el-form-item>
                 <el-form-item label="下单时间">
                     <date-picker
-                        v-model:startTime="queryParams.start_time"
-                        v-model:endTime="queryParams.end_time"
+                        v-model:start-time="queryParams.start_time"
+                        v-model:end-time="queryParams.end_time"
                     />
                 </el-form-item>
                 <el-form-item>

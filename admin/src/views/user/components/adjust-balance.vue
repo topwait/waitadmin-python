@@ -1,7 +1,7 @@
 <template>
     <popup
         :show="true"
-        :title="'调整余额'"
+        title="调整余额"
         :loading="loading"
         :async-close="true"
         width="500px"
@@ -33,7 +33,7 @@
                         type="number"
                     />
                 </el-form-item>
-                <el-form-item :label="`调整后的值`">
+                <el-form-item label="调整后的值">
                     fff
                 </el-form-item>
             </el-form>

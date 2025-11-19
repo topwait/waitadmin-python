@@ -59,7 +59,7 @@ const toolsUtil: any = {
      * @returns {string} (带单位的值)
      */
     addUnit(value: string | number, unit: string = 'px'): string {
-        return !Object.is(Number(value), NaN) ? `${value}${unit}` : value + ''
+        return !Object.is(Number(value), NaN) ? `${value}${unit}` : `${value}`
     },
 
     /**
@@ -82,19 +82,19 @@ const toolsUtil: any = {
         let query: string = ''
         for (const props of Object.keys(params)) {
             const value = params[props]
-            const part: string = encodeURIComponent(props) + '='
+            const part: string = `${encodeURIComponent(props)}=`
             if (!toolsUtil.isEmpty(value) && isObject(value)) {
                 for (const key of Object.keys(value)) {
                     if (!toolsUtil.isEmpty(value[key])) {
-                        const params: string = props + '[' + key + ']'
-                        const subPart: string = encodeURIComponent(params) + '='
-                        query += subPart + encodeURIComponent(value[key]) + '&'
+                        const params: string = `${props}[${key}]`
+                        const subPart: string = `${encodeURIComponent(params)}=`
+                        query += `${subPart + encodeURIComponent(value[key])}&`
                     }
                 }
             }
 
             if (!toolsUtil.isEmpty(value) && !isObject(value)) {
-                query += part + encodeURIComponent(value) + '&'
+                query += `${part + encodeURIComponent(value)}&`
             }
         }
         return query.slice(0, -1)

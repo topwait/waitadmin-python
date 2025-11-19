@@ -7,8 +7,8 @@
         />
 
         <img v-else
-             :src="themeStyles === 'white' ? sysConfig.logo_black_big : sysConfig.logo_white_big"
-             alt="logo"
+            :src="themeStyles === 'white' ? sysConfig.logo_black_big : sysConfig.logo_white_big"
+            alt="logo"
         />
     </div>
 </template>

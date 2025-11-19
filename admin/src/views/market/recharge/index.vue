@@ -39,7 +39,7 @@
         <!-- 表格栏 -->
         <el-card v-loading="pager.loading" class="!border-none" shadow="never">
             <div class="text-xl font-medium mb-[20px]">充值套餐</div>
-            <el-button type="primary" v-perms="['market:recharge:add']" @click="handleEditor('add')">
+            <el-button v-perms="['market:recharge:add']" type="primary" @click="handleEditor('add')">
                 <template #icon>
                     <icon name="el-icon-Plus" />
                 </template>

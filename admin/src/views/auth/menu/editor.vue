@@ -19,8 +19,8 @@
                 </el-form-item>
                 <el-form-item label="父级菜单" prop="pid" label-width="100px">
                     <el-tree-select
-                        class="flex-1"
                         v-model="formData.pid"
+                        class="flex-1"
                         :data="menuOptions"
                         clearable
                         node-key="id"
@@ -36,7 +36,7 @@
                     <el-input v-model="formData.name" placeholder="请输入菜单名称" clearable />
                 </el-form-item>
                 <el-form-item v-if="formData.type !== 'A'" label="菜单图标" prop="icon">
-                    <icon-picker class="flex-1" v-model="formData.icon" />
+                    <icon-picker v-model="formData.icon" class="flex-1" />
                 </el-form-item>
                 <el-form-item v-if="formData.type !== 'A'" prop="path" label-width="100px">
                     <el-input
@@ -56,8 +56,8 @@
                 </el-form-item>
                 <el-form-item v-if="formData.type === 'C'" prop="component" label-width="100px">
                     <el-autocomplete
-                        class="w-full"
                         v-model="formData.component"
+                        class="w-full"
                         :fetch-suggestions="querySearch"
                         clearable
                         placeholder="请输入组件路径"

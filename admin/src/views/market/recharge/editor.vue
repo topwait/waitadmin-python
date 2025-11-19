@@ -11,10 +11,10 @@
         <div class="p-6 pb-0">
             <el-form ref="formRef" :model="formData" :rules="formRules" label-width="80px">
                 <el-form-item label="充值金额" prop="money">
-                    <el-input type="number" v-model="formData.money" placeholder="请输入充值金额" />
+                    <el-input v-model="formData.money" type="number" placeholder="请输入充值金额" />
                 </el-form-item>
                 <el-form-item label="赠送金额" prop="give_money">
-                    <el-input type="number" v-model="formData.give_money" placeholder="请输入赠送金额" />
+                    <el-input v-model="formData.give_money" type="number" placeholder="请输入赠送金额" />
                 </el-form-item>
                 <el-form-item label="排序" prop="sort" label-width="100px">
                     <el-input-number v-model="formData.sort" :min="0" :max="9999" />

@@ -19,8 +19,8 @@
             <div class="drawer-card-body">
                 <div class="layout-drawer-container">
                     <div class="drawer-item"
-                         :class="layout==='classic' ? 'active' : ''"
-                         @click="layout = 'classic'"
+                        :class="layout==='classic' ? 'active' : ''"
+                        @click="layout = 'classic'"
                     >
                         <section class="el-container">
                             <aside class="el-aside" style="width: 17px; margin-right: 5px;"></aside>
@@ -31,8 +31,8 @@
                         </section>
                     </div>
                     <div class="drawer-item"
-                         :class="layout==='columns' ? 'active' : ''"
-                         @click="layout = 'columns'"
+                        :class="layout==='columns' ? 'active' : ''"
+                        @click="layout = 'columns'"
                     >
                         <section class="el-container">
                             <aside class="el-aside" style="width: 10px; margin-right: 5px;"></aside>
@@ -44,8 +44,8 @@
                         </section>
                     </div>
                     <div class="drawer-item"
-                         :class="layout==='regular' ? 'active' : ''"
-                         @click="layout = 'regular'"
+                        :class="layout==='regular' ? 'active' : ''"
+                        @click="layout = 'regular'"
                     >
                         <section class="el-container is-vertical">
                             <header class="el-aside" style="height: 10px; margin-bottom: 5px;"></header>
@@ -58,8 +58,8 @@
                         </section>
                     </div>
                     <div class="drawer-item"
-                         :class="layout==='roomier' ? 'active' : ''"
-                         @click="layout = 'roomier'"
+                        :class="layout==='roomier' ? 'active' : ''"
+                        @click="layout = 'roomier'"
                     >
                         <section class="el-container is-vertical">
                             <header class="el-aside" style="height: 10px; margin-bottom: 5px;"></header>

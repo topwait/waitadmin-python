@@ -105,17 +105,17 @@ const rules = {
         { required: true, message: '请选择验证类型', trigger: 'blur' }
     ],
     'smtp_host': [
-        { max: 100, message: '服务器地址不能超出100个字符', trigger: ['blur'] },
+        { max: 100, message: '服务器地址不能超出100个字符', trigger: ['blur'] }
     ],
     'smtp_port': [
         { pattern: /^[0-9]+$/, message: '服务器端口必须是数字', trigger: 'blur' },
-        { max: 10, message: '服务器端口不能超出10个字符', trigger: ['blur'] },
+        { max: 10, message: '服务器端口不能超出10个字符', trigger: ['blur'] }
     ],
     'smtp_user': [
-        { max: 100, message: '发件邮箱号不能超出100个字符', trigger: ['blur'] },
+        { max: 100, message: '发件邮箱号不能超出100个字符', trigger: ['blur'] }
     ],
     'smtp_pass': [
-        { max: 100, message: '邮箱授权码不能超出100个字符', trigger: ['blur'] },
+        { max: 100, message: '邮箱授权码不能超出100个字符', trigger: ['blur'] }
     ]
 }
 

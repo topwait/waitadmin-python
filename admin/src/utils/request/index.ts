@@ -20,7 +20,7 @@ const axiosHooks: AxiosHooks = {
 
         if (withToken) {
             const token: string = cacheUtil.get(cacheEnum.TOKEN_KEY) || ''
-            headers.Authorization = 'Bearer ' + token
+            headers.Authorization = `Bearer ${token}`
         }
 
         if (

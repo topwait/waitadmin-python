@@ -21,8 +21,8 @@
                 </el-form-item>
                 <el-form-item label="创建时间">
                     <date-picker
-                        v-model:startTime="queryParams.start_time"
-                        v-model:endTime="queryParams.end_time"
+                        v-model:start-time="queryParams.start_time"
+                        v-model:end-time="queryParams.end_time"
                     />
                 </el-form-item>
                 <el-form-item>
@@ -34,7 +34,7 @@
 
         <!-- 表格栏 -->
         <el-card v-loading="pager.loading" class="!border-none" shadow="never">
-            <el-button type="primary" v-perms="['content:article:add']" @click="handleEditor('add')">
+            <el-button v-perms="['content:article:add']" type="primary" @click="handleEditor('add')">
                 <template #icon>
                     <icon name="el-icon-plus" />
                 </template>

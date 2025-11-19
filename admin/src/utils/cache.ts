@@ -27,7 +27,7 @@ const cacheUtil: any = {
         try {
             window.localStorage.setItem(key, data)
             return true
-        } catch (e) {
+        } catch {
             return false
         }
     },
@@ -70,7 +70,7 @@ const cacheUtil: any = {
             }
 
             return data
-        } catch (e) {
+        } catch {
             return data
         }
     },

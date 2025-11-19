@@ -13,10 +13,10 @@
             <div class="flex p-3" @click.stop>
                 <div class="popover-input__input mr-[10px] flex-1">
                     <el-select
-                        class="flex-1"
-                        :size="size"
                         v-if="type === 'select'"
                         v-model="inputValue"
+                        class="flex-1"
+                        :size="size"
                         :teleported="teleported"
                     >
                         <el-option

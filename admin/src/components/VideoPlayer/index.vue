@@ -20,11 +20,11 @@ import VideoPlay from 'vue3-video-play/dist/index.mjs'
 const props = defineProps({
     src: {
         type: String,
-        required: true,
+        required: true
     },
     width: String,
     height: String,
-    poster: String,
+    poster: String
 })
 
 const attrs = useAttrs()
@@ -83,6 +83,6 @@ const onCanplay = () => {
 
 defineExpose({
     play,
-    pause,
+    pause
 })
 </script>

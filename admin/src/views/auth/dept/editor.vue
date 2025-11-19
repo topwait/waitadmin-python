@@ -10,10 +10,10 @@
     >
         <div class="p-6 pb-0">
             <el-form ref="formRef" :model="formData" :rules="formRules" label-width="80px">
-                <el-form-item label="上级部门" prop="pid" v-if="formData.pid !== 0">
+                <el-form-item v-if="formData.pid !== 0" label="上级部门" prop="pid">
                     <el-tree-select
-                        class="flex-1"
                         v-model="formData.pid"
+                        class="flex-1"
                         :data="optionsData.dept"
                         clearable
                         node-key="id"

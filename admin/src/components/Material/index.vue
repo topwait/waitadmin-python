@@ -23,13 +23,13 @@
                                 <template #dropdown>
                                     <el-dropdown-menu>
                                         <popover-input
-                                            @confirm="handleRenameCate($event, data.id)"
                                             size="default"
                                             width="400px"
                                             :value="data.name"
                                             :limit="20"
                                             show-limit
                                             teleported
+                                            @confirm="handleRenameCate($event, data.id)"
                                         >
                                             <el-dropdown-item>命名分组</el-dropdown-item>
                                         </popover-input>
@@ -43,12 +43,12 @@
             </el-scrollbar>
             <div class="grouping">
                 <popover-input
-                    @confirm="handleAddCate"
                     size="default"
                     width="400px"
                     :limit="20"
                     show-limit
                     teleported
+                    @confirm="handleAddCate"
                 >
                     <el-button>添加分组</el-button>
                 </popover-input>
@@ -100,9 +100,9 @@
                 </div>
                 <div>
                     <el-input
+                        v-model="searchParams.keyword"
                         class="w-60"
                         placeholder="请输入名称"
-                        v-model="searchParams.keyword"
                         @keyup.enter="resetPaging"
                     >
                         <template #append>

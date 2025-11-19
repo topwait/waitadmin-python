@@ -7,7 +7,7 @@
         @close="emits('close')"
     >
         <div class="p-6 pb-0">
-            <el-tabs type="border-card" v-model="currTabPane">
+            <el-tabs v-model="currTabPane" type="border-card">
                 <!-- 基础信息 -->
                 <el-tab-pane name="intros" label="基础信息" class="min-h-[542px]">
                     <!-- 账户 -->
@@ -50,11 +50,11 @@
                             <dd>
                                 {{ formData.account }}
                                 <popover-input
+                                    v-perms="['users:user:edit']"
                                     class="ml-[5px]"
                                     :limit="32"
                                     :value="formData.account"
                                     @confirm="handleEdit($event, 'account')"
-                                    v-perms="['users:user:edit']"
                                 >
                                     <el-button type="primary" link>
                                         <icon name="el-icon-EditPen" />
@@ -67,11 +67,11 @@
                             <dd>
                                 {{ formData.nickname }}
                                 <popover-input
+                                    v-perms="['users:user:edit']"
                                     class="ml-[5px]"
                                     :limit="32"
                                     :value="formData.nickname"
                                     @confirm="handleEdit($event, 'nickname')"
-                                    v-perms="['users:user:edit']"
                                 >
                                     <el-button type="primary" link>
                                         <icon name="el-icon-EditPen" />
@@ -84,10 +84,10 @@
                             <dd>
                                 {{ formData.mobile || '未绑定' }}
                                 <popover-input
+                                    v-perms="['users:user:edit']"
                                     class="ml-[5px]"
                                     :value="formData.mobile"
                                     @confirm="handleEdit($event, 'mobile')"
-                                    v-perms="['users:user:edit']"
                                 >
                                     <el-button type="primary" link>
                                         <icon name="el-icon-EditPen" />
@@ -100,6 +100,7 @@
                             <dd>
                                 {{ formData.gender || '未知' }}
                                 <popover-input
+                                    v-perms="['users:user:edit']"
                                     class="ml-[5px]"
                                     type="select"
                                     :value="formData.gender"
@@ -118,7 +119,6 @@
                                         }
                                     ]"
                                     @confirm="handleEdit($event, 'gender')"
-                                    v-perms="['users:user:edit']"
                                 >
                                     <el-button type="primary" link>
                                         <icon name="el-icon-EditPen" />
@@ -131,10 +131,10 @@
                             <dd>
                                 {{ formData.email || '未绑定' }}
                                 <popover-input
+                                    v-perms="['users:user:edit']"
                                     class="ml-[5px]"
                                     :value="formData.email"
                                     @confirm="handleEdit($event, 'email')"
-                                    v-perms="['users:user:edit']"
                                 >
                                     <el-button type="primary" link>
                                         <icon name="el-icon-EditPen" />
@@ -147,11 +147,11 @@
                             <dd>
                                 {{ formData.group || '未设置' }}
                                 <popover-input
+                                    v-perms="['users:user:edit']"
                                     class="ml-[5px]"
                                     type="select"
                                     :options="[]"
                                     @confirm="handleEdit($event, 'group')"
-                                    v-perms="['users:user:edit']"
                                 >
                                     <el-button type="primary" link>
                                         <icon name="el-icon-EditPen" />
@@ -164,8 +164,8 @@
                             <dd>
                                 <el-tag
                                     :type="formData.is_disable ? 'warning' : 'success'"
-                                    @click="handleBlacklist()"
                                     class="cursor-pointer"
+                                    @click="handleBlacklist()"
                                 >
                                     {{ formData.is_disable ? '已禁用' : '正常' }}
                                 </el-tag>
@@ -235,9 +235,9 @@
                     <div v-if="sessionPager.lists.length > 0" class="flex justify-end mt-4">
                         <paging
                             v-model="sessionPager"
-                            @change="sessionLists"
                             :page-sizes="[10, 20, 30, 40]"
                             :small="true"
+                            @change="sessionLists"
                         />
                     </div>
                 </el-tab-pane>
@@ -277,9 +277,9 @@
                     <div v-if="walletsPager.lists.length > 0" class="flex justify-end mt-4">
                         <paging
                             v-model="walletsPager"
-                            @change="walletsLists"
                             :page-sizes="[10, 20, 30, 40]"
                             :small="true"
+                            @change="walletsLists"
                         />
                     </div>
                 </el-tab-pane>
@@ -331,7 +331,7 @@ const formData = reactive({
     is_disable: 0,       // 是否禁用: [0=否, 1=是]
     last_login_ip: '',   // 最后登录IP
     last_login_time: '', // 最后登录时间
-    create_time: '',     // 用户注册时间
+    create_time: ''     // 用户注册时间
 })
 
 // 当前数据面板

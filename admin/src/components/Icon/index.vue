@@ -33,8 +33,8 @@ export default defineComponent({
                 )
         }
         if (props.name.indexOf(SVG_ICON_PREFIX) === 0) {
-            const size: string = props.size + ''
-            const font: string = /^\d+$/.test(size) ? size + 'px' : size
+            const size: string = `${props.size}`
+            const font: string = /^\d+$/.test(size) ? `${size}px` : size
             return () =>
                 h(
                     'i',

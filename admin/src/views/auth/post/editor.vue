@@ -18,9 +18,9 @@
                 </el-form-item>
                 <el-form-item label="岗位备注" prop="remarks">
                     <el-input
+                        v-model.trim="formData.remarks"
                         type="textarea"
                         :rows="5"
-                        v-model.trim="formData.remarks"
                         show-word-limit
                     />
                 </el-form-item>

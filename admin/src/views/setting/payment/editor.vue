@@ -43,18 +43,18 @@
                     </el-form-item>
                     <el-form-item label="支付证书私钥" prop="params.apiclient_key">
                         <el-input
+                            v-model="formData.params.apiclient_key"
                             type="textarea"
                             :rows="3"
-                            v-model="formData.params.apiclient_key"
                             clearable
                         />
                         <span class="form-tips">微信商户证书私钥 (apiclient_key.pem)</span>
                     </el-form-item>
                     <el-form-item label="微信支付证书" prop="params.apiclient_cert">
                         <el-input
+                            v-model="formData.params.apiclient_cert"
                             type="textarea"
                             :rows="3"
-                            v-model="formData.params.apiclient_cert"
                             clearable
                         />
                         <span class="form-tips">微信商户支付证书 (apiclient_cert.pem)</span>
@@ -72,18 +72,18 @@
                     </el-form-item>
                     <el-form-item label="应用私钥" prop="params.private_key">
                         <el-input
+                            v-model="formData.params.private_key"
                             type="textarea"
                             :rows="3"
-                            v-model="formData.params.private_key"
                             clearable
                         />
                         <span class="form-tips">支付宝应用私钥RSA2（private_key） </span>
                     </el-form-item>
                     <el-form-item label="支付公钥" prop="params.public_key">
                         <el-input
+                            v-model="formData.params.public_key"
                             type="textarea"
                             :rows="3"
-                            v-model="formData.params.public_key"
                             clearable
                         />
                         <span class="form-tips">支付宝公钥RSA2（ali_public_key） </span>

@@ -86,7 +86,7 @@ const formData = reactive<any>({
     target: '',    // 跳转方式
     url: '',       // 跳转链接
     sort: 0,       // 排序编号
-    is_disable: 0, // 是否禁用:[0=否, 1=是]
+    is_disable: 0 // 是否禁用:[0=否, 1=是]
 })
 
 // 表单规则
@@ -102,7 +102,7 @@ const formRules = reactive({
         { max: 200, message: '轮播标题不能大于200个字符', trigger: 'blur' }
     ],
     target: [
-        { required: true, message: '请选择跳转方式', trigger: 'blur' },
+        { required: true, message: '请选择跳转方式', trigger: 'blur' }
     ]
 })
 
