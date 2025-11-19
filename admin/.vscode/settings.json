@@ -1,0 +1,55 @@
+{
+    // 设网页缩放级别
+    "window.zoomLevel": 2,
+    // 文件树视图缩进
+    "workbench.tree.indent": 18,
+    // 关闭类型切TabSize
+    "editor.detectIndentation": false,
+    // 编辑器字体大小
+    "editor.fontSize": 15,
+    // 重设定缩进TabSize
+    "editor.tabSize": 4,
+    // 每保存时自动格式化 
+    "editor.formatOnSave": true,
+    // 启用Eslint规范校验
+    "eslint.enable": true,
+    // 启用Styles规范校验
+    "stylelint.enable": true,
+    // 启用TypeScript校验
+    "typescript.validate.enable": true,
+    // 每保存时自动修复规则
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.fixAll.stylelint": "explicit"
+    },
+    // 每保存时Styles修复
+    "stylelint.validate": [
+        "css",
+        "less",
+        "sass",
+        "scss",
+        "postcss",
+        "vue",
+    ],
+    // 确定校验准则ES
+    "eslint.validate": [
+        "typescript",
+        "javascript",
+        "javascriptreact",
+        "typescriptreact",
+        "vue"
+    ],
+    // 禁用对中文 (简/繁) 字符的高亮警告
+    "editor.unicodeHighlight.allowedLocales": {
+        "zh-hant": true,
+        "zh-hans": true
+    },
+    // 自定义CSS规则
+    "css.customData": [
+        ".vscode/tailwind.json"
+    ],
+    // JSON文件注释
+    "files.associations": {
+        "*.json": "jsonc"
+    }
+}
