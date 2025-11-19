@@ -173,6 +173,7 @@ onMounted(async () => {
     if (config.value.enable_captcha) {
         await getCaptcha()
     }
+
     const value = cacheUtil.get(cacheEnum.ACCOUNT_KEY)
     if (value?.remember) {
         remAccount.value = value.remember

@@ -23,10 +23,13 @@ class GlobalSetting(BaseSettings):
     load_dotenv(find_dotenv(), override=True)
 
     # 演示环境
-    ENV_DEMO: bool = os.getenv("ENV_DEMO", False)
+    ENV_DEMO: bool = os.getenv("ENV_DEMO", "False") == "True"
+
+    # 超级环境
+    ENV_SUPER: bool = os.getenv("ENV_SUPER", "False") == "True"
 
     # 调试模式
-    APP_DEBUG: bool = os.getenv("APP_DEBUG", False)
+    APP_DEBUG: bool = os.getenv("APP_DEBUG", "False") == "True"
 
     # 应用名称
     APPS_NAME: str = "apps"
@@ -39,8 +42,8 @@ class GlobalSetting(BaseSettings):
     # 服务配置
     SERVER_HOST: str = os.getenv("SERVER_HOST", "0.0.0.0")
     SERVER_PORT: int = int(os.getenv("SERVER_PORT", 8100))
-    SERVER_WORKERS: int = int(os.getenv("SERVER_WORKERS", 4))
-    SERVER_RELOAD: bool = True if os.getenv("SERVER_RELOAD", "False") == "True" else False
+    SERVER_WORKERS: int = int(os.getenv("SERVER_WORKERS", 1))
+    SERVER_RELOAD: bool = os.getenv("SERVER_RELOAD", "False") == "True"
 
     # 跨域请求
     CORS_ORIGINS: List[str] = ["*"]
@@ -83,7 +86,7 @@ class GlobalSetting(BaseSettings):
                     # 数据库编码
                     "charset": os.getenv("MYSQL_CHARSET", "utf8mb4"),
                     # 打印SQL
-                    "echo": True if os.getenv("MYSQL_ECHO", "False") == "True" else False
+                    "echo": os.getenv("MYSQL_ECHO", "False") == "True"
                 }
             }
         },

@@ -102,6 +102,8 @@ export function createRequest(opt?: Partial<FetchOptions>): Request {
                     case errorEnum.REQUEST_405_ERROR:
                     case errorEnum.SYSTEM_UNKNOWN_ERROR:
                     case errorEnum.SYSTEM_TIMEOUT_ERROR:
+                    case errorEnum.SYSTEM_KEY_ERROR:
+                    case errorEnum.SYSTEM_VAL_ERROR:
                     case errorEnum.DB_CONNECT_ERROR:
                     case errorEnum.DB_EMPTY_DATA_ERROR:
                         feedback.msgError(msg)

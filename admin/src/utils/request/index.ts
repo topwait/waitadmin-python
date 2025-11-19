@@ -60,6 +60,8 @@ const axiosHooks: AxiosHooks = {
             case errorEnum.REQUEST_405_ERROR:
             case errorEnum.SYSTEM_UNKNOWN_ERROR:
             case errorEnum.SYSTEM_TIMEOUT_ERROR:
+            case errorEnum.SYSTEM_KEY_ERROR:
+            case errorEnum.SYSTEM_VAL_ERROR:
             case errorEnum.DB_OPERATIONS_ERROR:
             case errorEnum.DB_EMPTY_DATA_ERROR:
                 msg && ElMessage.error(msg)

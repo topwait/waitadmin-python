@@ -24,8 +24,8 @@ module.exports = {
     ],
     'parserOptions': {
         'ecmaVersion': 'latest',
-        'parser': '@typescript-eslint/parser',
-        'sourceType': 'module'
+        'sourceType': 'module',
+        'parser': '@typescript-eslint/parser'
     },
     'plugins': [
         '@typescript-eslint',
