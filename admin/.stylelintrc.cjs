@@ -22,6 +22,7 @@ module.exports = {
         'selector-class-pattern': null,
         'rule-empty-line-before': null,
         'custom-property-pattern': null,
+        'at-rule-empty-line-before': null,
         'no-descending-specificity': null,
         'declaration-empty-line-before': null,
         'custom-property-empty-line-before': null,
@@ -53,7 +54,9 @@ module.exports = {
                     'each',
                     'include',
                     'mixin',
-                    'use'
+                    'use',
+                    'custom-variant',
+                    'theme'
                 ]
             }
         ]
