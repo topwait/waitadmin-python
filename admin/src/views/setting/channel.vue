@@ -1,5 +1,5 @@
 <template>
-    <el-form ref="formRef" :model="formData" label-width="150px">
+    <el-form :model="formData" label-width="150px">
         <!-- 选项卡 -->
         <el-card shadow="never" class="!border-none">
             <el-tabs v-model="currentTab">

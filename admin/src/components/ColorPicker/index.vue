@@ -9,10 +9,12 @@
 <script setup lang="ts">
 const props = defineProps({
     modelValue: {
-        type: String
+        type: String,
+        required: true
     },
     defaultColor: {
-        type: String
+        type: String,
+        required: true
     }
 })
 

@@ -82,8 +82,8 @@ import { ElInput } from 'element-plus'
 import { getElementIconNames, getLocalIconNames } from './index'
 
 interface Props {
-    modelValue: string
-    disabled?: boolean
+    modelValue?: string;
+    disabled?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {

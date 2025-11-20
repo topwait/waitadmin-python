@@ -1,5 +1,5 @@
 <template>
-    <el-form ref="formRef">
+    <el-form>
         <!-- 协议设置 -->
         <el-tabs type="border-card">
             <el-tab-pane label="服务协议">

@@ -7,7 +7,9 @@
         "dev": "vite",
         "build": "vite build && node scripts/build.mjs",
         "preview": "vite preview",
-        "lint:js": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+        "fix:js": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts",
+        "lint:js": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts",
+        "fix:css": "stylelint ./**/*.{vue,htm,html,css,scss}",
         "lint:css": "stylelint ./**/*.{vue,htm,html,css,scss} --fix"
     },
     "dependencies": {

@@ -234,9 +234,7 @@ const props = defineProps({
     }
 })
 
-const pLimit = ref(props.limit)
-const pSize = ref(props.pageSize)
-const pData = ref(props.data)
+const { pageSize, limit, data } = toRefs(props)
 const typeValue = computed<number>(() => {
     switch (props.type) {
         case 'image':
@@ -283,7 +281,7 @@ const {
     handleMoveFile,
     handleRenameFile,
     handleDeleteFile
-} = useFile(typeValue.value, cateId, pLimit, pSize, pData)
+} = useFile(typeValue.value, cateId, limit, pageSize, data)
 
 const getData = async () => {
     await getCateLists()

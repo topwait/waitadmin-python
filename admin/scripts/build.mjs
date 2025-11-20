@@ -13,12 +13,15 @@ async function build() {
     if (existsSync(releasePath)) {
         await remove(releasePath)
     }
+    // eslint-disable-next-line no-console
     console.log(`文件正在复制 ==> ${releaseRelativePath}`)
     try {
         await copyFile(distPath, releasePath)
     } catch (error) {
+        // eslint-disable-next-line no-console
         console.log(`\n ${error}`)
     }
+    // eslint-disable-next-line no-console
     console.log(`文件已复制 ==> ${releaseRelativePath}`)
 }
 

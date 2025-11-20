@@ -69,7 +69,7 @@ export class Axios {
 
                 if (err.code === AxiosError.ECONNABORTED || err.code === AxiosError.ERR_NETWORK) {
                     await new Promise((resolve) => setTimeout(resolve, 500))
-                    return await this.retryRequest(err)
+                    return this.retryRequest(err)
                 }
                 return Promise.reject(err)
             }

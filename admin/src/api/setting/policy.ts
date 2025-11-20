@@ -15,12 +15,12 @@ const policyApi = {
      *
      * @param {Object} params
      * @param {string} params.service
-     * @param {string} params.private
+     * @param {string} params.privacy
      * @param {string} params.payment
      */
     save(params: {
         service: string;
-        private: string;
+        privacy: string;
         payment: string;
     }): Promise<any> {
         return request.post({

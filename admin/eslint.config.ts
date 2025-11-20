@@ -53,7 +53,6 @@ export default defineConfig([
             'vue/no-unused-refs': 'warn',
             'vue/no-useless-v-bind': 'warn',
             'vue/require-prop-types': 'warn',
-            'vue/no-unused-properties': 'warn',
             'vue/require-default-prop': 'warn',
             'vue/prefer-import-from-vue': 'off',
             'vue/multi-word-component-names': 'off',
@@ -89,6 +88,18 @@ export default defineConfig([
 
     // 通用规则
     {
+        ignores: [
+            'dist/**',
+            'node_modules/**',
+            '.vscode/**',
+            '.idea/**',
+            '*.md',
+            '*.json',
+            '*.lock',
+            '*.d.ts',
+            '**/*.d.ts',
+            '**/*.min.js'
+        ],
         rules: {
             // 变量相关规则
             'no-var': 'warn',                  // 禁止使用var
