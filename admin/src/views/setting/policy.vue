@@ -14,7 +14,7 @@
         </el-tabs>
 
         <!-- 保存按钮 -->
-        <el-card shadow="never" class="!border-none mt-4">
+        <el-card shadow="never" class="border-none! mt-4">
             <el-button
                 v-perms="['setting:policy:save']"
                 :loading="loading"

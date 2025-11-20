@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 账号信息 -->
-        <el-card class="!border-none" shadow="never">
+        <el-card class="border-none!" shadow="never">
             <el-form
                 ref="formRef"
                 :model="formData"
@@ -70,7 +70,7 @@
         </el-card>
 
         <!-- 保存按钮 -->
-        <el-card shadow="never" class="!border-none mt-4">
+        <el-card shadow="never" class="border-none! mt-4">
             <el-button
                 :loading="loading"
                 type="primary"
@@ -110,12 +110,12 @@ const rules = reactive<object>({
         { required: true, message: '头像不能为空', trigger: ['change'] }
     ],
     username: [
-        { required: true, message: '登录账号不能为空', trigger: 'blur' },
-        { max: 20, message: '登录账号不能大于20个字符', trigger: 'blur' }
+        { required: true, message: '登录账号不能为空', trigger: 'blur-sm' },
+        { max: 20, message: '登录账号不能大于20个字符', trigger: 'blur-sm' }
     ],
     nickname: [
-        { required: true, message: '用户昵称不能为空', trigger: 'blur' },
-        { max: 20, message: '用户昵称不能大于20个字符', trigger: 'blur' }
+        { required: true, message: '用户昵称不能为空', trigger: 'blur-sm' },
+        { max: 20, message: '用户昵称不能大于20个字符', trigger: 'blur-sm' }
     ]
 })
 

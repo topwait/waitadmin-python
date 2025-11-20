@@ -28,7 +28,7 @@
                         <template v-if="formData.trigger == 'interval'">
                             <hover-close @close="handleDelRules(index)">
                                 <div class="flex">
-                                    <div class="mr-2 mb-[8px] w-[150px]">
+                                    <div class="mr-2 mb-2 w-[150px]">
                                         <el-select v-model="item.key" >
                                             <el-option label="间隔几周" value="weeks"/>
                                             <el-option label="间隔几天" value="days"/>
@@ -39,7 +39,7 @@
                                             <el-option label="结束日期" value="end_date"/>
                                         </el-select>
                                     </div>
-                                    <div class="flex-1 mb-[8px]">
+                                    <div class="flex-1 mb-2">
                                         <el-date-picker
                                             v-if="item.key === 'start_date' || item.key === 'end_date'"
                                             v-model="item.value"
@@ -168,18 +168,18 @@ const formData = reactive<any>({
 // 表单规则
 const formRules: any = reactive({
     name: [
-        { required: true, message: '任务名称不能为空', trigger: ['blur'] },
-        { max: 64, message: '任务名称不能大于64个字符', trigger: ['blur'] }
+        { required: true, message: '任务名称不能为空', trigger: ['blur-sm'] },
+        { max: 64, message: '任务名称不能大于64个字符', trigger: ['blur-sm'] }
     ],
     command: [
-        { required: true, message: '执行命令不能为空', trigger: ['blur'] },
-        { max: 200, message: '执行命令不能大于200个字符', trigger: ['blur'] }
+        { required: true, message: '执行命令不能为空', trigger: ['blur-sm'] },
+        { max: 200, message: '执行命令不能大于200个字符', trigger: ['blur-sm'] }
     ],
     params: [
-        { max: 200, message: '附带参数不能大于200个字符', trigger: ['blur'] }
+        { max: 200, message: '附带参数不能大于200个字符', trigger: ['blur-sm'] }
     ],
     remarks: [
-        { max: 300, message: '备注信息不能大于300个字符', trigger: ['blur'] }
+        { max: 300, message: '备注信息不能大于300个字符', trigger: ['blur-sm'] }
     ]
 })
 

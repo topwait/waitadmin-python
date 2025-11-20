@@ -1,7 +1,7 @@
 <template>
     <el-form :model="formData" label-width="150px">
         <!-- 选项卡 -->
-        <el-card shadow="never" class="!border-none">
+        <el-card shadow="never" class="border-none!">
             <el-tabs v-model="currentTab">
                 <el-tab-pane
                     v-for="(item, index) in headerList"
@@ -35,7 +35,7 @@
 
         <!-- 微信小程序 -->
         <div v-if="currentTab === '1'">
-            <el-card shadow="never" class="!border-none mt-4">
+            <el-card shadow="never" class="border-none! mt-4">
                 <div class="font-medium mb-7">微信小程序</div>
                 <el-form-item label="小程序名称" prop="wx.name">
                     <div class="w-80">
@@ -51,7 +51,7 @@
                     <material-picker v-model="formData.wx.qr_code" :limit="1" />
                 </el-form-item>
             </el-card>
-            <el-card shadow="never" class="!border-none mt-4">
+            <el-card shadow="never" class="border-none! mt-4">
                 <div class="font-medium mb-7">开发者ID</div>
                 <el-form-item label="AppID" prop="wx.app_id">
                     <div class="w-80">
@@ -64,7 +64,7 @@
                     </div>
                 </el-form-item>
             </el-card>
-            <el-card shadow="never" class="!border-none mt-4">
+            <el-card shadow="never" class="border-none! mt-4">
                 <div class="font-medium mb-7">服务器域名</div>
                 <el-form-item label="request合法域名" prop="wx.request_domain">
                     <div class="flex-1 min-w-0">
@@ -136,7 +136,7 @@
 
         <!-- 微信公众号 -->
         <div v-if="currentTab === '2'">
-            <el-card shadow="never" class="!border-none mt-4">
+            <el-card shadow="never" class="border-none! mt-4">
                 <div class="font-medium mb-7">微信公众号</div>
                 <el-form-item label="公众号名称" prop="oa.name">
                     <div class="w-80">
@@ -152,7 +152,7 @@
                     <material-picker v-model="formData.oa.qr_code" :limit="1" />
                 </el-form-item>
             </el-card>
-            <el-card shadow="never" class="!border-none mt-4">
+            <el-card shadow="never" class="border-none! mt-4">
                 <div class="font-medium mb-7">开发者ID</div>
                 <el-form-item label="AppID" prop="oa.app_id">
                     <div class="w-80">
@@ -165,7 +165,7 @@
                     </div>
                 </el-form-item>
             </el-card>
-            <el-card class="!border-none mt-4" shadow="never">
+            <el-card class="border-none! mt-4" shadow="never">
                 <div class="font-medium mb-7">服务器配置</div>
                 <el-form-item label="URL">
                     <div class="flex-1 min-w-0">
@@ -203,7 +203,7 @@
                     <div class="flex-1 min-w-0">
                         <el-radio-group
                             v-model="formData.oa.encryption_type"
-                            class="flex-col !items-start min-w-0"
+                            class="flex-col items-start! min-w-0"
                         >
                             <el-radio :value="1">明文模式 (不使用消息体加解密功能，安全系数较低)</el-radio>
                             <el-radio :value="2">兼容模式 (明文、密文将共存，方便开发者调试和维护)</el-radio>
@@ -212,7 +212,7 @@
                     </div>
                 </el-form-item>
             </el-card>
-            <el-card shadow="never" class="!border-none mt-4">
+            <el-card shadow="never" class="border-none! mt-4">
                 <div class="font-medium mb-7">功能设置</div>
                 <el-form-item label="request合法域名" prop="oa.wk_domain">
                     <div class="flex-1 min-w-0">
@@ -258,7 +258,7 @@
 
         <!-- 微信开放平台 -->
         <div v-if="currentTab === '3'">
-            <el-card shadow="never" class="!border-none mt-4">
+            <el-card shadow="never" class="border-none! mt-4">
                 <div class="font-medium mb-7">开发者ID</div>
                 <el-form-item label="AppID" prop="op.app_id">
                     <div class="w-80">
@@ -274,7 +274,7 @@
         </div>
 
         <!-- 保存按钮 -->
-        <el-card shadow="never" class="!border-none mt-4">
+        <el-card shadow="never" class="border-none! mt-4">
             <el-button
                 v-perms="['setting:channel:save']"
                 :loading="loading"

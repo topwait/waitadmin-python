@@ -103,11 +103,11 @@ const formData: any = reactive({
 // 表单规则
 const formRules: any = reactive({
     cid: [
-        { required: true, message: '请选择所属类目', trigger: ['blur'] }
+        { required: true, message: '请选择所属类目', trigger: ['blur-sm'] }
     ],
     title: [
-        { required: true, message: '文章标题不能为空', trigger: ['blur'] },
-        { max: 100, message: '文章标题不能大于100个字符', trigger: ['blur'] }
+        { required: true, message: '文章标题不能为空', trigger: ['blur-sm'] },
+        { max: 100, message: '文章标题不能大于100个字符', trigger: ['blur-sm'] }
     ]
 })
 

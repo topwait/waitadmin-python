@@ -138,12 +138,12 @@ const formData = reactive<any>({
 // 表单规则
 const formRules: any = reactive({
     'icon': [
-        { required: true, message: '请选择支付图标', trigger: ['blur'] },
-        { max: 250, message: '支付图标链接不能大于250个字符', trigger: ['blur'] }
+        { required: true, message: '请选择支付图标', trigger: ['blur-sm'] },
+        { max: 250, message: '支付图标链接不能大于250个字符', trigger: ['blur-sm'] }
     ],
     'shorter': [
-        { required: true, message: '请填写显示名称', trigger: ['blur'] },
-        { max: 32, message: '显示名称不能大于32个字符', trigger: ['blur'] }
+        { required: true, message: '请填写显示名称', trigger: ['blur-sm'] },
+        { max: 32, message: '显示名称不能大于32个字符', trigger: ['blur-sm'] }
     ]
 })
 

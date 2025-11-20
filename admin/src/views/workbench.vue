@@ -10,7 +10,7 @@
                 :xl="6"
                 :span="6"
             >
-                <el-card class="mb-4 !border-none" shadow="never">
+                <el-card class="mb-4 border-none!" shadow="never">
                     <template #header>
                         <div class="flex items-center justify-between">
                             <span>{{ item.name }}</span>
@@ -18,7 +18,7 @@
                     </template>
                     <div class="flex items-center justify-between py-2">
                         <span class="text-5xl font-medium">{{ item.value }}</span>
-                        <el-image class="w-[48px] h-[48px]" :src="item.icon"  />
+                        <el-image class="w-12 h-12" :src="item.icon"  />
                     </div>
                     <div class="flex items-center mb-3">
                         <span>昨日: {{ item.total }}</span>
@@ -29,9 +29,9 @@
 
         <div class="lg:flex">
             <!-- 常用功能 -->
-            <el-card class="flex-1 lg:mr-4 mb-4 !border-none" shadow="never">
+            <el-card class="flex-1 lg:mr-4 mb-4 border-none!" shadow="never">
                 <template #header>
-                    <span>常用功能</span>
+                    <span class="p-1.5">常用功能</span>
                 </template>
                 <ul class="shortcut flex flex-wrap">
                     <li
@@ -49,7 +49,7 @@
                 </ul>
             </el-card>
             <!-- 待办事项 -->
-            <el-card class="flex-1 lg:mr-4 mb-4 !border-none" shadow="never">
+            <el-card class="flex-1 lg:mr-4 mb-4 border-none!" shadow="never">
                 <template #header>
                     <div class="flex items-center justify-between">
                         <span>待办事项</span>
@@ -65,7 +65,7 @@
                 </ul>
             </el-card>
             <!-- 版本信息 -->
-            <el-card class="mb-4 !border-none" shadow="never">
+            <el-card class="mb-4 border-none!" shadow="never">
                 <template #header>
                     <div class="flex items-center justify-between">
                         <span>版本信息</span>
@@ -104,7 +104,7 @@
         </div>
 
         <div class="lg:flex">
-            <el-card class="flex-1 lg:mr-4 mb-4 !border-none" shadow="never">
+            <el-card class="flex-1 lg:mr-4 mb-4 border-none!" shadow="never">
                 <template #header>
                     <span>访问量趋势图</span>
                 </template>
@@ -114,7 +114,7 @@
                     :autoresize="true"
                 />
             </el-card>
-            <el-card class="flex-1 mb-4 !border-none" shadow="never">
+            <el-card class="flex-1 mb-4 border-none!" shadow="never">
                 <template #header>
                     <span>访问量趋势图</span>
                 </template>

@@ -72,18 +72,18 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     account: [
-        { required: true, message: '请输入账号', trigger: 'blur' },
-        { min: 4, max: 20, message: '账号长度应为4~20个字符', trigger: 'blur'}
+        { required: true, message: '请输入账号', trigger: 'blur-sm' },
+        { min: 4, max: 20, message: '账号长度应为4~20个字符', trigger: 'blur-sm'}
     ],
     nickname: [
-        { required: true, message: '请输入昵称', trigger: 'blur' },
-        { min: 4, max: 20, message: '昵称长度应为4~20个字符', trigger: 'blur'}
+        { required: true, message: '请输入昵称', trigger: 'blur-sm' },
+        { min: 4, max: 20, message: '昵称长度应为4~20个字符', trigger: 'blur-sm'}
     ],
     mobile: [
         {
             pattern: /^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/,
             message: '请输入正确的手机号码',
-            trigger: 'blur'
+            trigger: 'blur-sm'
         }
     ],
     email: [
@@ -92,17 +92,17 @@ const formRules = reactive({
             min: 2,
             max: 30,
             message: '邮箱格式错误',
-            trigger: 'blur'
+            trigger: 'blur-sm'
         }
     ],
     password: [
-        { required: true, message: '请输入6-20位数字+字母和符号组合', trigger: 'blur' },
-        { min: 6, max: 20, message: '密码长度应为6~20个字符', trigger: 'blur'}
+        { required: true, message: '请输入6-20位数字+字母和符号组合', trigger: 'blur-sm' },
+        { min: 6, max: 20, message: '密码长度应为6~20个字符', trigger: 'blur-sm'}
     ],
     password_confirm: [
-        { required: true, message: '请输入确认密码', trigger: 'blur' },
+        { required: true, message: '请输入确认密码', trigger: 'blur-sm' },
         {
-            trigger: 'blur',
+            trigger: 'blur-sm',
             validator(_rule: any, value: any, callback: any) {
                 if (value === '') {
                     callback(new Error('请再次输入密码'))

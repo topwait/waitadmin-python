@@ -92,17 +92,17 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     image: [
-        { required: true, message: '请上传轮播图片', trigger: ['blur'] }
+        { required: true, message: '请上传轮播图片', trigger: ['blur-sm'] }
     ],
     position: [
-        { required: true, message: '请选择轮播位置', trigger: ['blur'] }
+        { required: true, message: '请选择轮播位置', trigger: ['blur-sm'] }
     ],
     title: [
-        { required: true, message: '轮播标题不能为空', trigger: 'blur' },
-        { max: 200, message: '轮播标题不能大于200个字符', trigger: 'blur' }
+        { required: true, message: '轮播标题不能为空', trigger: 'blur-sm' },
+        { max: 200, message: '轮播标题不能大于200个字符', trigger: 'blur-sm' }
     ],
     target: [
-        { required: true, message: '请选择跳转方式', trigger: 'blur' }
+        { required: true, message: '请选择跳转方式', trigger: 'blur-sm' }
     ]
 })
 

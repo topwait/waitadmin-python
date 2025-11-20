@@ -94,12 +94,12 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     name: [
-        { required: true, message: '角色名称不能为空', trigger: 'blur' },
-        { min: 2, message: '角色名称不能少于2个字符', trigger: 'blur' },
-        { max: 20, message: '角色名称不能大于20个字符', trigger: 'blur' }
+        { required: true, message: '角色名称不能为空', trigger: 'blur-sm' },
+        { min: 2, message: '角色名称不能少于2个字符', trigger: 'blur-sm' },
+        { max: 20, message: '角色名称不能大于20个字符', trigger: 'blur-sm' }
     ],
     describe: [
-        { max: 200, message: '角色描述不能大于200个字符', trigger: 'blur' }
+        { max: 200, message: '角色描述不能大于200个字符', trigger: 'blur-sm' }
     ]
 })
 

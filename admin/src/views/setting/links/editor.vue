@@ -76,14 +76,14 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     title: [
-        { required: true, message: '友链名称不能为空', trigger: 'blur' },
-        { max: 200, message: '友链名称不能大于200个字符', trigger: 'blur' }
+        { required: true, message: '友链名称不能为空', trigger: 'blur-sm' },
+        { max: 200, message: '友链名称不能大于200个字符', trigger: 'blur-sm' }
     ],
     target: [
-        { required: true, message: '请选择跳转方式', trigger: 'blur' }
+        { required: true, message: '请选择跳转方式', trigger: 'blur-sm' }
     ],
     url: [
-        { required: true, message: '请填写跳转链接', trigger: 'blur' }
+        { required: true, message: '请填写跳转链接', trigger: 'blur-sm' }
     ]
 })
 

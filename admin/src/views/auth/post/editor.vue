@@ -65,12 +65,12 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     code: [
-        { required: true, message: '岗位编号不能为空', trigger: ['blur'] },
-        { min: 2, max: 10, message: '岗位编号长度必须介于 2 和 20 之间', trigger: ['blur'] }
+        { required: true, message: '岗位编号不能为空', trigger: ['blur-sm'] },
+        { min: 2, max: 10, message: '岗位编号长度必须介于 2 和 20 之间', trigger: ['blur-sm'] }
     ],
     name: [
-        { required: true, message: '岗位名称不能为空', trigger: ['blur'] },
-        { min: 4, max: 20, message: '岗位长度必须介于 2 和 30 之间', trigger: ['blur'] }
+        { required: true, message: '岗位名称不能为空', trigger: ['blur-sm'] },
+        { min: 4, max: 20, message: '岗位长度必须介于 2 和 30 之间', trigger: ['blur-sm'] }
     ]
 })
 

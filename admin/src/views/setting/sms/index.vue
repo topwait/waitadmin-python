@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 表格栏 -->
-        <el-card class="!border-none" shadow="never">
+        <el-card class="border-none!" shadow="never">
             <el-table :data="dataLists" size="large" class="mt-4">
                 <el-table-column label="图标" prop="image" min-width="135">
                     <template #default="{ row }">

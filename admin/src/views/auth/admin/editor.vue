@@ -153,30 +153,30 @@ const passwordConfirmValidator = (_rule: object, value: string, callback: any) =
 // 表单规则
 const formRules = reactive({
     role_id: [
-        { required: true, message: '请选择所属角色', trigger: ['blur'] }
+        { required: true, message: '请选择所属角色', trigger: ['blur-sm'] }
     ],
     avatar: [
-        { required: true, message: '请上传头像', trigger: 'blur' },
-        { max: 250, message: '头像链接不能大于250个字符', trigger: 'blur' }
+        { required: true, message: '请上传头像', trigger: 'blur-sm' },
+        { max: 250, message: '头像链接不能大于250个字符', trigger: 'blur-sm' }
     ],
     nickname: [
-        { required: true, message: '用户昵称不能为空', trigger: 'blur' },
-        { max: 20, message: '用户昵称不能大于20个字符', trigger: 'blur' }
+        { required: true, message: '用户昵称不能为空', trigger: 'blur-sm' },
+        { max: 20, message: '用户昵称不能大于20个字符', trigger: 'blur-sm' }
     ],
     username: [
-        { required: true, message: '登录账号不能为空', trigger: 'blur' },
-        { max: 20, message: '登录账号不能大于20个字符', trigger: 'blur' }
+        { required: true, message: '登录账号不能为空', trigger: 'blur-sm' },
+        { max: 20, message: '登录账号不能大于20个字符', trigger: 'blur-sm' }
     ],
     password: [
-        { required: true, message: '登陆密码不能为空', trigger: 'blur' },
-        { min: 6, max: 20, message: '登陆密码长度必须介于 6 和 20 之间', trigger: 'blur' },
+        { required: true, message: '登陆密码不能为空', trigger: 'blur-sm' },
+        { min: 6, max: 20, message: '登陆密码长度必须介于 6 和 20 之间', trigger: 'blur-sm' },
         { pattern: /^[^<>"'|\\]+$/, message: "登陆密码不能包含非法字符：< > \" ' \\\ |", trigger: 'blur' }
     ] as any[],
     password_confirm: [
-        { required: true, message: '确认密码不能为空', trigger: 'blur' },
+        { required: true, message: '确认密码不能为空', trigger: 'blur-sm' },
         {
             validator: passwordConfirmValidator,
-            trigger: 'blur'
+            trigger: 'blur-sm'
         }
     ] as any[]
 })
@@ -237,7 +237,7 @@ const open = async (type: string, row?: any): Promise<void> => {
         formRules.password_confirm = [
             {
                 validator: passwordConfirmValidator,
-                trigger: 'blur'
+                trigger: 'blur-sm'
             }
         ]
         const data = await authAdminApi.detail(row.id)

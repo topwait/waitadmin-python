@@ -8,10 +8,10 @@
             :width="width"
             :teleported="teleported"
             :persistent="false"
-            popper-class="!p-0"
+            popper-class="p-0!"
         >
             <div class="flex p-3" @click.stop>
-                <div class="popover-input__input mr-[10px] flex-1">
+                <div class="popover-input__input mr-2.5 flex-1">
                     <el-select
                         v-if="type === 'select'"
                         v-model="inputValue"

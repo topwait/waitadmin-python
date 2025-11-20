@@ -1,12 +1,12 @@
 <template>
     <div>
         <!-- 搜索栏 -->
-        <el-card class="!border-none mb-4" shadow="never">
-            <el-form class="mb-[-16px]" :model="queryParams" :inline="true">
+        <el-card class="border-none! mb-4" shadow="never">
+            <el-form class="-mb-4" :model="queryParams" :inline="true">
                 <el-form-item label="登录账号">
                     <el-input
                         v-model="queryParams.username"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请输入登录账号"
                         clearable
                         @keyup.enter="resetPaging"
@@ -15,7 +15,7 @@
                 <el-form-item label="手机号码">
                     <el-input
                         v-model="queryParams.mobile"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请输入手机号码"
                         clearable
                         @keyup.enter="resetPaging"
@@ -24,7 +24,7 @@
                 <el-form-item label="所属角色">
                     <el-select
                         v-model="queryParams.role"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请选择"
                     >
                         <el-option value="" label="全部"/>
@@ -44,7 +44,7 @@
         </el-card>
 
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
             <el-button v-perms="['auth:admin:add']" type="primary" @click="handleEditor('add')">
                 <template #icon>
                     <icon name="el-icon-Plus" />

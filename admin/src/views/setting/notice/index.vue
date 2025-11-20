@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 表格栏 -->
-        <el-card class="!border-none" shadow="never">
+        <el-card class="border-none!" shadow="never">
             <el-tabs v-model="tabsActive" @tab-change="queryNoticeLists">
                 <el-tab-pane
                     v-for="(item, index) in tabsMap"

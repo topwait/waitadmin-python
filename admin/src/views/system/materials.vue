@@ -1,6 +1,6 @@
 <template>
     <div class="materials">
-        <el-card class="!border-none" shadow="never">
+        <el-card class="border-none!" shadow="never">
             <el-tabs v-model="activeTab">
                 <el-tab-pane
                     v-for="item in tabsMap"

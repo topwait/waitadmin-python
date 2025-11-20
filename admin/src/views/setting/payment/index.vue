@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 表格栏 -->
-        <el-card class="!border-none" shadow="never">
+        <el-card class="border-none!" shadow="never">
             <el-table :data="dataLists" size="large" class="mt-4">
                 <el-table-column label="支付方式" prop="logo" min-width="135">
                     <template #default="{ row }">
@@ -10,7 +10,7 @@
                 </el-table-column>
                 <el-table-column label="显示图标" prop="icon" min-width="80">
                     <template #default="{ row }">
-                        <el-image :src="row.icon" class="w-[28px] h-[26px]" />
+                        <el-image :src="row.icon" class="w-7 h-[26px]" />
                     </template>
                 </el-table-column>
                 <el-table-column label="显示名称" prop="shorter" min-width="110" />

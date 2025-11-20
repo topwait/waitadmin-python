@@ -1,3 +1,134 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    /* Colors */
+    --color-white: var(--color-white);
+    --color-black: var(--color-black);
+
+    --color-primary: var(--el-color-primary);
+    --color-primary-light-3: var(--el-color-primary-light-3);
+    --color-primary-light-5: var(--el-color-primary-light-5);
+    --color-primary-light-7: var(--el-color-primary-light-7);
+    --color-primary-light-8: var(--el-color-primary-light-8);
+    --color-primary-light-9: var(--el-color-primary-light-9);
+    --color-primary-dark-2: var(--el-color-primary-dark-2);
+
+    --color-success: var(--el-color-success);
+    --color-warning: var(--el-color-warning);
+    --color-danger: var(--el-color-danger);
+    --color-error: var(--el-color-error);
+    --color-info: var(--el-color-info);
+    --color-body: var(--el-bg-color); 
+    --color-page: var(--el-bg-color-page);
+
+    --color-tx-primary: var(--el-text-color-primary);
+    --color-tx-regular: var(--el-text-color-regular);
+    --color-tx-secondary: var(--el-text-color-secondary);
+    --color-tx-placeholder: var(--el-text-color-placeholder);
+    --color-tx-disabled: var(--el-text-color-disabled);
+
+    --color-br: var(--el-border-color);
+    --color-br-light: var(--el-border-color-light);
+    --color-br-extra-light: var(--el-border-color-extra-light);
+    --color-br-dark: var(--el-border-color-dark);
+
+    --color-fill: var(--el-fill-color);
+    --color-fill-light: var(--el-fill-color-light);
+    --color-fill-lighter: var(--el-fill-color-lighter);
+
+    /* FontFamily */
+    --font-sans:
+        PingFang SC, Arial, Hiragino Sans GB, Microsoft YaHei, sans-serif;
+
+    /* FontSize */
+    --text-xs: var(--el-font-size-extra-small);
+    --text-sm: var(--el-font-size-small);
+    --text-base: var(--el-font-size-base);
+    --text-lg: var(--el-font-size-medium);
+    --text-xl: var(--el-font-size-large);
+    --text-2xl: var(--el-font-size-extra-large);
+    --text-3xl: 22px;
+    --text-4xl: 24px;
+    --text-5xl: 28px;
+    --text-6xl: 30px;
+    --text-7xl: 36px;
+    --text-8xl: 48px;
+    --text-9xl: 60px;
+
+    /* LineHeight */
+    --leading-none: 1;
+
+    /* Spacing */
+    --spacing-0: 0px;
+    --spacing-1: 4px;
+    --spacing-2: 8px;
+    --spacing-3: 12px;
+    --spacing-4: 16px;
+    --spacing-5: 20px;
+    --spacing-6: 24px;
+    --spacing-7: 28px;
+    --spacing-8: 32px;
+    --spacing-9: 36px;
+    --spacing-10: 40px;
+    --spacing-11: 44px;
+    --spacing-12: 48px;
+    --spacing-14: 56px;
+    --spacing-16: 64px;
+    --spacing-20: 80px;
+    --spacing-24: 96px;
+    --spacing-28: 112px;
+    --spacing-32: 128px;
+    --spacing-36: 144px;
+    --spacing-40: 160px;
+    --spacing-44: 176px;
+    --spacing-48: 192px;
+    --spacing-52: 208px;
+    --spacing-56: 224px;
+    --spacing-60: 240px;
+    --spacing-64: 256px;
+    --spacing-72: 288px;
+    --spacing-80: 320px;
+    --spacing-96: 384px;
+    --spacing-px: 1px;
+    --spacing-0_5: 2px;
+    --spacing-1_5: 6px;
+    --spacing-2_5: 10px;
+    --spacing-3_5: 14px;
+    --spacing-4_5: 18px;
+    --spacing-5_5: 22px;
+
+    /* Screens */
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+    --breakpoint-3xl: 1792px;
+    --breakpoint-4xl: 2048px;
+    --breakpoint-5xl: 2304px;
+    --breakpoint-6xl: 2560px;
+    --breakpoint-7xl: 2816px;
+    --breakpoint-8xl: 3072px;
+    --breakpoint-9xl: 3328px;
+    --breakpoint-10xl: 3584px;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+/* @layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+} */

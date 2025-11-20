@@ -1,8 +1,8 @@
 <template>
     <el-form ref="formRef" :rules="rules" :model="formData" label-width="120px">
         <!-- 登录设置 -->
-        <el-card shadow="never" class="!border-none">
-            <div class="text-xl font-medium mb-[20px]">登录设置</div>
+        <el-card shadow="never" class="border-none!">
+            <div class="text-xl font-medium mb-5">登录设置</div>
             <el-form-item label="显示登录协议：" prop="is_agreement">
                 <div>
                     <el-radio-group v-model="formData.is_agreement">
@@ -51,7 +51,7 @@
         </el-card>
 
         <!-- 保存按钮 -->
-        <el-card shadow="never" class="!border-none mt-4">
+        <el-card shadow="never" class="border-none! mt-4">
             <el-button
                 v-perms="['setting:login:save']"
                 :loading="loading"
@@ -80,7 +80,7 @@ const formData = reactive({
 // 表单验证
 const rules = reactive<FormRules>({
     defaults: [
-        { required: true, message: '请选择默认登录方式', trigger: 'blur' }
+        { required: true, message: '请选择默认登录方式', trigger: 'blur-sm' }
     ],
     login_modes: [
         {

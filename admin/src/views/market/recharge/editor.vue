@@ -56,7 +56,7 @@ const formData: any = reactive({
 // 表单规则
 const formRules: any = reactive({
     money: [
-        { required: true, message: '请填写充值金额', trigger: ['blur'] }
+        { required: true, message: '请填写充值金额', trigger: ['blur-sm'] }
     ]
 })
 

@@ -78,19 +78,19 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     pid: [
-        { required: true, message: '请选择上级部门', trigger: ['blur'] }
+        { required: true, message: '请选择上级部门', trigger: ['blur-sm'] }
     ],
     name: [
-        { required: true, message: '部门名称不能为空', trigger: ['blur'] },
-        { max: 100, message: '部门名称不能超出100个字符', trigger: ['blur'] }
+        { required: true, message: '部门名称不能为空', trigger: ['blur-sm'] },
+        { max: 100, message: '部门名称不能超出100个字符', trigger: ['blur-sm'] }
     ],
     mobile: [
-        { required: true, message: '部门电话不能为空', trigger: ['blur'] },
-        { max: 30, message: '部门电话不能超出30个字符', trigger: ['blur'] }
+        { required: true, message: '部门电话不能为空', trigger: ['blur-sm'] },
+        { max: 30, message: '部门电话不能超出30个字符', trigger: ['blur-sm'] }
     ],
     duty: [
-        { required: true, message: '负责人名称不能为空', trigger: ['blur'] },
-        { max: 30, message: '负责人名称不能超出30个字符', trigger: ['blur'] }
+        { required: true, message: '负责人名称不能为空', trigger: ['blur-sm'] },
+        { max: 30, message: '负责人名称不能超出30个字符', trigger: ['blur-sm'] }
     ]
 })
 

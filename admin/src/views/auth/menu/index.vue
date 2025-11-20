@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
             <div>
                 <el-button v-perms="['auth:menu:add']" type="primary" @click="handleEditor('add')">
                     <template #icon>

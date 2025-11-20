@@ -1,10 +1,10 @@
 <template>
     <div>
         <!-- 搜索栏 -->
-        <el-card class="!border-none mb-4" shadow="never">
-            <el-form class="mb-[-16px]" :model="queryParams" :inline="true">
+        <el-card class="border-none! mb-4" shadow="never">
+            <el-form class="-mb-4" :model="queryParams" :inline="true">
                 <el-form-item label="访问方式">
-                    <el-select v-model="queryParams.method" class="w-[250px]">
+                    <el-select v-model="queryParams.method" class="w-[150px]!">
                         <el-option value="" label="全部" />
                         <el-option value="GET" label="GET" />
                         <el-option value="POST" label="POST" />
@@ -16,7 +16,7 @@
                 <el-form-item label="来源IP">
                     <el-input
                         v-model="queryParams.ip"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请输入"
                         clearable
                         @keyup.enter="resetPaging"
@@ -25,7 +25,7 @@
                 <el-form-item label="访问链接">
                     <el-input
                         v-model="queryParams.url"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请输入"
                         clearable
                         @keyup.enter="resetPaging"
@@ -45,7 +45,7 @@
         </el-card>
 
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
             <el-table :data="pager.lists" size="large" class="mt-4">
                 <el-table-column label="ID" prop="id" min-width="100" />
                 <el-table-column label="操作描述" prop="summary" min-width="120" />

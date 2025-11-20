@@ -55,11 +55,11 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     name: [
-        { required: true, message: '分组名称不能为空', trigger: ['blur'] },
-        { max: 30, message: '分组名称不能大于30个字符', trigger: ['blur'] }
+        { required: true, message: '分组名称不能为空', trigger: ['blur-sm'] },
+        { max: 30, message: '分组名称不能大于30个字符', trigger: ['blur-sm'] }
     ],
     remarks: [
-        { max: 200, message: '备注内容不能大于200个字符', trigger: ['blur'] }
+        { max: 200, message: '备注内容不能大于200个字符', trigger: ['blur-sm'] }
     ]
 })
 

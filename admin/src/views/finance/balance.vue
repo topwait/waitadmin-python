@@ -1,12 +1,12 @@
 <template>
     <div>
         <!-- 搜索栏 -->
-        <el-card class="!border-none mb-4" shadow="never">
-            <el-form class="mb-[-16px]" :model="queryParams" :inline="true">
+        <el-card class="border-none! mb-4" shadow="never">
+            <el-form class="-mb-4" :model="queryParams" :inline="true">
                 <el-form-item label="用户信息">
                     <el-input
                         v-model="queryParams.user"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请输入用户编号/昵称/手机号"
                         clearable
                         @keyup.enter="resetPaging"
@@ -15,7 +15,7 @@
                 <el-form-item label="变动类型">
                     <el-select
                         v-model="queryParams.source_type"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请选择"
                     >
                         <el-option value="" label="全部"/>
@@ -41,7 +41,7 @@
         </el-card>
 
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
             <el-table :data="pager.lists" size="large">
                 <el-table-column label="用户编号" prop="user.sn" min-width="100" />
                 <el-table-column label="用户信息" min-width="120">

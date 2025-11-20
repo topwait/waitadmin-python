@@ -181,24 +181,24 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     pid: [
-        {required: true,  message: '请选择父级菜单', trigger: ['blur', 'change']}
+        {required: true,  message: '请选择父级菜单', trigger: ['blur-sm', 'change']}
     ],
     name: [
-        { required: true, message: '菜单名称不能为空', trigger: ['blur'] },
-        { max: 100, message: '菜单名称不能大于100个字符', trigger: ['blur'] }
+        { required: true, message: '菜单名称不能为空', trigger: ['blur-sm'] },
+        { max: 100, message: '菜单名称不能大于100个字符', trigger: ['blur-sm'] }
     ],
     path: [
-        { required: true, message: '路由地址不能为空', trigger: ['blur'] },
-        { max: 200, message: '路由地址不能大于200个字符', trigger: ['blur'] }
+        { required: true, message: '路由地址不能为空', trigger: ['blur-sm'] },
+        { max: 200, message: '路由地址不能大于200个字符', trigger: ['blur-sm'] }
     ],
     perms: [
-        { max: 200, message: '权限字符不能大于200个字符', trigger: ['blur'] }
+        { max: 200, message: '权限字符不能大于200个字符', trigger: ['blur-sm'] }
     ],
     params: [
-        { max: 200, message: '路由参数不能大于200个字符', trigger: ['blur'] }
+        { max: 200, message: '路由参数不能大于200个字符', trigger: ['blur-sm'] }
     ],
     component: [
-        { max: 200, message: '组件路径不能大于200个字符', trigger: ['blur'] }
+        { max: 200, message: '组件路径不能大于200个字符', trigger: ['blur-sm'] }
     ]
 })
 

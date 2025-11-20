@@ -1,12 +1,12 @@
 <template>
     <div>
         <!-- 搜索栏 -->
-        <el-card class="!border-none mb-4" shadow="never">
-            <el-form class="mb-[-16px]" :model="queryParams" :inline="true">
+        <el-card class="border-none! mb-4" shadow="never">
+            <el-form class="-mb-4" :model="queryParams" :inline="true">
                 <el-form-item label="分组名称">
                     <el-input
                         v-model="queryParams.name"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请输入分组名称"
                         clearable
                         @keyup.enter="resetPaging"
@@ -20,7 +20,7 @@
         </el-card>
 
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
             <el-button type="primary" @click="handleEditor('add')">
                 <template #icon>
                     <icon name="el-icon-Plus" />

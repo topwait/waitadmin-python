@@ -1,7 +1,7 @@
 <template>
     <el-form :model="formData" label-width="160px">
-        <el-card shadow="never" class="!border-none">
-            <div class="text-xl font-medium mb-[20px]">存储设置</div>
+        <el-card shadow="never" class="border-none!">
+            <div class="text-xl font-medium mb-5">存储设置</div>
             <el-form-item label="存储方式：" prop="drive">
                 <el-radio-group v-model="formData.drive">
                     <el-radio value="local">本地存储</el-radio>
@@ -91,7 +91,7 @@
         </el-card>
 
         <!-- 保存按钮 -->
-        <el-card shadow="never" class="!border-none mt-4">
+        <el-card shadow="never" class="border-none! mt-4">
             <el-button
                 v-perms="['setting:storage:save']"
                 :loading="loading"

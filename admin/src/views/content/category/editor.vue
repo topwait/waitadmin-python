@@ -52,8 +52,8 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     name: [
-        { required: true, message: '分类名称不能为空', trigger: ['blur'] },
-        { max: 20, message: '分类名称不能大于20个字符', trigger: ['blur'] }
+        { required: true, message: '分类名称不能为空', trigger: ['blur-sm'] },
+        { max: 20, message: '分类名称不能大于20个字符', trigger: ['blur-sm'] }
     ]
 })
 

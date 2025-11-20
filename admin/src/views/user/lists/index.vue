@@ -1,19 +1,19 @@
 <template>
     <div>
         <!-- 搜索栏 -->
-        <el-card class="!border-none mb-4" shadow="never">
-            <el-form class="mb-[-16px]" :model="queryParams" :inline="true">
+        <el-card class="border-none! mb-4" shadow="never">
+            <el-form class="-mb-4" :model="queryParams" :inline="true">
                 <el-form-item label="用户信息">
                     <el-input
                         v-model="queryParams.keyword"
-                        class="!w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请输入用户编号/昵称/手机"
                         clearable
                         @keyup.enter="resetPaging"
                     />
                 </el-form-item>
                 <el-form-item label="用户状态">
-                    <el-select v-model="queryParams.is_disable" class="w-[250px]">
+                    <el-select v-model="queryParams.is_disable" class="w-[150px]!">
                         <el-option value="" label="全部" />
                         <el-option value="0" label="正常" />
                         <el-option value="1" label="禁用" />
@@ -27,7 +27,7 @@
         </el-card>
 
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
             <el-button v-perms="['users:user:create']" type="primary" @click="handleEditor('create')">
                 <template #icon>
                     <icon name="el-icon-Plus" />

@@ -1,9 +1,9 @@
 <template>
     <div>
         <!-- 搜索栏 -->
-        <el-card class="!border-none mb-4" shadow="never">
-            <div class="text-xl font-medium mb-[20px]">充值配置</div>
-            <el-form class="mb-[-16px]" label-width="100px">
+        <el-card class="border-none! mb-4" shadow="never">
+            <div class="text-xl font-medium mb-5">充值配置</div>
+            <el-form class="-mb-4" label-width="100px">
                 <el-form-item label="充值状态">
                     <div>
                         <el-radio-group v-model="formData.status">
@@ -37,8 +37,8 @@
         </el-card>
 
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
-            <div class="text-xl font-medium mb-[20px]">充值套餐</div>
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
+            <div class="text-xl font-medium mb-5">充值套餐</div>
             <el-button v-perms="['market:recharge:add']" type="primary" @click="handleEditor('add')">
                 <template #icon>
                     <icon name="el-icon-Plus" />

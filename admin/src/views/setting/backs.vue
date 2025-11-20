@@ -1,8 +1,8 @@
 <template>
     <el-form ref="formRef" :rules="rules" :model="formData" label-width="120px">
         <!-- 后台设置 -->
-        <el-card shadow="never" class="!border-none">
-            <div class="text-xl font-medium mb-[20px]">后台设置</div>
+        <el-card shadow="never" class="border-none!">
+            <div class="text-xl font-medium mb-5">后台设置</div>
             <el-form-item prop="name">
                 <div class="w-[380px]">
                     <el-input
@@ -94,8 +94,8 @@
         </el-card>
 
         <!-- 联系方式 -->
-        <el-card shadow="never" class="!border-none mt-4">
-            <div class="text-xl font-medium mb-[20px]">联系方式</div>
+        <el-card shadow="never" class="border-none! mt-4">
+            <div class="text-xl font-medium mb-5">联系方式</div>
             <el-form-item label="联系人" prop="pc.name">
                 <div class="w-[380px]">
                     <el-input
@@ -115,7 +115,7 @@
         </el-card>
 
         <!-- 保存按钮 -->
-        <el-card shadow="never" class="!border-none mt-4">
+        <el-card shadow="never" class="border-none! mt-4">
             <el-button
                 v-perms="['setting:backs:save']"
                 :loading="loading"
@@ -150,31 +150,31 @@ const formData = reactive({
 // 表单验证
 const rules = {
     'name': [
-        { required: true, message: '请填写网站名称', trigger: ['blur'] },
-        { max: 30, message: '网站名称不能超出30个字符', trigger: ['blur'] }
+        { required: true, message: '请填写网站名称', trigger: ['blur-sm'] },
+        { max: 30, message: '网站名称不能超出30个字符', trigger: ['blur-sm'] }
     ],
     'title': [
-        { required: true, message: '请填写网站标题', trigger: ['blur'] },
-        { max: 30, message: '网站标题不能超出30个字符', trigger: ['blur'] }
+        { required: true, message: '请填写网站标题', trigger: ['blur-sm'] },
+        { max: 30, message: '网站标题不能超出30个字符', trigger: ['blur-sm'] }
     ],
     'cover': [
-        { max: 500, message: '网站封面链接不能超出500个字符', trigger: ['blur'] }
+        { max: 500, message: '网站封面链接不能超出500个字符', trigger: ['blur-sm'] }
     ],
     'favicon': [
-        { required: true, message: '请设置网站图标', trigger: ['blur'] },
-        { max: 500, message: '网站图标链接不能超出500个字符', trigger: ['blur'] }
+        { required: true, message: '请设置网站图标', trigger: ['blur-sm'] },
+        { max: 500, message: '网站图标链接不能超出500个字符', trigger: ['blur-sm'] }
     ],
     'logo_black_big': [
-        { required: true, message: '请选择深色logo', trigger: ['blur'] }
+        { required: true, message: '请选择深色logo', trigger: ['blur-sm'] }
     ],
     'logo_white_big': [
-        { required: true, message: '请选择浅色', trigger: ['blur'] }
+        { required: true, message: '请选择浅色', trigger: ['blur-sm'] }
     ],
     'contacts': [
-        { max: 20, message: '联系人姓名不能超出20个字符', trigger: ['blur'] }
+        { max: 20, message: '联系人姓名不能超出20个字符', trigger: ['blur-sm'] }
     ],
     'mobile': [
-        { max: 20, message: '联系电话不能超出200个字符', trigger: ['blur'] }
+        { max: 20, message: '联系电话不能超出200个字符', trigger: ['blur-sm'] }
     ]
 }
 

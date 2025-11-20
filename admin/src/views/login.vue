@@ -112,13 +112,13 @@ const formData = reactive({
 // 验证规则
 const rules = {
     username: [
-        { required: true, message: '请输入登录账号', trigger: ['blur'] }
+        { required: true, message: '请输入登录账号', trigger: ['blur-sm'] }
     ],
     password: [
-        { required: true, message: '请输入密码', trigger: ['blur'] }
+        { required: true, message: '请输入密码', trigger: ['blur-sm'] }
     ],
     code: [
-        { required: true, message: '请输入验证码', trigger: ['blur'] }
+        { required: true, message: '请输入验证码', trigger: ['blur-sm'] }
     ]
 }
 
