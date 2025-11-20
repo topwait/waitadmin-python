@@ -88,7 +88,9 @@ const tabsMap = [
  * 查询通知渠道列表
  */
 const queryNoticeLists = async (): Promise<void> => {
-    dataLists.value = await noticeApi.lists()
+    dataLists.value = await noticeApi.lists({
+        client: tabsActive.value
+    })
 }
 
 /**

@@ -97,6 +97,7 @@ const open = async (type: string, row?: any): Promise<void> => {
         const data = await journalApi.detail(row.id)
         for (const key in formData) {
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

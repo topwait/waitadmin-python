@@ -21,7 +21,7 @@ export default defineConfig([
             reportUnusedDisableDirectives: true
         },
         plugins: {
-            '@typescript-eslint': tsPlugin
+            '@typescript-eslint': tsPlugin as any
         },
         rules: {
             ...tsPlugin.configs.recommended.rules,
@@ -95,10 +95,6 @@ export default defineConfig([
             'no-shadow': 'off',                // 禁止变量声明与外层作用域变量同名
             'no-delete-var': 'off',            // 禁止删除变量
             'prefer-const': 'warn',            // 优先使用 const 声明未重新赋值的变量
-            'no-unused-vars': ['error', {      // 禁止未使用的变量(忽略 _ 开头的变量)
-                argsIgnorePattern: '^_',
-                varsIgnorePattern: '^_'
-            }],
 
             // 函数相关规则
             'no-func-assign': 'warn',           // 禁止对函数声明重新赋值

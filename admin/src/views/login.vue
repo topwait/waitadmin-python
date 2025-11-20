@@ -96,10 +96,10 @@ const formRef = shallowRef<FormInstance>()
 const config = computed(() => appStore.config)
 
 // 验证码
-const captcha = ref('')
+const captcha = ref<string>('')
 
 // 记住密码
-const remAccount = ref(false)
+const remAccount = ref<boolean>(false)
 
 // 表单参数
 const formData = reactive({

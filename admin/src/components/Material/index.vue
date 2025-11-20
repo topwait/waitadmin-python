@@ -234,7 +234,9 @@ const props = defineProps({
     }
 })
 
-const { pageSize, limit, data } = toRefs(props)
+const pLimit = ref(props.limit)
+const pSize = ref(props.pageSize)
+const pData = ref(props.data)
 const typeValue = computed<number>(() => {
     switch (props.type) {
         case 'image':
@@ -281,7 +283,7 @@ const {
     handleMoveFile,
     handleRenameFile,
     handleDeleteFile
-} = useFile(typeValue.value, cateId, limit, pageSize, data)
+} = useFile(typeValue.value, cateId, pLimit, pSize, pData)
 
 const getData = async () => {
     await getCateLists()
@@ -423,16 +425,16 @@ defineExpose({
                         height: 17px;
                         margin: 3px 2px;
                         overflow: hidden;
-                        font-size: 12px;
                         text-overflow: ellipsis;
+                        font-size: 12px;
                         white-space: nowrap;
                     }
                     .operate {
                         display: flex;
+                        visibility: hidden;
                         align-items: center;
                         height: 12px;
                         margin-bottom: 8px;
-                        visibility: hidden;
                         :deep(.el-button) {
                             margin: 0;
                             font-size: 12px;

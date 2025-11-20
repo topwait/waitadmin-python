@@ -17,10 +17,12 @@
 </template>
 
 <script setup lang="ts">
+import type { EpPropMergeType } from 'element-plus/es/utils'
+
 interface Props {
     modelValue?: Record<string, any>
     pageSizes?: number[]
-    size?: string,
+    size?: EpPropMergeType<StringConstructor, '' | 'default' | 'small' | 'large', never>,
     layout?: string,
     pageCount?: number,
     background?: boolean

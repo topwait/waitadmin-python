@@ -56,7 +56,8 @@ import type { PropType } from 'vue'
 
 const props = defineProps({
     value: {
-        type: String
+        type: String,
+        default: ''
     },
     type: {
         type: String,

@@ -26,7 +26,7 @@ const datetimeUtil: any = {
         for (const k in opt) {
             ret = new RegExp(`(${k})`).exec(format)
             if (ret) {
-                const replaceValue: string = ret[1].length == 1 ? opt[k] : opt[k].padStart(ret[1].length, '0')
+                const replaceValue: string = ret[1].length === 1 ? opt[k] : opt[k].padStart(ret[1].length, '0')
                 format = format.replace(ret[1], String(replaceValue))
             }
         }
@@ -47,7 +47,7 @@ const datetimeUtil: any = {
             timestamp = Number(new Date())
         }
 
-        if (timestamp.toString().length == 10) {
+        if (timestamp.toString().length === 10) {
             timestamp *= 1000
         }
 
@@ -66,7 +66,7 @@ const datetimeUtil: any = {
         for (const k in opt) {
             ret = new RegExp(`(${k})`).exec(format)
             if (ret) {
-                const replaceValue: string = ret[1].length == 1 ? opt[k] : opt[k].padStart(ret[1].length, '0')
+                const replaceValue: string = ret[1].length === 1 ? opt[k] : opt[k].padStart(ret[1].length, '0')
                 format = format.replace(ret[1], replaceValue)
             }
         }
@@ -169,8 +169,8 @@ const datetimeUtil: any = {
      * @example: [1714492800, 1717171199]
      */
     month(): number[] {
-        const startDate: Date  = new Date(new Date(new Date().getFullYear(), new Date().getMonth(), 1).setHours(0, 0, 0))
-        const endDate: Date  = new Date(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).setHours(23, 59, 59, 59))
+        const startDate: Date = new Date(new Date(new Date().getFullYear(), new Date().getMonth(), 1).setHours(0, 0, 0))
+        const endDate: Date = new Date(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).setHours(23, 59, 59, 59))
         const startTime = this.dateToTimestamp(this.formatDate(startDate))
         const endTime = this.dateToTimestamp(this.formatDate(endDate))
         return [startTime, endTime + (86400 - 1)]

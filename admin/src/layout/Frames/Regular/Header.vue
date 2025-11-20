@@ -14,8 +14,8 @@
                     @click="onSwitchMenu(route, index)"
                 >
                     <div class="vertical">
-                        <icon v-if="route.meta.icon" :name="route.meta.icon" :size="15" />
-                        <cite>{{ route.meta.title }}</cite>
+                        <icon v-if="route.meta?.icon" :name="String(route.meta?.icon)" :size="15" />
+                        <cite>{{ route.meta?.title }}</cite>
                     </div>
                 </li>
             </ul>

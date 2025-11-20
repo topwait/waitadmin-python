@@ -44,6 +44,7 @@
         "eslint": "^9.39.1",
         "eslint-plugin-vue": "^10.5.1",
         "fs-extra": "^11.3.2",
+        "jiti": "^2.6.1",
         "postcss": "^8.5.6",
         "sass": "1.79.6",
         "stylelint": "^16.25.0",

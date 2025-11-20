@@ -38,7 +38,7 @@ const routes = computed(() => userStore.routes)
 const isMobile = computed(() => appStore.isMobile)
 const isTabMultiple = computed(() => confStore.isTabMultiple)
 
-const subRouters = ref([])
+const subRouters = ref<any>([])
 const firstsMenu: Ref<string> = ref('')
 const menusIndex: Ref<number> = ref(0)
 const activeMenu = computed<string>(() => route.path)

@@ -1,5 +1,5 @@
 <template>
-    <el-form ref="formRef" :model="formData" label-width="160px">
+    <el-form :model="formData" label-width="160px">
         <el-card shadow="never" class="!border-none">
             <div class="text-xl font-medium mb-[20px]">存储设置</div>
             <el-form-item label="存储方式：" prop="drive">
@@ -109,6 +109,7 @@ import storageApi from '@/api/setting/storage'
 const loading = ref(false)
 const formData = reactive({
     drive: 'local',
+    local: {},
     qiniu: {
         bucket: '',
         domain: '',

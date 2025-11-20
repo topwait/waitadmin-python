@@ -56,8 +56,8 @@ const tabsMap = [
     :deep(.el-card) {
       height: 100%;
       .el-card__body {
-          padding-bottom: 10px;
           height: 100%;
+          padding-bottom: 10px;
       }
     }
     :deep(.el-tabs) {

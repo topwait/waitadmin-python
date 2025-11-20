@@ -11,7 +11,7 @@
             class="overflow-y-auto flex-1"
             :default-config="editorConfig"
             :mode="mode"
-            @onCreated="handleCreated"
+            @on-created="handleCreated"
         />
         <material-picker
             ref="materialPickerRef"

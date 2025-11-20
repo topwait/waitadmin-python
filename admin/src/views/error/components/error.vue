@@ -13,12 +13,19 @@
 </template>
 
 <script lang="ts" setup>
+import { title } from 'process'
 import { onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const props = defineProps({
-    code: String,
-    title: String,
+    code: {
+        type: String,
+        default: '404'
+    },
+    title: {
+        type: String,
+        default: '页面不存在'
+    },
     showBtn: {
         type: Boolean,
         default: true
