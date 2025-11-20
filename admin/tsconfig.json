@@ -34,8 +34,8 @@
         "src/**/*.vue",
         "src/vite-env.d.ts",
         "auto-imports.d.ts",
-        "components.d.ts",
-        "typings/**/*.d.ts"
+        "typings/**/*.d.ts",
+        "components.d.ts"
     ],
     "exclude": [
         "node_modules",
