@@ -35,7 +35,8 @@
         "src/vite-env.d.ts",
         "auto-imports.d.ts",
         "typings/**/*.d.ts",
-        "components.d.ts"
+        "components.d.ts",
+        "eslint.config.ts"
     ],
     "exclude": [
         "node_modules",
