@@ -5,6 +5,15 @@ import vuePlugin from 'eslint-plugin-vue'
 import vueParser from 'vue-eslint-parser'
 
 export default defineConfig([
+    // 忽略特定文件
+    {
+        ignores: [
+            'dist/**',
+            'node_modules/**',
+            'auto-imports.d.ts',
+            'components.d.ts'
+        ]
+    },
     // JS规则
     {
         files: ['**/*.{js,ts,jsx,tsx,mjs,cjs}'],
@@ -88,18 +97,6 @@ export default defineConfig([
 
     // 通用规则
     {
-        ignores: [
-            'dist/**',
-            'node_modules/**',
-            '.vscode/**',
-            '.idea/**',
-            '*.md',
-            '*.json',
-            '*.lock',
-            '*.d.ts',
-            '**/*.d.ts',
-            '**/*.min.js'
-        ],
         rules: {
             // 变量相关规则
             'no-var': 'warn',                  // 禁止使用var
