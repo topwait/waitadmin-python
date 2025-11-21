@@ -1,5 +1,4 @@
-import { merge } from 'lodash-es'
-import { isFunction } from 'lodash'
+import { merge, isFunction } from 'lodash-es'
 import { $fetch } from 'ofetch'
 import type {
     $Fetch,

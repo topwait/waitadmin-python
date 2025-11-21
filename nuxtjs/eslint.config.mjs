@@ -44,7 +44,7 @@ export default withNuxt([
             'array-bracket-spacing': 'warn',
             'brace-style': 'warn',
             'camelcase': 'off',
-            'max-depth': ['warn', 4],
+            'max-depth': ['warn', 6],
             'max-statements': ['warn', 100],
             'max-nested-callbacks': ['warn', 4],
             'max-statements-per-line': ['warn', { max: 1 }],
