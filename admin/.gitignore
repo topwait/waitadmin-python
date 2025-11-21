@@ -31,5 +31,6 @@ components.d.ts
 .eslintrc-auto-import.json
 
 # .env
+.env
 .env.development
 .env.production
