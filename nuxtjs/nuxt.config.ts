@@ -8,8 +8,8 @@ export default defineNuxtConfig({
         enabled: true
     },
 
+    srcDir: 'src/',
     ssr: !!envData.VITE_SSR,
-
     spaLoadingTemplate: false,
 
     css: [
