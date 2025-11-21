@@ -2,6 +2,16 @@
     "version": 4.0,
     "atDirectives": [
         {
+            "name": "@tailwind",
+            "description": "Use the `@tailwind` directive to inline tailwind CSS files, including Tailwind itself.",
+            "references": [
+                {
+                    "name": "Tailwind Documentation",
+                    "url": "https://tailwindcss.com/docs/functions-and-directives#tailwind-directive"
+                }
+            ]
+        },
+        {
             "name": "@import",
             "description": "Use the `@import` directive to inline import CSS files, including Tailwind itself.",
             "references": [
