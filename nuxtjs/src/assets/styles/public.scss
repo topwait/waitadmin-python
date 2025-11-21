@@ -3,9 +3,10 @@ body {
     font-family: "PingFang SC", Arial, "Microsoft YaHei", sans-serif;
     font-size: var(--el-font-size-base);
     color: var(--el-text-color-primary);
-    em { font-style: normal; }
+    em, i { font-style: normal; }
 }
 
+// 焦点轮廓
 :focus-visible {
     outline: none;
 }

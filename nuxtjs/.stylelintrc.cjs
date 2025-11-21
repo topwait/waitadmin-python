@@ -11,7 +11,6 @@ module.exports = {
         '**/*.jsx',
         '**/*.tsx',
         'index.html',
-        '**/tailwind.css',
         'dist/**',
         'node_modules/**'
     ],
