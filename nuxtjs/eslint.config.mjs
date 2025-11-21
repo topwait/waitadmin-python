@@ -107,7 +107,7 @@ export default withNuxt([
             'curly': 'warn',                     // 强制使用大括号包裹代码块
             'eqeqeq': 'warn',                    // 强制使用 === 和 !==
 
-            // 代码风
+            // 代码风格
             'no-multi-spaces': 'off',           // 禁止多个空格
             'no-trailing-spaces': 'warn',       // 禁止行尾空格
             'no-multiple-empty-lines': 'warn',  // 禁止连续多个空行

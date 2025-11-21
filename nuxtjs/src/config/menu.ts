@@ -27,7 +27,7 @@ const menus: any = [
                 'name': 'Gitee',
                 'path': 'https://gitee.com/wafts/waitadmin-python',
                 'target': '_blank'
-            },
+            }
         ]
     }
 ]
