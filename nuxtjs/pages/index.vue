@@ -89,6 +89,8 @@
 import appApi from '~/api/app'
 import Information from './article/_components/Information.vue'
 
+console.log('aaa')
+
 // 页面数据
 const { data: pageData } = await useAsyncData(
     () => appApi.homing(),
