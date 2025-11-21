@@ -37,6 +37,7 @@ export default defineConfig([
             '@typescript-eslint/no-unused-vars': 'warn',
             '@typescript-eslint/ban-ts-comment': 'off',
             '@typescript-eslint/no-explicit-any': 'off',
+            '@typescript-eslint/no-empty-object-type': 'off',
             '@typescript-eslint/no-unused-expressions': 'off'
         }
     },
@@ -130,7 +131,7 @@ export default defineConfig([
             'no-return-await': 'warn',           // 禁止不必要的 return await
             'default-case': 'off',               // switch 必须包含 default 分支
             'no-duplicate-case': 'warn',         // 禁止 switch 中重复 case
-            'max-depth': ['warn', 4],            // 限制代码块嵌套深度
+            'max-depth': ['warn', 6],            // 限制代码块嵌套深度
             'max-statements': ['warn', 100],     // 限制函数内语句数量
             'max-nested-callbacks': ['warn', 3], // 限制嵌套回调深度
             'max-statements-per-line': ['warn', { max: 1 }], // 每行最多 1 条语句
