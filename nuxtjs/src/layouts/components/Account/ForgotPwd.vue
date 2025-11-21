@@ -17,7 +17,7 @@
                     <el-input v-model="formData.code" placeholder="请输入验证码">
                         <template #suffix>
                             <div class="flex justify-center leading-5 border-l w-[90px]">
-                                <VerifyCode ref="verificationCodeRef" @click-get="onSendSms" />
+                                <VerifyCode @click-get="onSendSms" />
                             </div>
                         </template>
                     </el-input>
@@ -164,7 +164,7 @@ const { lockFn: handleSubmit, isLock } = useLockFn(async () => {
         await userApi.forgetPwd({
             account: formData.account,
             password: formData.password,
-            code: formData.code,
+            code: formData.code
         }).then(() => {
             feedback.msgSuccess('更改成功')
             setTimeout(() => appStore.setPopup(popupEnum.LOGIN), 1000)

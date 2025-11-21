@@ -234,7 +234,7 @@ const formRules: FormRules = {
             pattern: /^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/,
             message: '请输入正确的手机号码',
             trigger: 'blur'
-        },
+        }
     ],
     account: [{ required: true,  message: '请输入手机号', trigger: 'blur' }],
     password: [{ required: true, message: '请输入密码', trigger: 'blur' }],

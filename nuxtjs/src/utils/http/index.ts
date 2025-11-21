@@ -54,7 +54,7 @@ export function createRequest(opt?: Partial<FetchOptions>): Request {
                 const headers: any = options.headers || {}
                 if (withToken) {
                     const token: string = userStore.token || ''
-                    headers.Authorization = 'Bearer ' + token
+                    headers.Authorization = `Bearer ${token}`
                 }
                 options.headers = headers
 

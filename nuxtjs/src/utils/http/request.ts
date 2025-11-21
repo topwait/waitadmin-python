@@ -52,7 +52,10 @@ export class Request {
      * @returns {Promise<any>}
      * @author zero
      */
-    post<T = any>(fetchOptions: FetchOptions, requestOptions?: Partial<RequestOptions>): Promise<T> {
+    post<T = any>(
+        fetchOptions: FetchOptions,
+        requestOptions?: Partial<RequestOptions>
+    ): Promise<T> {
         return this.request<T>(
             { ...fetchOptions, method: 'POST' },
             requestOptions
@@ -67,7 +70,10 @@ export class Request {
      * @returns {Promise<any>}
      * @author zero
      */
-    uploadFile<T = any>(options: FetchOptions, params: FileParams): Promise<T> {
+    uploadFile<T = any>(
+        options: FetchOptions,
+        params: FileParams
+    ): Promise<T> {
         const formData: FormData = new FormData()
         const customFilename: string = params.name || 'file'
         formData.append(customFilename, params.file)
@@ -99,7 +105,10 @@ export class Request {
      * @returns {Promise<any>}
      * @author zero
      */
-    async eventStream<T = any>(fetchOptions: FetchOptions, requestOptions?: Partial<RequestEventStreamOptions>): Promise<T> {
+    async eventStream<T = any>(
+        fetchOptions: FetchOptions,
+        requestOptions?: Partial<RequestEventStreamOptions>
+    ): Promise<T> {
         let mergeOptions: any = merge({}, this.fetchOptions, fetchOptions)
         mergeOptions.requestOptions = merge({}, this.requestOptions, requestOptions)
 
@@ -189,7 +198,10 @@ export class Request {
      * @returns {Promise<any>}
      * @author zero
      */
-    request<T = any>(fetchOptions: FetchOptions, requestOptions?: Partial<RequestOptions>): Promise<T> {
+    request<T = any>(
+        fetchOptions: FetchOptions,
+        requestOptions?: Partial<RequestOptions>
+    ): Promise<T> {
         let mergeOptions: any = merge({}, this.fetchOptions, fetchOptions)
         mergeOptions.requestOptions = merge({}, this.requestOptions, requestOptions)
 
@@ -235,9 +247,13 @@ export class Request {
         let query: string = ''
         for (const props of Object.keys(params)) {
             const value = params[props]
-            const isEmpty: boolean = !(value !== null && value !== '' && typeof value !== 'undefined')
+            const isEmpty: boolean = !(
+                value !== null &&
+                value !== '' &&
+                typeof value !== 'undefined'
+            )
             if (!isEmpty) {
-                query += props + '=' + value + '&'
+                query += `${props}=${value}&`
             }
         }
         return query.slice(0, -1)

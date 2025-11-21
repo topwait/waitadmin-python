@@ -36,7 +36,7 @@ export function usePaging<T = any>(options: Options) {
         try {
             const pageParams: any = {
                 page: pager.page !== 1 ? pager.page : '',
-                limit: pager.limit !== 15 ? pager.limit : '',
+                limit: pager.limit !== 15 ? pager.limit : ''
             }
 
             const res = await fetchFun({

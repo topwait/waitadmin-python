@@ -26,7 +26,7 @@
                 <NuxtLink
                     class="menu-item"
                     target="_blank"
-                    :to="'/'"
+                    to="/"
                 >
                     返回首页
                 </NuxtLink>

@@ -5,7 +5,6 @@
     </el-button>
     <vue-countdown
         v-else
-        ref="vueCountdownRef"
         v-slot="{ totalSeconds }"
         :time="seconds * 1000"
         @end="end"

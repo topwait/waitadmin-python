@@ -103,16 +103,19 @@ const packages = ref<RechargePackageResponse[]>([])
 
 // 充值套餐
 const currentIndex = ref(0)
-const currentPackage = computed(() => {
-    return packages.value[currentIndex.value] || {}
-})
+const currentPackage = computed<RechargePackageResponse>(
+    () => {
+        return packages.value[currentIndex.value]
+                || {} as RechargePackageResponse
+    }
+)
 
 // 发起支付
 const {lockFn: payNow, isLock} = useLockFn(async () => {
     // 验证订单
     if (currentIndex.value === -1) {
         if (money.value < rechargeConfig.value.min_recharge) {
-            return feedback.msgError('充值金额不能少于: ' + money.value)
+            return feedback.msgError(`充值金额不能少于: ${money.value}`)
         }
     }
 

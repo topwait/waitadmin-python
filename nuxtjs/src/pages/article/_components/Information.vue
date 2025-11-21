@@ -65,7 +65,8 @@
 <script setup lang="ts">
 defineProps({
     type: {
-        type: String
+        type: String,
+        default: ''
     },
     title: {
         type: String,

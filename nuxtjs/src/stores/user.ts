@@ -14,7 +14,7 @@ const useUserStore = defineStore('userStore', {
     state: (): UserSate => {
         return {
             token: cacheUtil.get(cacheEnum.TOKEN_KEY) || '',
-            users: {} as UserCenterResponse,
+            users: {} as UserCenterResponse
         }
     },
     getters: {

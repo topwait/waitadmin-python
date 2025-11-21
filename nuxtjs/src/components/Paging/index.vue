@@ -1,8 +1,8 @@
 <template>
     <div class="pagination">
         <el-pagination
-            v-model:currentPage="pager.page"
-            v-model:pageSize="pager.limit"
+            v-model:current-page="pager.page"
+            v-model:page-size="pager.limit"
             :background="background"
             :layout="layout"
             :size="size"

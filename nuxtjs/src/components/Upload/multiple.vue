@@ -1,7 +1,7 @@
 <template>
     <div v-loading="loading" element-loading-text="上传中...">
         <el-upload
-            ref="uploadRef"
+            ref="uploadRefs"
             v-model:file-list="fileList"
             v-bind="$attrs"
             class="upload"

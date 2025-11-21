@@ -16,7 +16,7 @@ export default defineConfig([
     },
     // JS规则
     {
-        files: ['**/*.{js,ts,jsx,tsx,mjs,cjs}'],
+        files: ['**/*.{js,ts,jsx,tsx,mjs,cjs,vue}'],
         languageOptions: {
             ecmaVersion: 'latest',
             sourceType: 'module',
@@ -59,7 +59,7 @@ export default defineConfig([
         },
         rules: {
             ...vuePlugin.configs.recommended.rules,
-            'vue/no-v-html': 'warn',
+            'vue/no-v-html': 'off',
             'vue/no-unused-refs': 'warn',
             'vue/no-useless-v-bind': 'warn',
             'vue/require-prop-types': 'warn',
@@ -116,12 +116,14 @@ export default defineConfig([
             'no-useless-catch': 'warn',         // 禁止不必要的 catch 块
 
             // 调试相关规则
-            'no-console': 'warn',               // 禁止 console
             'no-debugger': 'warn',              // 禁止 debugger
             'no-undef': 'off',                  // 禁止未定义变量
             'no-redeclare': 'error',            // 禁止重复声明变量
             'no-lone-blocks': 'warn',           // 禁止不必要的代码块
             'no-extra-parens': 'warn',          // 禁止不必要的括号
+            'no-console': ['warn', {            // 禁止 console
+                allow: ['error', 'warn']
+            }],
 
             // 逻辑与控制流
             'no-empty': 'off',                   // 禁止空的代码块
@@ -133,7 +135,7 @@ export default defineConfig([
             'no-duplicate-case': 'warn',         // 禁止 switch 中重复 case
             'max-depth': ['warn', 6],            // 限制代码块嵌套深度
             'max-statements': ['warn', 100],     // 限制函数内语句数量
-            'max-nested-callbacks': ['warn', 3], // 限制嵌套回调深度
+            'max-nested-callbacks': ['warn', 5], // 限制嵌套回调深度
             'max-statements-per-line': ['warn', { max: 1 }], // 每行最多 1 条语句
             'curly': 'warn',                     // 强制使用大括号包裹代码块
             'eqeqeq': 'warn',                    // 强制使用 === 和 !==

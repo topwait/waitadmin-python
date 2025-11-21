@@ -1,7 +1,7 @@
 <template>
     <el-card class="!border-none h-full" shadow="never">
         <el-tabs v-model="tabIndex" type="card">
-            <el-tab-pane :label="'账号安全'" name="safer">
+            <el-tab-pane label="账号安全" name="safer">
                 <ul class="binding">
                     <!-- 邮箱 -->
                     <li>
