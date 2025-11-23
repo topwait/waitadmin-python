@@ -31,7 +31,14 @@ const color = computed({
     }
 })
 
-const predefineColors = ['#409EFF', '#28C76F', '#EA5455', '#FF9F43', '#01CFE8', '#4A5DFF']
+const predefineColors: string[] = [
+    '#409EFF',
+    '#28C76F',
+    '#EA5455',
+    '#FF9F43',
+    '#01CFE8',
+    '#4A5DFF'
+]
 
 const reset = () => {
     color.value = props.defaultColor

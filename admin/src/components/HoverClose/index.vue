@@ -1,7 +1,11 @@
 <template>
     <div class="hover-close">
         <slot></slot>
-        <div v-if="showClose" class="close" @click.stop="handleClose">
+        <div
+            v-if="showClose"
+            class="close"
+            @click.stop="handleClose"
+        >
             <icon :size="12" name="el-icon-CloseBold" />
         </div>
     </div>
