@@ -5,13 +5,25 @@
         </div>
         <el-form ref="formRef" size="large" :model="formData" :rules="formRules">
             <el-form-item label="旧的密码" prop="password_old">
-                <el-input v-model="formData.password_old" type="password" placeholder="请输入原始密码" />
+                <el-input
+                    v-model="formData.password_old"
+                    type="password"
+                    placeholder="请输入原始密码"
+                />
             </el-form-item>
             <el-form-item label="新的密码" prop="password">
-                <el-input v-model="formData.password" type="password" placeholder="请输入新的密码 (6~20个字符)" />
+                <el-input
+                    v-model="formData.password"
+                    type="password"
+                    placeholder="请输入新的密码 (6~20个字符)"
+                />
             </el-form-item>
             <el-form-item label="确认密码" prop="password_confirm">
-                <el-input v-model="formData.password_confirm" type="password" placeholder="请再次输入密码" />
+                <el-input
+                    v-model="formData.password_confirm"
+                    type="password"
+                    placeholder="请再次输入密码"
+                />
             </el-form-item>
             <el-form-item>
                 <el-button

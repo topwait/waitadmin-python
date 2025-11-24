@@ -111,7 +111,9 @@
         <!-- 微信登录 -->
         <template v-if="oauthChannel.includes(currentLogin)">
             <div v-if="oauthChannel.length" class="pt-[30px] px-[20px]">
-                <div class="text-3xl font-semibold text-tx-regular text-center">微信扫一扫登录</div>
+                <div class="text-3xl font-semibold text-tx-regular text-center">
+                    微信扫一扫登录
+                </div>
                 <div class="flex flex-col items-center mt-[10px] mb-[25px]">
                     <div v-loading="!sanQrCodeUrl" class="relative w-[206px] h-[206px]">
                         <img
@@ -134,7 +136,9 @@
                     </div>
                     <template v-if="sanCodeStatus === 0">
                         <div class="mt-[10px]">微信扫码登录/注册</div>
-                        <div class="mt-[18px] text-base text-tx-placeholder">首次扫码关注公众号后将自动注册新账号</div>
+                        <div class="mt-[18px] text-base text-tx-placeholder">
+                            首次扫码关注公众号后将自动注册新账号
+                        </div>
                     </template>
                     <template v-if="sanCodeStatus === 1">
                         <div class="mt-[10px] text-error">二维码失效</div>
