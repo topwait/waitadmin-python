@@ -8,6 +8,13 @@ interface Options {
 
 const pollingDict: any = {}
 
+/**
+ * 定时轮训执行(心跳)
+ *
+ * @param fun
+ * @param options
+ * @author zero
+ */
 export default function usePolling(fun: () => Promise<any>, options?: Options) {
     const result = ref(null)
     const error = ref(null)
@@ -77,10 +84,6 @@ export default function usePolling(fun: () => Promise<any>, options?: Options) {
             }, 0)
         }
     }
-
-    // onBeforeUnmount(() => {
-    //     end()
-    // })
 
     return {
         start,
