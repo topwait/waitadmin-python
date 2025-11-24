@@ -2,9 +2,13 @@
  * 防止函数被重复执行 (防抖)
  *
  * @param fn
+ * @param {number} delay
  * @author zero
  */
-export function useLockFn(fn: (...args: any[]) => Promise<any>, delay: number = 0) {
+export function useLockFn(
+    fn: (...args: any[]) => Promise<any>,
+    delay: number = 0
+) {
     const isLock: globalThis.Ref<boolean> = ref(false)
     const lockFn = async (...args: any[]): Promise<any> => {
         if (isLock.value) {

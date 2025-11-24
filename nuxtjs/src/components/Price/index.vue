@@ -30,16 +30,16 @@ import { computed } from 'vue'
 
 const props = withDefaults(
     defineProps<{
-      content: string | number; // 标题
-      digits?: number;          // 小数位数
-      autoDigits?: boolean;     // 动态小数
-      color?: string;           // 字体颜色
-      mainSize?: string;        // 主要内容字体大小
-      minorSize?: string;       // 次要内容字体大小
-      lineThrough?: boolean;    // 贯穿线
-      fontWeight?: string;      // 字重
-      prefix?: string;          // 前缀
-      suffix?: string;          // 后缀
+        content: string | number; // 标题
+        digits?: number;          // 小数位数
+        autoDigits?: boolean;     // 动态小数
+        color?: string;           // 字体颜色
+        mainSize?: string;        // 主要内容字体大小
+        minorSize?: string;       // 次要内容字体大小
+        lineThrough?: boolean;    // 贯穿线
+        fontWeight?: string;      // 字重
+        prefix?: string;          // 前缀
+        suffix?: string;          // 后缀
     }>(),
     {
         digits: 2,

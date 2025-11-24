@@ -133,9 +133,9 @@ const getAccept = computed(() => {
             return '.wmv,.avi,.mpg,.mpeg,.3gp,.mov,.mp4,m4v,.flv,.rmvb,.mkv'
         case 'audio':
             return '.mp3,.wav,.aac,.ogg,.flac,.m4a,.amr,.wma,.mid,.midi,.ape,.ac3'
-        case 'package':
+        case 'packs':
             return '.zip,.rar,.7z,.tar,.gz,.bz2,.tgz,.tar.gz,.tbz2,.tar.bz2,.iso,.cab'
-        case 'document':
+        case 'docs':
             return '.doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,.txt,.rtf,.html,.htm,.csv,.md,.pem'
         default:
             return '*'
