@@ -1,4 +1,6 @@
-/** ------ [文章列表] ------ */
+/**
+ * 文章列表类型
+ */
 interface ArticleListsResponse {
     id: number;
     category: string;
@@ -10,7 +12,9 @@ interface ArticleListsResponse {
     update_time: string;
 }
 
-/** ------[文章详情] ------ */
+/**
+ * 文章详情类型
+ */
 interface ArticleDetailResponse {
     id: number;
     category: string;
@@ -22,25 +26,26 @@ interface ArticleDetailResponse {
     is_collect: number;
     create_time: string;
     update_time: string;
-    prev: ArticleDetailNext;
-    next: ArticleDetailNext;
+    prev: {
+        id: number;
+        title: string;
+    };
+    next: {
+        id: number;
+        title: string;
+    };
 }
 
-interface ArticleDetailNext {
-    id: number;
-    title: string;
-}
-
-/** ------ [文章页面] ------ */
+/**
+ * 文章页面类型
+ */
 interface ArticlePagesResponse {
-    adv: ArticlePagesAdv[];
     topping: ArticleListsResponse[];
     ranking: ArticleListsResponse[];
-}
-
-interface ArticlePagesAdv {
-    title: string;
-    image: string;
-    target: string;
-    url: string;
+    adv: {
+        title: string;
+        image: string;
+        target: string;
+        url: string;
+    }[];
 }

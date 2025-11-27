@@ -19,7 +19,9 @@ const userApi = {
      * @returns {Promise<UserCollectResponse>}
      * @author zero
      */
-    collect(params: { page?: number }): Promise<UserCollectResponse> {
+    collect(params: {
+        page?: number;
+    }): Promise<UserCollectResponse> {
         return $request.get<UserCollectResponse>({
             url: '/user/collect',
             params: {
@@ -37,7 +39,10 @@ const userApi = {
      * @returns {Promise<any>}
      * @author zero
      */
-    edit(params: { field: string, value: number|string }): Promise<any> {
+    edit(params: {
+        field: string;
+        value: number|string;
+    }): Promise<any> {
         return $request.post({
             url: '/user/edit',
             params: {
@@ -57,7 +62,11 @@ const userApi = {
      * @returns {Promise<any>}
      * @author zero
      */
-    forgetPwd(params: { account: string, code: string, password: string }): Promise<any> {
+    forgetPwd(params: {
+        account: string;
+        code: string;
+        password: string;
+    }): Promise<any> {
         return $request.post({
             url: '/user/forget_pwd',
             params: {
@@ -77,7 +86,10 @@ const userApi = {
      * @returns {Promise<any>}
      * @author zero
      */
-    changePwd(params: { new_pwd: string, old_pwd: string }): Promise<any> {
+    changePwd(params: {
+        new_pwd: string;
+        old_pwd: string;
+    }): Promise<any> {
         return $request.post({
             url: '/user/change_pwd',
             params: {
@@ -97,7 +109,11 @@ const userApi = {
      * @returns {Promise<any>}
      * @author zero
      */
-    bindEmail(params: { scene: string, email: string, code: string }): Promise<any> {
+    bindEmail(params: {
+        scene: string;
+        email: string;
+        code: string;
+    }): Promise<any> {
         return $request.post({
             url: '/user/bind_email',
             params: {
@@ -118,7 +134,11 @@ const userApi = {
      * @returns {Promise<any>}
      * @author zero
      */
-    bindMobile(params: { scene: string, mobile: string, code: string }): Promise<any> {
+    bindMobile(params: {
+        scene: string;
+        mobile: string;
+        code: string;
+    }): Promise<any> {
         return $request.post({
             url: '/user/bind_mobile',
             params: {
@@ -138,7 +158,10 @@ const userApi = {
      * @returns {Promise<any>}
      * @author zero
      */
-    bindWechat(params: { state: string, code: string }): Promise<any> {
+    bindWechat(params: {
+        state: string;
+        code: string;
+    }): Promise<any> {
         return $request.post({
             url: '/user/bind_wechat',
             params: {

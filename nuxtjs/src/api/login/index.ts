@@ -11,10 +11,10 @@ const loginApi = {
      * @author zero
      */
     register(params: {
-        scene: string,
-        code: string,
-        account: string,
-        password: string
+        scene: string;
+        code: string;
+        account: string;
+        password: string;
     }): Promise<LoginResultResponse> {
         return $request.post<LoginResultResponse>({
             url: '/login/register',
@@ -78,7 +78,10 @@ const loginApi = {
      * @returns {Promise<LoginResultResponse>}
      * @author zero
      */
-    oaLogin(params: { state: string, code: string }): Promise<LoginResultResponse> {
+    oaLogin(params: {
+        state: string;
+        code: string;
+    }): Promise<LoginResultResponse> {
         return $request.post<LoginResultResponse>({
             url: '/login/oa_login',
             params

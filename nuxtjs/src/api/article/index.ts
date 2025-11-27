@@ -1,6 +1,9 @@
 const articleApi = {
     /**
      * 文章页面
+     *
+     * @returns {ArticlePagesResponse}
+     * @author zero
      */
     pages(): Promise<ArticlePagesResponse> {
         return $request.get<ArticlePagesResponse>({
@@ -15,15 +18,15 @@ const articleApi = {
      * @param {number} params.page - 当前页码
      * @param {number} params.cid - 所属类目
      * @param {string} params.keyword - 文章标题
-     * @returns {Promise<ArticleListsResponse>}
+     * @returns {Promise<ArticleListsResponse[]>}
      * @author zero
      */
     lists(params: {
-        page?: number,
-        cid?: number,
-        keyword?: string
-    }): Promise<ArticleListsResponse> {
-        return $request.get<ArticleListsResponse>({
+        page?: number;
+        cid?: number;
+        keyword?: string;
+    }): Promise<ArticleListsResponse[]> {
+        return $request.get<ArticleListsResponse[]>({
             url: '/article/lists',
             params
         })
@@ -34,6 +37,7 @@ const articleApi = {
      *
      * @param {number} id - 文章ID
      * @returns {Promise<ArticleDetailResponse>}
+     * @author zero
      */
     detail(id: number): Promise<ArticleDetailResponse> {
         return $request.get<ArticleDetailResponse>({

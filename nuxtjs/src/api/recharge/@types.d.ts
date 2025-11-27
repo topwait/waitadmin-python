@@ -1,4 +1,6 @@
-/** ------ [充值套餐] ------ */
+/**
+ * 充值套餐类型
+ */
 interface RechargePackageResponse {
     id: string;
     name: string;

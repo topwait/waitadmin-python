@@ -3,6 +3,9 @@ import type { FileParams } from 'ofetch'
 const appApi = {
     /**
      * 主页数据
+     *
+     * @returns {AppHomingResponse}
+     * @author zero
      */
     homing(): Promise<AppHomingResponse> {
         return $request.get<AppHomingResponse>({
@@ -12,6 +15,9 @@ const appApi = {
 
     /**
      * 系统配置
+     *
+     * @returns {AppConfigResponse}
+     * @author zero
      */
     config(): Promise<AppConfigResponse> {
         return $request.get<AppConfigResponse>({
@@ -21,6 +27,9 @@ const appApi = {
 
     /**
      * 政策协议
+     *
+     * @returns {AppPolicyResponse}
+     * @author zero
      */
     policy(type: string): Promise<AppPolicyResponse> {
         return $request.get<AppPolicyResponse>({
@@ -60,7 +69,10 @@ const appApi = {
      * @returns {Promise<any>}
      * @author zero
      */
-    sendSms(params: { scene: number, mobile: string }): Promise<any> {
+    sendSms(params: {
+        scene: number;
+        mobile: string;
+    }): Promise<any> {
         return $request.post({
             url: '/index/send_sms',
             params: {
@@ -79,7 +91,10 @@ const appApi = {
      * @returns {Promise<any>}
      * @author zero
      */
-    sendEmail(params: { scene: number, email: string }): Promise<any> {
+    sendEmail(params: {
+        scene: number;
+        email: string;
+    }): Promise<any> {
         return $request.post({
             url: '/index/send_email',
             params: {

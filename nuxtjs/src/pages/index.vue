@@ -31,7 +31,7 @@
                             class="flex py-5 border-br"
                         >
                             <NuxtLink
-                                :to="'/article/detail/' + item.id"
+                                :to="`/article/detail/${item.id}`"
                                 class="block w-[200px] h-[132px]"
                             >
                                 <ElImage
@@ -41,7 +41,7 @@
                             </NuxtLink>
                             <div class="w-[560px] ml-4">
                                 <NuxtLink
-                                    :to="'/article/detail/' + item.id"
+                                    :to="`/article/detail/${item.id}`"
                                     class="block hover:text-primary"
                                 >
                                     <h3 class="text-lg font-bold line-clamp-1">{{ item.title }}</h3>

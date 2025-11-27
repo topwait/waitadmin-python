@@ -1,4 +1,6 @@
-/** ------ [个人中心] ------ */
+/**
+ * 个人中心类型
+ */
 interface UserCenterResponse {
     id: number;
     sn: string;
@@ -16,7 +18,9 @@ interface UserCenterResponse {
     last_login_time: string;
 }
 
-/** ------ [我的收藏] ------ */
+/**
+ * 我的收藏类型
+ */
 interface UserCollectResponse {
     id: number;
     image: string;

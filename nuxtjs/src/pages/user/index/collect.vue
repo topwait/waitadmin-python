@@ -61,6 +61,7 @@ const { pager, queryLists } = usePaging<UserCollectResponse>({
  *
  * @param {number} id
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleDelete = async (id: number): Promise<void> => {
     feedback.confirm('确定要删除此项数据吗?')
