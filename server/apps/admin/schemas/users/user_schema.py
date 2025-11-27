@@ -313,7 +313,7 @@ class UserSessionListVo(BaseModel):
     uuid: str = Field(description="标识")
     tips: str = Field(description="提示")
     device: str = Field(description="设备")
-    status: int = Field(description="状态: [1=在线, 2=已失效, 2=踢下线]")
+    status: int = Field(description="状态: [1=在线, 2=已失效, 3=踢下线]")
     login_host: str = Field(description="登录IP")
     surplus_time: str = Field(description="剩余时长")
     create_time: str = Field(description="创建时间")
@@ -330,6 +330,7 @@ class UserSessionListVo(BaseModel):
                 "device": "微信小程序",
                 "status": 1,
                 "login_host": "192.168.3.11",
+                "surplus_time": "",
                 "create_time": "2024-06-26 16:42:56",
                 "expire_time": "2024-06-26 18:42:56",
                 "last_op_time": "2024-06-26 16:42:56",

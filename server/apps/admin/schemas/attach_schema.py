@@ -124,7 +124,7 @@ class AlbumListVo(BaseModel):
     name: str = Field(description="文件名称")
     path: str = Field(description="文件路径")
     url: str = Field(description="文件地址")
-    ext: str = Field(description="登录账号")
+    ext: str = Field(description="文件扩展")
     create_time: str = Field(description="创建时间")
     update_time: str = Field(description="更新时间")
 

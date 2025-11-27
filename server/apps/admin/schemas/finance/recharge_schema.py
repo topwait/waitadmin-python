@@ -37,7 +37,7 @@ class RechargeListVo(BaseModel):
     order_sn: str = Field(description="充值单号")
     paid_amount: Decimal = Field(description="充值金额")
     give_amount: Decimal = Field(description="赠送金额")
-    pay_way: str = Field(description="支付方式")
+    pay_way: str = Field(description="支付方式: [余额支付,微信支付,支付宝支付]")
     pay_status: int = Field(description="支付状态: [0=未支付, 1=已支付]")
     create_time: str = Field(description="创建时间")
     pay_time: str = Field(description="支付时间")

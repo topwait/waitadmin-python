@@ -82,7 +82,7 @@ class JournalDetailVo(BaseModel):
     error: str = Field(description="错误信息")
     status: int = Field(description="执行状态: [1=运行, 2=失败]")
     task_time: int = Field(description="最大执行时长")
-    start_time: str = Field(description="开始执行时间")
+    start_time: str = Field(description="开始执行结束执行时间时间")
     end_time: str = Field(description="结束执行时间")
     create_time: str = Field(description="操作时间")
 

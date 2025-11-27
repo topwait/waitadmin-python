@@ -13,16 +13,16 @@ const whiteList: string[] = [
 ]
 
 // 递归动态路由
-const addRoutesRecursively = (routes: any, parentPath = '') => {
+const addRoutesRecursively = (routes: any, parentPath: string = ''): void => {
     try {
-        routes.forEach((route: any) => {
+        routes.forEach((route: any): void => {
             // 如果路由是外部链接则不添加
             if (validateUtil.isExternal(route.path)) {
                 return
             }
 
             // 拼接父路由路径和当前路由路径
-            const fullPath = parentPath + route.path
+            const fullPath: string = parentPath + route.path
 
             // 创建路由对象确保路由的唯一性
             const routerEntry = {

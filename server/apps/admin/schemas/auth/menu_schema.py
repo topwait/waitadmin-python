@@ -105,7 +105,7 @@ class AuthMenuWholeVo(BaseModel):
     """ 所有菜单Vo """
     id: int = Field(description="菜单ID")
     pid: int = Field(description="父级ID")
-    name: str = Field(description="权限类型: [M=目录, C=菜单, A=按钮]")
+    name: str = Field(description="菜单名称")
     children: Union["AuthMenuWholeVo", List, None] = []
 
     class Config:
@@ -161,7 +161,7 @@ class AuthMenuListVo(BaseModel):
     name: str = Field(description="菜单名称")
     icon: str = Field(description="菜单图标")
     sort: int = Field(description="菜单排序")
-    perms: str = Field(description="路由参数")
+    perms: str = Field(description="路由权限")
     path: str = Field(description="路径地址")
     is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
     create_time: str = Field(description="创建时间")

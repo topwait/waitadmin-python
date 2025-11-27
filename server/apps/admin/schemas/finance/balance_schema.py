@@ -31,7 +31,7 @@ class BalanceSearchIn(BaseModel):
 
 class BalanceListVo(BaseModel):
     """余额明细列表Vo """
-    id: int = Field(description="文章ID")
+    id: int = Field(description="ID")
     log_sn: str = Field(description="日志编号")
     action: int = Field(description="变动类型: [1=增加, 2=减少]")
     source_sn: str = Field(description="来源单号")
