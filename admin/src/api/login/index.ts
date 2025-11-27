@@ -3,6 +3,9 @@ import request from '@/utils/request'
 const loginApi = {
     /**
      * 验证码
+     *
+     * @returns {LoginCaptchaResponse}
+     * @author zero
      */
     captcha(): Promise<LoginCaptchaResponse> {
         return request.get<LoginCaptchaResponse>({
@@ -18,6 +21,8 @@ const loginApi = {
      * @param {string} params.password
      * @param {string} [params.uuid]
      * @param {string} [params.code]
+     * @returns {LoginSuccessResponse}
+     * @author zero
      */
     login(params: {
         username: string;
@@ -33,6 +38,9 @@ const loginApi = {
 
     /**
      * 退出系统
+     *
+     * @returns {any}
+     * @author zero
      */
     logout(): Promise<any> {
         return request.post({

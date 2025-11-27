@@ -3,6 +3,9 @@ import request from '@/utils/request'
 const smsApi = {
     /**
      * 短信配置列表
+     *
+     * @returns {Promise<SettingSmsListResponse[]>}
+     * @author zero
      */
     lists(): Promise<SettingSmsListResponse[]> {
         return request.get<SettingSmsListResponse[]>({
@@ -14,6 +17,8 @@ const smsApi = {
      * 短信配置详情
      *
      * @param {string} alias
+     * @returns {Promise<SettingSmsDetailResponse>}
+     * @author zero
      */
     detail(alias: string): Promise<SettingSmsDetailResponse> {
         return request.get<SettingSmsDetailResponse>({
@@ -30,6 +35,8 @@ const smsApi = {
      * @param {string} params.name
      * @param {number} params.status
      * @param {any} params.params
+     * @returns {Promise<any>}
+     * @author zero
      */
     save(params: {
         alias: string;

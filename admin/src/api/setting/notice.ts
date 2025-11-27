@@ -8,6 +8,8 @@ const noticeApi = {
      * @param {number} [params.page_no]
      * @param {number} [params.page_size]
      * @param {number} params.client
+     * @returns {Promise<SettingNoticeListResponse[]>}
+     * @author zero
      */
     lists(params: {
         page_no?: number;
@@ -24,6 +26,8 @@ const noticeApi = {
      * 通知配置详情
      *
      * @param {number} id
+     * @returns {Promise<SettingNoticeDetailResponse>}
+     * @author zero
      */
     detail(id: number): Promise<SettingNoticeDetailResponse> {
         return request.get<SettingNoticeDetailResponse>({
@@ -46,6 +50,8 @@ const noticeApi = {
      * @param {any} params.sys_template
      * @param {any} params.ems_template
      * @param {any} params.sms_template
+     * @returns {Promise<any>}
+     * @author zero
      */
     save(params: {
         id: number;

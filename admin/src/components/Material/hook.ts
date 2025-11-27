@@ -1,7 +1,7 @@
 import { ElMessage, ElMessageBox, ElTree } from 'element-plus'
 import { usePaging } from '@/hooks/usePaging'
 import feedback from '@/utils/feedback'
-import attachApi from '@/api/attr/index'
+import attachApi from '@/api/public/attach'
 
 export function useCate(type: number): any {
     const cateId: Ref<number> = ref<number>(0)

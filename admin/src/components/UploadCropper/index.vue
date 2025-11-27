@@ -43,7 +43,7 @@
 import 'vue-cropper/dist/index.css'
 import { ElUpload, ElDialog, ElButton } from 'element-plus'
 import { VueCropper } from 'vue-cropper'
-import appApi from '@/api/app/index'
+import appApi from '@/api/public/app'
 
 const emits = defineEmits(['change'])
 

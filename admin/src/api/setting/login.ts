@@ -3,6 +3,9 @@ import request from '@/utils/request'
 const loginApi = {
     /**
      * 登录配置详情
+     *
+     * @returns {Promise<SettingLoginResponse>}
+     * @author zero
      */
     detail(): Promise<SettingLoginResponse> {
         return request.get<SettingLoginResponse>({
@@ -19,6 +22,8 @@ const loginApi = {
      * @param {string[]} params.registers
      * @param {string[]} params.login_modes
      * @param {string[]} params.login_other
+     * @returns {Promise<any>}
+     * @author zero
      */
     save(params: {
         is_agreement: number;

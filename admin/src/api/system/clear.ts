@@ -7,6 +7,8 @@ const clearApi = {
      * @param {Object} params
      * @param {boolean | number} params.system
      * @param {boolean | number} params.login
+     * @returns {Promise<any>}
+     * @author zero
      */
     clean(params: {
         system: boolean | number;

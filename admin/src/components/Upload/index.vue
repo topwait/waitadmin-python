@@ -47,7 +47,7 @@
 import type { PropType } from 'vue'
 import type { ElUpload, UploadRequestOptions, UploadUserFile } from 'element-plus'
 import feedback from '@/utils/feedback'
-import appApi from '@/api/app/index'
+import appApi from '@/api/public/app'
 
 const props = defineProps({
     files: {

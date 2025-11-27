@@ -130,7 +130,7 @@
 
 <script setup lang="ts">
 import vCharts from 'vue-echarts'
-import appApi from '@/api/app/index'
+import appApi from '@/api/public/app'
 
 // 页面加载中
 const pageLoading = ref<boolean>(true)

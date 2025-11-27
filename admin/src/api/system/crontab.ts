@@ -7,6 +7,8 @@ const crontabApi = {
      * @param {Object} params
      * @param {number} [params.page_no]
      * @param {number} [params.page_size]
+     * @returns {Promise<SystemCrontabListResponse[]>}
+     * @author zero
      */
     lists(params: {
         page_no?: number;
@@ -22,6 +24,8 @@ const crontabApi = {
      * 定时任务详情
      *
      * @param {number} id
+     * @returns {Promise<SystemCrontabDetailResponse>}
+     * @author zero
      */
     detail(id: number): Promise<SystemCrontabDetailResponse> {
         return request.get<SystemCrontabDetailResponse>({
@@ -42,6 +46,8 @@ const crontabApi = {
      * @param {number} [params.concurrent]
      * @param {string} [params.remarks]
      * @param {number} [params.status]
+     * @returns {Promise<any>}
+     * @author zero
      */
     add(params: {
         name: string;
@@ -72,6 +78,8 @@ const crontabApi = {
      * @param {number} [params.concurrent]
      * @param {string} [params.remarks]
      * @param {number} [params.status]
+     * @returns {Promise<any>}
+     * @author zero
      */
     edit(params: {
         id: number;
@@ -94,6 +102,8 @@ const crontabApi = {
      * 定时任务删除
      *
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     delete(id: number): Promise<any> {
         return request.post({
@@ -106,6 +116,8 @@ const crontabApi = {
      * 定时任务停止
      *
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     stop(id: number): Promise<any> {
         return request.post({
@@ -118,6 +130,8 @@ const crontabApi = {
      * 定时任务运行
      *
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     run(id: number): Promise<any> {
         return request.post({

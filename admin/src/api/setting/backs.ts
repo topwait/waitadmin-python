@@ -3,6 +3,9 @@ import request from '@/utils/request'
 const basicsApi = {
     /**
      * 后台配置详情
+     *
+     * @returns {SettingBacksResponse}
+     * @author zero
      */
     detail(): Promise<SettingBacksResponse> {
         return request.get<SettingBacksResponse>({
@@ -24,6 +27,8 @@ const basicsApi = {
      * @param {string} [params.logo_white_small]
      * @param {string} [params.contacts]
      * @param {string} [params.mobile]
+     * @returns {Promise<any>}
+     * @author zero
      */
     save(params: {
         name?: string;

@@ -9,6 +9,8 @@ const linksApi = {
      * @param {number} [params.page_size]
      * @param {string} [params.title]
      * @param {number} [params.is_disable]
+     * @returns {Promise<SettingLinksListResponse[]>}
+     * @author zero
      */
     lists(params: {
         page_no?: number;
@@ -26,6 +28,8 @@ const linksApi = {
      * 友链详情
      *
      * @param {number} id
+     * @returns {Promise<SettingLinksDetailResponse>}
+     * @author zero
      */
     detail(id: number): Promise<SettingLinksDetailResponse> {
         return request.get<SettingLinksDetailResponse>({
@@ -44,6 +48,8 @@ const linksApi = {
      * @param {string} [params.url]
      * @param {number} [params.sort]
      * @param {number} [params.is_disable]
+     * @returns {Promise<any>}
+     * @author zero
      */
     add(params: {
         title: string;
@@ -70,6 +76,8 @@ const linksApi = {
      * @param {string} [params.url]
      * @param {number} [params.sort]
      * @param {number} [params.is_disable]
+     * @returns {Promise<any>}
+     * @author zero
      */
     edit(params: {
         id: number;
@@ -90,6 +98,8 @@ const linksApi = {
      * 友链删除
      *
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     delete(id: number): Promise<any> {
         return request.post({

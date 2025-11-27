@@ -5,6 +5,9 @@ import type { AxiosProgressEvent } from 'axios'
 const appApi = {
     /**
      * 全局数据
+     *
+     * @returns {AppConfigResponse}
+     * @author zero
      */
     config(): Promise<AppConfigResponse> {
         return request.get({
@@ -14,6 +17,9 @@ const appApi = {
 
     /**
      * 工作台数据
+     *
+     * @returns {AppWorkbenchResponse}
+     * @author zero
      */
     workbench(): Promise<AppWorkbenchResponse> {
         return request.get({
@@ -23,6 +29,11 @@ const appApi = {
 
     /**
      * 文件上传
+     *
+     * @param {FileParams} params
+     * @param {any} onProgress
+     * @returns {AppUploadResponse}
+     * @author zero
      */
     upload(params: FileParams, onProgress?: any): Promise<AppUploadResponse> {
         return request.upload<AppUploadResponse>({

@@ -3,6 +3,9 @@ import request from '@/utils/request'
 const paymentApi = {
     /**
      * 支付配置列表
+     *
+     * @returns {Promise<SettingPaymentListResponse[]>}
+     * @author zero
      */
     lists(): Promise<SettingPaymentListResponse[]> {
         return request.get<SettingPaymentListResponse[]>({
@@ -14,6 +17,8 @@ const paymentApi = {
      * 支付配置详情
      *
      * @param {number} id
+     * @returns {Promise<SettingPaymentDetailResponse>}
+     * @author zero
      */
     detail(id: number): Promise<SettingPaymentDetailResponse> {
         return request.get<SettingPaymentDetailResponse>({
@@ -34,6 +39,8 @@ const paymentApi = {
      * @param {number} params.sort
      * @param {number} params.status
      * @param {any} params.params
+     * @returns {Promise<any>}
+     * @author zero
      */
     save(params: {
         id: number;

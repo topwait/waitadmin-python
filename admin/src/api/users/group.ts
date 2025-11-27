@@ -6,7 +6,7 @@ const userGroupApi = {
      */
     whole(): Promise<UserGroupWholeResponse[]> {
         return request.get<UserGroupWholeResponse[]>({
-            url: '/users/group/whole',
+            url: '/users/group/whole'
         })
     },
 

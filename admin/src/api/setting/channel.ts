@@ -3,6 +3,9 @@ import request from '@/utils/request'
 const channelApi = {
     /**
      * 渠道配置详情
+     *
+     * @returns {Promise<SettingChannelResponse>}
+     * @author zero
      */
     detail(): Promise<SettingChannelResponse> {
         return request.get<SettingChannelResponse>({
@@ -17,6 +20,8 @@ const channelApi = {
      * @param {any} [params.wx]
      * @param {any} [params.oa]
      * @param {any} [params.op]
+     * @returns {Promise<any>}
+     * @author zero
      */
     save(params: {
         wx?: any;

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import appApi from '@/api/app/index'
+import appApi from '@/api/public/app'
 
 interface AppSate {
     config: Record<string, any>,

@@ -10,6 +10,8 @@ const attachApi = {
      * @param {number} [params.cid]
      * @param {number} [params.type]
      * @param {string} [params.keyword]
+     * @returns {AlbumListResponse[]}
+     * @author zero
      */
     albumLists(params: {
         page_no?: number;
@@ -29,6 +31,8 @@ const attachApi = {
      *
      * @param {number[]} ids
      * @param {number} cid
+     * @returns {Promise<any>}
+     * @author zero
      */
     albumMove(ids: number[], cid: number): Promise<any> {
         return request.post({
@@ -45,6 +49,8 @@ const attachApi = {
      *
      * @param {number} id
      * @param {string} name
+     * @returns {Promise<any>}
+     * @author zero
      */
     albumRename(id: number, name: string): Promise<any> {
         return request.post({
@@ -60,6 +66,8 @@ const attachApi = {
      * 附件删除
      *
      * @param {number[]} ids
+     * @returns {Promise<any>}
+     * @author zero
      */
     albumDelete(ids: number[]): Promise<any> {
         return request.post({
@@ -74,6 +82,8 @@ const attachApi = {
      * 分组列表
      *
      * @param {number} type
+     * @returns {Promise<AlbumCateResponse[]>}
+     * @author zero
      */
     cateLists(type: number): Promise<AlbumCateResponse[]> {
         return request.get<AlbumCateResponse[]>({
@@ -87,6 +97,8 @@ const attachApi = {
      *
      * @param {number} type
      * @param {string} name
+     * @returns {Promise<any>}
+     * @author zero
      */
     cateAdd(type: number, name: string): Promise<any> {
         return request.post({
@@ -104,6 +116,8 @@ const attachApi = {
      * @param {number} type
      * @param {string} name
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     cateRename(type: number, name: string, id: number): Promise<any> {
         return request.post({
@@ -121,6 +135,8 @@ const attachApi = {
      *
      * @param {number} type
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     cateDelete(type: number, id: number): Promise<any> {
         return request.post({
