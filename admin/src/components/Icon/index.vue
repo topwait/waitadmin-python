@@ -29,7 +29,11 @@ export default defineComponent({
                         size: props.size,
                         color: props.color
                     },
-                    () => [createVNode(resolveComponent(props.name.replace(EL_ICON_PREFIX, '')))]
+                    () => [
+                        createVNode(
+                            resolveComponent(props.name.replace(EL_ICON_PREFIX, ''))
+                        )
+                    ]
                 )
         }
         if (props.name.indexOf(SVG_ICON_PREFIX) === 0) {

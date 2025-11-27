@@ -19,7 +19,9 @@
             <template v-else>
                 <div class="flex flex-col items-center justify-center h-full">
                     <icon name="el-icon-Plus" :size="20" />
-                    <div class="text-info mt-2 text-sm" style="line-height: 1">{{ tipsText }}</div>
+                    <div class="text-info mt-2 text-sm" style="line-height: 1">
+                        {{ tipsText }}
+                    </div>
                 </div>
             </template>
         </div>

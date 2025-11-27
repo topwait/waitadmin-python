@@ -85,7 +85,6 @@ export function dynamicViews(component: string) {
         return modules[key]
     }
 
-    // eslint-disable-next-line no-console
     console.error(`找不到组件${component},请确保组件路径正确`)
     return RouterView
 }

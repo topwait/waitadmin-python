@@ -72,7 +72,7 @@ const queryStr = computed<string>(() => {
     try {
         const queryObj = JSON.parse(query)
         return toolsUtil.objectToQuery(queryObj)
-    } catch (error) {
+    } catch {
         return query
     }
 })

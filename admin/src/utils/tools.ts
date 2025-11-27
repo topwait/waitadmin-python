@@ -1,13 +1,14 @@
 import { isObject } from '@vue/shared'
 import { cloneDeep } from 'lodash-es'
 
-const toolsUtil: any = {
+const toolsUtil = {
     /**
      * 树转数组
      *
      * @param {any[]} data
      * @param {any} props
      * @returns {any[]}
+     * @author zero
      */
     treeToArray(data: any[], props: any = { children: 'children' }): any[] {
         data = cloneDeep(data)
@@ -32,6 +33,7 @@ const toolsUtil: any = {
      * @param {any[]} data
      * @param {any} props
      * @returns {any[]}
+     * @author zero
      */
     arrayToTree(data: any[], props: any = { id: 'id', parentId: 'pid', children: 'children' }): any[] {
         data = cloneDeep(data)
@@ -57,6 +59,7 @@ const toolsUtil: any = {
      * @param {string|number} value (值: 100)
      * @param {string} unit (单位: [px,em,rem])
      * @returns {string} (带单位的值)
+     * @author zero
      */
     addUnit(value: string | number, unit: string = 'px'): string {
         return !Object.is(Number(value), NaN) ? `${value}${unit}` : `${value}`
@@ -67,6 +70,7 @@ const toolsUtil: any = {
      *
      * @param value
      * @returns {boolean} (ture=是,false=否)
+     * @author zero
      */
     isEmpty(value: unknown): boolean {
         return value === null && typeof value === 'undefined'
@@ -77,6 +81,7 @@ const toolsUtil: any = {
      *
      * @param {object} params
      * @returns {string} Query语法
+     * @author zero
      */
     objectToQuery(params: Record<string, any>): string {
         let query: string = ''

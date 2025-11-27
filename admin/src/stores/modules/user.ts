@@ -9,21 +9,21 @@ import authAdminApi from '@/api/auth/admin'
 import loginApi from '@/api/login/index'
 
 interface UserSate {
-    token: string,
-    perms: string[],
-    users: Record<string, any>,
-    routes: RouteRecordRaw[]
+    // 令牌
+    token: string;
+    // 权限
+    perms: string[];
+    // 用户
+    users: AuthAdminOneselfResponse['user'];
+    // 路由
+    routes: RouteRecordRaw[];
 }
 
 const useUserStore = defineStore('user', {
     state: (): UserSate => ({
-        // 令牌
         token: cacheUtil.get(cacheEnum.TOKEN_KEY) || '',
-        // 用户
-        users: {},
-        // 权限
+        users: {} as AuthAdminOneselfResponse['user'],
         perms: [],
-        // 路由
         routes: []
     }),
     getters: {
@@ -35,8 +35,8 @@ const useUserStore = defineStore('user', {
          */
         resetState(): void {
             this.token = ''
-            this.users = {}
             this.perms = []
+            this.users = {} as AuthAdminOneselfResponse['user']
             resetRouter()
             cacheUtil.remove(cacheEnum.TOKEN_KEY)
         },
@@ -79,16 +79,17 @@ const useUserStore = defineStore('user', {
         /**
          * 获取用户信息
          */
-        getUserInfo(): Promise<any> {
+        getUserInfo(): Promise<AuthAdminOneselfResponse> {
             return new Promise((resolve, reject): void => {
-                authAdminApi.oneself().then((data: any): void => {
-                    this.users = data.user
-                    this.perms = data.perms
-                    this.routes = filterRoutes(data.menus)
-                    resolve(data)
-                }).catch((error: any): void => {
-                    reject(error)
-                })
+                authAdminApi.oneself()
+                    .then((data: AuthAdminOneselfResponse): void => {
+                        this.users = data.user
+                        this.perms = data.perms
+                        this.routes = filterRoutes(data.menus)
+                        resolve(data)
+                    }).catch((error: any): void => {
+                        reject(error)
+                    })
             })
         }
     }

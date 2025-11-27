@@ -2,16 +2,21 @@ import { defineStore } from 'pinia'
 import appApi from '@/api/public/app'
 
 interface AppSate {
-    config: Record<string, any>,
+    // 全局配置
+    config: AppConfigResponse,
+    // 手机模式
     isMobile: boolean,
+    // 页面显示
     isRouteShow: boolean,
+    // 菜单伸缩
     isCollapsed: boolean,
+    // 主体高度
     layoutHeight: number,
 }
 
 const useAppStore = defineStore('app', {
     state: (): AppSate => ({
-        config: {},
+        config: {} as AppConfigResponse,
         isMobile: true,
         isRouteShow: true,
         isCollapsed: false,
@@ -27,7 +32,7 @@ const useAppStore = defineStore('app', {
         getConfig() {
             return new Promise((resolve, reject): void => {
                 appApi.config()
-                    .then((data: any): void => {
+                    .then((data: AppConfigResponse): void => {
                         this.config = data
                         resolve(data)
                     })
