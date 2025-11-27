@@ -56,12 +56,15 @@ const formData: any = reactive({
 // 表单规则
 const formRules: any = reactive({
     money: [
-        { required: true, message: '请填写充值金额', trigger: ['blur-sm'] }
+        { required: true, message: '请填写充值金额', trigger: ['blur'] }
     ]
 })
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -89,6 +92,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -97,7 +101,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await rechargePackApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

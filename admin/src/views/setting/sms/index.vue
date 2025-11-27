@@ -46,6 +46,9 @@ const dataLists = ref<Array<any>>([])
 
 /**
  * 查询短信渠道列表
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const querySmsLists = async (): Promise<void> => {
     dataLists.value = await smsApi.lists()
@@ -57,6 +60,7 @@ const querySmsLists = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true

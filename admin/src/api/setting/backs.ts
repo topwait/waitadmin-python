@@ -4,8 +4,8 @@ const basicsApi = {
     /**
      * 后台配置详情
      */
-    detail(): Promise<any> {
-        return request.get({
+    detail(): Promise<SettingBacksResponse> {
+        return request.get<SettingBacksResponse>({
             url: '/setting/backs/detail'
         })
     },

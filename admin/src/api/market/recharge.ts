@@ -3,9 +3,12 @@ import request from '@/utils/request'
 const rechargePackApi = {
     /**
      * 充值套餐列表
+     *
+     * @returns {MarketRechargeListResponse[]}
+     * @author zero
      */
-    lists(): Promise<any> {
-        return request.get({
+    lists(): Promise<MarketRechargeListResponse[]> {
+        return request.get<MarketRechargeListResponse[]>({
             url: '/market/recharge/lists'
         })
     },
@@ -14,9 +17,11 @@ const rechargePackApi = {
      * 充值套餐详情
      *
      * @param {number} id
+     * @returns {MarketRechargeDetailResponse}
+     * @author zero
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<MarketRechargeDetailResponse> {
+        return request.get<MarketRechargeDetailResponse>({
             url: '/market/recharge/detail',
             params: { id }
         })
@@ -30,6 +35,8 @@ const rechargePackApi = {
      * @param {number} params.give_money
      * @param {number} params.sort
      * @param {number} params.is_show
+     * @returns {Promise<any>}
+     * @author zero
      */
     add(params: {
         money: number;
@@ -52,6 +59,8 @@ const rechargePackApi = {
      * @param {number} params.give_money
      * @param {number} params.sort
      * @param {number} params.is_show
+     * @returns {Promise<any>}
+     * @author zero
      */
     edit(params: {
         id: number;
@@ -70,6 +79,8 @@ const rechargePackApi = {
      * 充值套餐删除
      *
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     delete(id: number): Promise<any> {
         return request.post({
@@ -79,16 +90,18 @@ const rechargePackApi = {
     },
 
     /**
-     * 充值参数配置
+     * 充值配置更新
      *
      * @param {Object} params
      * @param {number} params.status
      * @param {number} params.min_recharge
+     * @returns {Promise<any>}
+     * @author zero
      */
     config(params: {
         status: number;
         min_recharge: number;
-    }) {
+    }): Promise<any> {
         return request.post({
             url: '/market/recharge/config',
             params

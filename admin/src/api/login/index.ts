@@ -4,8 +4,8 @@ const loginApi = {
     /**
      * 验证码
      */
-    captcha(): Promise<any> {
-        return request.get({
+    captcha(): Promise<LoginCaptchaResponse> {
+        return request.get<LoginCaptchaResponse>({
             url: '/login/captcha'
         })
     },
@@ -24,8 +24,8 @@ const loginApi = {
         password: string;
         uuid?: string;
         code?: string;
-    }): Promise<any> {
-        return request.post({
+    }): Promise<LoginSuccessResponse> {
+        return request.post<LoginSuccessResponse>({
             url: '/login/check',
             params
         })

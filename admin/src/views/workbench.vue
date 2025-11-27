@@ -79,20 +79,20 @@
                         <tbody>
                             <tr>
                                 <td>当前版本</td>
-                                <td>v{{ workbenchData.version.version }}</td>
+                                <td>v{{ workbenchData.version?.version }}</td>
                             </tr>
                             <tr>
                                 <td>基于框架</td>
-                                <td>{{ workbenchData.version.frame }}</td>
+                                <td>{{ workbenchData.version?.frame }}</td>
                             </tr>
                             <tr>
                                 <td>主要特色</td>
-                                <td>{{ workbenchData.version.tones }}</td>
+                                <td>{{ workbenchData.version?.tones }}</td>
                             </tr>
                             <tr>
                                 <td>获取渠道</td>
                                 <td>
-                                    <a :href="workbenchData.version.official" target="_blank">
+                                    <a :href="workbenchData.version?.official" target="_blank">
                                         <el-button type="primary">官方网站</el-button>
                                     </a>
                                 </td>
@@ -130,18 +130,13 @@
 
 <script setup lang="ts">
 import vCharts from 'vue-echarts'
-import appApi from '@/api/app'
+import appApi from '@/api/app/index'
 
 // 页面加载中
-const pageLoading: Ref<boolean> = ref(true)
+const pageLoading = ref<boolean>(true)
 
 // 控制台数据
-const workbenchData: Ref<any> = ref({
-    today: [],    // 今日数据
-    shortcut: [], // 快捷方式
-    backlogs: [], // 待办事项
-    version: {}  // 版本信息
-})
+const workbenchData = ref<AppWorkbenchResponse>({} as AppWorkbenchResponse)
 
 // 趋势图配置
 const chartOption = ref({
@@ -229,7 +224,13 @@ const chartOption = ref({
     }
 })
 
-const getWorkbenchData = () => {
+/**
+ * 获取控制台数据
+ *
+ * @returns {void}
+ * @author zero
+ */
+const getWorkbenchData = (): void => {
     appApi.workbench().then((res: any) => {
         workbenchData.value.today = res.today
         workbenchData.value.backlogs = res.backlogs

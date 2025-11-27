@@ -13,6 +13,8 @@ const rechargeApi = {
      * @param {number} [params.pay_status]
      * @param {string} [params.start_time]
      * @param {string} [params.end_time]
+     * @returns {FinanceRechargeListResponse[]}
+     * @author zero
      */
     lists(params: {
         page_no?: number;

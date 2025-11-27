@@ -65,17 +65,20 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     code: [
-        { required: true, message: '岗位编号不能为空', trigger: ['blur-sm'] },
-        { min: 2, max: 10, message: '岗位编号长度必须介于 2 和 20 之间', trigger: ['blur-sm'] }
+        { required: true, message: '岗位编号不能为空', trigger: ['blur'] },
+        { min: 2, max: 20, message: '岗位编号长度必须介于 2 和 20 之间', trigger: ['blur'] }
     ],
     name: [
-        { required: true, message: '岗位名称不能为空', trigger: ['blur-sm'] },
-        { min: 4, max: 20, message: '岗位长度必须介于 2 和 30 之间', trigger: ['blur-sm'] }
+        { required: true, message: '岗位名称不能为空', trigger: ['blur'] },
+        { min: 2, max: 30, message: '岗位名称长度必须介于 2 和 30 之间', trigger: ['blur'] }
     ]
 })
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -103,6 +106,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -111,7 +115,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await authPostApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

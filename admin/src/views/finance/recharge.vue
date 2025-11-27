@@ -29,7 +29,7 @@
                     >
                         <el-option value="" label="全部"/>
                         <el-option
-                            v-for="(value, key) in pager.extend?.payWay"
+                            v-for="(value, key) in pager.extend?.payWay as ExtendType['payWay']"
                             :key="key"
                             :label="value"
                             :value="key"
@@ -44,7 +44,7 @@
                     >
                         <el-option value="" label="全部"/>
                         <el-option
-                            v-for="(value, key) in pager.extend?.payStatus"
+                            v-for="(value, key) in pager.extend?.payStatus as ExtendType['payStatus']"
                             :key="key"
                             :label="value"
                             :value="key"
@@ -68,10 +68,10 @@
         <el-card v-loading="pager.loading" class="border-none!" shadow="never">
             <el-table :data="pager.lists" size="large">
                 <el-table-column label="用户信息" min-width="120">
-                    <template #default="{ row }">
+                    <template #default="scope: { row: FinanceRechargeListResponse }">
                         <div class="flex items-center">
-                            <el-avatar :size="36" :src="row.user.avatar"/>
-                            <span class="ml-2">{{ row?.user.nickname }}</span>
+                            <el-avatar :size="36" :src="scope.row.user?.avatar"/>
+                            <span class="ml-2">{{ scope.row.user?.nickname }}</span>
                         </div>
                     </template>
                 </el-table-column>
@@ -98,6 +98,12 @@
 <script setup lang="ts">
 import { usePaging } from '@/hooks/usePaging'
 import rechargeApi from '@/api/finance/recharge'
+
+// 扩展类型
+interface ExtendType {
+    payWay: Record<number, string>;
+    payStatus: Record<number, string>;
+}
 
 // 查询参数
 const queryParams = reactive({

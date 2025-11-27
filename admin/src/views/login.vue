@@ -84,7 +84,7 @@ import { cacheEnum } from '@/enums/cache'
 import useAppStore from '@/stores/modules/app'
 import useUserStore from '@/stores/modules/user'
 import cacheUtil from '@/utils/cache'
-import loginApi from '@/api/login'
+import loginApi from '@/api/login/index'
 
 const route = useRoute()
 const router = useRouter()
@@ -112,18 +112,21 @@ const formData = reactive({
 // 验证规则
 const rules = {
     username: [
-        { required: true, message: '请输入登录账号', trigger: ['blur-sm'] }
+        { required: true, message: '请输入登录账号', trigger: ['blur'] }
     ],
     password: [
-        { required: true, message: '请输入密码', trigger: ['blur-sm'] }
+        { required: true, message: '请输入密码', trigger: ['blur'] }
     ],
     code: [
-        { required: true, message: '请输入验证码', trigger: ['blur-sm'] }
+        { required: true, message: '请输入验证码', trigger: ['blur'] }
     ]
 }
 
 /**
  * 获取验证码
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const getCaptcha = async (): Promise<void> => {
     const data = await loginApi.captcha()
@@ -133,6 +136,9 @@ const getCaptcha = async (): Promise<void> => {
 
 /**
  * 处理回车事件
+ *
+ * @returns {any}
+ * @author zero
  */
 const handleEnter = (): any => {
     if (!formData.password) {
@@ -143,6 +149,9 @@ const handleEnter = (): any => {
 
 /**
  * 处理登录事件
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleLogin = async (): Promise<void> => {
     await formRef.value?.validate()

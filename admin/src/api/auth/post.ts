@@ -4,8 +4,8 @@ const authPostApi = {
     /**
      * 所有岗位
      */
-    whole(): Promise<any> {
-        return request.get({
+    whole(): Promise<AuthPostWholeResponse[]> {
+        return request.get<AuthPostWholeResponse[]>({
             url: '/auth/post/whole'
         })
     },
@@ -26,8 +26,8 @@ const authPostApi = {
         code?: string;
         name?: string;
         is_disable?: number;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<AuthPostListResponse[]> {
+        return request.get<AuthPostListResponse[]>({
             url: '/auth/post/lists',
             params
         })
@@ -38,8 +38,8 @@ const authPostApi = {
      *
      * @param {number} id
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<AuthPostDetailResponse> {
+        return request.get<AuthPostDetailResponse>({
             url: '/auth/post/detail',
             params: { id }
         })
@@ -54,6 +54,8 @@ const authPostApi = {
      * @param {string} [params.remarks]
      * @param {number} [params.sort]
      * @param {number} [params.is_disable]
+     * @returns {Promise<any>}
+     * @author zero
      */
     add(params: {
         code: string;
@@ -78,7 +80,8 @@ const authPostApi = {
      * @param {string} [params.remarks]
      * @param {number} [params.sort]
      * @param {number} [params.is_disable]
-     *
+     * @returns {Promise<any>}
+     * @author zero
      */
     edit(params: {
         id: number;
@@ -98,6 +101,8 @@ const authPostApi = {
      * 岗位删除
      *
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     delete(id: number): Promise<any> {
         return request.post({

@@ -4,8 +4,8 @@ const channelApi = {
     /**
      * 渠道配置详情
      */
-    detail(): Promise<any> {
-        return request.get({
+    detail(): Promise<SettingChannelResponse> {
+        return request.get<SettingChannelResponse>({
             url: '/setting/channel/detail'
         })
     },

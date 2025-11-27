@@ -78,19 +78,19 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     pid: [
-        { required: true, message: '请选择上级部门', trigger: ['blur-sm'] }
+        { required: true, message: '请选择上级部门', trigger: ['blur'] }
     ],
     name: [
-        { required: true, message: '部门名称不能为空', trigger: ['blur-sm'] },
-        { max: 100, message: '部门名称不能超出100个字符', trigger: ['blur-sm'] }
+        { required: true, message: '部门名称不能为空', trigger: ['blur'] },
+        { max: 100, message: '部门名称不能超出100个字符', trigger: ['blur'] }
     ],
     mobile: [
-        { required: true, message: '部门电话不能为空', trigger: ['blur-sm'] },
-        { max: 30, message: '部门电话不能超出30个字符', trigger: ['blur-sm'] }
+        { required: true, message: '部门电话不能为空', trigger: ['blur'] },
+        { max: 30, message: '部门电话不能超出30个字符', trigger: ['blur'] }
     ],
     duty: [
-        { required: true, message: '负责人名称不能为空', trigger: ['blur-sm'] },
-        { max: 30, message: '负责人名称不能超出30个字符', trigger: ['blur-sm'] }
+        { required: true, message: '负责人名称不能为空', trigger: ['blur'] },
+        { max: 30, message: '负责人名称不能超出30个字符', trigger: ['blur'] }
     ]
 })
 
@@ -105,6 +105,9 @@ const { optionsData } = useDictOptions<{
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -132,6 +135,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -140,7 +144,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await authDeptApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

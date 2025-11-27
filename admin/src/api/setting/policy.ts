@@ -4,8 +4,8 @@ const policyApi = {
     /**
      * 协议配置详情
      */
-    detail(): Promise<any> {
-        return request.get({
+    detail(): Promise<SettingPolicyResponse> {
+        return request.get<SettingPolicyResponse>({
             url: '/setting/policy/detail'
         })
     },

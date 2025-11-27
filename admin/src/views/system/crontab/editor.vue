@@ -168,23 +168,26 @@ const formData = reactive<any>({
 // 表单规则
 const formRules: any = reactive({
     name: [
-        { required: true, message: '任务名称不能为空', trigger: ['blur-sm'] },
-        { max: 64, message: '任务名称不能大于64个字符', trigger: ['blur-sm'] }
+        { required: true, message: '任务名称不能为空', trigger: ['blur'] },
+        { max: 64, message: '任务名称不能大于64个字符', trigger: ['blur'] }
     ],
     command: [
-        { required: true, message: '执行命令不能为空', trigger: ['blur-sm'] },
-        { max: 200, message: '执行命令不能大于200个字符', trigger: ['blur-sm'] }
+        { required: true, message: '执行命令不能为空', trigger: ['blur'] },
+        { max: 200, message: '执行命令不能大于200个字符', trigger: ['blur'] }
     ],
     params: [
-        { max: 200, message: '附带参数不能大于200个字符', trigger: ['blur-sm'] }
+        { max: 200, message: '附带参数不能大于200个字符', trigger: ['blur'] }
     ],
     remarks: [
-        { max: 300, message: '备注信息不能大于300个字符', trigger: ['blur-sm'] }
+        { max: 300, message: '备注信息不能大于300个字符', trigger: ['blur'] }
     ]
 })
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -214,6 +217,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -222,7 +226,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await crontabApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

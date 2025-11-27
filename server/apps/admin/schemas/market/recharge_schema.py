@@ -123,7 +123,7 @@ class RechargePackageListVo(BaseModel):
                 "sort": 10,
                 "is_show": 1,
                 "create_time": "2023-07-22 11:33:44",
-                "update_time": "2023-07-22 11:33:44",
+                "update_time": "2023-07-22 11:33:44"
             }
         }
 

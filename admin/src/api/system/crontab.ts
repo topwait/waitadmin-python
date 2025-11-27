@@ -11,8 +11,8 @@ const crontabApi = {
     lists(params: {
         page_no?: number;
         page_size?: number;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<SystemCrontabListResponse[]> {
+        return request.get<SystemCrontabListResponse[]>({
             url: '/system/crontab/lists',
             params
         })
@@ -23,8 +23,8 @@ const crontabApi = {
      *
      * @param {number} id
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<SystemCrontabDetailResponse> {
+        return request.get<SystemCrontabDetailResponse>({
             url: '/system/crontab/detail',
             params: { id }
         })

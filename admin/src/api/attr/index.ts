@@ -17,8 +17,8 @@ const attachApi = {
         cid?: number;
         type?: number;
         keyword?: string;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<AlbumListResponse[]> {
+        return request.get<AlbumListResponse[]>({
             url: '/attach/album_lists',
             params
         })
@@ -75,8 +75,8 @@ const attachApi = {
      *
      * @param {number} type
      */
-    cateLists(type: number): Promise<any> {
-        return request.get({
+    cateLists(type: number): Promise<AlbumCateResponse[]> {
+        return request.get<AlbumCateResponse[]>({
             url: '/attach/cate_lists',
             params: { type }
         })

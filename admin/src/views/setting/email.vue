@@ -99,28 +99,31 @@ const formData = reactive({
 // 表单验证
 const rules = {
     'smtp_type': [
-        { required: true, message: '请选择发送方式', trigger: 'blur-sm' }
+        { required: true, message: '请选择发送方式', trigger: 'blur' }
     ],
     'verify_type': [
-        { required: true, message: '请选择验证类型', trigger: 'blur-sm' }
+        { required: true, message: '请选择验证类型', trigger: 'blur' }
     ],
     'smtp_host': [
-        { max: 100, message: '服务器地址不能超出100个字符', trigger: ['blur-sm'] }
+        { max: 100, message: '服务器地址不能超出100个字符', trigger: ['blur'] }
     ],
     'smtp_port': [
-        { pattern: /^[0-9]+$/, message: '服务器端口必须是数字', trigger: 'blur-sm' },
-        { max: 10, message: '服务器端口不能超出10个字符', trigger: ['blur-sm'] }
+        { pattern: /^[0-9]+$/, message: '服务器端口必须是数字', trigger: 'blur' },
+        { max: 10, message: '服务器端口不能超出10个字符', trigger: ['blur'] }
     ],
     'smtp_user': [
-        { max: 100, message: '发件邮箱号不能超出100个字符', trigger: ['blur-sm'] }
+        { max: 100, message: '发件邮箱号不能超出100个字符', trigger: ['blur'] }
     ],
     'smtp_pass': [
-        { max: 100, message: '邮箱授权码不能超出100个字符', trigger: ['blur-sm'] }
+        { max: 100, message: '邮箱授权码不能超出100个字符', trigger: ['blur'] }
     ]
 }
 
 /**
  * 查询配置参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const queryConfigs = async (): Promise<void> => {
     const data = await emailApi.detail()
@@ -129,6 +132,9 @@ const queryConfigs = async (): Promise<void> => {
 
 /**
  * 提交修改参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()

@@ -46,6 +46,9 @@ const formData = reactive({
 
 /**
  * 查询配置参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const queryConfigs = async (): Promise<void> => {
     const data = await policyApi.detail()
@@ -54,6 +57,9 @@ const queryConfigs = async (): Promise<void> => {
 
 /**
  * 提交修改参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     loading.value = true

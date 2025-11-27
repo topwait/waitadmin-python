@@ -13,8 +13,8 @@ const noticeApi = {
         page_no?: number;
         page_size?: number;
         client: number;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<SettingNoticeListResponse[]> {
+        return request.get<SettingNoticeListResponse[]>({
             url: '/setting/notice/lists',
             params
         })
@@ -25,8 +25,8 @@ const noticeApi = {
      *
      * @param {number} id
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<SettingNoticeDetailResponse> {
+        return request.get<SettingNoticeDetailResponse>({
             url: '/setting/notice/detail',
             params: { id }
         })

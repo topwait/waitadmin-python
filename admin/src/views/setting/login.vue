@@ -80,7 +80,7 @@ const formData = reactive({
 // 表单验证
 const rules = reactive<FormRules>({
     defaults: [
-        { required: true, message: '请选择默认登录方式', trigger: 'blur-sm' }
+        { required: true, message: '请选择默认登录方式', trigger: 'blur' }
     ],
     login_modes: [
         {
@@ -105,6 +105,9 @@ const rules = reactive<FormRules>({
 
 /**
  * 查询配置参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const queryConfigs = async (): Promise<void> => {
     const data = await loginApi.detail()
@@ -113,6 +116,9 @@ const queryConfigs = async (): Promise<void> => {
 
 /**
  * 提交修改参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()

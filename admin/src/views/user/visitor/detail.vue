@@ -91,6 +91,7 @@ const formData = reactive({
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -99,6 +100,7 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'detail') {
         const data = await journalApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
                 // @ts-ignore
                 formData[key] = data[key]

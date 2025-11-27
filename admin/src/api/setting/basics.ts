@@ -4,8 +4,8 @@ const basicsApi = {
     /**
      * 网站配置详情
      */
-    detail(): Promise<any> {
-        return request.get({
+    detail(): Promise<SettingBasicsResponse> {
+        return request.get<SettingBasicsResponse>({
             url: '/setting/basics/detail'
         })
     },

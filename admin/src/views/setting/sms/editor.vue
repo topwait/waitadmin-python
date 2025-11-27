@@ -87,21 +87,24 @@ const formData = reactive<any>({
 // 表单规则
 const formRules: any = reactive({
     'params.sign': [
-        { max: 100, message: '短信签名不能大于100个字符', trigger: ['blur-sm'] }
+        { max: 100, message: '短信签名不能大于100个字符', trigger: ['blur'] }
     ],
     'params.app_id': [
-        { max: 200, message: 'APP_ID不能大于200个字符', trigger: ['blur-sm'] }
+        { max: 200, message: 'APP_ID不能大于200个字符', trigger: ['blur'] }
     ],
     'params.acc_key': [
-        { max: 200, message: 'APP_KEY不能大于200个字符', trigger: ['blur-sm'] }
+        { max: 200, message: 'APP_KEY不能大于200个字符', trigger: ['blur'] }
     ],
     'params.acc_secret': [
-        { max: 200, message: 'SECRET_KEY不能大于200个字符', trigger: ['blur-sm'] }
+        { max: 200, message: 'SECRET_KEY不能大于200个字符', trigger: ['blur'] }
     ]
 })
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -124,6 +127,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -132,7 +136,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await smsApi.detail(row.alias)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

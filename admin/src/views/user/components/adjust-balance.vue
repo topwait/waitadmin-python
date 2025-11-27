@@ -81,8 +81,11 @@ const formRules: FormRules = {
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
-const handleSubmit = async () => {
+const handleSubmit = async (): Promise<void> => {
     formData.user_id = props.user_id
 
     loading.value = true

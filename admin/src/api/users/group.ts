@@ -2,6 +2,15 @@ import request from '@/utils/request'
 
 const userGroupApi = {
     /**
+     * 所有分组列表
+     */
+    whole(): Promise<UserGroupWholeResponse[]> {
+        return request.get<UserGroupWholeResponse[]>({
+            url: '/users/group/whole',
+        })
+    },
+
+    /**
      * 用户分组列表
      *
      * @param {Object} params
@@ -13,8 +22,8 @@ const userGroupApi = {
         page_no?: number;
         page_size?: number;
         name?: string;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<UserGroupListResponse[]> {
+        return request.get<UserGroupListResponse[]>({
             url: '/users/group/lists',
             params
         })
@@ -25,8 +34,8 @@ const userGroupApi = {
      *
      * @param {number} id
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<UserGroupDetailResponse> {
+        return request.get<UserGroupDetailResponse>({
             url: '/users/group/detail',
             params: { id }
         })

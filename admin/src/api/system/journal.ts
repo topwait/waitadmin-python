@@ -21,8 +21,8 @@ const journalApi = {
         ip?: string;
         start_time?: string;
         end_time?: string;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<SystemJournalListResponse[]> {
+        return request.get<SystemJournalListResponse[]>({
             url: '/system/journal/lists',
             params
         })
@@ -33,8 +33,8 @@ const journalApi = {
      *
      * @param {number} id
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<SystemJournalDetailResponse> {
+        return request.get<SystemJournalDetailResponse>({
             url: '/system/journal/detail',
             params: { id }
         })

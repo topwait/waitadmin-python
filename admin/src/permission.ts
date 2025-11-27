@@ -44,13 +44,16 @@ const addRoutesRecursively = (routes: any, parentPath = '') => {
             }
         })
     } catch (e) {
-        // eslint-disable-next-line no-console
         console.error('Error adding routes:', e)
     }
 }
 
 // 路由前置拦截
-router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext): Promise<any> => {
+router.beforeEach(async (
+    to: RouteLocationNormalized,
+    _from: RouteLocationNormalized,
+    next: NavigationGuardNext
+): Promise<any> => {
     const userStore = useUserStore()
     const tabsStore = useTabsStore()
 

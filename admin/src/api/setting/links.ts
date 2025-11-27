@@ -15,8 +15,8 @@ const linksApi = {
         page_size?: number;
         title?: string;
         is_disable?: number;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<SettingLinksListResponse[]> {
+        return request.get<SettingLinksListResponse[]>({
             url: '/setting/links/lists',
             params
         })
@@ -27,8 +27,8 @@ const linksApi = {
      *
      * @param {number} id
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<SettingLinksDetailResponse> {
+        return request.get<SettingLinksDetailResponse>({
             url: '/setting/links/detail',
             params: { id }
         })

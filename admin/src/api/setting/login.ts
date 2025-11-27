@@ -4,8 +4,8 @@ const loginApi = {
     /**
      * 登录配置详情
      */
-    detail(): Promise<any> {
-        return request.get({
+    detail(): Promise<SettingLoginResponse> {
+        return request.get<SettingLoginResponse>({
             url: '/setting/login/detail'
         })
     },

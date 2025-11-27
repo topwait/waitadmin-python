@@ -51,6 +51,9 @@ const dataLists = ref<Array<any>>([])
 
 /**
  * 查询支付配置列表
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const queryPaymentLists = async (): Promise<void> => {
     dataLists.value = await paymentApi.lists()
@@ -62,6 +65,7 @@ const queryPaymentLists = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true

@@ -52,13 +52,16 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     name: [
-        { required: true, message: '分类名称不能为空', trigger: ['blur-sm'] },
-        { max: 20, message: '分类名称不能大于20个字符', trigger: ['blur-sm'] }
+        { required: true, message: '分类名称不能为空', trigger: ['blur'] },
+        { max: 20, message: '分类名称不能大于20个字符', trigger: ['blur'] }
     ]
 })
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -86,6 +89,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -94,7 +98,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await articleCateApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

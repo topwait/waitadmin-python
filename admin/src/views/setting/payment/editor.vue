@@ -117,9 +117,21 @@ const popTitle = computed<string>(() => {
 })
 
 enum PayWayEnum {
-    BALANCE = 1,
+    // BALANCE = 1,
     WXPAY = 2,
     ALIPAY = 3
+}
+
+interface ParamsType {
+    // 微信
+    merchant_type?: string;
+    interface_version?: string;
+    mch_id?: string;
+    apiclient_key?: string;
+    apiclient_cert?: string;
+    // 支付宝
+    private_key?: string;
+    public_key?: string;
 }
 
 // 表单数据
@@ -132,23 +144,26 @@ const formData = reactive<any>({
     icon: '',
     sort: 0,
     status: 0,
-    params: {}
+    params: {} as ParamsType
 })
 
 // 表单规则
 const formRules: any = reactive({
     'icon': [
-        { required: true, message: '请选择支付图标', trigger: ['blur-sm'] },
-        { max: 250, message: '支付图标链接不能大于250个字符', trigger: ['blur-sm'] }
+        { required: true, message: '请选择支付图标', trigger: ['blur'] },
+        { max: 250, message: '支付图标链接不能大于250个字符', trigger: ['blur'] }
     ],
     'shorter': [
-        { required: true, message: '请填写显示名称', trigger: ['blur-sm'] },
-        { max: 32, message: '显示名称不能大于32个字符', trigger: ['blur-sm'] }
+        { required: true, message: '请填写显示名称', trigger: ['blur'] },
+        { max: 32, message: '显示名称不能大于32个字符', trigger: ['blur'] }
     ]
 })
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -171,6 +186,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -179,7 +195,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await paymentApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

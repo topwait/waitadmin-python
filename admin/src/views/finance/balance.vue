@@ -45,18 +45,18 @@
             <el-table :data="pager.lists" size="large">
                 <el-table-column label="用户编号" prop="user.sn" min-width="100" />
                 <el-table-column label="用户信息" min-width="120">
-                    <template #default="{ row }">
+                    <template #default="scope: { row: FinanceBalanceListResponse }">
                         <div class="flex items-center">
-                            <el-avatar :size="36" :src="row.user.avatar"/>
-                            <span class="ml-2">{{ row?.user.nickname }}</span>
+                            <el-avatar :size="36" :src="scope.row.user.avatar"/>
+                            <span class="ml-2">{{ scope.row.user.nickname }}</span>
                         </div>
                     </template>
                 </el-table-column>
                 <el-table-column label="变动的金额" prop="change_amount" min-width="100" />
                 <el-table-column label="变动类型" prop="action" min-width="100">
-                    <template #default="{ row }">
-                        <span v-if="row.action === 1">+{{ row?.change_amount }}</span>
-                        <span v-else>-{{ row?.change_amount }}</span>
+                    <template #default="scope: { row: FinanceBalanceListResponse }">
+                        <span v-if="scope.row.action === 1">+{{ scope.row.change_amount }}</span>
+                        <span v-else>-{{ scope.row.change_amount }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="变动前金额" prop="before_amount" min-width="100" />

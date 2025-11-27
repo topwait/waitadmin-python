@@ -181,24 +181,24 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     pid: [
-        {required: true,  message: '请选择父级菜单', trigger: ['blur-sm', 'change']}
+        {required: true,  message: '请选择父级菜单', trigger: ['blur', 'change']}
     ],
     name: [
-        { required: true, message: '菜单名称不能为空', trigger: ['blur-sm'] },
-        { max: 100, message: '菜单名称不能大于100个字符', trigger: ['blur-sm'] }
+        { required: true, message: '菜单名称不能为空', trigger: ['blur'] },
+        { max: 100, message: '菜单名称不能大于100个字符', trigger: ['blur'] }
     ],
     path: [
-        { required: true, message: '路由地址不能为空', trigger: ['blur-sm'] },
-        { max: 200, message: '路由地址不能大于200个字符', trigger: ['blur-sm'] }
+        { required: true, message: '路由地址不能为空', trigger: ['blur'] },
+        { max: 200, message: '路由地址不能大于200个字符', trigger: ['blur'] }
     ],
     perms: [
-        { max: 200, message: '权限字符不能大于200个字符', trigger: ['blur-sm'] }
+        { max: 200, message: '权限字符不能大于200个字符', trigger: ['blur'] }
     ],
     params: [
-        { max: 200, message: '路由参数不能大于200个字符', trigger: ['blur-sm'] }
+        { max: 200, message: '路由参数不能大于200个字符', trigger: ['blur'] }
     ],
     component: [
-        { max: 200, message: '组件路径不能大于200个字符', trigger: ['blur-sm'] }
+        { max: 200, message: '组件路径不能大于200个字符', trigger: ['blur'] }
     ]
 })
 
@@ -206,7 +206,7 @@ const formRules = reactive({
  * 获取视图
  */
 const componentsOptions = ref(getModulesKey())
-const querySearch = (queryString: string, cb: any) => {
+const querySearch = (queryString: string, cb: any): void => {
     const results = queryString
         ? componentsOptions.value.filter((item: any) =>
             item.toLowerCase().includes(queryString.toLowerCase())
@@ -217,6 +217,9 @@ const querySearch = (queryString: string, cb: any) => {
 
 /**
  * 获取菜单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const getMenu = async (): Promise<void> => {
     const data: any = await authMenuApi.lists()
@@ -229,6 +232,9 @@ const getMenu = async (): Promise<void> => {
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -256,6 +262,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -265,7 +272,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await authMenuApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

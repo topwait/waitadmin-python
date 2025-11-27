@@ -30,8 +30,8 @@
             <el-table :data="pager.lists" size="large" class="mt-4">
                 <el-table-column label="分组名称" prop="name" min-width="100" />
                 <el-table-column label="分组备注" prop="remarks" min-width="150">
-                    <template #default="{ row }">
-                        {{ row?.remarks || '-'  }}
+                    <template #default="scope: { row: UserGroupListResponse }">
+                        {{ scope.row.remarks || '-'  }}
                     </template>
                 </el-table-column>
                 <el-table-column label="排序" prop="sort" min-width="100" />
@@ -79,6 +79,7 @@ const { pager, queryLists, resetParams, resetPaging } = usePaging({
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true
@@ -91,6 +92,7 @@ const handleEditor = async (type: string, row?: any): Promise<void> => {
  *
  * @param {number} id
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleDelete = async (id: number): Promise<void> => {
     feedback.confirm('确定要删除此项数据吗?')

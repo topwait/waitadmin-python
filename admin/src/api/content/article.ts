@@ -11,6 +11,8 @@ const articleApi = {
      * @param {number} [params.status]
      * @param {string} [params.start_time]
      * @param {string} [params.end_time]
+     * @returns {ContentArticleListResponse[]}
+     * @author zero
      */
     lists(params: {
         page_no?: number;
@@ -19,8 +21,8 @@ const articleApi = {
         status?: number;
         start_time?: string;
         end_time?: string;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<ContentArticleListResponse[]> {
+        return request.get<ContentArticleListResponse[]>({
             url: '/content/article/lists',
             params
         })
@@ -30,9 +32,11 @@ const articleApi = {
      * 文章详情
      *
      * @param {number} id
+     * @returns {ContentCategoryDetailResponse}
+     * @author zero
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<ContentArticleDetailResponse> {
+        return request.get<ContentArticleDetailResponse>({
             url: '/content/article/detail',
             params: { id }
         })
@@ -51,6 +55,8 @@ const articleApi = {
      * @param {number} [params.is_topping]
      * @param {number} [params.is_recommend]
      * @param {number} [params.is_show]
+     * @returns {Promise<any>}
+     * @author zero
      */
     add(params: {
         cid: number;
@@ -83,6 +89,8 @@ const articleApi = {
      * @param {number} [params.is_topping]
      * @param {number} [params.is_recommend]
      * @param {number} [params.is_show]
+     * @returns {Promise<any>}
+     * @author zero
      */
     edit(params: {
         id: number;
@@ -106,6 +114,8 @@ const articleApi = {
      * 文章删除
      *
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     delete(id: number): Promise<any> {
         return request.post({

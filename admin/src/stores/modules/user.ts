@@ -6,7 +6,7 @@ import router, { filterRoutes, resetRouter } from '@/router'
 import useTabsStore from '@/stores/modules/tabs'
 import cacheUtil from '@/utils/cache'
 import authAdminApi from '@/api/auth/admin'
-import loginApi from '@/api/login'
+import loginApi from '@/api/login/index'
 
 interface UserSate {
     token: string,

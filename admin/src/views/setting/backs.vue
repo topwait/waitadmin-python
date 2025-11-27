@@ -150,36 +150,39 @@ const formData = reactive({
 // 表单验证
 const rules = {
     'name': [
-        { required: true, message: '请填写网站名称', trigger: ['blur-sm'] },
-        { max: 30, message: '网站名称不能超出30个字符', trigger: ['blur-sm'] }
+        { required: true, message: '请填写网站名称', trigger: ['blur'] },
+        { max: 30, message: '网站名称不能超出30个字符', trigger: ['blur'] }
     ],
     'title': [
-        { required: true, message: '请填写网站标题', trigger: ['blur-sm'] },
-        { max: 30, message: '网站标题不能超出30个字符', trigger: ['blur-sm'] }
+        { required: true, message: '请填写网站标题', trigger: ['blur'] },
+        { max: 30, message: '网站标题不能超出30个字符', trigger: ['blur'] }
     ],
     'cover': [
-        { max: 500, message: '网站封面链接不能超出500个字符', trigger: ['blur-sm'] }
+        { max: 500, message: '网站封面链接不能超出500个字符', trigger: ['blur'] }
     ],
     'favicon': [
-        { required: true, message: '请设置网站图标', trigger: ['blur-sm'] },
-        { max: 500, message: '网站图标链接不能超出500个字符', trigger: ['blur-sm'] }
+        { required: true, message: '请设置网站图标', trigger: ['blur'] },
+        { max: 500, message: '网站图标链接不能超出500个字符', trigger: ['blur'] }
     ],
     'logo_black_big': [
-        { required: true, message: '请选择深色logo', trigger: ['blur-sm'] }
+        { required: true, message: '请选择深色logo', trigger: ['blur'] }
     ],
     'logo_white_big': [
-        { required: true, message: '请选择浅色', trigger: ['blur-sm'] }
+        { required: true, message: '请选择浅色', trigger: ['blur'] }
     ],
     'contacts': [
-        { max: 20, message: '联系人姓名不能超出20个字符', trigger: ['blur-sm'] }
+        { max: 20, message: '联系人姓名不能超出20个字符', trigger: ['blur'] }
     ],
     'mobile': [
-        { max: 20, message: '联系电话不能超出200个字符', trigger: ['blur-sm'] }
+        { max: 20, message: '联系电话不能超出200个字符', trigger: ['blur'] }
     ]
 }
 
 /**
  * 查询配置参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const queryConfigs = async (): Promise<void> => {
     const data = await backsApi.detail()
@@ -188,6 +191,9 @@ const queryConfigs = async (): Promise<void> => {
 
 /**
  * 提交修改参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()

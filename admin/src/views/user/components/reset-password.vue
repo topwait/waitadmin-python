@@ -23,6 +23,7 @@ import userApi from '@/api/users/user'
 const emits = defineEmits(['close', 'success'])
 
 const props = defineProps({
+    // 用户ID
     user_id: {
         type: Number,
         default: 0
@@ -37,8 +38,11 @@ const formData = reactive({
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
-const handleSubmit = async () => {
+const handleSubmit = async (): Promise<void> => {
     loading.value = true
     await userApi.resetPassword(props.user_id, formData.password)
         .finally(() => {

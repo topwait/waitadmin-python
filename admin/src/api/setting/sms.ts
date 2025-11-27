@@ -4,8 +4,8 @@ const smsApi = {
     /**
      * 短信配置列表
      */
-    lists(): Promise<any> {
-        return request.get({
+    lists(): Promise<SettingSmsListResponse[]> {
+        return request.get<SettingSmsListResponse[]>({
             url: '/setting/sms/lists'
         })
     },
@@ -15,8 +15,8 @@ const smsApi = {
      *
      * @param {string} alias
      */
-    detail(alias: string): Promise<any> {
-        return request.get({
+    detail(alias: string): Promise<SettingSmsDetailResponse> {
+        return request.get<SettingSmsDetailResponse>({
             url: '/setting/sms/detail',
             params: { alias }
         })

@@ -110,17 +110,20 @@ const rules = reactive<object>({
         { required: true, message: '头像不能为空', trigger: ['change'] }
     ],
     username: [
-        { required: true, message: '登录账号不能为空', trigger: 'blur-sm' },
-        { max: 20, message: '登录账号不能大于20个字符', trigger: 'blur-sm' }
+        { required: true, message: '登录账号不能为空', trigger: 'blur' },
+        { max: 20, message: '登录账号不能大于20个字符', trigger: 'blur' }
     ],
     nickname: [
-        { required: true, message: '用户昵称不能为空', trigger: 'blur-sm' },
-        { max: 20, message: '用户昵称不能大于20个字符', trigger: 'blur-sm' }
+        { required: true, message: '用户昵称不能为空', trigger: 'blur' },
+        { max: 20, message: '用户昵称不能大于20个字符', trigger: 'blur' }
     ]
 })
 
 /**
  * 获取用户
+ *
+ * @returns {void}
+ * @author zero
  */
 const getUserInfo = (): void => {
     const userInfo = userStore.users
@@ -132,6 +135,9 @@ const getUserInfo = (): void => {
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()

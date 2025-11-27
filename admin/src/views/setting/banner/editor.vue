@@ -92,17 +92,17 @@ const formData = reactive<any>({
 // 表单规则
 const formRules = reactive({
     image: [
-        { required: true, message: '请上传轮播图片', trigger: ['blur-sm'] }
+        { required: true, message: '请上传轮播图片', trigger: ['blur'] }
     ],
     position: [
-        { required: true, message: '请选择轮播位置', trigger: ['blur-sm'] }
+        { required: true, message: '请选择轮播位置', trigger: ['blur'] }
     ],
     title: [
-        { required: true, message: '轮播标题不能为空', trigger: 'blur-sm' },
-        { max: 200, message: '轮播标题不能大于200个字符', trigger: 'blur-sm' }
+        { required: true, message: '轮播标题不能为空', trigger: 'blur' },
+        { max: 200, message: '轮播标题不能大于200个字符', trigger: 'blur' }
     ],
     target: [
-        { required: true, message: '请选择跳转方式', trigger: 'blur-sm' }
+        { required: true, message: '请选择跳转方式', trigger: 'blur' }
     ]
 })
 
@@ -117,6 +117,9 @@ const { optionsData } = useDictOptions<{
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -144,6 +147,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -152,7 +156,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await bannerApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

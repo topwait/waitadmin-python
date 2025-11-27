@@ -1,11 +1,12 @@
 import request from '@/utils/request'
 import type { FileParams } from '@/utils/request/type'
+import type { AxiosProgressEvent } from 'axios'
 
 const appApi = {
     /**
      * 全局数据
      */
-    config(): Promise<any> {
+    config(): Promise<AppConfigResponse> {
         return request.get({
             url: '/index/config'
         })
@@ -14,7 +15,7 @@ const appApi = {
     /**
      * 工作台数据
      */
-    workbench(): Promise<any> {
+    workbench(): Promise<AppWorkbenchResponse> {
         return request.get({
             url: '/index/workbench'
         })
@@ -23,13 +24,13 @@ const appApi = {
     /**
      * 文件上传
      */
-    upload(params: FileParams, onProgress?: any): Promise<any> {
-        return request.upload({
+    upload(params: FileParams, onProgress?: any): Promise<AppUploadResponse> {
+        return request.upload<AppUploadResponse>({
             url: '/upload/files',
             headers: {
                 'Content-Type': 'multipart/form-data;charset=UTF-8'
             },
-            onUploadProgress(progressEvent): void {
+            onUploadProgress(progressEvent: AxiosProgressEvent): void {
                 onProgress && onProgress(progressEvent)
             }
         }, params)

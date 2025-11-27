@@ -4,8 +4,8 @@ const bannerApi = {
     /**
      * 轮播图位置
      */
-    sites(): Promise<any> {
-        return request.get({
+    sites(): Promise<SettingBannerSitesResponse[]> {
+        return request.get<SettingBannerSitesResponse[]>({
             url: '/setting/banner/sites'
         })
     },
@@ -24,8 +24,8 @@ const bannerApi = {
         page_size?: number;
         title?: string;
         is_disable?: number;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<SettingBannerListResponse[]> {
+        return request.get<SettingBannerListResponse[]>({
             url: '/setting/banner/lists',
             params
         })
@@ -36,8 +36,8 @@ const bannerApi = {
      *
      * @param {number} id
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<SettingBannerDetailResponse> {
+        return request.get<SettingBannerDetailResponse>({
             url: '/setting/banner/detail',
             params: { id }
         })

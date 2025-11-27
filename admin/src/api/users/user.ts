@@ -15,8 +15,8 @@ const userApi = {
         page_size?: number;
         keyword?: string;
         is_disable?: number;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<UserListResponse[]> {
+        return request.get<UserListResponse[]>({
             url: '/users/user/lists',
             params
         })
@@ -27,8 +27,8 @@ const userApi = {
      *
      * @param {number} id
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<UserDetailResponse> {
+        return request.get<UserDetailResponse>({
             url: '/users/user/detail',
             params: { id }
         })
@@ -153,8 +153,8 @@ const userApi = {
         page_no?: number;
         page_size?: number;
         user_id: string;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<UserWalletLogsResponse[]> {
+        return request.get<UserWalletLogsResponse[]>({
             url: '/users/user/wallet_logs',
             params: {
                 user_id: params.user_id,
@@ -176,8 +176,8 @@ const userApi = {
         user_id: number;
         page_no?: number;
         page_size?: number;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<UserSessionResponse[]> {
+        return request.get<UserSessionResponse[]>({
             url: '/users/user/sessions',
             params: {
                 user_id: params.user_id,

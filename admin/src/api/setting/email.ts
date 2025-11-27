@@ -4,8 +4,8 @@ const emailApi = {
     /**
      * 邮箱配置详情
      */
-    detail(): Promise<any> {
-        return request.get({
+    detail(): Promise<SettingEmailResponse> {
+        return request.get<SettingEmailResponse>({
             url: '/setting/email/detail'
         })
     },

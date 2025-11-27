@@ -4,8 +4,8 @@ const storageApi = {
     /**
      * 存储配置详情
      */
-    detail(): Promise<any> {
-        return request.get({
+    detail(): Promise<SettingStorageResponse> {
+        return request.get<SettingStorageResponse>({
             url: '/setting/storage/detail'
         })
     },

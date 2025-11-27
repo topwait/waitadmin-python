@@ -213,35 +213,38 @@ const formData = reactive({
 const rules = {
     // Base
     'website.icp': [
-        { max: 500, message: 'ICP备案不能超出500个字符', trigger: ['blur-sm'] }
+        { max: 500, message: 'ICP备案不能超出500个字符', trigger: ['blur'] }
     ],
     'website.pcp': [
-        { max: 500, message: '公安备案不能超出500个字符', trigger: ['blur-sm'] }
+        { max: 500, message: '公安备案不能超出500个字符', trigger: ['blur'] }
     ],
     // H5
     'h5.title': [
-        { max: 200, message: 'H5端标题不能超出200个字符', trigger: ['blur-sm'] }
+        { max: 200, message: 'H5端标题不能超出200个字符', trigger: ['blur'] }
     ],
     'h5.close_url': [
-        { max: 500, message: 'H5端关闭访问地址不能超出500个字符', trigger: ['blur-sm'] }
+        { max: 500, message: 'H5端关闭访问地址不能超出500个字符', trigger: ['blur'] }
     ],
     // PC
     'pc.name': [
-        { max: 200, message: '网站名称不能超出200个字符', trigger: ['blur-sm'] }
+        { max: 200, message: '网站名称不能超出200个字符', trigger: ['blur'] }
     ],
     'pc.title': [
-        { max: 200, message: '网站标题不能超出200个字符', trigger: ['blur-sm'] }
+        { max: 200, message: '网站标题不能超出200个字符', trigger: ['blur'] }
     ],
     'pc.keyword': [
-        { max: 200, message: '网站关键词不能超出200个字符', trigger: ['blur-sm'] }
+        { max: 200, message: '网站关键词不能超出200个字符', trigger: ['blur'] }
     ],
     'pc.description': [
-        { max: 500, message: '网站描述不能超出500个字符', trigger: ['blur-sm'] }
+        { max: 500, message: '网站描述不能超出500个字符', trigger: ['blur'] }
     ]
 }
 
 /**
  * 查询配置参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const queryConfigs = async (): Promise<void> => {
     const data = await basicsApi.detail()
@@ -250,6 +253,9 @@ const queryConfigs = async (): Promise<void> => {
 
 /**
  * 提交修改参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()

@@ -10,6 +10,8 @@ const authAdminApi = {
      * @param {string} [params.username]
      * @param {string} [params.mobile]
      * @param {string} [params.role]
+     * @returns {AuthAdminListResponse[]}
+     * @author zero
      */
     lists(params: {
         page_no?: number;
@@ -17,8 +19,8 @@ const authAdminApi = {
         username?: string;
         mobile?: string;
         role?: number;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<AuthAdminListResponse[]> {
+        return request.get<AuthAdminListResponse[]>({
             url: '/auth/admin/lists',
             params
         })
@@ -26,9 +28,12 @@ const authAdminApi = {
 
     /**
      * 管理员自身
+     *
+     * @returns {AuthAdminOneselfResponse}
+     * @author zero
      */
-    oneself(): Promise<any> {
-        return request.get({
+    oneself(): Promise<AuthAdminOneselfResponse> {
+        return request.get<AuthAdminOneselfResponse>({
             url: '/auth/admin/oneself'
         })
     },
@@ -37,9 +42,11 @@ const authAdminApi = {
      * 管理员详情
      *
      * @param {number} id
+     * @returns {AuthAdminDetailResponse}
+     * @author zero
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<AuthAdminDetailResponse> {
+        return request.get<AuthAdminDetailResponse>({
             url: '/auth/admin/detail',
             params: { id }
         })
@@ -59,6 +66,8 @@ const authAdminApi = {
      * @param {string} [params.mobile]
      * @param {string} [params.email]
      * @param {number} [params.is_disable]
+     * @returns {Promise<any>}
+     * @author zero
      */
     add(params: {
         role_id: number;
@@ -95,6 +104,8 @@ const authAdminApi = {
      * @param {string} [params.mobile]
      * @param {string} [params.email]
      * @param {number} [params.is_disable]
+     * @returns {Promise<any>}
+     * @author zero
      */
     edit(params: {
         id: number;
@@ -127,6 +138,8 @@ const authAdminApi = {
      * @param {string} [params.email]
      * @param {string} [params.password]
      * @param {string} [params.password_old]
+     * @returns {Promise<any>}
+     * @author zero
      */
     setInfo(params: {
         avatar: string;
@@ -146,6 +159,8 @@ const authAdminApi = {
      * 管理员删除
      *
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     delete(id: number): Promise<any> {
         return request.post({

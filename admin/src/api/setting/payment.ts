@@ -4,8 +4,8 @@ const paymentApi = {
     /**
      * 支付配置列表
      */
-    lists(): Promise<any> {
-        return request.get({
+    lists(): Promise<SettingPaymentListResponse[]> {
+        return request.get<SettingPaymentListResponse[]>({
             url: '/setting/payment/lists'
         })
     },
@@ -15,8 +15,8 @@ const paymentApi = {
      *
      * @param {number} id
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<SettingPaymentDetailResponse> {
+        return request.get<SettingPaymentDetailResponse>({
             url: '/setting/payment/detail',
             params: { id }
         })

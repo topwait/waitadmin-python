@@ -122,6 +122,7 @@ const { pager, queryLists, resetParams, resetPaging } = usePaging({
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true
@@ -134,6 +135,7 @@ const handleEditor = async (type: string, row?: any): Promise<void> => {
  *
  * @param {number} id
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleDelete = async (id: number): Promise<void> => {
     feedback.confirm('确定要删除此项数据吗?')
@@ -146,6 +148,9 @@ const handleDelete = async (id: number): Promise<void> => {
 
 /**
  * 处理展开
+ *
+ * @returns {void}
+ * @author zero
  */
 const handleExpand = (): void => {
     isExpand = !isExpand
@@ -158,6 +163,7 @@ const handleExpand = (): void => {
  * @param {any[]} children
  * @param {boolean} unfold
  * @returns {void}
+ * @author zero
  */
 const _toggleExpand = (children: any[], unfold: boolean = true): void => {
     for (const key in children) {

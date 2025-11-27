@@ -86,6 +86,9 @@ const tabsMap = [
 
 /**
  * 查询通知渠道列表
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const queryNoticeLists = async (): Promise<void> => {
     dataLists.value = await noticeApi.lists({
@@ -99,6 +102,7 @@ const queryNoticeLists = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true
