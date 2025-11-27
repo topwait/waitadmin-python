@@ -9,6 +9,8 @@ const userApi = {
      * @param {number} [params.page_size]
      * @param {string} [params.keyword]
      * @param {number} [params.is_disable]
+     * @returns {UserListResponse[]}
+     * @author zero
      */
     lists(params: {
         page_no?: number;
@@ -26,6 +28,8 @@ const userApi = {
      * 用户详情
      *
      * @param {number} id
+     * @returns {UserDetailResponse}
+     * @author zero
      */
     detail(id: number): Promise<UserDetailResponse> {
         return request.get<UserDetailResponse>({
@@ -43,6 +47,8 @@ const userApi = {
      * @param {string} params.mobile
      * @param {string} params.nickname
      * @param {string} params.password
+     * @returns {Promise<any>}
+     * @author zero
      */
     create(params: {
         account: string;
@@ -63,6 +69,8 @@ const userApi = {
      * @param {number} user_id
      * @param {string} field
      * @param {string} value
+     * @returns {Promise<any>}
+     * @author zero
      */
     edit(user_id: number, field: string, value: string): Promise<any> {
         return request.post({
@@ -79,6 +87,8 @@ const userApi = {
      * 拉黑名单
      *
      * @param {number} user_id
+     * @returns {Promise<any>}
+     * @author zero
      */
     blacklist(user_id: number): Promise<any> {
         return request.post({
@@ -94,6 +104,8 @@ const userApi = {
      *
      * @param {number} user_id
      * @param {number} group_id
+     * @returns {Promise<any>}
+     * @author zero
      */
     changeGroup(user_id: number, group_id: number): Promise<any> {
         return request.post({
@@ -110,6 +122,8 @@ const userApi = {
      *
      * @param {number} user_id
      * @param {string} password
+     * @returns {Promise<any>}
+     * @author zero
      */
     resetPassword(user_id: number, password: string): Promise<any> {
         return request.post({
@@ -123,6 +137,9 @@ const userApi = {
 
     /**
      * 调整账户
+     *
+     * @returns {Promise<any>}
+     * @author zero
      */
     adjustAccount(params: {
         user_id: number;
@@ -148,6 +165,8 @@ const userApi = {
      * @param {number} [params.page_no]
      * @param {number} [params.page_size]
      * @param {number} params.user_id
+     * @returns {Promise<UserWalletLogsResponse[]>}
+     * @author zero
      */
     walletLogs(params: {
         page_no?: number;
@@ -171,6 +190,8 @@ const userApi = {
      * @param {number} params.user_id
      * @param {number} [params.page_no]
      * @param {number} [params.page_size]
+     * @returns {Promise<UserSessionResponse[]>}
+     * @author zero
      */
     sessions(params: {
         user_id: number;
@@ -192,6 +213,8 @@ const userApi = {
      *
      * @param {number} user_id
      * @param {string} uuid
+     * @returns {Promise<any>}
+     * @author zero
      */
     kickOut(user_id: number, uuid: string): Promise<any> {
         return request.post({
