@@ -21,6 +21,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {void}
+     * @author zero
      */
     msg(msg: string): void {
         ElMessage.info(msg)
@@ -31,6 +32,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {void}
+     * @author zero
      */
     msgError(msg: string): void {
         ElMessage.error(msg)
@@ -41,6 +43,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {void}
+     * @author zero
      */
     msgSuccess(msg: string): void {
         ElMessage.success(msg)
@@ -51,6 +54,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {void}
+     * @author zero
      */
     msgWarning(msg: string): void {
         ElMessage.warning(msg)
@@ -61,6 +65,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {void}
+     * @author zero
      */
     alert(msg: string): void {
         ElMessageBox.alert(msg, '系统提示').then((): void => { })
@@ -71,6 +76,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {void}
+     * @author zero
      */
     alertError(msg: string): void {
         ElMessageBox.alert(msg, '系统提示', { type: 'error' }).then((): void => { })
@@ -81,6 +87,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {void}
+     * @author zero
      */
     alertSuccess(msg: string): void {
         ElMessageBox.alert(msg, '系统提示', { type: 'success' }).then((): void => { })
@@ -91,6 +98,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {void}
+     * @author zero
      */
     alertWarning(msg: string): void {
         ElMessageBox.alert(msg, '系统提示', { type: 'warning' }).then((): void => { })
@@ -101,6 +109,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {void}
+     * @author zero
      */
     notify(msg: string): void {
         ElNotification.info(msg)
@@ -111,6 +120,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {void}
+     * @author zero
      */
     notifyError(msg: string): void {
         ElNotification.error(msg)
@@ -121,6 +131,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {void}
+     * @author zero
      */
     notifySuccess(msg: string): void {
         ElNotification.success(msg)
@@ -131,6 +142,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {void}
+     * @author zero
      */
     notifyWarning(msg: string): void {
         ElNotification.warning(msg)
@@ -141,6 +153,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {Promise<MessageBoxData>}
+     * @author zero
      */
     confirm(msg: string): Promise<MessageBoxData> {
         return ElMessageBox.confirm(msg, '温馨提示', {
@@ -157,6 +170,7 @@ export class Feedback {
      * @param {string} title
      * @param {ElMessageBoxOptions} options
      * @returns {Promise<MessageBoxData>}
+     * @author zero
      */
     prompt(content: string, title: string, options?: ElMessageBoxOptions): Promise<MessageBoxData> {
         return ElMessageBox.prompt(content, title, {
@@ -171,6 +185,7 @@ export class Feedback {
      *
      * @param {string} msg
      * @returns {void}
+     * @author zero
      */
     loading(msg: string): void {
         this.loadingInstance = ElLoading.service({

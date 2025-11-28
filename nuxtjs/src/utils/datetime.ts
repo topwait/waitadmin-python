@@ -1,10 +1,11 @@
-const datetimeUtil: any = {
+const datetimeUtil = {
     /**
      * 格式化日期格式
      *
      * @param {Date} dateTime 日期对象
      * @param {Date} format 时间格式
      * @return {string} 格式化后的日期
+     * @author zero
      * @example:
      *    原始: new Date() => Fri May 31 2024 15:43:03 GMT+0800 (中国标准时间)
      *    最终: 2024-05-31
@@ -42,6 +43,7 @@ const datetimeUtil: any = {
      * @param {number} timestamp 时间戳
      * @param {string} format 时间格式
      * @returns {string} 转换后的日期时间
+     * @author zero
      * @example: 1717139415 => 2024-05-31 15:10:15
      */
     timestampToDate(timestamp: number, format: string = 'YYYY-MM-DD hh:mm:ss'): string {
@@ -83,6 +85,7 @@ const datetimeUtil: any = {
      *
      * @param {string} datetime 日期时间
      * @returns {number} 转换后的时间戳(秒)
+     * @author zero
      * @example: 2024-05-31 15:10:15 => 1717139415
      */
     dateToTimestamp(datetime: string): number {
@@ -103,6 +106,7 @@ const datetimeUtil: any = {
      * 获取当前日期时间
      *
      * @returns {string}
+     * @author zero
      * @example: 2024-05-31 15:54:00
      */
     datetime(): string {
@@ -113,6 +117,7 @@ const datetimeUtil: any = {
      * 获取的当前时间戳
      *
      * @returns {number}
+     * @author zero
      * @example: 1717142058720
      */
     time(): number {
@@ -124,6 +129,7 @@ const datetimeUtil: any = {
      * 返回今日开始和结束的时间戳
      *
      * @returns {number[]}
+     * @author zero
      * @example: [1717084800, 1717171199]
      */
     today(): number[] {
@@ -140,6 +146,7 @@ const datetimeUtil: any = {
      * 返回昨日开始和结束的时间戳
      *
      * @returns {number[]}
+     * @author zero
      * @example: [1716998400, 1717084799]
      */
     yesterday(): number[] {
@@ -148,7 +155,7 @@ const datetimeUtil: any = {
         date.setMinutes(0)
         date.setSeconds(0)
         date.setMilliseconds(0)
-        const t: number = this.today()[0] - 86400
+        const t: number = this.today()[0]! - 86400
         return [t, t + (86400 - 1)]
     },
 
@@ -156,13 +163,14 @@ const datetimeUtil: any = {
      * 返回本周开始和结束的时间戳
      *
      * @returns {number[]}
+     * @author zero
      * @example: [1716739200, 1717343999]
      */
     week(): number[] {
         const startDate: Date = new Date(new Date().setHours(0, 0, 0) - (new Date().getDay() - 1) * 24 * 60 * 60 * 1000)
         const endDate: Date = new Date(new Date().setHours(0, 0, 0) + (7 - new Date().getDay()) * 24 * 60 * 60 * 1000)
-        const startTime = this.dateToTimestamp(this.formatDate(startDate))
-        const endTime = this.dateToTimestamp(this.formatDate(endDate))
+        const startTime: number = this.dateToTimestamp(this.formatDate(startDate))
+        const endTime: number = this.dateToTimestamp(this.formatDate(endDate))
         return [startTime, endTime + (86400 - 1)]
     },
 
@@ -170,13 +178,14 @@ const datetimeUtil: any = {
      * 返回本月开始和结束的时间戳
      *
      * @returns {number[]}
+     * @author zero
      * @example: [1714492800, 1717171199]
      */
     month(): number[] {
         const startDate: Date = new Date(new Date(new Date().getFullYear(), new Date().getMonth(), 1).setHours(0, 0, 0))
         const endDate: Date = new Date(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).setHours(23, 59, 59, 59))
-        const startTime = this.dateToTimestamp(this.formatDate(startDate))
-        const endTime = this.dateToTimestamp(this.formatDate(endDate))
+        const startTime: number = this.dateToTimestamp(this.formatDate(startDate))
+        const endTime: number = this.dateToTimestamp(this.formatDate(endDate))
         return [startTime, endTime + (86400 - 1)]
     },
 
@@ -184,13 +193,14 @@ const datetimeUtil: any = {
      * 返回今年开始和结束的时间戳
      *
      * @returns {number[]}
+     * @author zero
      * @example: [1704038400, 1735660799]
      */
     year(): number[] {
         const startDate: Date = new Date(new Date().getFullYear(), 0, 1)
         const endDate: Date = new Date(new Date(new Date().getFullYear() + 1, 0, 0).setHours(23, 59, 59, 59))
-        const startTime = this.dateToTimestamp(this.formatDate(startDate))
-        const endTime = this.dateToTimestamp(this.formatDate(endDate))
+        const startTime: number = this.dateToTimestamp(this.formatDate(startDate))
+        const endTime: number = this.dateToTimestamp(this.formatDate(endDate))
         return [startTime, endTime + (86400 - 1)]
     }
 }

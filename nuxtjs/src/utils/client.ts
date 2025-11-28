@@ -10,6 +10,9 @@ interface ClientCallbacks {
 const clientUtil = {
     /**
      * 是否为手机环境
+     *
+     * @returns {boolean}
+     * @author zero
      */
     isMobile(): boolean {
         return isMobileJs().any
@@ -17,6 +20,9 @@ const clientUtil = {
 
     /**
      * 是否为微信环境
+     *
+     * @returns {boolean}
+     * @author zero
      */
     isWeixin(): boolean {
         return /MicroMessenger/i.test(navigator.userAgent)
@@ -24,6 +30,9 @@ const clientUtil = {
 
     /**
      * 取当前的客户端
+     *
+     * @returns {number}
+     * @author zero
      */
     getClient(): number {
         if (this.isMobile()) {
@@ -37,10 +46,13 @@ const clientUtil = {
 
     /**
      * 根据客户端执行
+     *
+     * @returns {any}
+     * @author zero
      */
-    handleClientCallback(callbacks: ClientCallbacks) {
-        const c = ClientEnum[this.getClient()]
-        const callback = callbacks[c as keyof ClientCallbacks] || function () { }
+    handleClientCallback(callbacks: ClientCallbacks): any {
+        const c: string | undefined = ClientEnum[this.getClient()]
+        const callback = callbacks[c as keyof ClientCallbacks] || function (): void { }
         return callback()
     }
 }

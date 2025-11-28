@@ -16,6 +16,8 @@ const validateUtil = {
      *
      * @param {any} val  值
      * @param {any} type 类型
+     * @returns {boolean}
+     * @author zero
      */
     is(val: any, type: any): boolean {
         return toString.call(val) === `[object ${type}]`
@@ -26,6 +28,7 @@ const validateUtil = {
      *
      * @param {any} val 值
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isMap(val: any): boolean {
         return this.is(val, 'Map')
@@ -36,6 +39,7 @@ const validateUtil = {
      *
      * @param {any} val 值
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isDate(val: any): boolean {
         return this.is(val, 'Date')
@@ -46,6 +50,7 @@ const validateUtil = {
      *
      * @param {any} val 值
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isNumber(val: any): boolean {
         return this.is(val, 'Number')
@@ -56,6 +61,7 @@ const validateUtil = {
      *
      * @param {any} val 值
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isString(val: any): boolean {
         return this.is(val, 'String')
@@ -66,6 +72,7 @@ const validateUtil = {
      *
      * @param {any} val 值
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isBoolean(val: any): boolean {
         return this.is(val, 'Boolean')
@@ -76,6 +83,7 @@ const validateUtil = {
      *
      * @param {any} val 值
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isRegExp(val: any): boolean {
         return this.is(val, 'RegExp')
@@ -86,6 +94,7 @@ const validateUtil = {
      *
      * @param {any} val 值
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isArray(val: any): boolean {
         return val && Array.isArray(val)
@@ -96,6 +105,7 @@ const validateUtil = {
      *
      * @param {any} val 值
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isFunction(val: any): boolean {
         return typeof val === 'function'
@@ -106,6 +116,7 @@ const validateUtil = {
      *
      * @param {any} val 值
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isObject(val: any): boolean {
         return val !== null && this.is(val, 'Object')
@@ -116,6 +127,7 @@ const validateUtil = {
      *
      * @param {string} val 值
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isMobile(val: string): boolean {
         return /^1[3-9]\d{9}$/.test(val)
@@ -126,6 +138,7 @@ const validateUtil = {
      *
      * @param val 值
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isEmail(val: string): boolean {
         return /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(val)
@@ -136,6 +149,7 @@ const validateUtil = {
      *
      * @param {string} path 值
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isExternal(path: string): boolean {
         return /^(https?:|mailto:|tel:)/.test(path)
@@ -146,6 +160,7 @@ const validateUtil = {
      *
      * @param {any} value 值
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isEmpty(value: any): boolean {
         return !(value !== null && value !== '' && typeof value !== 'undefined')
@@ -156,6 +171,7 @@ const validateUtil = {
      *
      * @param {object|null|undefined} target
      * @returns {boolean} true=是, false=否
+     * @author zero
      */
     isEmptyObject(target: object | null | undefined): boolean {
         if (!target) {

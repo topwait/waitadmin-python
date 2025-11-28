@@ -16,8 +16,8 @@ export interface PayOptions {
 export class Pay {
     [x: string]: any
     // 维护模块名单
-    private static modules = new Map()
-    static inject(name: string, module: any) {
+    private static modules: Map<any, any> = new Map()
+    static inject(name: string, module: any): void {
         this.modules.set(name, module)
     }
 
@@ -29,7 +29,7 @@ export class Pay {
     }
 
     // 调用拉起支付
-    async run(options: PayOptions) {
+    async run(options: PayOptions): Promise<any> {
         try {
             // @ts-ignore
             const module = this[PayWayEnum[options.payWay]]

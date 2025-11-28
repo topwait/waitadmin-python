@@ -29,6 +29,7 @@ const themeUtil = {
      * @param {string} type    颜色类型
      * @param {boolean} isDark 暗黑模式
      * @returns objects
+     * @author zero
      */
     generateVars(color: string, type: string = 'primary', isDark: boolean = false) {
         const colors: any = {
@@ -47,6 +48,7 @@ const themeUtil = {
      * @param {Record<string, string>} options
      * @param {boolean} isDark
      * @returns {string}
+     * @author zero
      */
     generateTheme(options: Record<string, string>, isDark: boolean = false): string {
         const varsMap: Record<string, string> = Object.keys(options).reduce(
@@ -68,6 +70,7 @@ const themeUtil = {
      * @param {Record<string, string>} options
      * @param {isDark} isDark
      * @returns {void}
+     * @author zero
      */
     setTheme(options: Record<string, string>, isDark: boolean = false): void {
         const theme: string = this.generateTheme(options, isDark)

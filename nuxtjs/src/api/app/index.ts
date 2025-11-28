@@ -28,6 +28,7 @@ const appApi = {
     /**
      * 政策协议
      *
+     * @param {string} type - 协议类型
      * @returns {AppPolicyResponse}
      * @author zero
      */

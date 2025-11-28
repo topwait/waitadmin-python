@@ -10,7 +10,7 @@ export class Alipay {
         pay[name] = this
     }
 
-    run(options: PayOptions) {
+    run(options: PayOptions): Promise<void> {
         return new Promise((resolve, reject): void => {
             clientUtil.handleClientCallback({
                 PC: (): void => {
@@ -44,7 +44,7 @@ export class Alipay {
             {
                 key: 'payment',
                 totalTime: 300 * 1000,
-                callback: () => {
+                callback: (): void => {
                     reject('支付超时!')
                     ElMessageBox.close()
                     feedback.alertWarning('支付超时！')

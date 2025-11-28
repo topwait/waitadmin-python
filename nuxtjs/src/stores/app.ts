@@ -4,13 +4,13 @@ import appApi from '@/api/app'
 
 interface AppSate {
     popupType: popupEnum,
-    config: Record<string, any>
+    config: AppConfigResponse
 }
 
 const useAppStore = defineStore('appStore', {
     state: (): AppSate => ({
         popupType: popupEnum.NULL,
-        config: {}
+        config: {} as AppConfigResponse
     }),
     getters: {
         getRechargeConfig: (state: AppSate) => state.config.recharge || {},
@@ -22,8 +22,9 @@ const useAppStore = defineStore('appStore', {
         /**
          * 获取全局配置
          */
-        async getConfig(): Promise<any> {
+        async getConfig(): Promise<AppConfigResponse> {
             this.config = await appApi.config()
+            return this.config
         },
         /**
          * 设置显示弹窗

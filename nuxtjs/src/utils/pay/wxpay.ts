@@ -10,7 +10,7 @@ export class Wxpay {
         pay[name] = this
     }
 
-    run(options: PayOptions) {
+    run(options: PayOptions): Promise<void> {
         return new Promise((resolve, reject): void => {
             clientUtil.handleClientCallback({
                 PC: (): void => {
@@ -47,7 +47,7 @@ export class Wxpay {
             }
         )
         start()
-        this.showQrCode(options.config).catch(() => {
+        this.showQrCode(options.config).catch((): void => {
             end()
             reject('取消支付')
         })
