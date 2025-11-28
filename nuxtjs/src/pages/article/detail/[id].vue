@@ -89,7 +89,7 @@
 
 <script setup lang="ts">
 import articleApi from '@/api/article'
-import Information from '../_components/Information.vue'
+import Information from '../_components/information.vue'
 
 const route = useRoute()
 const articleId = parseInt(String(route.params?.id))

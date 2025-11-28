@@ -37,7 +37,10 @@ export class Request {
      * @returns {Promise<any>}
      * @author zero
      */
-    get<T = any>(fetchOptions: FetchOptions, requestOptions?: Partial<RequestOptions>): Promise<T> {
+    get<T = any>(
+        fetchOptions: FetchOptions,
+        requestOptions?: Partial<RequestOptions>
+    ): Promise<T> {
         return this.request<T>(
             { ...fetchOptions, method: 'GET' },
             requestOptions

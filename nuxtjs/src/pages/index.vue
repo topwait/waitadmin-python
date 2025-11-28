@@ -87,7 +87,7 @@
 
 <script setup lang="ts">
 import appApi from '@/api/app'
-import Information from './article/_components/Information.vue'
+import Information from './article/_components/information.vue'
 
 // 页面数据
 const { data: pageData } = await useAsyncData(

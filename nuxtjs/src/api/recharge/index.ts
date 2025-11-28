@@ -15,9 +15,9 @@ const rechargeApi = {
      * 充值下单
      *
      * @param params
-     * @param {number} params.money
-     * @param {number} [params.package_id]
-     * @returns Promise<any>
+     * @param {number} params.money - 充值金额
+     * @param {number} [params.package_id] - 套餐ID
+     * @returns {Promise<any>}
      * @author zero
      */
     place(params: {

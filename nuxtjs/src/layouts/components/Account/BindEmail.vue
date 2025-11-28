@@ -3,13 +3,28 @@
         <div class="text-lg font-semibold my-3">
             {{ users?.email ? '变更邮箱' : '绑定邮箱' }}
         </div>
-        <el-form ref="formRef" size="large" :model="formData" :rules="formRules">
+        <el-form
+            ref="formRef"
+            size="large"
+            :model="formData"
+            :rules="formRules"
+        >
+            <!-- 原邮箱 -->
             <el-form-item v-if="users?.email">
-                <el-input :value="users.email" placeholder="原邮箱号" :disabled="true" />
+                <el-input
+                    :disabled="true"
+                    :value="users.email"
+                    placeholder="原邮箱号"
+                />
             </el-form-item>
+            <!-- 新邮箱 -->
             <el-form-item prop="email">
-                <el-input v-model="formData.email" placeholder="请输入邮箱号" />
+                <el-input
+                    v-model="formData.email"
+                    placeholder="请输入邮箱号"
+                />
             </el-form-item>
+            <!-- 验证码 -->
             <el-form-item prop="code">
                 <el-input v-model="formData.code" placeholder="请输入验证码">
                     <template #suffix>
@@ -19,6 +34,7 @@
                     </template>
                 </el-input>
             </el-form-item>
+            <!-- 提交按钮 -->
             <el-form-item>
                 <el-button
                     type="primary"
@@ -42,16 +58,18 @@ import useAppStore from '@/stores/app'
 import userApi from '@/api/user'
 import appApi from '@/api/app'
 
+// 状态管理
 const appStore = useAppStore()
 const userStore = useUserStore()
-
-// 用户信息
 const { users } = toRefs(userStore)
 
 // 表单参数
-const formData = reactive({
-    code: '',
-    email: ''
+const formData = reactive<{
+    email: string;
+    code: string;
+}>({
+    email: '',
+    code: ''
 })
 
 // 表单验证

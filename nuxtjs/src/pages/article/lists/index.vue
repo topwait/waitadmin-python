@@ -96,8 +96,8 @@
 
 <script setup lang="ts">
 import { Search } from '@element-plus/icons-vue'
+import Information from '../_components/information.vue'
 import articleApi from '@/api/article'
-import Information from '../_components/Information.vue'
 
 // 页面数据
 const { data: pageData } = await useAsyncData(

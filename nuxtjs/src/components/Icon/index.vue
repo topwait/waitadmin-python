@@ -24,6 +24,7 @@ export default defineComponent({
         }
     },
     setup(props) {
+        // Element Plus 图标
         if (props.name.indexOf(EL_ICON_PREFIX) === 0) {
             return () =>
                 createVNode(
@@ -35,6 +36,7 @@ export default defineComponent({
                     () => [createVNode(resolveComponent(props.name))]
                 )
         }
+        // Local SVG 图标
         if (props.name.indexOf(SVG_ICON_PREFIX) === 0) {
             const size: string = `${props.size}`
             const font: string = /^\d+$/.test(size) ? `${size}px` : size
