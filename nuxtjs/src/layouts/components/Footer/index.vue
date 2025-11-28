@@ -4,10 +4,10 @@
             <div class="flex justify-center py-[30px]">
                 <div class="mii">
                     <div class="nav">
-                        <NuxtLink :to="`/policy/${policyEnum.SERVICE}`">用户协议</NuxtLink>
-                        <NuxtLink :to="`/policy/${policyEnum.PRIVACY}`">隐私政策</NuxtLink>
-                        <NuxtLink to="https://www.waitadmin.cn/docs">开发文档</NuxtLink>
-                        <NuxtLink to="tps://www.waitadmin.cn">源码下载</NuxtLink>
+                        <nuxt-link :to="`/policy/${policyEnum.SERVICE}`">用户协议</nuxt-link>
+                        <nuxt-link :to="`/policy/${policyEnum.PRIVACY}`">隐私政策</nuxt-link>
+                        <nuxt-link to="https://www.waitadmin.cn/docs">开发文档</nuxt-link>
+                        <nuxt-link to="tps://www.waitadmin.cn">源码下载</nuxt-link>
                     </div>
                     <p>
                         {{ pcConfig.description }}
@@ -22,14 +22,14 @@
             <div class="copyright">
                 {{ websiteConfig.copyright }}
                 <template v-if="websiteConfig.icp">
-                    | <NuxtLink to="https://beian.miit.gov.cn/" rel="nofollow" target="_blank">
+                    | <nuxt-link to="https://beian.miit.gov.cn/" rel="nofollow" target="_blank">
                         {{ websiteConfig.icp }}
-                    </NuxtLink>
+                    </nuxt-link>
                 </template>
                 <template v-if="websiteConfig.pcp">
-                    | <NuxtLink to="https://beian.miit.gov.cn/" rel="nofollow" target="_blank">
+                    | <nuxt-link to="https://beian.miit.gov.cn/" rel="nofollow" target="_blank">
                         {{ websiteConfig.pcp }}
-                    </NuxtLink>
+                    </nuxt-link>
                 </template>
             </div>
         </div>

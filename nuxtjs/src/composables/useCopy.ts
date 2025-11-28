@@ -3,8 +3,6 @@ import { ElMessage } from 'element-plus'
 
 /**
  * 复制内容函数
- *
- * @author zero
  */
 export const useCopy = () => {
     const copy = async (text: string, message: string = '复制成功') => {

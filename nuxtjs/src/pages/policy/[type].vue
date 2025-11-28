@@ -2,34 +2,34 @@
     <div class="layout-policy-widget">
         <div class="policy-menu">
             <div class="lists">
-                <NuxtLink
+                <nuxt-link
                     class="menu-item"
                     :to="`/policy/${policyEnum.SERVICE}`"
                     :class="{ active: route.params.type === 'service' }"
                 >
                     服务协议
-                </NuxtLink>
-                <NuxtLink
+                </nuxt-link>
+                <nuxt-link
                     class="menu-item"
                     :to="`/policy/${policyEnum.PRIVACY}`"
                     :class="{ active: route.params.type === 'privacy' }"
                 >
                     隐私协议
-                </NuxtLink>
-                <NuxtLink
+                </nuxt-link>
+                <nuxt-link
                     class="menu-item"
                     :to="`/policy/${policyEnum.PAYMENT}`"
                     :class="{ active: route.params.type === 'payment' }"
                 >
                     支付协议
-                </NuxtLink>
-                <NuxtLink
+                </nuxt-link>
+                <nuxt-link
                     class="menu-item"
                     target="_blank"
                     to="/"
                 >
                     返回首页
-                </NuxtLink>
+                </nuxt-link>
             </div>
         </div>
         <div class="policy-body">

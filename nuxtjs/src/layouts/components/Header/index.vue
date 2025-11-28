@@ -1,24 +1,24 @@
 <template>
     <header>
         <div class="container">
-            <NuxtLink v-if="pcConfig.logo" to="/" class="logo">
+            <nuxt-link v-if="pcConfig.logo" to="/" class="logo">
                 <img :src="pcConfig.logo" :alt="pcConfig.name"/>
-            </NuxtLink>
+            </nuxt-link>
             <ul class="navigation">
                 <li
                     v-for="(item, index) in menus"
                     :key="index"
                     :class="activeMenu === item.path ? 'active' : ''"
                 >
-                    <NuxtLink :to="item.path" :target="item.target">
+                    <nuxt-link :to="item.path" :target="item.target">
                         {{ item.name }}
                         <icon v-if="item.children" name="el-icon-ArrowDown" />
-                    </NuxtLink>
+                    </nuxt-link>
                     <dl v-if="item.children">
                         <dd v-for="(sub, i) in item.children" :key="i">
-                            <NuxtLink :to="sub.path" :target="sub.target">
+                            <nuxt-link :to="sub.path" :target="sub.target">
                                 {{ sub.name }}
-                            </NuxtLink>
+                            </nuxt-link>
                         </dd>
                     </dl>
                 </li>

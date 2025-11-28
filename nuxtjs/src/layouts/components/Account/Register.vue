@@ -2,60 +2,60 @@
     <div class="register-popup-container">
         <!-- 注册账号 -->
         <div v-if="registerConfigs.length > 0" class="pt-[20px] px-[20px]">
-            <ElTabs v-model="currentRegister" class="tabs">
-                <ElTabPane v-if="registerConfigs.includes('mobile')" label="手机号注册" name="mobile" @click="currentRegister = 'mobile'" />
-                <ElTabPane v-if="registerConfigs.includes('email')" label="邮箱注册" name="email" @click="currentRegister = 'email'" />
-            </ElTabs>
-            <ElForm ref="formRef" size="large" :model="formData" :rules="formRules">
-                <ElFormItem v-if="currentRegister === 'mobile'" prop="mobile">
-                    <ElInput v-model="formData.mobile" placeholder="请输入手机号">
+            <el-tabs v-model="currentRegister" class="tabs">
+                <el-tab-pane v-if="registerConfigs.includes('mobile')" label="手机号注册" name="mobile" @click="currentRegister = 'mobile'" />
+                <el-tab-pane v-if="registerConfigs.includes('email')" label="邮箱注册" name="email" @click="currentRegister = 'email'" />
+            </el-tabs>
+            <el-form ref="formRef" size="large" :model="formData" :rules="formRules">
+                <el-form-item v-if="currentRegister === 'mobile'" prop="mobile">
+                    <el-input v-model="formData.mobile" placeholder="请输入手机号">
                         <template #prepend>
                             <ElSelect model-value="+86" style="width: 80px">
                                 <ElOption label="+86" value="+86" />
                             </ElSelect>
                         </template>
-                    </ElInput>
-                </ElFormItem>
-                <ElFormItem v-if="currentRegister === 'email'" prop="email">
-                    <ElInput v-model="formData.email" placeholder="请输入邮箱号"/>
-                </ElFormItem>
-                <ElFormItem prop="code">
-                    <ElInput v-model="formData.code" placeholder="请输入验证码">
+                    </el-input>
+                </el-form-item>
+                <el-form-item v-if="currentRegister === 'email'" prop="email">
+                    <el-input v-model="formData.email" placeholder="请输入邮箱号"/>
+                </el-form-item>
+                <el-form-item prop="code">
+                    <el-input v-model="formData.code" placeholder="请输入验证码">
                         <template #suffix>
                             <div class="flex justify-center pl-5 leading-5 border-l w-90">
                                 <VerifyCode ref="verificationCodeRef" @click-get="onSendSms" />
                             </div>
                         </template>
-                    </ElInput>
-                </ElFormItem>
-                <ElFormItem prop="password">
-                    <ElInput
+                    </el-input>
+                </el-form-item>
+                <el-form-item prop="password">
+                    <el-input
                         v-model="formData.password"
                         type="password"
                         show-password
                         placeholder="请输入6~20位数字+字母或符号组合密码"
                     />
-                </ElFormItem>
-                <ElFormItem prop="password_confirm">
-                    <ElInput
+                </el-form-item>
+                <el-form-item prop="password_confirm">
+                    <el-input
                         v-model="formData.password_confirm"
                         :loading="isLock"
                         type="password"
                         show-password
                         placeholder="请再次输入密码"
                     />
-                </ElFormItem>
-                <ElFormItem>
-                    <ElButton
+                </el-form-item>
+                <el-form-item>
+                    <el-button
                         type="primary"
                         class="w-full h-42"
                         :loading="isLock"
                         @click="onRegisterLock()"
                     >
                         注册
-                    </ElButton>
-                </ElFormItem>
-            </ElForm>
+                    </el-button>
+                </el-form-item>
+            </el-form>
         </div>
 
         <el-empty
@@ -67,31 +67,31 @@
         <!-- 已有账号？ -->
         <div class="flex justify-center cursor-pointer hover-opacity">
             已有账号？
-            <NuxtLink
+            <nuxt-link
                 class="color-theme"
                 @click="appStore.setPopup(popupEnum.LOGIN)"
             >
                 立即登录
-            </NuxtLink>
+            </nuxt-link>
         </div>
 
         <!-- 隐私协议 -->
         <div class="protocol">
             您登录或注册即同意
-            <NuxtLink
+            <nuxt-link
                 class="text-tx-regular cursor-pointer hover-opacity"
                 target="_blank"
                 :to="`/policy/${policyEnum.SERVICE}`"
             >
                 《用户协议》
-            </NuxtLink>和
-            <NuxtLink
+            </nuxt-link>和
+            <nuxt-link
                 class="text-tx-regular cursor-pointer hover-opacity"
                 target="_blank"
                 :to="`/policy/${policyEnum.PRIVACY}`"
             >
                 《隐私政策》
-            </NuxtLink>
+            </nuxt-link>
         </div>
     </div>
 </template>

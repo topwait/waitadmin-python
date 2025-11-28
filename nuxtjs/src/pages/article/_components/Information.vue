@@ -10,13 +10,13 @@
                     :key="index"
                     class="py-2"
                 >
-                    <NuxtLink
+                    <nuxt-link
                         :to="'/article/detail/' + item.id"
                         class="text-base line-clamp-1 hover:text-primary"
                     >
                         <span class="text-[#dab26b]">[{{ item.category }}] · </span>
                         {{ item.title }}
-                    </NuxtLink>
+                    </nuxt-link>
                 </li>
             </ul>
         </el-card>
@@ -32,33 +32,33 @@
                     class="flex py-5"
                 >
                     <span>{{ index < 9 ? '0' : ''}}{{ index + 1 }}</span>
-                    <NuxtLink :to="'/article/detail/' + item.id" class="block w-[560px]">
+                    <nuxt-link :to="'/article/detail/' + item.id" class="block w-[560px]">
                         <h3 class="text-lg font-bold line-clamp-1 hover:text-primary">
                             {{ item.title }}
                         </h3>
                         <div class="text-sm text-tx-secondary line-clamp-2 mt-[5px]">
                             {{ item.intro }}
                         </div>
-                    </NuxtLink>
+                    </nuxt-link>
                 </li>
             </ul>
         </el-card>
 
-        <ElCarousel
+        <el-carousel
             v-if="type === 'adv'"
             class="w-full"
             trigger="click"
             height="185px"
         >
-            <ElCarouselItem v-for="(item, index) in data" :key="index">
-                <NuxtLink :to="item.url" :target="item.target" :title="item.title">
-                    <ElImage
+            <el-carousel-item v-for="(item, index) in data" :key="index">
+                <nuxt-link :to="item.url" :target="item.target" :title="item.title">
+                    <el-image
                         class="w-full h-full rounded-[8px] overflow-hidden"
                         :src="item.image"
                     />
-                </NuxtLink>
-            </ElCarouselItem>
-        </ElCarousel>
+                </nuxt-link>
+            </el-carousel-item>
+        </el-carousel>
     </div>
 </template>
 

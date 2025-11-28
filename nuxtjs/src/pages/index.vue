@@ -30,22 +30,22 @@
                             :class="pageData.topping.length > index+1 ? 'border-b' : ''"
                             class="flex py-5 border-br"
                         >
-                            <NuxtLink
+                            <nuxt-link
                                 :to="`/article/detail/${item.id}`"
                                 class="block w-[200px] h-[132px]"
                             >
-                                <ElImage
+                                <el-image
                                     class="w-full h-full rounded-[4px]"
                                     :src="item.image"
                                 />
-                            </NuxtLink>
+                            </nuxt-link>
                             <div class="w-[560px] ml-4">
-                                <NuxtLink
+                                <nuxt-link
                                     :to="`/article/detail/${item.id}`"
                                     class="block hover:text-primary"
                                 >
                                     <h3 class="text-lg font-bold line-clamp-1">{{ item.title }}</h3>
-                                </NuxtLink>
+                                </nuxt-link>
                                 <div class="text-sm text-tx-secondary line-clamp-2 mt-[5px] min-h-[39px]">
                                     {{ item.intro }}
                                 </div>
@@ -62,25 +62,24 @@
 
             <!-- Right -->
             <div class="w-[370px] mt-4">
-                <Information
+                <information
                     type="topping"
                     title="最近更新"
                     :data="pageData.everyday"
                 />
 
-                <Information
+                <information
                     class="mt-4"
                     type="ranking"
                     title="排名榜单"
                     :data="pageData.ranking"
                 />
 
-                <Information
+                <information
                     class="mt-4"
                     type="adv"
                     :data="pageData.adv"
                 />
-
             </div>
         </template>
     </NuxtLayout>

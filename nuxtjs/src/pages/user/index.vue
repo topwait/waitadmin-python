@@ -4,7 +4,7 @@
             <div class="left-sidebar">
                 <div class="member">
                     <div class="avatar">
-                        <ElAvatar :size="120" :src="userInfo.avatar" />
+                        <el-avatar :size="120" :src="userInfo.avatar" />
                     </div>
                     <div class="name">{{ userInfo.nickname }}</div>
                     <div class="nums">
@@ -24,10 +24,10 @@
                         :key="index"
                         :class="activeMenu === item.path ? 'active' : ''"
                     >
-                        <NuxtLink :to="item.path">
+                        <nuxt-link :to="item.path">
                             <icon :name="item.icon" size="22" />
                             <span>{{ item.name }}</span>
-                        </NuxtLink>
+                        </nuxt-link>
                     </li>
                 </ul>
             </div>

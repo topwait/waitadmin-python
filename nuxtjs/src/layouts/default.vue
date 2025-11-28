@@ -2,14 +2,14 @@
     <ElContainer class="layout-default">
         <layout-account />
         <layout-header />
-        <ElMain>
+        <el-main>
             <slot></slot>
             <template v-if="$slots?.container">
                 <div class="container">
                     <slot name="container"></slot>
                 </div>
             </template>
-        </ElMain>
+        </el-main>
         <layout-footer />
     </ElContainer>
 </template>

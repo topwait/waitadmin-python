@@ -50,21 +50,21 @@
 
         <el-card class="!border-none mt-4" shadow="never">
             <div class="text-xl font-medium mb-[20px]">支付方式</div>
-            <PaymentSelect v-model="payWay" from="recharge"/>
+            <payment-select v-model="payWay" from="recharge"/>
         </el-card>
 
         <el-card class="!border-none mt-4" shadow="never">
             <div class="flex justify-between">
                 <div>
                     实付金额:
-                    <Price
+                    <price
                         :content="currentIndex === -1 ? money : currentPackage.money"
                         main-size="24px"
                         minor-size="14px"
                         color="#FF7021"
                     />
                 </div>
-                <ElButton
+                <el-button
                     type="primary"
                     size="large"
                     style="padding: 0 54px;"
@@ -72,7 +72,7 @@
                     @click="payNow"
                 >
                     立即充值
-                </ElButton>
+                </el-button>
             </div>
         </el-card>
     </div>
