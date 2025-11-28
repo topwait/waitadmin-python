@@ -50,7 +50,7 @@
                         <div class="flex justify-end my-4">
                             <paging
                                 v-model="pager"
-                                layout="prev, pager, next"
+                                layout="total, prev, pager, next"
                                 @change="queryLists"
                             />
                         </div>

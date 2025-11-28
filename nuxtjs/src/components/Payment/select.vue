@@ -20,16 +20,16 @@
 import { useVModel } from '@vueuse/core'
 import paymentApi from '@/api/payment'
 
+const emits = defineEmits<{
+  (event: 'update:modelValue', value: string | number): void
+}>()
+
 const props = defineProps<{
     from: 'recharge'
     modelValue: string | number
 }>()
 
-const emit = defineEmits<{
-  (event: 'update:modelValue', value: string | number): void
-}>()
-
-const payWayType = useVModel(props, 'modelValue', emit)
+const payWayType = useVModel(props, 'modelValue', emits)
 const payWayList: any = ref([])
 
 const queryPayWay = async () => {
