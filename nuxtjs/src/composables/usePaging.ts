@@ -12,8 +12,8 @@ interface Options {
 export function usePaging<T = any>(options: Options) {
     // 读取参数
     const fetchFun = options.fetchFun
-    const page: number = options.page || 0
-    const size: number = options.size || 0
+    const page: number = options.page || 1
+    const size: number = options.size || 15
     const params: Record<string, any> = options.params || {}
     const firstLoading: boolean = options.firstLoading || false
 
@@ -34,10 +34,14 @@ export function usePaging<T = any>(options: Options) {
     const queryLists = async (): Promise<any> => {
         pager.loading = true
         try {
+            const pageParams = {
+                page_no: pager.page !== 1 ? pager.page : '',
+                page_size: pager.size !== 15 ? pager.size : ''
+            }
+
             const res = await fetchFun({
                 ...filterNullObj(params),
-                page_no: pager.page <= 0 ? pager.page : '',
-                page_size: pager.size <= 15 ? pager.size : ''
+                ...filterNullObj(pageParams)
             })
 
             if (!res?.lists) {

@@ -41,7 +41,7 @@
                             </div>
                         </li>
                     </ul>
-                    <template v-if="pager?.lists.length <= 0 && !pager.loading">
+                    <template v-if="!pager.loading">
                         <el-empty
                             v-if="pager?.lists.length <= 0 && !pager.loading"
                             description="暂无资讯"

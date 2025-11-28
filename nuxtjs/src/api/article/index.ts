@@ -15,14 +15,14 @@ const articleApi = {
      * 文章列表
      *
      * @param {Object} params
-     * @param {number} params.page - 当前页码
+     * @param {number} params.page_no - 当前页码
      * @param {number} params.cid - 所属类目
      * @param {string} params.keyword - 文章标题
      * @returns {Promise<ArticleListsResponse[]>}
      * @author zero
      */
     lists(params: {
-        page?: number;
+        page_no?: number;
         cid?: number;
         keyword?: string;
     }): Promise<ArticleListsResponse[]> {

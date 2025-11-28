@@ -17,7 +17,8 @@ from fastapi import Query
 
 class ArticleSearchIn(BaseModel):
     """ 文章搜索参数 """
-    page: int = Query(gt=0, default=1, description="当前页码")
+    page_no: Union[int, None] = Query(gt=0, default=1, description="当前页码")
+    page_size: Union[int, None] = Query(gt=0, default=15, description="每页条数")
     cid: Union[int, None] = Query(default=None, description="所属分类")
     keyword: Union[str, None] = Query(default=None, description="搜索关键词")
 

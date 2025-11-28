@@ -70,8 +70,8 @@ class ArticleService:
         _model = ArticleModel.filter(*where).order_by(*order)
         _pager = await ArticleModel.paginate(
             model=_model,
-            page_no=params.page,
-            page_size=15,
+            page_no=params.page_no,
+            page_size=params.page_size,
             fields=["id", "cid", "image", "title", "intro", "browse", "create_time", "update_time"]
         )
 

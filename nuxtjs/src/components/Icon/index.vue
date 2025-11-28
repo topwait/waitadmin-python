@@ -7,14 +7,17 @@ import SvgIcon from './SvgIcon.vue'
 export default defineComponent({
     name: 'Icon',
     props: {
+        // 图标名称
         name: {
             type: String,
             required: true
         },
+        // 图标大小
         size: {
             type: [String, Number],
             default: '14px'
         },
+        // 图标颜色
         color: {
             type: String,
             default: 'inherit'
