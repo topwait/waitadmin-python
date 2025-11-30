@@ -237,6 +237,7 @@ watch(
 <style lang="scss">
 .routine-login-form {
     padding: 20px 20px 0;
+
     // 选项卡样式
     .tabs {
         padding-bottom: 10px;
