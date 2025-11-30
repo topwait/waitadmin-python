@@ -9,6 +9,12 @@ interface AppConfigResponse {
         register: any[];
         means: string[];
         oauth: string[];
+        pc: {
+            is_agreement: boolean;
+            default_method: string;
+            usable_channel: string[];
+            usable_register: string[];
+        }
     };
     // 网站配置
     website: {

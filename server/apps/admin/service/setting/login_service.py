@@ -10,7 +10,6 @@
 # +----------------------------------------------------------------------
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
-import json
 from exception import AppException
 from common.utils.config import ConfigUtil
 from apps.admin.schemas.setting import login_schema as schema
@@ -31,12 +30,15 @@ class LoginService:
             zero
         """
         conf = await ConfigUtil.get("login") or {}
+        pc = conf.get("pc") or {}
+
         return schema.LoginDetailVo(
-            is_agreement=int(conf.get("is_agreement", 0)),
-            defaults=conf.get("defaults", "account"),
-            registers=conf.get("registers", []),
-            login_modes=conf.get("login_modes", []),
-            login_other=conf.get("login_other", [])
+            pc=schema.LoginConfig(
+                is_agreement=bool(pc.get("is_agreement", False)),
+                default_method=pc.get("default_method", "account"),
+                usable_channel=pc.get("usable_channel", []),
+                usable_register=pc.get("usable_register", [])
+            )
         )
 
     @classmethod
@@ -50,23 +52,22 @@ class LoginService:
         Author:
             zero
         """
-        if post.defaults not in ["account", "mobile", "wx"]:
-            raise AppException("不支持的默认登录方式: " + post.defaults)
+        client = {"pc": "PC端"}
+        orders = ["account", "mobile", "email", "wx"]
 
-        for item in post.registers:
-            if item not in ["mobile", "email"]:
-                raise AppException("不支持的允许注册方式: " + item)
+        config = post.model_dump()
+        for k in ["pc"]:
+            # 读取数据
+            defaults = config[k]["default_method"]
+            channels = config[k]["usable_channel"]
+            register = config[k]["usable_register"]
 
-        for item in post.login_modes:
-            if item not in ["account", "mobile"]:
-                raise AppException("不支持的通用登录方式: " + item)
+            # 从新排序
+            config[k]["usable_channel"] = sorted(channels, key=lambda x: orders.index(x))
+            config[k]["usable_register"] = sorted(register, key=lambda x: orders.index(x))
 
-        for item in post.login_other:
-            if item not in ["wx"]:
-                raise AppException("不支持的第三方登录: " + item)
+            # 验证渠道
+            if channels and defaults not in channels:
+                 raise AppException(f"{client[k]}『默认登录方式』尚未在可用登录方式启用")
 
-        await ConfigUtil.set("login", "is_agreement", post.is_agreement)
-        await ConfigUtil.set("login", "defaults", post.defaults)
-        await ConfigUtil.set("login", "registers", json.dumps(post.registers))
-        await ConfigUtil.set("login", "login_modes", json.dumps(post.login_modes))
-        await ConfigUtil.set("login", "login_other", json.dumps(post.login_other))
+        await ConfigUtil.set("login", "pc", config["pc"])

@@ -23,38 +23,49 @@ const loginApi = {
     },
 
     /**
-     * 登录系统
+     * 账号登录
      *
-     * @param {Object} params
-     * @param {string} params.scene - 登录场景[mobile=手机, account=账号]
-     * @param {string} params.code - 验证码
-     * @param {string} params.mobile - 手机号[可选]
-     * @param {string} params.account - 登录账号[可选]
-     * @param {string} params.password - 登录密码[可选]
+     * @param params
+     * @param {string} params.account - 登录账号
+     * @param {string} params.password - 登录密码
      * @returns {Promise<LoginResultResponse>}
      * @author zero
      */
-    login(params: any): Promise<LoginResultResponse> {
-        switch (params.scene) {
-            case 'mobile':
-                return $request.post<LoginResultResponse>({
-                    url: '/login/mobile_login',
-                    params: {
-                        scene: params.scene,
-                        mobile: params.mobile,
-                        code: params.code
-                    }
-                })
-            default:
-                return $request.post<LoginResultResponse>({
-                    url: '/login/account_login',
-                    params: {
-                        scene: params.scene,
-                        account: params.account,
-                        password: params.password
-                    }
-                })
-        }
+    accountLogin(params: {
+        account: string;
+        password: string;
+    }): Promise<LoginResultResponse> {
+        return $request.post<LoginResultResponse>({
+            url: '/login/account_login',
+            params: {
+                scene: 'account',
+                account: params.account,
+                password: params.password
+            }
+        })
+    },
+
+    /**
+     * 手机登录
+     *
+     * @param params
+     * @param {string} params.mobile - 手机号码
+     * @param {string} params.code - 短信验证码
+     * @returns {Promise<LoginResultResponse>}
+     * @author zero
+     */
+    mobileLogin(params: {
+        mobile: string;
+        code: string;
+    }): Promise<LoginResultResponse> {
+        return $request.post<LoginResultResponse>({
+            url: '/login/account_login',
+            params: {
+                scene: 'mobile',
+                mobile: params.mobile,
+                code: params.code
+            }
+        })
     },
 
     /**

@@ -5,6 +5,7 @@
             append-to-body
             width="auto"
             class="none-padding"
+            :close-on-click-modal="false"
         >
             <div class="flex">
                 <login v-if="appStore.popupType === popupEnum.LOGIN" />
@@ -28,13 +29,13 @@
 <script setup lang="ts">
 import { popupEnum } from '@/enums/app'
 import useAppStore from '@/stores/app'
-import Login from './Login.vue'
 import Register from './Register.vue'
 import ForgotPwd from './ForgotPwd.vue'
 import ChangePwd from './ChangePwd.vue'
 import BindEmail from './BindEmail.vue'
 import BindMobile from './BindMobile.vue'
 import BindWechat from './BindWechat.vue'
+import Login from '../Login/index.vue'
 
 const appStore = useAppStore()
 

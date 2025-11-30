@@ -14,21 +14,26 @@ from typing import List
 from pydantic import BaseModel, Field
 
 
+class LoginConfig(BaseModel):
+    """ 登录注册配置 """
+    is_agreement: bool = Field(..., description="显示授权协议")
+    default_method: str = Field(..., pattern=r"^(account|mobile|wx)$", description="默认登录方式")
+    usable_channel: List[str] = Field(default=[], description="可用登录方式: [account, mobile, wx]")
+    usable_register: List[str] = Field(default=[], description="允许注册方式: [account, mobile, email]")
+
+
 class LoginDetailVo(BaseModel):
-    """ 存储配置详情Vo """
-    is_agreement: int = Field(..., ge=0, le=1, description="存储渠道")
-    defaults: str = Field(..., description="默认登录方式")
-    registers: List[str] = Field(..., description="允许注册方式")
-    login_modes: List[str] = Field(..., description="通用登录方式")
-    login_other: List[str] = Field(..., description="第三方登录")
+    """ 登录配置详情Vo """
+    pc: LoginConfig = Field(..., description="PC端登录配置")
 
     class Config:
         json_schema_extra = {
             "example": {
-                "is_agreement": 1,
-                "defaults": "account",
-                "registers": ["mobile", "email"],
-                "login_modes": ["account", "mobile"],
-                "login_other": ["wx"]
+                "pc": {
+                    "is_agreement": True,
+                    "default_method": "account",
+                    "usable_channel": ["account", "mobile", "wx"],
+                    "usable_register": ["account", "mobile", "email"]
+                }
             }
         }

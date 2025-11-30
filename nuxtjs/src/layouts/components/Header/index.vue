@@ -29,8 +29,21 @@
                     <icon v-else name="svg-icon-Light" :size="22" />
                 </li>
                 <li v-if="!userStore.isLogin">
-                    <a href="javascript:" @click="appStore.setPopup(popupEnum.LOGIN)">登录</a> /
-                    <a href="javascript:" @click="appStore.setPopup(popupEnum.REGISTER)">注册</a>
+                    <a
+                        v-if="loginConfig.usable_channel.length"
+                        href="javascript:"
+                        @click="appStore.setPopup(popupEnum.LOGIN)"
+                    >
+                        登录
+                    </a>
+                    <span v-if="loginConfig.dividing">/</span>
+                    <a
+                        v-if="loginConfig.usable_register.length"
+                        href="javascript:"
+                        @click="appStore.setPopup(popupEnum.REGISTER)"
+                    >
+                        注册
+                    </a>
                 </li>
                 <li v-else>
                     <el-dropdown class="px-2.5 h-full" @command="handleCommand">
@@ -75,6 +88,17 @@ const changeDark = () => {
         value: !isDark.value
     })
 }
+
+// 登录配置
+const loginConfig = computed(() => {
+    const usable_channel = appStore.getLoginConfig.pc.usable_channel
+    const usable_register = appStore.getLoginConfig.pc.usable_register
+    return {
+        usable_channel: usable_channel,
+        usable_register: usable_register,
+        dividing: !!(usable_channel.length && usable_register.length)
+    }
+})
 
 // PC端配置
 const pcConfig = computed(() => {

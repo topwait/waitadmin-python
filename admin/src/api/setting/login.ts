@@ -16,22 +16,11 @@ const loginApi = {
     /**
      * 登录配置保存
      *
-     * @param {Object} params
-     * @param {number} params.is_agreement
-     * @param {string} params.defaults
-     * @param {string[]} params.registers
-     * @param {string[]} params.login_modes
-     * @param {string[]} params.login_other
+     * @param {SettingLoginResponse} params
      * @returns {Promise<any>}
      * @author zero
      */
-    save(params: {
-        is_agreement: number;
-        defaults: string;
-        registers: string[];
-        login_modes: string[];
-        login_other: string[];
-    }): Promise<any> {
+    save(params: SettingLoginResponse): Promise<any> {
         return request.post({
             url: '/setting/login/save',
             params

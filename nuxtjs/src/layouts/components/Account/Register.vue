@@ -1,25 +1,44 @@
 <template>
     <div class="register-popup-container">
         <!-- 注册账号 -->
-        <div v-if="registerConfigs.length > 0" class="pt-[20px] px-[20px]">
+        <div v-if="usableRegister.length" class="pt-[20px] px-[20px]">
             <el-tabs v-model="currentRegister" class="tabs">
-                <el-tab-pane v-if="registerConfigs.includes('mobile')" label="手机号注册" name="mobile" @click="currentRegister = 'mobile'" />
-                <el-tab-pane v-if="registerConfigs.includes('email')" label="邮箱注册" name="email" @click="currentRegister = 'email'" />
+                <el-tab-pane
+                    v-if="usableRegister.includes('account')"
+                    label="账号注册"
+                    name="account"
+                    @click="currentRegister = 'account'"
+                />
+                <el-tab-pane
+                    v-if="usableRegister.includes('mobile')"
+                    label="手机号注册"
+                    name="mobile"
+                    @click="currentRegister = 'mobile'"
+                />
+                <el-tab-pane
+                    v-if="usableRegister.includes('email')"
+                    label="邮箱注册"
+                    name="email"
+                    @click="currentRegister = 'email'"
+                />
             </el-tabs>
             <el-form ref="formRef" size="large" :model="formData" :rules="formRules">
+                <!-- 手机号注册 -->
                 <el-form-item v-if="currentRegister === 'mobile'" prop="mobile">
                     <el-input v-model="formData.mobile" placeholder="请输入手机号">
                         <template #prepend>
-                            <ElSelect model-value="+86" style="width: 80px">
-                                <ElOption label="+86" value="+86" />
-                            </ElSelect>
+                            <el-select model-value="+86" style="width: 80px">
+                                <el-option label="+86" value="+86" />
+                            </el-select>
                         </template>
                     </el-input>
                 </el-form-item>
+                <!-- 邮箱号注册 -->
                 <el-form-item v-if="currentRegister === 'email'" prop="email">
                     <el-input v-model="formData.email" placeholder="请输入邮箱号"/>
                 </el-form-item>
-                <el-form-item prop="code">
+                <!-- 验证码 -->
+                <el-form-item v-if="currentRegister !== 'account'" prop="code">
                     <el-input v-model="formData.code" placeholder="请输入验证码">
                         <template #suffix>
                             <div class="flex justify-center pl-5 leading-5 border-l w-90">
@@ -28,6 +47,16 @@
                         </template>
                     </el-input>
                 </el-form-item>
+                <!-- 登录账号 -->
+                <el-form-item v-if="currentRegister === 'account'" prop="account">
+                    <el-input
+                        v-model="formData.account"
+                        type="text"
+                        show-password
+                        placeholder="请输入登录账号"
+                    />
+                </el-form-item>
+                <!-- 登录密码 -->
                 <el-form-item prop="password">
                     <el-input
                         v-model="formData.password"
@@ -36,6 +65,7 @@
                         placeholder="请输入6~20位数字+字母或符号组合密码"
                     />
                 </el-form-item>
+                <!-- 确认密码 -->
                 <el-form-item prop="password_confirm">
                     <el-input
                         v-model="formData.password_confirm"
@@ -45,6 +75,7 @@
                         placeholder="请再次输入密码"
                     />
                 </el-form-item>
+                <!-- 注册按钮 -->
                 <el-form-item>
                     <el-button
                         type="primary"
@@ -58,6 +89,7 @@
             </el-form>
         </div>
 
+        <!-- 注册关闭 -->
         <el-empty
             v-else
             description="注册服务暂停"
@@ -65,10 +97,10 @@
         />
 
         <!-- 已有账号？ -->
-        <div class="flex justify-center cursor-pointer hover-opacity">
+        <div class="flex justify-center cursor-pointer hover:opacity-80">
             已有账号？
             <nuxt-link
-                class="color-theme"
+                class="text-primary"
                 @click="appStore.setPopup(popupEnum.LOGIN)"
             >
                 立即登录
@@ -76,17 +108,18 @@
         </div>
 
         <!-- 隐私协议 -->
-        <div class="protocol">
-            您登录或注册即同意
+        <div v-if="isAgreement" class="protocol">
+            <el-checkbox v-model="checked" size="large" />
+            <span class="ml-1.5">您注册即同意</span>
             <nuxt-link
-                class="text-tx-regular cursor-pointer hover-opacity"
+                class="text-tx-regular cursor-pointer hover:opacity-80"
                 target="_blank"
                 :to="`/policy/${policyEnum.SERVICE}`"
             >
                 《用户协议》
             </nuxt-link>和
             <nuxt-link
-                class="text-tx-regular cursor-pointer hover-opacity"
+                class="text-tx-regular cursor-pointer hover:opacity-80"
                 target="_blank"
                 :to="`/policy/${policyEnum.PRIVACY}`"
             >
@@ -100,23 +133,42 @@
 import type { FormInstance, FormRules } from 'element-plus'
 import { popupEnum, policyEnum } from '@/enums/app'
 import { noticeEnum } from '@/enums/notice'
-import useAppStore from '@/stores/app'
 import useUserStore from '@/stores/user'
+import useAppStore from '@/stores/app'
 import loginApi from '@/api/login'
 import appApi from '@/api/app'
 
 const appStore = useAppStore()
 const userStore = useUserStore()
 
-// 注册配置
-const registerConfigs: any = appStore.getLoginConfig.register
-const currentRegister = ref(registerConfigs[0])
+// 注册配置参数
+const config = appStore.getLoginConfig.pc
+
+// 是否同意协议
+const checked = ref<boolean>(!config?.is_agreement)
+
+// 显示授权协议
+const isAgreement = ref<boolean>(config?.is_agreement)
+
+// 可用登录渠道
+const usableRegister = ref<string[]>(config?.usable_register)
+
+// 当前注册方式
+const currentRegister = ref<string>(usableRegister.value[0] || '')
 
 // 表单参数
-const formData = reactive({
+const formData = reactive<{
+    mobile: string;
+    email: string;
+    code: string;
+    account: string;
+    password: string;
+    password_confirm: string;
+}>({
     mobile: '',
     email: '',
     code: '',
+    account: '',
     password: '',
     password_confirm: ''
 })
@@ -146,6 +198,10 @@ const formRules: FormRules = {
         { required: true, message: '请输入验证码', trigger: 'blur' },
         { min: 4, max: 20, message: '验证码不正确', trigger: 'blur' }
     ],
+    account: [
+        { required: true, message: '请输入登录账号', trigger: 'blur' },
+        { min: 4, max: 20, message: '账号长度应为4~20个字符', trigger: 'blur'}
+    ],
     password: [
         { required: true, message: '请输入6-20位数字+字母或符号组合', trigger: 'blur' },
         { min: 6, max: 20, message: '密码长度应为6~20个字符', trigger: 'blur'}
@@ -171,6 +227,11 @@ const formRules: FormRules = {
  */
 const verificationCodeRef = shallowRef()
 const onSendSms = async () => {
+    if (!checked.value) {
+        feedback.msgError('请阅读《服务协议》与《隐私协议》')
+        return
+    }
+
     if (currentRegister.value === 'mobile') {
         await formRef.value?.validateField(['mobile'])
         await appApi.sendSms({
@@ -194,8 +255,19 @@ const onSendSms = async () => {
  * 注册账号
  */
 const { lockFn: onRegisterLock, isLock } = useLockFn(async () => {
+    if (!checked.value) {
+        feedback.msgError('请阅读《服务协议》与《隐私协议》')
+        return
+    }
+
     const scene = currentRegister.value
-    const account = scene === 'mobile' ? formData.mobile : formData.email
+    let account: string = formData.account
+    if (scene === 'mobile') {
+        account = formData.mobile
+    } else if (scene === 'email') {
+        account = formData.email
+    }
+
     const params = {
         scene: scene,
         account: account,
@@ -241,7 +313,9 @@ const { lockFn: onRegisterLock, isLock } = useLockFn(async () => {
     }
 
     .protocol {
-        padding: 10px;
+        display: flex;
+        align-items: center;
+        padding-left: 15px;
         margin-top: 20px;
         font-size: 13px;
         color: var(--el-text-color-secondary);

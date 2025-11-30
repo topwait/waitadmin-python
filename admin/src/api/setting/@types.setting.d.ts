@@ -177,16 +177,17 @@ interface SettingStorageResponse {
  * 登录配置参数类型
  */
 interface SettingLoginResponse {
-    // 是否协议
-    is_agreement: number;
-    // 默认登录方式
-    defaults: string;
-    // 注册方式
-    registers: string[];
-    // 登录方式
-    login_modes: string[];
-    // 其他登录方式
-    login_other: string[];
+    // PC端登录配置
+    pc: {
+        // 显示授权协议
+        is_agreement: boolean;
+        // 默认登录方式: [account, mobile, wx]
+        default_method: string;
+        // 可用登录方式: [account, mobile, wx]
+        usable_channel: string[];
+        // 允许注册方式: [account, mobile, email]
+        usable_register: string[];
+    }
 }
 
 /**
