@@ -22,7 +22,7 @@
                     />
                 </el-form-item>
                 <el-form-item label="岗位状态">
-                    <el-select v-model="queryParams.status" class="w-[150px]!">
+                    <el-select v-model="queryParams.is_disable" class="w-[150px]!">
                         <el-option value="" label="全部" />
                         <el-option :value="false" label="正常" />
                         <el-option :value="true" label="禁用" />
@@ -100,7 +100,7 @@ const editorRef = shallowRef<InstanceType<typeof Editor>>()
 const queryParams = reactive({
     code: '',
     name: '',
-    status: ''
+    is_disable: ''
 })
 
 // 分页参数

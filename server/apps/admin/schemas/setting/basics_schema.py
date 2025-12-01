@@ -25,7 +25,7 @@ class H5Params(BaseModel):
     """ H5端参数 """
     title: str = Field(default="", max_length=200, description="网站标题")
     logo: str = Field(default="", max_length=300, description="网站logo")
-    status: int = Field(default=0, ge=0, le=1, description="启用状态: [0=关闭, 1=开启]")
+    status: bool = Field(default=False, description="启用状态")
     close_url: str = Field(default="", max_length=1000, description="关闭后访问地址")
 
 
@@ -60,7 +60,7 @@ class BasicsDetailVo(BaseModel):
                 "h5": {
                     "logo": "https://xx.com/images/logo.png",
                     "title": "this is WaitAdmin-Python",
-                    "status": 1,
+                    "status": True,
                     "close_url": ""
                 },
                 "pc": {

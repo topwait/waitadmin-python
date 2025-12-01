@@ -19,7 +19,8 @@ from apps.admin.service.market.recharge_service import RechargeService
 router = APIRouter(prefix="/recharge", tags=["充值套餐"])
 
 
-@router.get("/lists", summary="充值套餐列表", response_model=R[Dict[str, Union[schema.RechargeConfigIn, schema.RechargePackageListVo]]])
+@router.get("/lists", summary="充值套餐列表",
+            response_model=R[Dict[str, Union[schema.RechargeConfigIn, schema.RechargePackageListVo]]])
 @response_json
 async def lists():
     return await RechargeService.lists()

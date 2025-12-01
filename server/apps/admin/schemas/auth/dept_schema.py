@@ -100,7 +100,7 @@ class AuthDeptDeleteIn(BaseModel):
     @classmethod
     def messages(cls):
         return {
-            "id.missing": "id参数缺失",
+            "id.missing": "id参数缺失"
         }
 
     class Config:

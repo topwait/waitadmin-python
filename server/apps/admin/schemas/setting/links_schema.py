@@ -35,7 +35,7 @@ class LinksAddIn(BaseModel):
     target: str = Field(..., min_length=1, pattern=r"^(_self|_blank|_parent|_top)$", description="跳转方式")
     url: str = Field(max_length=250, default="", description="跳转链接")
     sort: int = Field(ge=0, le=999999, default=0, description="排序编号")
-    is_disable: int = Field(ge=0, le=1, default=0, description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(default=False, description="是否禁用")
 
     @classmethod
     def messages(cls):
@@ -47,8 +47,7 @@ class LinksAddIn(BaseModel):
             "target.pattern": "不支持的跳转方式",
             "sort.ge": "排序号不能少于0",
             "sort.le": "排序号不能大于999999",
-            "is_disable.ge": "轮播图状态非合法值: [0, 1]",
-            "is_disable.le": "轮播图状态非合法值: [0, 1]"
+            "is_disable.bool_parsing": "友链状态必须为布尔值"
         }
 
     class Config:
@@ -59,7 +58,7 @@ class LinksAddIn(BaseModel):
                 "target": "_blank",
                 "url": "https://www.thinkphp.cn",
                 "sort": 0,
-                "is_disable": 0
+                "is_disable": False
             }
         }
 
@@ -72,21 +71,11 @@ class LinksEditIn(BaseModel):
     target: str = Field(..., min_length=1, pattern=r"^(_self|_blank|_parent|_top)$", description="跳转方式")
     url: str = Field(max_length=250, default="", description="跳转链接")
     sort: int = Field(ge=0, le=999999, default=0, description="排序编号")
-    is_disable: int = Field(ge=0, le=1, default=0, description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(default=False, description="是否禁用")
 
     @classmethod
     def messages(cls):
-        return {
-            "title.min_length": "请填写友链名称",
-            "title.max_length": "友链名称不能超出200个字符",
-            "image.max_length": "友链图标不能超出250个字符",
-            "target.min_length": "请选择跳转方式",
-            "target.pattern": "不支持的跳转方式",
-            "sort.ge": "排序号不能少于0",
-            "sort.le": "排序号不能大于999999",
-            "is_disable.ge": "友链状态非合法值: [0, 1]",
-            "is_disable.le": "友链状态非合法值: [0, 1]"
-        }
+        return LinksAddIn.messages()
 
     class Config:
         json_schema_extra = {
@@ -97,7 +86,7 @@ class LinksEditIn(BaseModel):
                 "target": "_blank",
                 "url": "https://www.thinkphp.cn",
                 "sort": 0,
-                "is_disable": 0
+                "is_disable": False
             }
         }
 
@@ -105,6 +94,12 @@ class LinksEditIn(BaseModel):
 class LinksDeleteIn(BaseModel):
     """ 友情链接删除参数 """
     id: int = Field(gt=0, description="友链ID", examples=[1])
+
+    @classmethod
+    def messages(cls):
+        return {
+            "id.missing": "id参数缺失"
+        }
 
     class Config:
         json_schema_extra = {
@@ -125,7 +120,7 @@ class LinksListVo(BaseModel):
     target: str = Field(description="跳转方式")
     url: str = Field(description="跳转链接")
     sort: int = Field(description="排序编号")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(description="是否禁用")
     create_time: str = Field(description="创建时间")
     update_time: str = Field(description="更新时间")
 
@@ -138,7 +133,7 @@ class LinksListVo(BaseModel):
                 "target": "_blank",
                 "url": "https://www.thinkphp.cn",
                 "sort": 0,
-                "is_disable": 0,
+                "is_disable": False,
                 "create_time": "2023-03-12 00:32:13",
                 "update_time": "2023-03-18 15:29:50"
             }
@@ -153,7 +148,7 @@ class LinksDetailVo(BaseModel):
     target: str = Field(description="跳转方式")
     url: str = Field(description="跳转链接")
     sort: int = Field(description="排序号")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(description="是否禁用")
     create_time: str = Field(description="创建时间")
     update_time: str = Field(description="更新时间")
 
@@ -166,7 +161,7 @@ class LinksDetailVo(BaseModel):
                 "target": "_blank",
                 "url": "https://www.thinkphp.cn",
                 "sort": 0,
-                "is_disable": 0,
+                "is_disable": False,
                 "create_time": "2023-03-12 00:32:13",
                 "update_time": "2023-03-18 15:29:50"
             }

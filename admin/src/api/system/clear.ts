@@ -5,14 +5,14 @@ const clearApi = {
      * 清理缓存
      *
      * @param {Object} params
-     * @param {boolean | number} params.system
-     * @param {boolean | number} params.login
+     * @param {boolean} params.system
+     * @param {boolean} params.login
      * @returns {Promise<any>}
      * @author zero
      */
     clean(params: {
-        system: boolean | number;
-        login: boolean | number;
+        system: boolean;
+        login: boolean;
     }): Promise<any> {
         return request.post({
             url: '/system/clear/clean',

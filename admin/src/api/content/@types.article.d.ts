@@ -16,12 +16,12 @@ interface ContentArticleListResponse {
     collect: number;
     // 排序
     sort: number;
-    // 是否置顶: [0=否, 1=是]"
-    is_topping: number;
-    // 是否推荐: [0=否, 1=是]"
-    is_recommend: number;
-    // 是否显示: [0=否, 1=是]"
-    is_show: number;
+    // 是否置顶
+    is_topping: boolean;
+    // 是否推荐
+    is_recommend: boolean;
+    // 是否显示
+    is_show: boolean;
     // 创建时间
     create_time: string;
     // 更新时间
@@ -50,10 +50,10 @@ interface ContentArticleDetailResponse {
     collect: number;
     // 排序
     sort: number;
-    // 是否置顶: [0=否, 1=是]"
-    is_topping: number;
-    // 是否推荐: [0=否, 1=是]"
-    is_recommend: number;
-    // 是否显示: [0=否, 1=是]"
-    is_show: number;
+    // 是否置顶
+    is_topping: boolean;
+    // 是否推荐
+    is_recommend: boolean;
+    // 是否显示
+    is_show: boolean;
 }

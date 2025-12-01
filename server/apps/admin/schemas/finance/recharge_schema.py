@@ -22,10 +22,10 @@ class RechargeSearchIn(BaseModel):
     page_size: int = Query(gt=0, le=200, default=15, description="每页条数")
     user: Union[str, None] = Query(default=None, description="用户信息")
     order_sn: Union[str, None] = Query(default=None, description="充值单号")
-    pay_way: Union[str, int, None] = Query(default=None, description="支付方式: [2=微信, 3=支付宝]")
-    pay_status: Union[str, int, None] = Query(default=None, description="支付状态: [0=未支付, 1=已支付]")
-    start_time: Union[int, str, None] = Query(default=None, description="开始时间")
-    end_time: Union[int, str, None] = Query(default=None, description="结束时间")
+    pay_way: Union[int, None] = Query(default=None, description="支付方式: [2=微信, 3=支付宝]")
+    pay_status: Union[int, None] = Query(default=None, description="支付状态: [0=未支付, 1=已支付]")
+    start_time: Union[str, None] = Query(default=None, description="开始时间")
+    end_time: Union[str, None] = Query(default=None, description="结束时间")
 
 
 """--------------- Separator ---------------"""

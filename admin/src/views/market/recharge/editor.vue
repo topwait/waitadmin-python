@@ -20,9 +20,9 @@
                     <el-input-number v-model="formData.sort" :min="0" :max="9999" />
                 </el-form-item>
                 <el-form-item label="状态">
-                    <el-radio-group v-model="formData.is_disable">
-                        <el-radio :value="0">正常</el-radio>
-                        <el-radio :value="1">停用</el-radio>
+                    <el-radio-group v-model="formData.is_show">
+                        <el-radio :value="true">正常</el-radio>
+                        <el-radio :value="false">停用</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
@@ -50,7 +50,7 @@ const formData: any = reactive({
     money: '',       // 充值金额
     give_money: 0,   // 赠送金额
     sort: 0,         // 排序编号
-    is_show: 0       // 是否显示:[0=否, 1=是]
+    is_show: false   // 是否显示
 })
 
 // 表单规则

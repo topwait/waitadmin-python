@@ -33,7 +33,7 @@ const smsApi = {
      * @param {Object} params
      * @param {string} params.alias
      * @param {string} params.name
-     * @param {number} params.status
+     * @param {boolean} params.status
      * @param {any} params.params
      * @returns {Promise<any>}
      * @author zero
@@ -41,7 +41,7 @@ const smsApi = {
     save(params: {
         alias: string;
         name: string;
-        status: number;
+        status: boolean;
         params: any;
     }): Promise<any> {
         return request.post({

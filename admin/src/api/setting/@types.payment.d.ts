@@ -15,7 +15,7 @@ interface SettingPaymentListResponse {
     // 排序
     sort: number;
     // 状态
-    status: number;
+    status: boolean;
 }
 
 /**
@@ -35,7 +35,7 @@ interface SettingPaymentDetailResponse {
     // 排序
     sort: number;
     // 状态
-    status: number;
+    status: boolean;
     // 参数
     params: Record<string, string>
 }

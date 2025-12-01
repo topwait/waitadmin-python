@@ -232,8 +232,8 @@ interface SettingSmsListResponse {
     desc: string;
     // 短信图标
     image: string;
-    // 短信状态: [0=禁用, 1=启用]
-    status: number;
+    // 短信状态
+    status: boolean;
 }
 
 /**
@@ -244,8 +244,8 @@ interface SettingSmsDetailResponse {
     alias: string;
     // 短信名称
     name: string;
-    // 短信状态: [0=禁用, 1=启用]
-    status: number;
+    // 短信状态
+    status: booleans;
     // 短信参数
     params: Record<string, string>
 }

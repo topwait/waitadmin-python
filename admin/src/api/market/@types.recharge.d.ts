@@ -10,8 +10,8 @@ interface MarketRechargeListResponse {
     give_money: number;
     // 排序
     sort: number;
-    // 是否显示: [0=否, 1=是]
-    is_show: number;
+    // 是否显示
+    is_show: boolean;
     // 创建时间
     create_time: string;
     // 更新时间
@@ -30,6 +30,6 @@ interface MarketRechargeDetailResponse {
     give_money: number;
     // 排序
     sort: number;
-    // 是否显示: [0=否, 1=是]
-    is_show: number;
+    // 是否显示
+    is_show: boolean;
 }

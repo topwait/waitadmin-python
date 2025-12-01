@@ -56,8 +56,8 @@ interface AuthAdminOneselfResponse {
         email: string;
         // 角色名称
         role: string;
-        // 是否禁用: [0=否, 1=是]"
-        is_disable: number;
+        // 是否禁用
+        is_disable: boolean;
     };
     // 权限
     perms: string[];

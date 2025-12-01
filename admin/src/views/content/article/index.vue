@@ -13,10 +13,10 @@
                     />
                 </el-form-item>
                 <el-form-item label="文章状态">
-                    <el-select v-model="queryParams.status" class="w-[150px]!">
+                    <el-select v-model="queryParams.is_show" class="w-[150px]!">
                         <el-option value="" label="全部" />
-                        <el-option value="1" label="显示" />
-                        <el-option value="0" label="隐藏" />
+                        <el-option :value="true" label="显示" />
+                        <el-option :value="false" label="隐藏" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="创建时间">
@@ -61,19 +61,19 @@
                 <el-table-column label="排序" prop="sort" min-width="100" />
                 <el-table-column label="置顶" prop="is_topping" min-width="80">
                     <template #default="{ row }">
-                        <el-tag v-if="row.is_topping === 1">是</el-tag>
+                        <el-tag v-if="row.is_topping">是</el-tag>
                         <el-tag v-else type="danger">否</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="推荐" prop="is_recommend" min-width="80">
                     <template #default="{ row }">
-                        <el-tag v-if="row.is_recommend === 1">是</el-tag>
+                        <el-tag v-if="row.is_recommend">是</el-tag>
                         <el-tag v-else type="danger">否</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="状态" prop="is_show" min-width="80">
                     <template #default="{ row }">
-                        <el-tag v-if="row.is_show === 1">显示</el-tag>
+                        <el-tag v-if="row.is_show">显示</el-tag>
                         <el-tag v-else type="danger">隐藏</el-tag>
                     </template>
                 </el-table-column>
@@ -121,7 +121,7 @@ const editorRef = shallowRef<InstanceType<typeof Editor>>()
 // 查询参数
 const queryParams = reactive({
     title: '',
-    status: '',
+    is_show: '',
     start_time: '',
     end_time: ''
 })

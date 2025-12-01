@@ -103,7 +103,7 @@ class BannerService:
         Author:
             zero
         """
-        params = post.dict()
+        params = post.model_dump()
         params["image"] = UrlUtil.to_relative_url(params["image"])
         await DevBannerModel.create(
             **params,
@@ -122,7 +122,7 @@ class BannerService:
         Author:
             zero
         """
-        params = post.dict()
+        params = post.model_dump()
         params["image"] = UrlUtil.to_relative_url(params["image"])
         del params["id"]
 

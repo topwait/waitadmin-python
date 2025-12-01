@@ -24,7 +24,7 @@
                             value: 'id',
                             label: 'name',
                             disabled(data: any) {
-                                return data.is_disable !== 0
+                                return data.is_disable
                             }
                         }"
                         check-strictly

@@ -30,7 +30,7 @@ class SmsListVo(BaseModel):
     name: str = Field(description="短信名称")
     desc: str = Field(description="短信描述")
     image: str = Field(description="短信图标")
-    status: int = Field(ge=0, le=1, description="短信状态: [0=禁用, 1=启用]")
+    status: bool = Field(description="短信状态")
 
     class Config:
         json_schema_extra = {
@@ -39,7 +39,7 @@ class SmsListVo(BaseModel):
                 "name": "阿里云短信",
                 "desc": "阿里云短信服务（Short Message Service）",
                 "image": "http://0.0.0.0:8100/static/images/service_aliyun.png",
-                "status": 1
+                "status": True
             }
         }
 
@@ -48,7 +48,7 @@ class SmsDetailVo(BaseModel):
     """ 短信详情Vo """
     alias: str = Field(description="短信别名")
     name: str = Field(description="短信名称")
-    status: int = Field(ge=0, le=1, description="短信状态: [0=禁用, 1=启用]")
+    status: bool = Field(description="短信状态")
     params: SmsParams = Field(description="短信参数")
 
     class Config:
@@ -56,7 +56,7 @@ class SmsDetailVo(BaseModel):
             "example": {
                 "alias": "aliyun",
                 "name": "阿里云短信",
-                "status": 1,
+                "status": True,
                 "params": {
                   "sign": "WaitAdmin",
                   "app_id": "867354488",

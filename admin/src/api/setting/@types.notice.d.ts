@@ -10,11 +10,11 @@ interface SettingNoticeListResponse {
     name: string;
     // 类型
     type: string;
-    // 系统状态
+    // 系统状态: [0=停用, 1=启用, 2=没有]
     sys_status: number;
-    // 短信状态
+    // 短信状态: [0=停用, 1=启用, 2=没有]
     ems_status: number;
-    // 短信状态
+    // 短信状态: [0=停用, 1=启用, 2=没有]
     sms_status: number;
 }
 
@@ -38,8 +38,8 @@ interface SettingNoticeDetailResponse {
     variable: Record<string, string>,
     // 系统模板
     sys_template: {
-        // 状态
-        status: string;
+        // 状态: [0=停用, 1=启用, 2=没有]
+        status: number;
         // 内容
         content: string;
         // 模板编码
@@ -47,8 +47,8 @@ interface SettingNoticeDetailResponse {
     },
     // 短信模板
     ems_template: {
-        // 状态
-        status: string;
+        // 状态: [0=停用, 1=启用, 2=没有]
+        status: number;
         // 内容
         content: string;
         // 模板编码
@@ -56,8 +56,8 @@ interface SettingNoticeDetailResponse {
     },
     // 短信模板
     sms_template: {
-        // 状态
-        status: string;
+        // 状态: [0=停用, 1=启用, 2=没有]
+        status: number;
         // 内容
         content: string;
         // 模板编码

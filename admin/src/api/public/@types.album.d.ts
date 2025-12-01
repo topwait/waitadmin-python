@@ -5,7 +5,7 @@ interface AlbumListResponse {
     // ID
     id: number;
     // 文件类型: [10=图片, 20=视频, 30=音频, 40=压缩, 50=文件]
-    type: number;
+    type: number | 10 | 20 | 30 | 40 | 50;
     // 文件大小
     size: number;
     // 文件名称

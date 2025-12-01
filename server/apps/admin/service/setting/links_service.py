@@ -84,7 +84,7 @@ class LinksService:
             zero
         """
         await DevLinksModel.create(
-            **post.dict(),
+            **post.model_dump(),
             create_time=int(time.time()),
             update_time=int(time.time())
         )
@@ -100,7 +100,7 @@ class LinksService:
         Author:
             zero
         """
-        params = post.dict()
+        params = post.model_dump()
         del params["id"]
 
         await DevLinksModel.filter(id=post.id).update(

@@ -12,7 +12,7 @@
                 <el-table-column label="渠道描述" prop="desc" min-width="180" />
                 <el-table-column label="状态" prop="status" min-width="80">
                     <template #default="{ row }">
-                        <el-tag v-if="row.status === 1">启用</el-tag>
+                        <el-tag v-if="row.status">启用</el-tag>
                         <el-tag v-else type="danger">停用</el-tag>
                     </template>
                 </el-table-column>

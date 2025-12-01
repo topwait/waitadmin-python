@@ -8,7 +8,7 @@ const userApi = {
      * @param {number} [params.page_no]
      * @param {number} [params.page_size]
      * @param {string} [params.keyword]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {UserListResponse[]}
      * @author zero
      */
@@ -16,7 +16,7 @@ const userApi = {
         page_no?: number;
         page_size?: number;
         keyword?: string;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<UserListResponse[]> {
         return request.get<UserListResponse[]>({
             url: '/users/user/lists',

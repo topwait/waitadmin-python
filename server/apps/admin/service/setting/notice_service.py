@@ -41,6 +41,7 @@ class NoticeService:
             ems = json.loads(item["ems_template"])
             sms = json.loads(item["sms_template"])
 
+            # 状态: [0=停用, 1=启用, 2=没有]
             sys_status = sys.get("status") if sys else 2
             ems_status = ems.get("status") if ems else 2
             sms_status = sms.get("status") if sms else 2

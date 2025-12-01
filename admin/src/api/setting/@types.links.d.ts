@@ -14,8 +14,8 @@ interface SettingLinksListResponse {
     url: string;
     // 排序
     sort: number;
-    // 是否禁用: [0=禁用, 1=启用]
-    is_disable: number;
+    // 是否禁用
+    is_disable: boolean;
     // 创建时间
     create_time: string;
     // 更新时间
@@ -38,8 +38,8 @@ interface SettingLinksDetailResponse {
     url: string;
     // 排序
     sort: number;
-    // 是否禁用: [0=禁用, 1=启用]
-    is_disable: number;
+    // 是否禁用
+    is_disable: boolean;
     // 创建时间
     create_time: string;
     // 更新时间

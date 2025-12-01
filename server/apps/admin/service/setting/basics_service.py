@@ -43,7 +43,7 @@ class BasicsService:
             h5=schema.H5Params(
                 logo=await UrlUtil.to_absolute_url(h5_conf.get("logo", "")),
                 title=h5_conf.get("title", ""),
-                status=int(h5_conf.get("status", 1)),
+                status=bool(h5_conf.get("status", True)),
                 close_url=h5_conf.get("close_url", ""),
             ),
             pc=schema.PcParams(

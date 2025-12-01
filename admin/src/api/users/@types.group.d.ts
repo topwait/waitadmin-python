@@ -36,6 +36,4 @@ interface UserGroupDetailResponse {
     name: string;
     // 排序
     sort: number;
-    // 是否禁用
-    is_disable: number;
 }

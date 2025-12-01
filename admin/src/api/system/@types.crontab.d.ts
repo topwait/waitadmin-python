@@ -19,7 +19,7 @@ interface SystemCrontabListResponse {
     // 并发数量
     concurrent: number;
     // 执行状态: [1=运行, 2=暂停, 3=错误]
-    status: number;
+    status: number | 1 | 2 | 3;
     // 执行时长
     exe_time: number;
     // 最后执行时间
@@ -48,7 +48,7 @@ interface SystemCrontabDetailResponse {
     // 并发数量
     concurrent: number;
     // 执行状态: [1=运行, 2=暂停, 3=错误]
-    status: number;
+    status: number | 1 | 2 | 3;
     // 任务列表
     tasks: {
         // ID

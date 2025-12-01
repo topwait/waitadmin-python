@@ -37,7 +37,7 @@ class SmsService:
             name="阿里云短信",
             desc="阿里云短信服务（Short Message Service）",
             image=await UrlUtil.to_absolute_url("static/images/service_aliyun.png"),
-            status=1 if engine == "aliyun" else 0
+            status=True if engine == "aliyun" else False
         )
 
         tencent = schema.SmsListVo(
@@ -45,7 +45,7 @@ class SmsService:
             name="腾讯云短信",
             desc="腾讯云短信服务（Short Message Service）",
             image=await UrlUtil.to_absolute_url("static/images/service_tencent.png"),
-            status=1 if engine == "tencent" else 0
+            status=True if engine == "tencent" else False
         )
 
         return [aliyun, tencent]
@@ -67,7 +67,7 @@ class SmsService:
             return schema.SmsDetailVo(
                 alias="aliyun",
                 name="阿里云短信",
-                status=1 if engine == "aliyun" else 0,
+                status=True if engine == "aliyun" else False,
                 params=schema.SmsParams(
                     sign=config.get("sign", ""),
                     app_id=config.get("app_id", ""),
@@ -80,7 +80,7 @@ class SmsService:
             return schema.SmsDetailVo(
                 alias="tencent",
                 name="腾讯云短信",
-                status=1 if engine == "tencent" else 0,
+                status=False if engine == "tencent" else False,
                 params=schema.SmsParams(
                     sign=config.get("sign", ""),
                     app_id=config.get("app_id", ""),
@@ -103,7 +103,7 @@ class SmsService:
         await ConfigUtil.set("sms", post.alias, post.params.__dict__)
 
         engine = await ConfigUtil.get("sms", "engine", "aliyun")
-        if engine == post.alias and post.status == 0:
+        if engine == post.alias and not post.status:
             await ConfigUtil.set("sms", "engine", "")
         else:
             await ConfigUtil.set("sms", "engine", post.alias)

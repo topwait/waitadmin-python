@@ -11,7 +11,6 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 from typing import List
-
 from fastapi import APIRouter, Depends
 from hypertext import R, response_json
 from apps.admin.schemas.setting import notice_schema as schema

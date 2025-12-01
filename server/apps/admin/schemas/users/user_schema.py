@@ -220,7 +220,7 @@ class UserListVo(BaseModel):
     avatar: str = Field(description="用户头像")
     mobile: str = Field(description="手机号码")
     email: str = Field(description="电子邮箱")
-    is_disable: int = Field(description="是否显示: [0=否, 1=是]")
+    is_disable: bool = Field(description="是否显示")
     create_time: str = Field(description="创建时间")
     update_time: str = Field(description="更新时间")
 
@@ -233,7 +233,7 @@ class UserListVo(BaseModel):
                 "avatar": "https://www.xxx.com/wait.png",
                 "mobile": "13800138000",
                 "email": "13800138000@163.com",
-                "is_disable": 0,
+                "is_disable": False,
                 "last_login_ip": "127.0.0.1",
                 "last_login_time": "2024-04-18 11:22:33",
                 "create_time": "2024-04-18 11:22:33",
@@ -253,7 +253,7 @@ class UserDetailVo(BaseModel):
     mobile: str = Field(description="手机号码")
     email: str = Field(description="电子邮箱")
     balance: float = Field(description="钱包余额")
-    is_disable: int = Field(description="是否显示: [0=否, 1=是]")
+    is_disable: bool = Field(description="是否禁用")
     last_login_ip: str = Field(description="最后登录IP")
     last_login_time: str = Field(description="最后登录时间")
     create_time: str = Field(description="创建时间")
@@ -268,7 +268,7 @@ class UserDetailVo(BaseModel):
                 "gender": "男",
                 "mobile": "13800138000",
                 "email": "13800138000@163.com",
-                "is_disable": 0,
+                "is_disable": False,
                 "last_login_ip": "127.0.0.1",
                 "last_login_time": "2024-04-18 11:22:33",
                 "create_time": "2024-04-18 11:22:33"
@@ -338,4 +338,3 @@ class UserSessionListVo(BaseModel):
                 "last_ua_browser": ""
             }
         }
-

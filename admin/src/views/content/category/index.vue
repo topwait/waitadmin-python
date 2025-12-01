@@ -15,8 +15,8 @@
                 <el-form-item label="分类状态">
                     <el-select v-model="queryParams.is_disable" class="w-[150px]!">
                         <el-option value="" label="全部" />
-                        <el-option value="0" label="正常" />
-                        <el-option value="1" label="禁用" />
+                        <el-option :value="false" label="正常" />
+                        <el-option :value="true" label="禁用" />
                     </el-select>
                 </el-form-item>
                 <el-form-item>
@@ -40,7 +40,7 @@
                 <el-table-column label="排序" prop="sort" min-width="80" />
                 <el-table-column label="状态" prop="is_disable" min-width="80">
                     <template #default="{ row }">
-                        <el-tag v-if="row.is_disable == 0">正常</el-tag>
+                        <el-tag v-if="!row.is_disable">正常</el-tag>
                         <el-tag v-else type="danger">禁用</el-tag>
                     </template>
                 </el-table-column>

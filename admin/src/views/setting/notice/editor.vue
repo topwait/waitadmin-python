@@ -21,8 +21,8 @@
                     <div class="font-medium mb-3">系统通知</div>
                     <el-form-item label="开启状态" prop="sys_template.status" required>
                         <el-radio-group v-model="formData.sys_template.status">
-                            <el-radio value="0">关闭</el-radio>
-                            <el-radio value="1">开启</el-radio>
+                            <el-radio :value="false">关闭</el-radio>
+                            <el-radio :value="true">开启</el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="通知内容" prop="sys_template.content" required>
@@ -37,8 +37,8 @@
                     <div class="font-medium mb-3">邮件通知</div>
                     <el-form-item label="开启状态" prop="ems_template.status" required>
                         <el-radio-group v-model="formData.ems_template.status">
-                            <el-radio value="0">关闭</el-radio>
-                            <el-radio value="1">开启</el-radio>
+                            <el-radio :value="false">关闭</el-radio>
+                            <el-radio :value="true">开启</el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="邮件内容" prop="ems_template.content" required>
@@ -53,8 +53,8 @@
                     <div class="font-medium mb-3">短信通知</div>
                     <el-form-item label="开启状态" prop="sms_template.status" required>
                         <el-radio-group v-model="formData.sms_template.status">
-                            <el-radio value="0">关闭</el-radio>
-                            <el-radio value="1">开启</el-radio>
+                            <el-radio :value="false">关闭</el-radio>
+                            <el-radio :value="true">开启</el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="模板编号" prop="sms_template.template_code" required>

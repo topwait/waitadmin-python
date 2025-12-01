@@ -8,7 +8,7 @@ const linksApi = {
      * @param {number} [params.page_no]
      * @param {number} [params.page_size]
      * @param {string} [params.title]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {Promise<SettingLinksListResponse[]>}
      * @author zero
      */
@@ -16,7 +16,7 @@ const linksApi = {
         page_no?: number;
         page_size?: number;
         title?: string;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<SettingLinksListResponse[]> {
         return request.get<SettingLinksListResponse[]>({
             url: '/setting/links/lists',
@@ -47,7 +47,7 @@ const linksApi = {
      * @param {string} [params.target]
      * @param {string} [params.url]
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -57,7 +57,7 @@ const linksApi = {
         target: string;
         url?: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/setting/links/add',
@@ -75,7 +75,7 @@ const linksApi = {
      * @param {string} [params.target]
      * @param {string} [params.url]
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -86,7 +86,7 @@ const linksApi = {
         target: string;
         url?: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/setting/links/edit',

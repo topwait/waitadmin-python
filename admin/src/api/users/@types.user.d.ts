@@ -16,8 +16,8 @@ interface UserListResponse {
     mobile: string;
     // 电子邮箱
     email: string;
-    // 是否显示: [0=否, 1=是]
-    is_disable: number;
+    // 是否显示
+    is_disable: boolean;
     // 创建时间
     create_time: string;
     // 更新时间
@@ -46,8 +46,8 @@ interface UserDetailResponse {
     email: string;
     // 钱包余额
     balance: number;
-    // 是否显示: [0=否, 1=是]
-    is_disable: number;
+    // 是否显示
+    is_disable: boolean;
     // 最后登录IP
     last_login_ip: string;
     // 最后登录时间
@@ -63,7 +63,7 @@ interface UserWalletLogsResponse {
     // ID
     id: number;
     // 操作类型: [1=增加, 2=减少]
-    action: number;
+    action: number | 1 | 2;
     // 操作人
     op_user: string;
     // 日志编号
@@ -95,7 +95,7 @@ interface UserSessionResponse {
     // 设备
     device: string;
     // 状态: [1=在线, 2=已失效, 3=踢下线]
-    status: number;
+    status: number | 1 | 2 | 3;
     // 登录主机
     login_host: string;
     // 剩余时长

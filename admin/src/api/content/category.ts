@@ -20,7 +20,7 @@ const articleCateApi = {
      * @param {number} [params.page_no]
      * @param {number} [params.page_size]
      * @param {string} [params.name]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {ContentCategoryListResponse[]}
      * @author zero
      */
@@ -28,7 +28,7 @@ const articleCateApi = {
         page_no?: number;
         page_size?: number;
         name?: string;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<ContentCategoryListResponse[]> {
         return request.get<ContentCategoryListResponse[]>({
             url: '/content/category/lists',
@@ -56,14 +56,14 @@ const articleCateApi = {
      * @param {Object} params
      * @param {string} params.name
      * @param {number} [params.sort]
-     * @param {number} params.is_disable
+     * @param {boolean} params.is_disable
      * @returns {Promise<any>}
      * @author zero
      */
     add(params: {
         name: string;
         sort?: number;
-        is_disable: number;
+        is_disable: boolean;
     }): Promise<any> {
         return request.post({
             url: '/content/category/add',
@@ -86,7 +86,7 @@ const articleCateApi = {
         id: number;
         name: string;
         sort?: number;
-        is_disable: number;
+        is_disable: boolean;
     }): Promise<any> {
         return request.post({
             url: '/content/category/edit',

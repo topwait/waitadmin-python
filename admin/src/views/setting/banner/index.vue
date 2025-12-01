@@ -58,7 +58,7 @@
                 <el-table-column label="排序编号" prop="sort" min-width="80" />
                 <el-table-column label="是否禁用" prop="is_disable" min-width="80">
                     <template #default="{ row }">
-                        <el-tag v-if="row.is_disable === 1">是</el-tag>
+                        <el-tag v-if="!row.is_disable">是</el-tag>
                         <el-tag v-else type="danger">否</el-tag>
                     </template>
                 </el-table-column>

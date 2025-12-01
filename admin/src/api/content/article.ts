@@ -8,7 +8,7 @@ const articleApi = {
      * @param {number} [params.page_no]
      * @param {number} [params.page_size]
      * @param {string} [params.title]
-     * @param {number} [params.status]
+     * @param {boolean} [params.is_show]
      * @param {string} [params.start_time]
      * @param {string} [params.end_time]
      * @returns {ContentArticleListResponse[]}
@@ -18,7 +18,7 @@ const articleApi = {
         page_no?: number;
         page_size?: number;
         title?: string;
-        status?: number;
+        is_show?: boolean;
         start_time?: string;
         end_time?: string;
     }): Promise<ContentArticleListResponse[]> {
@@ -52,9 +52,9 @@ const articleApi = {
      * @param {string} [params.intro]
      * @param {string} [params.content]
      * @param {number} [params.sort]
-     * @param {number} [params.is_topping]
-     * @param {number} [params.is_recommend]
-     * @param {number} [params.is_show]
+     * @param {boolean} [params.is_topping]
+     * @param {boolean} [params.is_recommend]
+     * @param {boolean} [params.is_show]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -65,9 +65,9 @@ const articleApi = {
         intro?: string;
         content?: string;
         sort?: number;
-        is_topping?: number;
-        is_recommend?: number;
-        is_show?: number;
+        is_topping?: boolean;
+        is_recommend?: boolean;
+        is_show?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/content/article/add',
@@ -86,9 +86,9 @@ const articleApi = {
      * @param {string} [params.intro]
      * @param {string} [params.content]
      * @param {number} [params.sort]
-     * @param {number} [params.is_topping]
-     * @param {number} [params.is_recommend]
-     * @param {number} [params.is_show]
+     * @param {boolean} [params.is_topping]
+     * @param {boolean} [params.is_recommend]
+     * @param {boolean} [params.is_show]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -100,9 +100,9 @@ const articleApi = {
         intro?: string;
         content?: string;
         sort?: number;
-        is_topping?: number;
-        is_recommend?: number;
-        is_show?: number;
+        is_topping?: boolean;
+        is_recommend?: boolean;
+        is_show?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/content/article/edit',

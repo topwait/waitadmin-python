@@ -7,7 +7,7 @@ interface FinanceBalanceListResponse {
     // 日志编号
     log_sn: string;
     // 变动类型: [1=增加, 2=减少]
-    action: number;
+    action: number | 1 | 2;
     // 来源单号
     source_sn: string;
     // 来源类型

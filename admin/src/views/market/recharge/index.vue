@@ -7,8 +7,8 @@
                 <el-form-item label="充值状态">
                     <div>
                         <el-radio-group v-model="formData.status">
-                            <el-radio :value="0">开启</el-radio>
-                            <el-radio :value="1">关闭</el-radio>
+                            <el-radio :value="true">开启</el-radio>
+                            <el-radio :value="false">关闭</el-radio>
                         </el-radio-group>
                         <div class="form-tips">关闭充值功能后, 用户将无法进行余额充值</div>
                     </div>
@@ -90,12 +90,12 @@ import feedback from '@/utils/feedback'
 import rechargePackApi from '@/api/market/recharge'
 import Editor from './editor.vue'
 
-const showEdit = ref(false)
+const showEdit = ref<boolean>(false)
 const editorRef = shallowRef<InstanceType<typeof Editor>>()
 
-const loading = ref(false)
+const loading = ref<boolean>(false)
 const formData = reactive({
-    status: 0,
+    status: false,
     min_recharge: 0
 })
 

@@ -46,20 +46,20 @@
                 </el-form-item>
                 <el-form-item label="置顶" prop="is_topping">
                     <el-radio-group v-model="formData.is_topping">
-                        <el-radio :value="1">是</el-radio>
-                        <el-radio :value="0">否</el-radio>
+                        <el-radio :value="true">是</el-radio>
+                        <el-radio :value="false">否</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="推荐" prop="is_recommend">
                     <el-radio-group v-model="formData.is_recommend">
-                        <el-radio :value="1">是</el-radio>
-                        <el-radio :value="0">否</el-radio>
+                        <el-radio :value="true">是</el-radio>
+                        <el-radio :value="false">否</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="状态" prop="is_show">
                     <el-radio-group v-model="formData.is_show">
-                        <el-radio :value="1">显示</el-radio>
-                        <el-radio :value="0">隐藏</el-radio>
+                        <el-radio :value="true">显示</el-radio>
+                        <el-radio :value="false">隐藏</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="内容" prop="content">
@@ -88,16 +88,16 @@ const popTitle = computed<string>(() => {
 // 表单数据
 const loading = ref(false)
 const formData: any = reactive({
-    id: '',          // 文章ID
-    cid: '',         // 类目ID
-    title: '',       // 标题
-    image: '',       // 封面
-    intro: '',       // 简介
-    content: '',     // 内容
-    sort: 0,         // 部门排序
-    is_topping: 0,   // 是否置顶:[0=否, 1=是]
-    is_recommend: 0, // 是否推荐:[0=否, 1=是]
-    is_show: 0       // 是否显示:[0=否, 1=是]
+    id: '',              // 文章ID
+    cid: '',             // 类目ID
+    title: '',           // 标题
+    image: '',           // 封面
+    intro: '',           // 简介
+    content: '',         // 内容
+    sort: 0,             // 部门排序
+    is_topping: false,   // 是否置顶
+    is_recommend: false, // 是否推荐
+    is_show: false       // 是否显示
 })
 
 // 表单规则

@@ -37,7 +37,7 @@ const paymentApi = {
      * @param {string} params.name
      * @param {string} params.icon
      * @param {number} params.sort
-     * @param {number} params.status
+     * @param {boolean} params.status
      * @param {any} params.params
      * @returns {Promise<any>}
      * @author zero
@@ -49,7 +49,7 @@ const paymentApi = {
         name: string;
         icon: string;
         sort: number;
-        status: number;
+        status: boolean;
         params: any;
     }): Promise<any> {
         return request.post({

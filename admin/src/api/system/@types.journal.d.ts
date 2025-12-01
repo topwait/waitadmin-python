@@ -19,7 +19,7 @@ interface SystemJournalListResponse {
     // 错误信息
     error: string;
     // 执行状态: [1=运行, 2=失败]
-    status: number;
+    status: number | 1 | 2;
     // 最大执行时长
     task_time: number;
     // 创建时间
@@ -55,7 +55,7 @@ interface SystemJournalDetailResponse {
     // 错误信息
     error: string;
     // 执行状态: [1=运行, 2=失败]
-    status: number;
+    status: number | 1 | 2;
     // 最大执行时长
     task_time: number;
     // 开始执行结束执行时间时间

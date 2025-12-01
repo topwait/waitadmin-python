@@ -34,7 +34,7 @@ const rechargePackApi = {
      * @param {number} params.money
      * @param {number} params.give_money
      * @param {number} params.sort
-     * @param {number} params.is_show
+     * @param {boolean} params.is_show
      * @returns {Promise<any>}
      * @author zero
      */
@@ -42,7 +42,7 @@ const rechargePackApi = {
         money: number;
         give_money: number;
         sort: number;
-        is_show: number;
+        is_show: boolean;
     }): Promise<any> {
         return request.post({
             url: '/market/recharge/add',
@@ -58,7 +58,7 @@ const rechargePackApi = {
      * @param {number} params.money
      * @param {number} params.give_money
      * @param {number} params.sort
-     * @param {number} params.is_show
+     * @param {boolean} params.is_show
      * @returns {Promise<any>}
      * @author zero
      */
@@ -67,7 +67,7 @@ const rechargePackApi = {
         money: number;
         give_money: number;
         sort: number;
-        is_show: number;
+        is_show: boolean;
     }): Promise<any> {
         return request.post({
             url: '/market/recharge/edit',
@@ -93,13 +93,13 @@ const rechargePackApi = {
      * 充值配置更新
      *
      * @param {Object} params
-     * @param {number} params.status
+     * @param {boolean} params.status
      * @param {number} params.min_recharge
      * @returns {Promise<any>}
      * @author zero
      */
     config(params: {
-        status: number;
+        status: boolean;
         min_recharge: number;
     }): Promise<any> {
         return request.post({

@@ -20,7 +20,7 @@ const bannerApi = {
      * @param {number} [params.page_no]
      * @param {number} [params.page_size]
      * @param {string} [params.title]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {SettingBannerListResponse[]}
      * @author zero
      */
@@ -28,7 +28,7 @@ const bannerApi = {
         page_no?: number;
         page_size?: number;
         title?: string;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<SettingBannerListResponse[]> {
         return request.get<SettingBannerListResponse[]>({
             url: '/setting/banner/lists',
@@ -60,7 +60,7 @@ const bannerApi = {
      * @param {string} params.target
      * @param {string} [params.url]
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -71,7 +71,7 @@ const bannerApi = {
         target: string;
         url?: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/setting/banner/add',
@@ -89,7 +89,7 @@ const bannerApi = {
      * @param {string} params.target
      * @param {string} [params.url]
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -101,7 +101,7 @@ const bannerApi = {
         target: string;
         url?: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/setting/banner/edit',
