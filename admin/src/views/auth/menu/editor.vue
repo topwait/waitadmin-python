@@ -110,8 +110,8 @@
                 </el-form-item>
                 <el-form-item v-if="formData.type !== 'A'" prop="is_show" label-width="100px">
                     <el-radio-group v-model="formData.is_show">
-                        <el-radio :value="1">显示</el-radio>
-                        <el-radio :value="0">隐藏</el-radio>
+                        <el-radio :value="true">显示</el-radio>
+                        <el-radio :value="false">隐藏</el-radio>
                     </el-radio-group>
                     <template v-slot:label>
                         <el-tooltip
@@ -125,8 +125,8 @@
                 </el-form-item>
                 <el-form-item label="菜单状态" label-width="100px">
                     <el-radio-group v-model="formData.is_disable">
-                        <el-radio :value="0">正常</el-radio>
-                        <el-radio :value="1">停用</el-radio>
+                        <el-radio :value="false">正常</el-radio>
+                        <el-radio :value="true">停用</el-radio>
                     </el-radio-group>
                     <template v-slot:label>
                         <el-tooltip
@@ -164,18 +164,18 @@ const menuOptions = ref<any[]>([])
 // 表单数据
 const loading = ref<boolean>(false)
 const formData = reactive<any>({
-    id: 0,         // 菜单ID
-    pid: 0,        // 父级菜单
-    type: 'M',     // 菜单类型
-    name: '',      // 菜单名称
-    icon: '',      // 菜单图标
-    perms: '',     // 权限标识
-    params: '',    // 路由参数
-    component: '', // 组件路径
-    path: '',      // 路由地址
-    sort: 0,       // 菜单排序
-    is_show: 1,    // 是否显示:[0=否, 1=是]
-    is_disable: 0  // 是否禁用:[0=否, 1=是]
+    id: 0,             // 菜单ID
+    pid: 0,            // 父级菜单
+    type: 'M',         // 菜单类型
+    name: '',          // 菜单名称
+    icon: '',          // 菜单图标
+    perms: '',         // 权限标识
+    params: '',        // 路由参数
+    component: '',     // 组件路径
+    path: '',          // 路由地址
+    sort: 0,           // 菜单排序
+    is_show: true,     // 是否显示
+    is_disable: false  // 是否禁用
 })
 
 // 表单规则

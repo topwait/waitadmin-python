@@ -55,7 +55,7 @@ const authRoleApi = {
      * @param {string} params.name
      * @param {string} [params.describe]
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @param {number[]} [params.menu_ids]
      * @returns {Promise<any>}
      * @author zero
@@ -64,7 +64,7 @@ const authRoleApi = {
         name: string;
         describe?: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
         menu_ids?: number[];
     }): Promise<any> {
         return request.post({
@@ -81,7 +81,7 @@ const authRoleApi = {
      * @param {string} params.name
      * @param {string} [params.describe]
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @param {number[]} [params.menu_ids]
      * @returns {Promise<any>}
      * @author zero
@@ -91,7 +91,7 @@ const authRoleApi = {
         name: string;
         describe?: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
         menu_ids?: number[];
     }): Promise<any> {
         return request.post({

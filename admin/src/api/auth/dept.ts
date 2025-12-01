@@ -18,14 +18,14 @@ const authDeptApi = {
      *
      * @param {string} [params.name]
      * @param {string} [params.mobile]
-     * @param {string} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {AuthDeptListResponse[]}
      * @author zero
      */
     lists(params: {
         name?: string;
         mobile?: string;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<AuthDeptListResponse[]> {
         return request.get<AuthDeptListResponse[]>({
             url: '/auth/dept/lists',
@@ -56,7 +56,7 @@ const authDeptApi = {
      * @param {string} params.string
      * @param {string} params.mobile
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -66,7 +66,7 @@ const authDeptApi = {
         duty: string;
         mobile: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/auth/dept/add',
@@ -84,7 +84,7 @@ const authDeptApi = {
      * @param {string} params.string
      * @param {string} params.mobile
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -95,7 +95,7 @@ const authDeptApi = {
         duty: string;
         mobile: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/auth/dept/edit',

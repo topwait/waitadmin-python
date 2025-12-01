@@ -94,8 +94,8 @@
                 </el-form-item>
                 <el-form-item label="状态">
                     <el-radio-group v-model="formData.is_disable">
-                        <el-radio :value="0">正常</el-radio>
-                        <el-radio :value="1">停用</el-radio>
+                        <el-radio :value="false">正常</el-radio>
+                        <el-radio :value="true">停用</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
@@ -134,7 +134,7 @@ const formData = reactive<any>({
     password_confirm: '', // 确认密码
     mobile: '',           // 联系电话
     email: '',            // 电子邮箱
-    is_disable: 0         // 是否禁用:[0=否, 1=是]
+    is_disable: false     // 是否禁用
 })
 
 // 密码规则

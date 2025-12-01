@@ -32,8 +32,8 @@ interface AuthMenuListResponse {
     perms: string;
     // 路径地址
     path: string;
-    // 是否禁用: [0=否, 1=是]
-    is_disable: number;
+    // 是否禁用
+    is_disable: boolean;
     // 创建时间
     create_time: string;
     // 更新时间
@@ -66,8 +66,8 @@ interface AuthMenuDetailResponse {
     path: string;
     // 菜单排序
     sort: number;
-    // 是否显示: [0=否, 1=是]
-    is_show: number;
-    // 是否禁用: [0=否, 1=是]
-    is_disable: number;
+    // 是否显示
+    is_show: boolean;
+    // 是否禁用
+    is_disable: boolean;
 }

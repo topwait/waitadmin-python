@@ -21,7 +21,7 @@ class AuthPostSearchIn(BaseModel):
     page_size: int = Query(gt=0, le=200, default=15, description="每页条数")
     code: Union[str, None] = Query(default=None, description="岗位编号")
     name: Union[str, None] = Query(default=None, description="岗位名称")
-    is_disable: Union[int, str, None] = Query(default=None, description="是否禁用: [0=正常, 1=禁用]")
+    is_disable: Union[bool, None] = Query(default=None, description="是否禁用")
 
 
 class AuthPostDetailIn(BaseModel):
@@ -31,11 +31,26 @@ class AuthPostDetailIn(BaseModel):
 
 class AuthPostAddIn(BaseModel):
     """ 岗位新增参数 """
-    code: str = Field(..., max_length=30, description="岗位编号")
+    code: str = Field(..., min_length=2, max_length=30, description="岗位编号")
     name: str = Field(..., max_length=30, description="岗位名称")
     remarks: str = Field(..., max_length=200, description="岗位备注")
     sort: int = Field(ge=0, default=0, description="岗位排序")
-    is_disable: int = Field(ge=0, le=1, default=0, description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(default=False, description="是否禁用")
+
+    @classmethod
+    def messages(cls):
+        return {
+            "code.missing": "请填写岗位编号",
+            "code.min_length": "岗位编号不能小于2个字符",
+            "code.max_length": "岗位编号不能超出30个字符",
+            "name.missing": "请填写岗位名称",
+            "name.min_length": "岗位名称不能小于2个字符",
+            "name.max_length": "岗位名称不能超出30个字符",
+            "remarks.max_length": "岗位描述不能超出200个字符",
+            "sort.ge": "排序号不能少于0",
+            "sort.le": "排序号不能大于999999",
+            "is_disable.bool_parsing": "岗位状态必须为布尔值"
+        }
 
     class Config:
         json_schema_extra = {
@@ -44,7 +59,7 @@ class AuthPostAddIn(BaseModel):
                 "name": "Programmer",
                 "remarks": "负责维护Java项目和功能迭代",
                 "sort": 0,
-                "is_disable": 0
+                "is_disable": False
             }
         }
 
@@ -56,7 +71,11 @@ class AuthPostEditIn(BaseModel):
     name: str = Field(..., max_length=30, description="岗位名称")
     remarks: str = Field(..., max_length=200, description="岗位备注")
     sort: int = Field(ge=0, default=0, description="岗位排序")
-    is_disable: int = Field(ge=0, le=1, default=0, description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(default=False, description="是否禁用")
+
+    @classmethod
+    def messages(cls):
+        return AuthPostAddIn.messages()
 
     class Config:
         json_schema_extra = {
@@ -66,7 +85,7 @@ class AuthPostEditIn(BaseModel):
                 "name": "Programmer",
                 "remarks": "Development and Maintenance",
                 "sort": 0,
-                "is_disable": 0
+                "is_disable": False
             }
         }
 
@@ -74,6 +93,12 @@ class AuthPostEditIn(BaseModel):
 class AuthPostDeleteIn(BaseModel):
     """ 岗位删除参数 """
     id: int = Field(..., gt=0, description="岗位ID", examples=[1])
+
+    @classmethod
+    def messages(cls):
+        return {
+            "id.missing": "id参数缺失"
+        }
 
     class Config:
         json_schema_extra = {
@@ -109,7 +134,7 @@ class AuthPostListVo(BaseModel):
     name: str = Field(description="岗位名称")
     remarks: str = Field(description="岗位备注")
     sort: int = Field(description="岗位排序")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(description="是否禁用")
     create_time: str = Field(description="创建时间")
     update_time: str = Field(description="更新时间")
 
@@ -121,7 +146,7 @@ class AuthPostListVo(BaseModel):
                 "name": "Programmer",
                 "remarks": "Development and Maintenance",
                 "sort": 0,
-                "is_disable": 0,
+                "is_disable": False,
                 "create_time": "2024-03-26 11:20:00",
                 "update_time": "2024-03-26 11:20:00"
             }
@@ -135,7 +160,7 @@ class AuthPostDetailVo(BaseModel):
     name: str = Field(description="岗位名称")
     remarks: str = Field(description="岗位备注")
     sort: int = Field(description="岗位排序")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(description="是否禁用")
 
     class Config:
         json_schema_extra = {
@@ -145,6 +170,6 @@ class AuthPostDetailVo(BaseModel):
                 "name": "Programmer",
                 "remarks": "Development and Maintenance",
                 "sort": 0,
-                "is_disable": 0
+                "is_disable": False
             }
         }

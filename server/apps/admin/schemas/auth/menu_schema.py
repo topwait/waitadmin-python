@@ -23,16 +23,38 @@ class AuthMenuDetailIn(BaseModel):
 class AuthMenuAddIn(BaseModel):
     """ 菜单新增参数 """
     pid: int = Field(..., ge=0, description="上级菜单")
-    type: str = Field(..., min_length=1, max_length=1, description="权限类型: [M,C,A]")
+    type: str = Field(..., pattern=r"^(M|C|A)$", description="权限类型: [M,C,A]")
     name: str = Field(..., max_length=100, description="菜单名称")
     icon: str = Field(max_length=100, default="", description="菜单图标")
     sort: int = Field(ge=0, default=0, description="排序编号")
     perms: str = Field(max_length=200, default="", description="权限标识")
     params: str = Field(max_length=200, default="", description="路由参数")
     component: str = Field(max_length=200, default="", description="组件路径")
-    path: str = Field(..., max_length=200, description="路由地址")
-    is_show: int = Field(ge=0, le=1, default=0, description="是否显示: [0=否, 1=是]")
-    is_disable: int = Field(ge=0, le=1, default=0, description="是否禁用: [0=否, 1=是]")
+    path: str = Field(max_length=200, default="", description="路由地址")
+    is_show: bool = Field(default=True, description="是否显示")
+    is_disable: bool = Field(default=False, description="是否禁用")
+
+    @classmethod
+    def messages(cls):
+        return {
+            "pid.missing": "pid参数缺失",
+            "pid.ge": "上级菜单的值必须大于等于0",
+            "type.missing": "请选择权限类型",
+            "type.pattern": "权限类型值异常: [M,C,A]",
+            "code.min_length": "岗位编号不能小于2个字符",
+            "code.max_length": "岗位编号不能超出30个字符",
+            "name.missing": "请填写菜单名称",
+            "name.max_length": "菜单名称不能超出100个字符",
+            "icon.max_length": "菜单图标不能超出100个字符",
+            "perms.max_length": "权限标识不能超出200个字符",
+            "params.max_length": "路由参数不能超出200个字符",
+            "component.max_length": "组件路径不能超出200个字符",
+            "path.max_length": "路由地址不能超出200个字符",
+            "sort.ge": "排序号不能少于0",
+            "sort.le": "排序号不能大于999999",
+            "is_show.bool_parsing": "显示状态必须为布尔值",
+            "is_disable.bool_parsing": "禁用状态必须为布尔值"
+        }
 
     class Config:
         json_schema_extra = {
@@ -46,8 +68,8 @@ class AuthMenuAddIn(BaseModel):
                 "params": "",
                 "component": "auth/menu/index",
                 "path": "auth/menu/index",
-                "is_show": 1,
-                "is_disable": 0
+                "is_show": True,
+                "is_disable": False
             }
         }
 
@@ -64,8 +86,12 @@ class AuthMenuEditIn(BaseModel):
     params: str = Field(max_length=200, default="", description="路由参数")
     component: str = Field(max_length=200, default="", description="组件路径")
     path: str = Field(..., max_length=200, description="路由地址")
-    is_show: int = Field(ge=0, le=1, default=0, description="是否显示: [0=否, 1=是]")
-    is_disable: int = Field(ge=0, le=1, default=0, description="是否禁用: [0=否, 1=是]")
+    is_show: bool = Field(default=True, description="是否显示")
+    is_disable: bool = Field(default=False, description="是否禁用")
+
+    @classmethod
+    def messages(cls):
+        return AuthMenuAddIn.messages()
 
     class Config:
         json_schema_extra = {
@@ -80,8 +106,8 @@ class AuthMenuEditIn(BaseModel):
                 "params": "",
                 "component": "auth/menu/index",
                 "path": "auth/menu/index",
-                "is_show": 1,
-                "is_disable": 0
+                "is_show": True,
+                "is_disable": False
             }
         }
 
@@ -89,6 +115,12 @@ class AuthMenuEditIn(BaseModel):
 class AuthMenuDeleteIn(BaseModel):
     """ 菜单删除参数 """
     id: int = Field(..., gt=0, description="菜单ID", examples=[1])
+
+    @classmethod
+    def messages(cls):
+        return {
+            "id.missing": "id参数缺失"
+        }
 
     class Config:
         json_schema_extra = {
@@ -130,8 +162,8 @@ class AuthMenuRoutesVo(BaseModel):
     params: str = Field(description="路由参数")
     component: str = Field(description="组件路径")
     path: str = Field(description="页面路径")
-    is_show: int = Field(description="是否显示: [0=否, 1=是]")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_show: bool = Field(description="是否显示")
+    is_disable: bool = Field(description="是否禁用")
     children: Union["AuthMenuRoutesVo", List, None] = []
 
     class Config:
@@ -146,8 +178,8 @@ class AuthMenuRoutesVo(BaseModel):
                 "params": "",
                 "component": "workbench",
                 "path": "workbench",
-                "is_show": 1,
-                "is_disable": 0,
+                "is_show": True,
+                "is_disable": False,
                 "children": []
             }
         }
@@ -163,7 +195,8 @@ class AuthMenuListVo(BaseModel):
     sort: int = Field(description="菜单排序")
     perms: str = Field(description="路由权限")
     path: str = Field(description="路径地址")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_show: bool = Field(description="是否显示")
+    is_disable: bool = Field(description="是否禁用")
     create_time: str = Field(description="创建时间")
     update_time: str = Field(description="更新时间")
     children: Union["AuthMenuListVo", List, None] = []
@@ -178,7 +211,8 @@ class AuthMenuListVo(BaseModel):
                 "icon": "el-icon-house",
                 "sort": 9900,
                 "perms": "index:console",
-                "is_disable": 0,
+                "is_show": True,
+                "is_disable": False,
                 "create_time": "2022-03-31 11:18:15",
                 "update_time": "2024-06-30 17:40:07",
                 "children": []
@@ -198,8 +232,8 @@ class AuthMenuDetailVo(BaseModel):
     component: str = Field(description="组件路径")
     path: str = Field(description="页面路径")
     sort: int = Field(description="菜单排序")
-    is_show: int = Field(description="是否显示: [0=否, 1=是]")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_show: bool = Field(description="是否显示")
+    is_disable: bool = Field(description="是否禁用")
 
     class Config:
         json_schema_extra = {
@@ -214,7 +248,7 @@ class AuthMenuDetailVo(BaseModel):
                 "component": "workbench",
                 "path": "workbench",
                 "sort": 9900,
-                "is_show": 1,
-                "is_disable": 0
+                "is_show": True,
+                "is_disable": False
             }
         }

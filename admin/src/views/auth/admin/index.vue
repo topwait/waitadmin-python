@@ -64,7 +64,7 @@
                 <el-table-column label="所属部门" prop="dept" min-width="100" show-tooltip-when-overflow />
                 <el-table-column label="状态" prop="is_disable" min-width="80">
                     <template #default="{ row }">
-                        <el-tag v-if="row.is_disable === 0">正常</el-tag>
+                        <el-tag v-if="!row.is_disable">正常</el-tag>
                         <el-tag v-else type="danger">停用</el-tag>
                     </template>
                 </el-table-column>

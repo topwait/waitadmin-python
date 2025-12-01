@@ -40,7 +40,7 @@ class AuthAdminAddIn(BaseModel):
     avatar: str = Field(..., min_length=1, max_length=250, description="用户头像")
     mobile: str = Field(default="", description="联系电话")
     email: str = Field(default="", description="电子邮箱")
-    is_disable: int = Field(ge=0, le=1, default=0, description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(default=False, description="是否禁用")
 
     @classmethod
     def messages(cls):
@@ -57,8 +57,7 @@ class AuthAdminAddIn(BaseModel):
             "password.max_length": "登录密码不能大于20位数",
             "avatar.min_length": "请上传用户头像",
             "avatar.max_length": "用户头像链接不能超出250个字符",
-            "is_disable.ge": "管理员状态非合法值: [0, 1]",
-            "is_disable.le": "管理员状态非合法值: [0, 1]"
+            "is_disable.bool_parsing": "部门状态必须为布尔值"
         }
 
     class Config:
@@ -73,7 +72,7 @@ class AuthAdminAddIn(BaseModel):
                 "avatar": "https://www.xxx.com/avatar.png",
                 "mobile": "13800138000",
                 "email": "13800138000@163.com",
-                "is_disable": 0
+                "is_disable": False
             }
         }
 
@@ -174,7 +173,7 @@ class AuthAdminListVo(BaseModel):
     username: str = Field(description="登录账号")
     mobile: str = Field(description="联系电话")
     email: str = Field(description="电子邮箱")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(description="是否禁用")
     last_login_ip: str = Field(description="最后登录IP")
     last_login_time: str = Field(description="最后登录时间")
     create_time: str = Field(description="创建时间")
@@ -191,7 +190,7 @@ class AuthAdminListVo(BaseModel):
                 "username": "admin",
                 "mobile": "13800138000",
                 "email": "13800138000@163.com",
-                "is_disable": 0,
+                "is_disable": False,
                 "last_login_time": "2024-07-02 11:02:00",
                 "create_time": "2023-11-08 10:19:19",
                 "update_time": "2024-06-30 17:35:24"
@@ -211,7 +210,7 @@ class AuthAdminDetailVo(BaseModel):
     mobile: str = Field(description="联系电话")
     email: str = Field(description="电子邮箱")
     role: str = Field(default="", description="角色名称")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(description="是否禁用")
 
     class Config:
         json_schema_extra = {
@@ -226,7 +225,7 @@ class AuthAdminDetailVo(BaseModel):
                 "mobile": "13800138000",
                 "email": "13800138000@163.com",
                 "role": "super",
-                "is_disable": 0
+                "is_disable": False
             }
         }
 
@@ -250,7 +249,7 @@ class AuthAdminOneselfVo(BaseModel):
                     "username": "admin",
                     "mobile": "13800138000",
                     "email": "13800138000@163.com",
-                    "is_disable": 0
+                    "is_disable": False
                 },
                 "perms": ["*"],
                 "menus": []

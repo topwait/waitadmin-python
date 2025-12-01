@@ -122,7 +122,7 @@ class MenuService:
             zero
         """
         await AuthMenuModel.create(
-            **post.dict(),
+            **post.model_dump(),
             create_time=int(time.time()),
             update_time=int(time.time())
         )
@@ -140,7 +140,7 @@ class MenuService:
         Author:
             zero
         """
-        params = post.dict()
+        params = post.model_dump()
         params["update_time"] = time.time()
         del params["id"]
 

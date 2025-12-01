@@ -105,7 +105,7 @@ class PostService:
             raise AppException("岗位名称已被占用")
 
         await AuthPostModel.create(
-            **post.dict(),
+            **post.model_dump(),
             create_time=int(time.time()),
             update_time=int(time.time())
         )
@@ -133,7 +133,7 @@ class PostService:
         if _post3:
             raise AppException("岗位名称已被占用")
 
-        params = post.dict()
+        params = post.model_dump()
         del params["id"]
 
         await AuthPostModel.filter(id=post.id).update(

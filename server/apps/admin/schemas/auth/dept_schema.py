@@ -19,7 +19,7 @@ class AuthDeptSearchIn(BaseModel):
     """ 部门搜索参数 """
     name: Union[str, None] = Query(default=None, description="部门名称")
     mobile: Union[str, None] = Query(default=None, description="部门电话")
-    is_disable: int = Field(ge=0, le=1, default=0, description="是否禁用: [0=否, 1=是]")
+    is_disable: Union[bool, None] = Field(default=None, description="是否禁用")
 
 
 class AuthDeptDetailIn(BaseModel):
@@ -34,7 +34,7 @@ class AuthDeptAddIn(BaseModel):
     duty: str = Field(..., min_length=1, max_length=30, description="负责人名")
     mobile: str = Field(..., min_length=1, max_length=30, description="部门电话")
     sort: int = Field(ge=0, le=999999, default=0, description="排序编号")
-    is_disable: int = Field(ge=0, le=1, default=0, description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(default=False, description="是否禁用")
 
     @classmethod
     def messages(cls):
@@ -49,8 +49,7 @@ class AuthDeptAddIn(BaseModel):
             "mobile.max_length": "部门电话不能超出30个字符",
             "sort.ge": "排序号不能少于0",
             "sort.le": "排序号不能大于999999",
-            "is_disable.ge": "部门状态必须非合法值: [0, 1]",
-            "is_disable.le": "部门状态必须非合法值: [0, 1]"
+            "is_disable.bool_parsing": "部门状态必须为布尔值"
         }
 
     class Config:
@@ -61,7 +60,7 @@ class AuthDeptAddIn(BaseModel):
                 "duty": "Marco",
                 "mobile": "13800138000",
                 "sort": 0,
-                "is_disable": 0
+                "is_disable": False
             }
         }
 
@@ -74,7 +73,7 @@ class AuthDeptEditIn(BaseModel):
     duty: str = Field(..., max_length=30, description="负责人名")
     mobile: str = Field(..., max_length=30, description="部门电话")
     sort: int = Field(ge=0, le=999999, default=0, description="排序编号")
-    is_disable: int = Field(ge=0, le=1, default=0, description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(default=False, description="是否禁用")
 
     @classmethod
     def messages(cls):
@@ -89,7 +88,7 @@ class AuthDeptEditIn(BaseModel):
                 "duty": "Marco",
                 "mobile": "13800138000",
                 "sort": 0,
-                "is_disable": 0
+                "is_disable": False
             }
         }
 
@@ -97,6 +96,12 @@ class AuthDeptEditIn(BaseModel):
 class AuthDeptDeleteIn(BaseModel):
     """ 部门删除参数 """
     id: int = Field(..., gt=0, description="部门ID", examples=[1])
+
+    @classmethod
+    def messages(cls):
+        return {
+            "id.missing": "id参数缺失",
+        }
 
     class Config:
         json_schema_extra = {
@@ -114,7 +119,7 @@ class AuthDeptWholeVo(BaseModel):
     id: int = Field(description="部门ID")
     pid: int = Field(description="父级ID")
     name: str = Field(description="部门名称")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(description="是否禁用")
     children: Union["AuthDeptWholeVo", List, None] = []
 
     class Config:
@@ -123,7 +128,7 @@ class AuthDeptWholeVo(BaseModel):
                 "id": 1,
                 "pid": 0,
                 "name": "Microsoft",
-                "is_disable": 0,
+                "is_disable": False,
                 "children": []
             }
         }
@@ -137,7 +142,7 @@ class AuthDeptListVo(BaseModel):
     mobile: str = Field(description="部门电话")
     duty: str = Field(description="负责人")
     sort: int = Field(description="排序编号")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(description="是否禁用")
     create_time: str = Field(description="创建时间")
     update_time: str = Field(description="更新时间")
     children: Union["AuthDeptListVo", List, None] = []
@@ -151,7 +156,7 @@ class AuthDeptListVo(BaseModel):
                 "duty": "Marco",
                 "mobile": "13800138000",
                 "sort": 0,
-                "is_disable": 0,
+                "is_disable": False,
                 "create_time": "2024-04-18 15:30:01",
                 "update_time": "2024-04-18 16:41:47",
                 "children": []
@@ -167,7 +172,7 @@ class AuthDeptDetailVo(BaseModel):
     duty: str = Field(description="负责人名")
     mobile: str = Field(description="部门电话")
     sort: int = Field(description="排序编号")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(description="是否禁用")
 
     class Config:
         json_schema_extra = {
@@ -178,6 +183,6 @@ class AuthDeptDetailVo(BaseModel):
                 "duty": "Marco",
                 "mobile": "13800138000",
                 "sort": 0,
-                "is_disable": 0
+                "is_disable": False
             }
         }

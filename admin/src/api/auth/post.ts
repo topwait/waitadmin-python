@@ -18,14 +18,14 @@ const authPostApi = {
      * @param {number} [params.page_size]
      * @param {string} [params.code]
      * @param {string} [params.name]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      */
     lists(params: {
         page_no?: number;
         page_size?: number;
         code?: string;
         name?: string;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<AuthPostListResponse[]> {
         return request.get<AuthPostListResponse[]>({
             url: '/auth/post/lists',
@@ -53,7 +53,7 @@ const authPostApi = {
      * @param {string} params.name
      * @param {string} [params.remarks]
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -62,7 +62,7 @@ const authPostApi = {
         name: string;
         remarks?: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/auth/post/add',
@@ -79,7 +79,7 @@ const authPostApi = {
      * @param {string} params.name
      * @param {string} [params.remarks]
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -89,7 +89,7 @@ const authPostApi = {
         name: string;
         remarks?: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/auth/post/edit',

@@ -65,7 +65,7 @@ const authAdminApi = {
      * @param {string} params.avatar
      * @param {string} [params.mobile]
      * @param {string} [params.email]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -79,7 +79,7 @@ const authAdminApi = {
         avatar: string;
         mobile?: string;
         email?: string;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         params.dept_id = params.dept_id ? params.dept_id : 0
         params.post_id = params.post_id ? params.post_id : 0
@@ -103,7 +103,7 @@ const authAdminApi = {
      * @param {string} params.avatar
      * @param {string} [params.mobile]
      * @param {string} [params.email]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -118,7 +118,7 @@ const authAdminApi = {
         avatar: string;
         mobile?: string;
         email?: string;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         params.dept_id = params.dept_id ? params.dept_id : 0
         params.post_id = params.post_id ? params.post_id : 0

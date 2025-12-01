@@ -52,8 +52,8 @@ const authMenuApi = {
      * @param {string} [params.params]
      * @param {string} [params.component]
      * @param {string} [params.path]
-     * @param {number} [params.is_show]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_show]
+     * @param {boolean} [params.is_disable]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -67,8 +67,8 @@ const authMenuApi = {
         params?: string;
         component?: string;
         path?: string;
-        is_show?: number;
-        is_disable?: number;
+        is_show?: boolean;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/auth/menu/add',
@@ -90,8 +90,8 @@ const authMenuApi = {
      * @param {string} [params.params]
      * @param {string} [params.component]
      * @param {string} [params.path]
-     * @param {number} [params.is_show]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_show]
+     * @param {boolean} [params.is_disable]
      * @returns {Promise<any>}
      * @author zero
      */
@@ -106,8 +106,8 @@ const authMenuApi = {
         params?: string;
         component?: string;
         path?: string;
-        is_show?: number;
-        is_disable?: number;
+        is_show?: boolean;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/auth/menu/edit',

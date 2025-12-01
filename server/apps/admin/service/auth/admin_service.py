@@ -186,7 +186,7 @@ class AdminService:
             if await AuthAdminModel.filter(email=post.email, is_delete=0).first().only("id"):
                 raise AppException("邮箱号已被占用")
 
-        params = post.dict()
+        params = post.model_dump()
         params["salt"] = ToolsUtil.make_rand_char(6)
         params["avatar"] = UrlUtil.to_relative_url(post.avatar)
         params["password"] = ToolsUtil.make_md5_str(post.password, params["salt"])
@@ -231,7 +231,7 @@ class AdminService:
             if await AuthAdminModel.filter(id__not=admin.id, email=post.email, is_delete=0).first().only("id"):
                 raise AppException("邮箱号已被占用")
 
-        params = post.dict()
+        params = post.model_dump()
         params["avatar"] = UrlUtil.to_relative_url(post.avatar)
         params["update_time"] = time.time()
         params["password"] = admin.password

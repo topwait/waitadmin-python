@@ -18,8 +18,8 @@ interface AuthAdminListResponse {
     mobile: string;
     // 电子邮箱
     email: string;
-    // 是否禁用: [0=否, 1=是]"
-    is_disable: number;
+    // 是否禁用
+    is_disable: boolean;
     // 最后登录IP
     last_login_ip: string;
     // 最后登录时间
@@ -87,10 +87,10 @@ interface AuthAdminMenuResponse {
     component: string;
     // 路由地址
     path: string;
-    // 是否显示: [0=否, 1=是]
-    is_show: number;
-    // 是否禁用: [0=否, 1=是]"
-    is_disable: number;
+    // 是否显示
+    is_show: boolean;
+    // 是否禁用
+    is_disable: boolean;
     // 子菜单
     children: AuthAdminMenuResponse[];
 }
@@ -119,6 +119,6 @@ interface AuthAdminDetailResponse {
     email: string;
     // 角色名称
     role: string;
-    // 是否禁用: [0=否, 1=是]"
-    is_disable: number;
+    // 是否禁用
+    is_disable: boolean;
 }

@@ -106,7 +106,7 @@ class RoleService:
         Author:
             zero
         """
-        params = post.dict()
+        params = post.model_dump()
         del params["menu_ids"]
 
         role = await AuthRoleModel.create(
@@ -132,7 +132,7 @@ class RoleService:
         Author:
             zero
         """
-        params = post.dict()
+        params = post.model_dump()
         del params["id"]
         del params["menu_ids"]
 

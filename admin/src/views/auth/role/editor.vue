@@ -33,8 +33,8 @@
                 </el-form-item>
                 <el-form-item label="状态" prop="is_disable">
                     <el-radio-group v-model="formData.is_disable">
-                        <el-radio :value="0">正常</el-radio>
-                        <el-radio :value="1">停用</el-radio>
+                        <el-radio :value="false">正常</el-radio>
+                        <el-radio :value="true">停用</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="菜单权限">
@@ -83,11 +83,11 @@ const checkStrictly = ref(true)
 // 表单数据
 const loading = ref<boolean>(false)
 const formData = reactive<any>({
-    id: 0,         // 角色ID
-    name: '',      // 角色名称
-    sort: 0,       // 角色排序
-    describe: '',  // 角色描述
-    is_disable: 0, // 是否禁用:[0=否, 1=是]
+    id: 0,              // 角色ID
+    name: '',           // 角色名称
+    sort: 0,            // 角色排序
+    describe: '',       // 角色描述
+    is_disable: false,  // 是否禁用
     menu_ids: [] as number[]
 })
 
