@@ -35,7 +35,7 @@ class ArticleCateService:
             zero
         """
         _lists = await ArticleCategoryModel\
-            .filter(is_delete=0)\
+            .filter(is_delete=False)\
             .order_by("-sort", "-id")\
             .all()\
             .values("id", "name", "is_disable")
@@ -61,7 +61,7 @@ class ArticleCateService:
             "%like%": ["name"]
         }, params.__dict__)
 
-        _model = ArticleCategoryModel.filter(is_delete=0).filter(*where).order_by("-sort", "-id")
+        _model = ArticleCategoryModel.filter(is_delete=False).filter(*where).order_by("-sort", "-id")
         _pager = await ArticleCategoryModel.paginate(
             model=_model,
             page_no=params.page_no,
@@ -101,12 +101,12 @@ class ArticleCateService:
         Author:
             zero
         """
-        pn = await ArticleCategoryModel.filter(name=post.name, is_delete=0)
+        pn = await ArticleCategoryModel.filter(name=post.name, is_delete=False)
         if pn:
             raise AppException("文章分类名称已被占用")
 
         await ArticleCategoryModel.create(
-            **post.dict(),
+            **post.model_dump(),
             create_time=int(time.time()),
             update_time=int(time.time())
         )
@@ -122,15 +122,15 @@ class ArticleCateService:
         Author:
             zero
         """
-        _post = await ArticleCategoryModel.filter(id=post.id, is_delete=0).first().values("id")
+        _post = await ArticleCategoryModel.filter(id=post.id, is_delete=False).first().values("id")
         if not _post:
             raise AppException("文章分类不存在")
 
-        _post3 = await ArticleCategoryModel.filter(name=post.name, id__not=post.id, is_delete=0).values("id")
+        _post3 = await ArticleCategoryModel.filter(name=post.name, id__not=post.id, is_delete=False).values("id")
         if _post3:
             raise AppException("文章分类名称已被占用")
 
-        params = post.dict()
+        params = post.model_dump()
         del params["id"]
 
         await ArticleCategoryModel.filter(id=post.id).update(
@@ -150,12 +150,15 @@ class ArticleCateService:
         Author:
             zero
         """
-        p = await ArticleCategoryModel.filter(id=id_, is_delete=0).first().values("id")
+        p = await ArticleCategoryModel.filter(id=id_, is_delete=False).first().values("id")
         if not p:
             raise AppException("文章分类不存在")
 
-        admin = await ArticleModel.filter(cid=id_, is_delete=0).first().values("id")
+        admin = await ArticleModel.filter(cid=id_, is_delete=False).first().values("id")
         if admin:
             raise AppException("文章分类已被使用不能删除")
 
-        await ArticleCategoryModel.filter(id=id_).update(is_delete=1, delete_time=int(time.time()))
+        await ArticleCategoryModel.filter(id=id_).update(
+            is_delete=True,
+            delete_time=int(time.time())
+        )

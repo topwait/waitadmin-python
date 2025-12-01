@@ -12,7 +12,9 @@
 # +----------------------------------------------------------------------
 import time
 from decimal import Decimal
+from typing import List, Dict
 from tortoise import fields
+from tortoise.expressions import Q
 from kernels.model import DbModel
 from common.utils.tools import ToolsUtil
 
@@ -32,8 +34,8 @@ class UserModel(DbModel):
     balance = fields.DecimalField(null=False, max_digits=10, decimal_places=2, default=0, description="钱包余额")
     last_login_ip = fields.CharField(null=False, max_length=100, default="", description="最后登录IP")
     last_login_time = fields.IntField(null=False, default=0, description="最后登录时间")
-    is_disable = fields.SmallIntField(null=False, default=0, description="是否禁用: [0=否, 1=是]")
-    is_delete = fields.SmallIntField(null=False, default=0, description="是否删除: [0=否, 1=是]")
+    is_disable = fields.BooleanField(null=False, default=False, description="是否禁用")
+    is_delete = fields.BooleanField(null=False, default=False, description="是否删除")
     create_time = fields.IntField(null=False, default=0, description="创建时间")
     update_time = fields.IntField(null=False, default=0, description="更新时间")
     delete_time = fields.IntField(null=False, default=0, description="删除时间")
@@ -41,6 +43,48 @@ class UserModel(DbModel):
     class Meta:
         table_description = "用户管理表"
         table = DbModel.table_prefix("user")
+
+    @classmethod
+    async def fetch_info_by_ids(cls, ids: List[int], field: List[str] = None) -> Dict[int, dict]:
+        """
+        获取用户信息ID映射
+
+        Args:
+            ids (List[int]): 用户ID
+            field (List[str]): 查询的字段
+
+        Returns:
+            {1: {}, 2: {}}
+
+        Author:
+            zero
+        """
+        dicts = {}
+        if ids:
+            field = ["id", "sn", "nickname", "avatar", "mobile"] if not field else field
+            users = await (cls.filter(id__in=list(set(ids))).all().values(*field))
+            dicts = {item["id"]: item for item in users}
+        return dicts
+
+    @classmethod
+    async def search_by_keyword(cls, keyword: str, limit: int = 200) -> List[int]:
+        """
+        根据关键词搜索用户ID条件
+
+        Args:
+            keyword (str): 搜索关键词
+            limit (int): 检索的条数
+
+        Returns:
+            [1, 2, 3]
+
+        Author:
+            zero
+        """
+        condition = [Q(nickname__icontains=keyword) | Q(sn=keyword) | Q(mobile=keyword)]
+        users = await UserModel.filter(*condition).filter(is_delete=False).limit(limit).values("id")
+        ids = [int(item["id"]) for item in users] or [0]
+        return ids
 
 
 class UserAuthModel(DbModel):
@@ -62,7 +106,7 @@ class UserGroupModel(DbModel):
     name = fields.CharField(null=False, max_length=30, default="", description="名称")
     remarks = fields.CharField(null=False, max_length=200, default="", description="备注")
     sort = fields.IntField(null=False, default=0, description="排序")
-    is_delete = fields.SmallIntField(null=False, default=0, description="是否删除: [0=否, 1=是]")
+    is_delete = fields.BooleanField(null=False, default=False, description="是否删除")
     create_time = fields.IntField(null=False, default=0, description="创建时间")
     update_time = fields.IntField(null=False, default=0, description="更新时间")
     delete_time = fields.IntField(null=False, default=0, description="删除时间")

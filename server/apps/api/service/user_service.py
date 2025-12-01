@@ -45,13 +45,13 @@ class UserService:
         Author:
             zero
         """
-        user = await UserModel.filter(id=id_, is_delete=0).get()
+        user = await UserModel.filter(id=id_, is_delete=False).get()
         auth = await UserAuthModel.filter(
             user_id=user.id,
             terminal__in=[ClientEnum.MNP, ClientEnum.OA]
         ).first()
 
-        collect = await ArticleCollectModel.filter(user_id=user.id, is_delete=0).count()
+        collect = await ArticleCollectModel.filter(user_id=user.id, is_delete=False).count()
 
         d = user.__dict__
         d["avatar"] = await UrlUtil.to_absolute_url(user.avatar)
@@ -69,13 +69,13 @@ class UserService:
         COUNT_SQL = f"""__SELECT COUNT(*)
                         FROM `{ArticleCollectModel.Meta.table}` AS ac
                         JOIN `{ArticleModel.Meta.table}` AS a ON a.id=ac.article_id
-                        WHERE ac.user_id={user_id} AND ac.is_delete=0 AND a.is_delete=0;
+                        WHERE ac.user_id={user_id} AND ac.is_delete=False AND a.is_delete=False;
                     """.replace("__", "")
 
         QUERY_SQL = f"""__SELECT ac.`id`, a.`image`, a.`title`, a.`browse`, a.`collect`, ac.`create_time`
                        FROM `{ArticleCollectModel.Meta.table}` AS ac
                        JOIN `{ArticleModel.Meta.table}` AS a ON a.id=ac.article_id
-                       WHERE ac.user_id={user_id} AND ac.is_delete=0 AND a.is_delete=0
+                       WHERE ac.user_id={user_id} AND ac.is_delete=False AND a.is_delete=False
                        ORDER BY ac.id DESC
                        LIMIT {offset}, 15;
                    """.replace("__", "")
@@ -104,7 +104,7 @@ class UserService:
             zero
         """
         if field == "account":
-            user = await UserModel.filter(id__not=user_id, account=value, is_delete=0).first()
+            user = await UserModel.filter(id__not=user_id, account=value, is_delete=False).first()
             if user:
                 raise AppException("该账号已被占用")
             if len(value) < 4:
@@ -114,7 +114,7 @@ class UserService:
 
             await UserModel.filter(id=user_id).update(account=value, update_time=int(time.time()))
         elif field == "nickname":
-            user = await UserModel.filter(id__not=user_id, nickname=value, is_delete=0).first()
+            user = await UserModel.filter(id__not=user_id, nickname=value, is_delete=False).first()
             if user:
                 raise AppException("该昵称已被占用")
             if len(value) < 3:
@@ -128,7 +128,7 @@ class UserService:
                 raise AppException("请正确选择您的性别")
             await UserModel.filter(id=user_id).update(gender=value, update_time=int(time.time()))
         elif field == "avatar":
-            user = await UserModel.filter(id=user_id, is_delete=0).first()
+            user = await UserModel.filter(id=user_id, is_delete=False).first()
             if not user:
                 raise AppException("账号异常请刷新页面")
             avatar = UrlUtil.to_relative_url(value)
@@ -154,7 +154,7 @@ class UserService:
             raise AppException("验证码错误")
 
         # 查询账户
-        user = await UserModel.filter(mobile=mobile, is_delete=0).first()
+        user = await UserModel.filter(mobile=mobile, is_delete=False).first()
 
         # 验证账户
         if not user:
@@ -181,7 +181,7 @@ class UserService:
             zero
         """
         # 查询账户
-        user = await UserModel.filter(id=user_id, is_delete=0).first()
+        user = await UserModel.filter(id=user_id, is_delete=False).first()
 
         # 验证账户
         if not user:
@@ -291,14 +291,14 @@ class UserService:
                 raise AppException("验证码错误")
 
         # 查询用户
-        user = await UserModel.filter(id=user_id, is_delete=0).first()
+        user = await UserModel.filter(id=user_id, is_delete=False).first()
 
         # 验证用户
         if not user:
             raise AppException("用户不存在")
 
         # 验证手机
-        check_mobile = await UserModel.filter(id__eq=user_id, mobile=mobile, is_delete=0).first()
+        check_mobile = await UserModel.filter(id__eq=user_id, mobile=mobile, is_delete=False).first()
         if check_mobile:
             raise AppException("手机号已被占用")
 
@@ -329,12 +329,12 @@ class UserService:
             raise AppException("验证码错误")
 
         # 验证用户
-        user = await UserModel.filter(id=user_id, is_delete=0).first()
+        user = await UserModel.filter(id=user_id, is_delete=False).first()
         if not user:
             raise AppException("用户不存在")
 
         # 验证邮箱
-        check_email = await UserModel.filter(id__not=user_id, email=email, is_delete=0).first()
+        check_email = await UserModel.filter(id__not=user_id, email=email, is_delete=False).first()
         if check_email:
             raise AppException("邮箱号已被占用")
 

@@ -25,7 +25,7 @@ async def files(
         file: UploadFile,
         cid: int = Form(ge=0, default=0),
         scene: str = Form(default="image"),
-        is_attach: int = Form(ge=0, le=1, default=1),
+        is_attach: bool = Form(default=True),
 ) -> UploadResultVo:
     admin_id: int = request.state.admin_id
     return await UploadService.file(file, cid, scene, is_attach, admin_id)

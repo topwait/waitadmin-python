@@ -32,7 +32,7 @@ class RechargeService:
         Author:
             zero
         """
-        lists = await RechargePackageModel.filter(is_delete=0).order_by("-sort", "-id").all()
+        lists = await RechargePackageModel.filter(is_delete=False).order_by("-sort", "-id").all()
         _data = []
         for item in lists:
             _data.append(schema.RechargePackageListVo(
@@ -67,7 +67,7 @@ class RechargeService:
         Author:
             zero
         """
-        package = await RechargePackageModel.filter(id=id_, is_delete=0).get()
+        package = await RechargePackageModel.filter(id=id_, is_delete=False).get()
         return schema.RechargePackageDetailVo(
             id=package.id,
             money=package.money,
@@ -107,7 +107,7 @@ class RechargeService:
         Author:
             zero
         """
-        await RechargePackageModel.filter(id=post.id, is_delete=0).get()
+        await RechargePackageModel.filter(id=post.id, is_delete=False).get()
         await RechargePackageModel.filter(id=post.id).update(
             money=post.money,
             give_money=post.give_money,
@@ -129,7 +129,7 @@ class RechargeService:
         """
         await RechargePackageModel.filter(id=id_).get()
         await RechargePackageModel.filter(id=id_).update(
-            is_delete=1,
+            is_delete=True,
             delete_time=int(time.time())
         )
 

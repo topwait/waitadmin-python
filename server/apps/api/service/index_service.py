@@ -84,13 +84,13 @@ class IndexService:
         """
         _adv_lists = await (DevBannerModel
                             .filter(position=BannerEnum.SIDE)
-                            .filter(is_disable=0, is_delete=0)
+                            .filter(is_disable=False, is_delete=False)
                             .order_by("-sort", "-id")
                             .all())
 
         _banner_lists = await (DevBannerModel
                                .filter(position=BannerEnum.HOME)
-                               .filter(is_disable=0, is_delete=0)
+                               .filter(is_disable=False, is_delete=False)
                                .order_by("-sort", "-id")
                                .all())
 

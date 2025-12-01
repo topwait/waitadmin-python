@@ -57,7 +57,7 @@ class CrontabService:
         Author:
             zero
         """
-        _model = SysCrontabModel.filter(is_delete=0).order_by("-id")
+        _model = SysCrontabModel.filter(is_delete=False).order_by("-id")
         _pager = await SysCrontabModel.paginate(
             model=_model,
             page_no=params.page_no,
@@ -131,7 +131,7 @@ class CrontabService:
             zero
         """
         # 获取任务信息
-        cron = await SysCrontabModel.filter(id=id_, is_delete=0).get()
+        cron = await SysCrontabModel.filter(id=id_, is_delete=False).get()
 
         # 通知获取进程任务
         await RedisUtil.publish(cls.REDIS_CHANNEL, scene="cron", data=json.dumps({
@@ -215,7 +215,7 @@ class CrontabService:
             zero
         """
         # 查询验证数据
-        cron = await SysCrontabModel.filter(id=post.id, is_delete=0).get()
+        cron = await SysCrontabModel.filter(id=post.id, is_delete=False).get()
         cls.__check_rules(post.trigger, post.rules)
         cls.__check_module(post.command)
 
@@ -262,11 +262,11 @@ class CrontabService:
         Author:
             zero
         """
-        cron = await SysCrontabModel.filter(id=id_, is_delete=0).get()
+        cron = await SysCrontabModel.filter(id=id_, is_delete=False).get()
         try:
             async with in_transaction("mysql"):
                 # 从数据库删除
-                await SysCrontabModel.filter(id=id_).update(is_delete=1, delete_time=int(time.time()))
+                await SysCrontabModel.filter(id=id_).update(is_delete=True, delete_time=int(time.time()))
                 # 从任务中删除
                 await RedisUtil.publish(cls.REDIS_CHANNEL, scene="cron", data=json.dumps({
                     "op": "delete",
@@ -289,7 +289,7 @@ class CrontabService:
         Author:
             zero
         """
-        cron = await SysCrontabModel.filter(id=id_, is_delete=0).get()
+        cron = await SysCrontabModel.filter(id=id_, is_delete=False).get()
         try:
             async with in_transaction("mysql"):
                 # 从数据库暂停
@@ -319,7 +319,7 @@ class CrontabService:
         Author:
             zero
         """
-        cron = await SysCrontabModel.filter(id=id_, is_delete=0).get()
+        cron = await SysCrontabModel.filter(id=id_, is_delete=False).get()
         cls.__check_module(cron.command)
         try:
             async with in_transaction("mysql"):

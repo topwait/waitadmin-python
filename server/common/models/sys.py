@@ -42,7 +42,7 @@ class SysCrontabModel(DbModel):
     status = fields.SmallIntField(null=False, default=1, description="执行状态: [1=运行, 2=暂停, 3=错误]")
     exe_time = fields.FloatField(null=False, default=0, description="执行时长")
     last_time = fields.IntField(null=False, default=0, description="最后执行时间")
-    is_delete = fields.SmallIntField(null=False, default=0, description="是否删除: [0=否, 1=是]")
+    is_delete = fields.BooleanField(null=False, default=False, description="是否删除")
     create_time = fields.IntField(null=False, default=0, description="创建时间")
     update_time = fields.IntField(null=False, default=0, description="更新时间")
     delete_time = fields.IntField(null=False, default=0, description="删除时间")

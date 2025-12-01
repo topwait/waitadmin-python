@@ -70,7 +70,7 @@ class NoticeService:
             zero
         """
         fields = NoticeSetting.without_field("is_delete,create_time,update_time,delete_time")
-        detail = await NoticeSetting.filter(id=id_, is_delete=0).first().values(*fields)
+        detail = await NoticeSetting.filter(id=id_, is_delete=False).first().values(*fields)
 
         if not detail:
             raise AppException("通知配置不存在")
@@ -99,7 +99,7 @@ class NoticeService:
         Author:
             zero
         """
-        detail = await NoticeSetting.filter(id=post.id, is_delete=0).first().values("id")
+        detail = await NoticeSetting.filter(id=post.id, is_delete=False).first().values("id")
         if not detail:
             raise AppException("通知配置不存在")
 

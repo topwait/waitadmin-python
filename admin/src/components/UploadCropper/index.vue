@@ -72,7 +72,7 @@ const handleConfirmCropper = () => {
             file: imgFile,
             data: {
                 scene: 'image',
-                is_attach: 0
+                is_attach: false
             }
         }, null)
 

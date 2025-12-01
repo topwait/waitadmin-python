@@ -40,7 +40,7 @@ class ArticleService:
             zero
         """
         _lists = await ArticleCategoryModel \
-            .filter(is_disable=0, is_delete=0) \
+            .filter(is_disable=False, is_delete=False) \
             .order_by("-sort", "-id") \
             .all() \
             .values("id", "name")
@@ -119,7 +119,7 @@ class ArticleService:
 
         _lists = await (ArticleModel
                         .filter(*where)
-                        .filter(is_show=1, is_delete=0)
+                        .filter(is_show=1, is_delete=False)
                         .order_by(*order)
                         .limit(limit)
                         .all()
@@ -159,7 +159,7 @@ class ArticleService:
         """
         # 文章详情
         detail = await ArticleModel \
-            .filter(id=id_, is_delete=0) \
+            .filter(id=id_, is_delete=False) \
             .get() \
             .values("id", "cid", "image", "title", "intro", "content", "browse", "create_time", "update_time")
 
@@ -171,7 +171,7 @@ class ArticleService:
         collect = await ArticleCollectModel.filter(
             user_id=user_id,
             article_id=detail["id"],
-            is_delete=0
+            is_delete=False
         ).first()
 
         # 更新阅读
@@ -179,14 +179,14 @@ class ArticleService:
 
         # 上一条记录
         _prev = await (ArticleModel
-                       .filter(id__lt=id_, is_delete=0)
+                       .filter(id__lt=id_, is_delete=False)
                        .order_by("-sort", "-id")
                        .first()
                        .values("id", "title"))
 
         # 下一条记录
         _next = await (ArticleModel
-                       .filter(id__gt=id_, is_delete=0)
+                       .filter(id__gt=id_, is_delete=False)
                        .order_by("-sort", "-id")
                        .first()
                        .values("id", "title"))
@@ -212,7 +212,7 @@ class ArticleService:
         """
         adv_lists = await (DevBannerModel
                            .filter(position=BannerEnum.SIDE)
-                           .filter(is_disable=0, is_delete=0)
+                           .filter(is_disable=False, is_delete=False)
                            .order_by("-sort", "-id")
                            .all().values("title", "image", "target", "url"))
 
@@ -249,7 +249,7 @@ class ArticleService:
             await (ArticleCollectModel
                    .filter(id=collect.id)
                    .update(
-                        is_delete=0 if collect.is_delete else 1,
+                        is_delete=False if collect.is_delete else 1,
                         delete_time=0 if collect.is_delete else int(time.time()),
                         update_time=int(time.time())
                    ))

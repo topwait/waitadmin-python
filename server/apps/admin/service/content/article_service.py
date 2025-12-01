@@ -43,7 +43,7 @@ class ArticleService:
             "datetime": ["start_time|end_time@create_time"]
         }, params.__dict__)
 
-        _model = ArticleModel.filter(is_delete=0).filter(*where).order_by("-sort", "-id")
+        _model = ArticleModel.filter(is_delete=False).filter(*where).order_by("-sort", "-id")
         _pager = await ArticleModel.paginate(
             model=_model,
             page_no=params.page_no,
@@ -86,12 +86,12 @@ class ArticleService:
         Author:
             zero
         """
-        cate = await ArticleCategoryModel.filter(id=post.cid, is_delete=0).first()
+        cate = await ArticleCategoryModel.filter(id=post.cid, is_delete=False).first()
         if not cate:
             raise AppException("文章分类不存在")
 
         await ArticleModel.create(
-            **post.dict(),
+            **post.model_dump(),
             create_time=int(time.time()),
             update_time=int(time.time())
         )
@@ -107,15 +107,15 @@ class ArticleService:
         Author:
             zero
         """
-        _article = await ArticleModel.filter(id=post.id, is_delete=0).first().values("id")
+        _article = await ArticleModel.filter(id=post.id, is_delete=False).first().values("id")
         if not _article:
             raise AppException("文章不存在")
 
-        cate = await ArticleCategoryModel.filter(id=post.cid, is_delete=0).first()
+        cate = await ArticleCategoryModel.filter(id=post.cid, is_delete=False).first()
         if not cate:
             raise AppException("文章分类不存在")
 
-        params = post.dict()
+        params = post.model_dump()
         del params["id"]
 
         await ArticleModel.filter(id=post.id).update(
@@ -134,8 +134,11 @@ class ArticleService:
         Author:
             zero
         """
-        p = await ArticleModel.filter(id=id_, is_delete=0).first().values("id")
+        p = await ArticleModel.filter(id=id_, is_delete=False).first().values("id")
         if not p:
             raise AppException("文章不存在")
 
-        await ArticleModel.filter(id=id_).update(is_delete=1, delete_time=int(time.time()))
+        await ArticleModel.filter(id=id_).update(
+            is_delete=True,
+            delete_time=int(time.time())
+        )

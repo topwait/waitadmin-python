@@ -161,7 +161,7 @@ class UserService:
             "%like%": ["keyword@sn|nickname|mobile"],
         }, params.__dict__)
 
-        _model = UserModel.filter(is_delete=0).filter(*where).order_by("-id")
+        _model = UserModel.filter(is_delete=False).filter(*where).order_by("-id")
         _pager = await UserModel.paginate(
             model=_model,
             page_no=params.page_no,
@@ -243,7 +243,7 @@ class UserService:
         Author:
             zero
         """
-        await UserModel.filter(id=user_id, is_delete=0).get()
+        await UserModel.filter(id=user_id, is_delete=False).get()
         if field in ["account", "nickname"]:
             await cls._update_user_field(user_id, field, value)
         elif field == "gender":
@@ -272,7 +272,7 @@ class UserService:
         Author:
             zero
         """
-        user = await UserModel.filter(id=user_id, is_delete=0).get()
+        user = await UserModel.filter(id=user_id, is_delete=False).get()
         user.is_disable = 0 if user.is_disable else 1
         user.update_time = int(time.time())
         await user.save()
@@ -290,9 +290,9 @@ class UserService:
         Author:
             zero
         """
-        user = await UserModel.filter(id=user_id, is_delete=0).get()
+        user = await UserModel.filter(id=user_id, is_delete=False).get()
         if group_id:
-            group = await UserGroupModel.filter(id=group_id, is_delete=0).first()
+            group = await UserGroupModel.filter(id=group_id, is_delete=False).first()
             if not group:
                 raise AppException("分组不存在")
 
@@ -312,7 +312,7 @@ class UserService:
         Author:
             zero
         """
-        await UserModel.filter(id=user_id, is_delete=0).get()
+        await UserModel.filter(id=user_id, is_delete=False).get()
 
         salt, password = ToolsUtil.make_md5_pwd(new_password)
         await UserModel.filter(id=user_id).update(
@@ -335,7 +335,7 @@ class UserService:
         Author:
             zero
         """
-        user = await UserModel.filter(id=user_id, is_delete=0).get()
+        user = await UserModel.filter(id=user_id, is_delete=False).get()
 
         async with in_transaction("mysql"):
             if action == "inc":
@@ -397,7 +397,7 @@ class UserService:
             if len(value) > 20:
                 raise AppException(f"{_lang[field]}长度不能大于20个字符")
 
-            user = await UserModel.filter(id__not=user_id, **{field: value}, is_delete=0).first()
+            user = await UserModel.filter(id__not=user_id, **{field: value}, is_delete=False).first()
             if user:
                 raise AppException(f"该{_lang[field]}已被占用了")
 

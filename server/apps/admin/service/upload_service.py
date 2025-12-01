@@ -25,7 +25,7 @@ class UploadService:
     """ 上传文件服务类 """
 
     @classmethod
-    async def file(cls, file_in: UploadFile, cid: int, scene: str, is_attach: int, admin_id: int) -> UploadResultVo:
+    async def file(cls, file_in: UploadFile, cid: int, scene: str, is_attach: bool, admin_id: int) -> UploadResultVo:
         """
         上传文件。
 
@@ -33,7 +33,7 @@ class UploadService:
             file_in (UploadFile): 文件对象。
             cid (int): 分类ID。
             scene (str): 上传场景。
-            is_attach (int): 是否记录附件。
+            is_attach (bool): 是否记录附件。
             admin_id (int): 管理员ID。
 
         Returns:

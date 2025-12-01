@@ -78,7 +78,7 @@ class LoginService:
         # 查询账号
         user = await (UserModel
                       .filter(Q(account=account) | Q(mobile=account) | Q(email=account))
-                      .filter(is_delete=0)
+                      .filter(is_delete=False)
                       .first())
 
         # 验证账号
@@ -119,7 +119,7 @@ class LoginService:
             raise AppException("验证码错误")
 
         # 查询账号
-        user = await UserModel.filter(mobile=mobile, is_delete=0).first()
+        user = await UserModel.filter(mobile=mobile, is_delete=False).first()
 
         # 验证账号
         if not user:

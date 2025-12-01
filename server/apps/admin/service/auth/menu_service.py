@@ -37,7 +37,7 @@ class MenuService:
             zero
         """
         fields = ["id", "pid", "name"]
-        lists = await AuthMenuModel.filter(is_delete=0).order_by("-sort", "id").all().values(*fields)
+        lists = await AuthMenuModel.filter(is_delete=False).order_by("-sort", "id").all().values(*fields)
 
         vo_list = [TypeAdapter(schema.AuthMenuWholeVo).validate_python(item) for item in lists]
         vo_dict = [i.__dict__ for i in vo_list]
@@ -61,7 +61,7 @@ class MenuService:
         menu_ids = await AuthPermModel.filter(role_id=role_id).all().values("menu_id")
         menu_ids = [item["menu_id"] for item in menu_ids] or [0]
 
-        where = [Q(is_delete=0), Q(type__in=("M", "C"))]
+        where = [Q(is_delete=False), Q(type__in=("M", "C"))]
         if admin_id != 1:
             where.append(Q(id__in=menu_ids))
 
@@ -84,7 +84,7 @@ class MenuService:
             zero
         """
         fields = AuthMenuModel.without_field("is_delete,delete_time")
-        lists = await AuthMenuModel.filter(is_delete=0).order_by("-sort", "id").all().values(*fields)
+        lists = await AuthMenuModel.filter(is_delete=False).order_by("-sort", "id").all().values(*fields)
         for item in lists:
             item["create_time"] = TimeUtil.timestamp_to_date(item["create_time"])
             item["update_time"] = TimeUtil.timestamp_to_date(item["update_time"])
@@ -159,7 +159,7 @@ class MenuService:
             zero
         """
         await AuthMenuModel.filter(id=id_).update(
-            is_delete=1,
+            is_delete=True,
             delete_time=int(time.time())
         )
         await LoginCache.role_perms_del()
