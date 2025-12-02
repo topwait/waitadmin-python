@@ -117,6 +117,12 @@ class AuthAdminDeleteIn(BaseModel):
     """ 管理员删除参数 """
     id: int = Field(gt=0, description="管理员ID", examples=[1])
 
+    @classmethod
+    def messages(cls):
+        return {
+            "id.missing": "id参数缺失"
+        }
+
     class Config:
         json_schema_extra = {
             "example": {

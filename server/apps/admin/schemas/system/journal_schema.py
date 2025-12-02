@@ -22,8 +22,8 @@ class JournalSearchIn(BaseModel):
     method: Union[str, None] = Query(default=None, description="请求方法: [GET, POST, PUT, DELETE, OPTION]")
     url: Union[str, None] = Query(default=None, description="访问地址")
     ip: Union[str, None] = Query(default=None, description="来源IP")
-    start_time: Union[int, str, None] = Query(default=None, description="开始时间")
-    end_time: Union[int, str, None] = Query(default=None, description="结束时间")
+    start_time: Union[str, None] = Query(default=None, description="开始时间")
+    end_time: Union[str, None] = Query(default=None, description="结束时间")
 
 
 class JournalDetailIn(BaseModel):

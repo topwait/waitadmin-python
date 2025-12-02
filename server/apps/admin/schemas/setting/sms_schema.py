@@ -58,10 +58,10 @@ class SmsDetailVo(BaseModel):
                 "name": "阿里云短信",
                 "status": True,
                 "params": {
-                  "sign": "WaitAdmin",
-                  "app_id": "867354488",
-                  "acc_key": "LTtI2tFasBEVz5EroCj5NNsp",
-                  "acc_secret": "E2bZ0Wh5EofT8u5FgsOFdlYdKnbWsz"
+                    "sign": "WaitAdmin",
+                    "app_id": "867354488",
+                    "acc_key": "LTtI2tFasBEVz5EroCj5NNsp",
+                    "acc_secret": "E2bZ0Wh5EofT8u5FgsOFdlYdKnbWsz"
                 }
               }
         }
