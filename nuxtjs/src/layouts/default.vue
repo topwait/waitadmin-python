@@ -15,9 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import LayoutAccount from '@/layouts/components/Account/index.vue'
-import LayoutHeader from '@/layouts/components/Header/index.vue'
-import LayoutFooter from '@/layouts/components/Footer/index.vue'
+import LayoutAccount from '@/layouts/components/account/index.vue'
+import LayoutHeader from '@/layouts/components/header/index.vue'
+import LayoutFooter from '@/layouts/components/footer/index.vue'
 </script>
 
 <style scoped lang="scss">

@@ -17,7 +17,7 @@ from .article_schema import ArticleListsVo
 
 
 class QueryPolicyIn(BaseModel):
-    """ 发送短信参数"""
+    """ 查询协议参数"""
     type: str = Query(..., description="协议类型: [service,private,payment]")
 
     class Config:

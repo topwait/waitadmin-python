@@ -61,7 +61,7 @@
                         :content="currentIndex === -1 ? money : currentPackage.money"
                         main-size="24px"
                         minor-size="14px"
-                        color="#FF7021"
+                        color="#ff7021"
                     />
                 </div>
                 <el-button
@@ -102,7 +102,7 @@ const payWay = ref<number>(PayWayEnum.WXPAY)
 const packages = ref<RechargePackageResponse[]>([])
 
 // 充值套餐
-const currentIndex = ref(0)
+const currentIndex = ref(-1)
 const currentPackage = computed<RechargePackageResponse>(
     () => {
         return packages.value[currentIndex.value]

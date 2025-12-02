@@ -182,8 +182,8 @@ class UserCenterVo(BaseModel):
     collect: int = Field(description="收藏数量")
     balance: Decimal = Field(default=0, description="钱包余额")
     gender: int = Field(default=0, description="用户性别: [0=未知, 1=男, 2=女]")
-    is_wechat: int = Field(default=0, description="已绑微信: [0=否, 1=是]")
-    is_password: int = Field(default=0, description="已设密码: [0=否, 1=是]")
+    is_wechat: bool = Field(default=0, description="已绑微信")
+    is_password: bool = Field(default=0, description="已设密码")
     create_time: str = Field(default="", description="注册时间")
     last_login_time: str = Field(default="", description="最后登录时间")
 
@@ -200,8 +200,8 @@ class UserCenterVo(BaseModel):
                 "collect": 0,
                 "balance": 0.0,
                 "gender": 0,
-                "is_wechat": 0,
-                "is_password": 0,
+                "is_wechat": True,
+                "is_password": False,
                 "create_time": "2023-12-20 11:27:05",
                 "last_login_time": "2023-12-20 11:27:05"
             }
@@ -225,6 +225,6 @@ class UserCollectVo(BaseModel):
                 "title": "this is title",
                 "browse": 10,
                 "collect": 15,
-                "last_login_time": "2023-12-20 11:27:05"
+                "create_time": "2023-12-20 11:27:05"
             }
         }

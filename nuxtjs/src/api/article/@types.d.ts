@@ -38,8 +38,8 @@ interface ArticleDetailResponse {
     content: string;
     // 访问数量
     browse: number;
-    // 是否收藏: [0=否, 1=是]
-    is_collect: number;
+    // 是否收藏
+    is_collect: boolean;
     // 创建时间
     create_time: string;
     // 更新时间

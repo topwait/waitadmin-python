@@ -95,6 +95,7 @@ class PaymentService:
                 "description": description,
                 "redirect_url": post.redirect_url
             })
+        return None
 
     @classmethod
     async def notify_mnp(cls):

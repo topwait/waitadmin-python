@@ -249,7 +249,7 @@ class ArticleService:
             await (ArticleCollectModel
                    .filter(id=collect.id)
                    .update(
-                        is_delete=False if collect.is_delete else 1,
+                        is_delete=False if collect.is_delete else True,
                         delete_time=0 if collect.is_delete else int(time.time()),
                         update_time=int(time.time())
                    ))

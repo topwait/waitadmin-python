@@ -10,7 +10,7 @@
 # +----------------------------------------------------------------------
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
-from typing import List, Dict
+from typing import List, Dict, Any
 from fastapi import Depends, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from exception import AppException
@@ -28,9 +28,10 @@ obstruction: Dict[str, List[str]] = {
 
 
 class LoginInterceptor:
+    """ 登录状态拦截 """
     @staticmethod
     async def handler(request: Request, bearer: HTTPAuthorizationCredentials = Depends(HTTPBearer())):
-        endpoint: any = request.scope.get("endpoint", lambda: None)
+        endpoint: Any = request.scope.get("endpoint", lambda: None)
         if endpoint.__module__ == "starlette.staticfiles":
             return True
 
@@ -56,6 +57,7 @@ class LoginInterceptor:
 
 
 class PermsInterceptor:
+    """ 路由权限拦截 """
     @staticmethod
     async def handler(request: Request):
         module: str = get_settings().ROUTER_ALIAS.get("admin", "admin")

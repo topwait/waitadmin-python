@@ -22,10 +22,10 @@ interface UserCenterResponse {
     balance: number;
     // 用户性别: [0=未知, 1=男, 2=女]
     gender: number;
-    // 已绑微信: [0=否, 1=是]
-    is_wechat: number;
-    // 已设密码: [0=否, 1=是]
-    is_password: number;
+    // 已绑微信
+    is_wechat: boolean;
+    // 已设密码
+    is_password: boolean;
     // 注册时间
     create_time: string;
     // 最后登录时间

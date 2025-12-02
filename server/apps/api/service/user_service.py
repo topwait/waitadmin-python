@@ -56,14 +56,27 @@ class UserService:
         d = user.__dict__
         d["avatar"] = await UrlUtil.to_absolute_url(user.avatar)
         d["collect"] = collect
-        d["is_wechat"] = 1 if auth else 0
-        d["is_password"] = 1 if user.password else 0
+        d["is_wechat"] = True if auth else False
+        d["is_password"] = True if user.password else False
         d["create_time"] = TimeUtil.timestamp_to_date(user.create_time)
         d["last_login_time"] = TimeUtil.timestamp_to_date(user.last_login_time)
         return TypeAdapter(schema.UserCenterVo).validate_python(d)
 
     @classmethod
-    async def collect(cls, user_id: int, params: schema.UserCollectSearchIn):
+    async def collect(cls, user_id: int, params: schema.UserCollectSearchIn) -> PagingResult[schema.UserCollectVo]:
+        """
+        收藏列表
+
+        Args:
+            user_id (int): 用户ID
+            params (schema.UserCollectSearchIn): 搜索参数
+
+        Returns:
+            PagingResult[schema.UserCollectVo]
+
+        Author:
+            zero
+        """
         offset: int = (params.page - 1) * 15
 
         COUNT_SQL = f"""__SELECT COUNT(*)
@@ -91,7 +104,7 @@ class UserService:
         return PagingResult.create(_lists, count[0]["COUNT(*)"], params.page, 15)
 
     @classmethod
-    async def edit(cls, field: str, value: str, user_id: int):
+    async def edit(cls, field: str, value: str, user_id: int) -> None:
         """
         编辑用户资料。
 
@@ -137,7 +150,7 @@ class UserService:
             raise AppException("不支持的场景")
 
     @classmethod
-    async def forget_pwd(cls, code: str, mobile: str, new_pwd: str):
+    async def forget_pwd(cls, code: str, mobile: str, new_pwd: str) -> None:
         """
         找回登录密码 (找回后强退账号)。
 
@@ -168,7 +181,7 @@ class UserService:
         await user.save()
 
     @classmethod
-    async def change_pwd(cls, old_pwd: str, new_pwd: str, user_id: int):
+    async def change_pwd(cls, old_pwd: str, new_pwd: str, user_id: int) -> None:
         """
         修改登录密码 (修改后强退账号)。
 
@@ -203,7 +216,7 @@ class UserService:
         # todo
 
     @classmethod
-    async def bind_wechat(cls, state: str, code: str, user_id: int, terminal: int):
+    async def bind_wechat(cls, state: str, code: str, user_id: int, terminal: int) -> None:
         """
         绑定微信。
 
@@ -266,7 +279,7 @@ class UserService:
             await WechatCache.login_scan_set(state, WechatCache.SCAN_STATUS_OK)
 
     @classmethod
-    async def bind_mobile(cls, scene: str, mobile: str, code: str, user_id: int):
+    async def bind_mobile(cls, scene: str, mobile: str, code: str, user_id: int) -> None:
         """
         绑定手机。
 
@@ -310,7 +323,7 @@ class UserService:
             await MsgDriver.verify_code(n_code, code)
 
     @classmethod
-    async def bind_email(cls, scene: str, email: str, code: str, user_id: int):
+    async def bind_email(cls, scene: str, email: str, code: str, user_id: int) -> None:
         """
         绑定邮箱。
 

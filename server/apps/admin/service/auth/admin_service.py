@@ -285,7 +285,7 @@ class AdminService:
         if not admin:
             raise AppException("管理员不存在")
 
-        update_dict = {"update_time": int(time.time())}
+        update_dict: dict = {"update_time": int(time.time())}
         if post.password:
             password_old = ToolsUtil.make_md5_str(post.password_old, admin.salt)
             if admin.password != password_old:

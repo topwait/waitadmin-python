@@ -67,8 +67,8 @@ class UploadService:
             file_path=result.get("path"),
             file_size=result.get("size"),
             file_ext=result.get("ext"),
-            is_user=1,
-            is_attach=0,
+            is_user=True,
+            is_attach=False,
             create_time=int(time.time()),
             update_time=int(time.time())
         )

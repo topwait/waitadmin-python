@@ -4,11 +4,6 @@
 interface AppConfigResponse {
     // 登录配置
     login: {
-        is_agreement: number;
-        defaults: string;
-        register: any[];
-        means: string[];
-        oauth: string[];
         pc: {
             is_agreement: boolean;
             default_method: string;

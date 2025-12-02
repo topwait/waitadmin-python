@@ -29,13 +29,13 @@
 <script setup lang="ts">
 import { popupEnum } from '@/enums/app'
 import useAppStore from '@/stores/app'
-import Register from './Register.vue'
-import ForgotPwd from './ForgotPwd.vue'
-import ChangePwd from './ChangePwd.vue'
-import BindEmail from './BindEmail.vue'
-import BindMobile from './BindMobile.vue'
-import BindWechat from './BindWechat.vue'
-import Login from '../Login/index.vue'
+import Register from './register.vue'
+import ForgotPwd from './forgot-pwd.vue'
+import ChangePwd from './change-pwd.vue'
+import BindEmail from './bind-email.vue'
+import BindMobile from './bind-mobile.vue'
+import BindWechat from './bind-wechat.vue'
+import Login from '../login/index.vue'
 
 const appStore = useAppStore()
 
