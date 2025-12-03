@@ -76,8 +76,8 @@
 
 <script setup lang="ts">
 import { policyEnum } from '@/enums/app'
-import LoginWechat from './login-wechat.vue'
-import LoginRoutine from './login-routine.vue'
+import LoginWechat from './LoginWechat.vue'
+import LoginRoutine from './LoginRoutine.vue'
 import useAppStore from '@/stores/app'
 
 const appStore = useAppStore()
