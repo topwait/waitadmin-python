@@ -38,7 +38,7 @@ class GlobalSetting(BaseSettings):
     APPS_NAME: str = "apps"
 
     # 项目信息
-    VERSION: str = "1.1.4"
+    VERSION: str = "1.1.5"
     PROJECT_NAME: str = "WaitAdmin(Python)开源后台系统"
     DESCRIPTION: str = "Fastapi + Vue3 + NuxtJs + TypeScript"
 
