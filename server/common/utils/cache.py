@@ -276,9 +276,274 @@ class RedisUtil:
 
     # =============== 【List指令】 ===============
     @classmethod
-    async def blPop(cls, key: str, field: str):
-        # await cls.redis.blpop()
-        pass
+    async def lPush(cls, key: str, *values: Union[int, float, str]) -> int:
+        """
+        将一个或多个值插入到列表头部。
+
+        Args:
+            key (str): Redis列表的键名。
+            *values (Union[int, float, str]): 要插入列表的一个或多个值。
+
+        Returns:
+            int: 执行命令后，列表的长度。
+        """
+        return await cls.redis.lpush(cls.get_key(key), *values)
+
+    @classmethod
+    async def rPush(cls, key: str, *values: Union[int, float, str]) -> int:
+        """
+        将一个或多个值插入到列表尾部。
+
+        Args:
+            key (str): Redis列表的键名。
+            *values (Union[int, float, str]): 要插入列表的一个或多个值。
+
+        Returns:
+            int: 执行命令后，列表的长度。
+        """
+        return await cls.redis.rpush(cls.get_key(key), *values)
+
+    @classmethod
+    async def lPushX(cls, key: str, *values: Union[int, float, str]) -> int:
+        """
+        将一个值插入到已存在的列表头部。如果列表不存在，则不执行任何操作。
+
+        Args:
+            key (str): Redis列表的键名。
+            *values (Union[int, float, str]): 要插入列表的一个或多个值。
+
+        Returns:
+            int: 执行命令后，列表的长度。如果列表不存在，则返回0。
+        """
+        return await cls.redis.lpushx(cls.get_key(key), *values)
+
+    @classmethod
+    async def rPushX(cls, key: str, *values: Union[int, float, str]) -> int:
+        """
+        将一个值插入到已存在的列表尾部。如果列表不存在，则不执行任何操作。
+
+        Args:
+            key (str): Redis列表的键名。
+            *values (Union[int, float, str]): 要插入列表的一个或多个值。
+
+        Returns:
+            int: 执行命令后，列表的长度。如果列表不存在，则返回0。
+        """
+        return await cls.redis.rpushx(cls.get_key(key), *values)
+
+    @classmethod
+    async def lPop(cls, key: str, count: int = 1) -> Union[str, List[str], None]:
+        """
+        移除并返回列表的第一个元素，或者指定数量的元素。
+
+        Args:
+            key (str): Redis列表的键名。
+            count (int): 要移除的元素数量，默认为1。
+
+        Returns:
+            Union[str, List[str], None]: 
+                如果count为1，则返回单个元素；
+                如果count大于1，则返回包含多个元素的列表；
+                如果列表为空，则返回None。
+        """
+        if count == 1:
+            return await cls.redis.lpop(cls.get_key(key))
+        else:
+            return await cls.redis.lpop(cls.get_key(key), count)
+
+    @classmethod
+    async def rPop(cls, key: str, count: int = 1) -> Union[str, List[str], None]:
+        """
+        移除并返回列表的最后一个元素，或者指定数量的元素。
+
+        Args:
+            key (str): Redis列表的键名。
+            count (int): 要移除的元素数量，默认为1。
+
+        Returns:
+            Union[str, List[str], None]: 
+                如果count为1，则返回单个元素；
+                如果count大于1，则返回包含多个元素的列表；
+                如果列表为空，则返回None。
+        """
+        if count == 1:
+            return await cls.redis.rpop(cls.get_key(key))
+        else:
+            return await cls.redis.rpop(cls.get_key(key), count)
+
+    @classmethod
+    async def blPop(cls, keys: List[str], timeout: int = 0) -> list:
+        """
+        从第一个非空列表中弹出一个元素，如果列表都为空，则阻塞指定时间。
+
+        Args:
+            keys (List[str]): Redis列表的键名列表。
+            timeout (int): 阻塞超时时间，单位为秒。默认为0，表示永久阻塞。
+
+        Returns:
+            Optional[Tuple[str, str]]: 
+                如果成功弹出元素，则返回一个元组，包含键名和弹出的值；
+                如果超时，则返回None。
+        """
+        ks = [cls.get_key(k) for k in keys]
+        return await cls.redis.blpop(ks, timeout)
+
+    @classmethod
+    async def brPop(cls, keys: List[str], timeout: int = 0) -> list:
+        """
+        从第一个非空列表的尾部弹出一个元素，如果列表都为空，则阻塞指定时间。
+
+        Args:
+            keys (List[str]): Redis列表的键名列表。
+            timeout (int): 阻塞超时时间，单位为秒。默认为0，表示永久阻塞。
+
+        Returns:
+            Optional[Tuple[str, str]]: 
+                如果成功弹出元素，则返回一个元组，包含键名和弹出的值；
+                如果超时，则返回None。
+        """
+        ks = [cls.get_key(k) for k in keys]
+        return await cls.redis.brpop(ks, timeout)
+
+    @classmethod
+    async def brPopLPush(cls, source: str, destination: str, timeout: int = 0) -> Optional[str]:
+        """
+        从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它；
+        如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。
+
+        Args:
+            source (str): 源列表的键名。
+            destination (str): 目标列表的键名。
+            timeout (int): 阻塞超时时间，单位为秒。默认为0，表示永久阻塞。
+
+        Returns:
+            Optional[str]: 被弹出的元素。如果超时，则返回None。
+        """
+        src = cls.get_key(source)
+        dst = cls.get_key(destination)
+        return await cls.redis.brpoplpush(src, dst, timeout)
+
+    @classmethod
+    async def lRange(cls, key: str, start: int, end: int) -> List[str]:
+        """
+        获取列表指定范围内的元素。
+
+        Args:
+            key (str): Redis列表的键名。
+            start (int): 开始位置，0表示第一个元素，-1表示最后一个元素。
+            end (int): 结束位置，0表示第一个元素，-1表示最后一个元素。
+
+        Returns:
+            List[str]: 指定范围内的元素列表。
+        """
+        return await cls.redis.lrange(cls.get_key(key), start, end)
+
+    @classmethod
+    async def lIndex(cls, key: str, index: int) -> Optional[str]:
+        """
+        通过索引获取列表中的元素。
+
+        Args:
+            key (str): Redis列表的键名。
+            index (int): 索引位置，0表示第一个元素，-1表示最后一个元素。
+
+        Returns:
+            Optional[str]: 列表中对应索引的元素。如果索引超出范围，则返回None。
+        """
+        return await cls.redis.lindex(cls.get_key(key), index)
+
+    @classmethod
+    async def lInsert(cls, key: str, where: str, ref_value: str, value: str) -> int:
+        """
+        在列表的元素前或者后插入元素。
+
+        Args:
+            key (str): Redis列表的键名。
+            where (str): 插入的位置，可以是 'BEFORE' 或 'AFTER'。
+            ref_value (str): 参考值，即在该值前或后插入。
+            value (str): 要插入的值。
+
+        Returns:
+            int: 执行命令后，列表的长度。如果参考值不存在，则返回-1。
+        """
+        return await cls.redis.linsert(cls.get_key(key), where, ref_value, value)
+
+    @classmethod
+    async def lLen(cls, key: str) -> int:
+        """
+        获取列表的长度。
+
+        Args:
+            key (str): Redis列表的键名。
+
+        Returns:
+            int: 列表的长度。如果列表不存在，则返回0。
+        """
+        return await cls.redis.llen(cls.get_key(key))
+
+    @classmethod
+    async def lRem(cls, key: str, count: int, value: str) -> int:
+        """
+        移除列表中与参数value相等的元素。
+
+        Args:
+            key (str): Redis列表的键名。
+            count (int): 
+                count > 0: 从表头开始向表尾搜索，移除与value相等的元素，数量为count。
+                count < 0: 从表尾开始向表头搜索，移除与value相等的元素，数量为count的绝对值。
+                count = 0: 移除表中所有与value相等的值。
+            value (str): 要移除的值。
+
+        Returns:
+            int: 被移除元素的数量。
+        """
+        return await cls.redis.lrem(cls.get_key(key), count, value)
+
+    @classmethod
+    async def lSet(cls, key: str, index: int, value: str) -> str:
+        """
+        通过索引设置列表元素的值。
+
+        Args:
+            key (str): Redis列表的键名。
+            index (int): 索引位置，0表示第一个元素，-1表示最后一个元素。
+            value (str): 要设置的值。
+
+        Returns:
+            str
+        """
+        return await cls.redis.lset(cls.get_key(key), index, value)
+
+    @classmethod
+    async def lTrim(cls, key: str, start: int, end: int) -> str:
+        """
+        对一个列表进行修剪，只保留指定区间内的元素，不在指定区间之内的元素都将被删除。
+
+        Args:
+            key (str): Redis列表的键名。
+            start (int): 开始位置，0表示第一个元素，-1表示最后一个元素。
+            end (int): 结束位置，0表示第一个元素，-1表示最后一个元素。
+
+        Returns:
+            str
+        """
+        return await cls.redis.ltrim(cls.get_key(key), start, end)
+
+    @classmethod
+    async def rPopLPush(cls, source: str, destination: str) -> Optional[str]:
+        """
+        移除列表的最后一个元素，并将该元素添加到另一个列表并返回。
+
+        Args:
+            source (str): 源列表的键名。
+            destination (str): 目标列表的键名。
+
+        Returns:
+            Optional[str]: 被移除的元素。如果源列表为空，则返回None。
+        """
+        src = cls.get_key(source)
+        dst = cls.get_key(destination)
+        return await cls.redis.rpoplpush(src, dst)
 
     # =============== 【Hash指令】 ===============
     @classmethod

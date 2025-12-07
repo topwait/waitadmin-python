@@ -36,7 +36,8 @@ class DbModel(Model):
 
     @classmethod
     async def paginate(
-            cls, model: Type[MODEL],
+            cls,
+            model: Type[MODEL],
             page_no: int = 1,
             page_size: int = 15,
             schema: Any = None,
@@ -46,8 +47,8 @@ class DbModel(Model):
             datetime_format: str = "%Y-%m-%d %H:%M:%S",
     ):
         fields = [] if not fields else fields
-        _count = await model.count()
-        _lists = await model.limit(page_size).offset((page_no - 1) * page_size).values(*fields)
+        _count = await model.filter().count()
+        _lists = await model.filter().limit(page_size).offset((page_no - 1) * page_size).values(*fields)
 
         for item in _lists:
             if auto_timestamp:
@@ -165,7 +166,7 @@ class DbModel(Model):
         return conn.get("prefix", "") + table
 
 
-def is_number(s: any) -> bool:
+def is_number(s: Any) -> bool:
     try:
         float(s)
         return True

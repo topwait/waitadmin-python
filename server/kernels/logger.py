@@ -16,7 +16,7 @@ import gzip
 import logging
 import importlib
 from datetime import datetime
-from typing import Dict, List, IO
+from typing import Dict, List, IO, Any
 
 _LEVEL_NUM = {
     "notset": logging.NOTSET,
@@ -67,7 +67,8 @@ class CompressedFileHandler(logging.FileHandler):
         """ Compress and archive logs """
         if os.path.exists(self.baseFilename) and os.path.getsize(self.baseFilename) > self.gzip_size:
             with open(self.baseFilename, "rb") as f_in, gzip.open(self.baseFilename + ".gz", "wb") as f_out:
-                f_out.writelines(f_in)
+                f: Any = f_in
+                f_out.writelines(f)
             open(self.baseFilename, "w").close()
 
 
