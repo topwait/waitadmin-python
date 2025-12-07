@@ -31,6 +31,9 @@ class GlobalSetting(BaseSettings):
     # 调试模式
     APP_DEBUG: bool = os.getenv("APP_DEBUG", "False") == "True"
 
+    # 应用路径
+    APP_PATH: str = os.path.dirname(__file__)
+
     # 应用名称
     APPS_NAME: str = "apps"
 
