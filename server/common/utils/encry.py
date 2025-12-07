@@ -15,8 +15,8 @@ import base64
 from typing import Literal, Dict, Any
 from rsa import core, PublicKey, transform
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives import serialization, hashes
+from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from config import get_settings
 
 
@@ -74,13 +74,13 @@ class EncryUtil:
                 raise Exception(f"{error}: server/license/rsa_{method}_key.pem")
 
             with open(rsa_path, mode="r", encoding="utf-8") as file:
-                key_pem = file.read().strip()
+                pem_key = file.read().strip()
 
         match method:
             case "public":
-                return cls.rsa_public_decrypt(key_pem, ciphertext)
+                return cls.rsa_public_decrypt(pem_key, ciphertext)
             case "private":
-                return cls.rsa_private_decrypt(key_pem, ciphertext, password, pad_mode, hash_alg)
+                return cls.rsa_private_decrypt(pem_key, ciphertext, password, pad_mode, hash_alg)
 
     @classmethod
     def rsa_encrypt(
@@ -111,6 +111,7 @@ class EncryUtil:
         Author:
             zero
         """
+        print(pem_key)
         if pem_key is None:
             app_path: str = get_settings().APP_PATH
             rsa_path: str = f"{app_path}/license/rsa_{method}_key.pem"
@@ -121,22 +122,22 @@ class EncryUtil:
                 raise Exception(f"{error}: server/license/rsa_{method}_key.pem")
 
             with open(rsa_path, mode="r", encoding="utf-8") as file:
-                key_pem = file.read().strip()
+                pem_key = file.read().strip()
 
         match method:
             case "public":
-                return cls.rsa_public_encrypt(key_pem, plaintext, pad_mode, hash_alg)
+                return cls.rsa_public_encrypt(pem_key, plaintext, pad_mode, hash_alg)
             case "private":
-                return cls.rsa_private_encrypt(key_pem, plaintext, password)
+                return cls.rsa_private_encrypt(pem_key, plaintext, password)
 
     @classmethod
-    def rsa_public_decrypt(cls, public_key_pem: str, ciphertext: str) -> str | None:
+    def rsa_public_decrypt(cls, public_pem_key: str, ciphertext: str) -> str | None:
         """
         RSA公钥解密: https://blog.csdn.net/Kernel_Heart/article/details/111524368
         (pip install rsa)
 
         Args:
-            public_key_pem (str): 公钥
+            public_pem_key (str): 公钥
             ciphertext (str): 密文
 
         Returns:
@@ -147,7 +148,7 @@ class EncryUtil:
         """
         try:
             # 加载公钥
-            public_key = PublicKey.load_pkcs1_openssl_pem(public_key_pem.encode("utf-8"))
+            public_key = PublicKey.load_pkcs1_openssl_pem(public_pem_key.encode("utf-8"))
             # 将密文转换为整数形式: RSA算法需要处理大整数
             cipher_bytes = transform.bytes2int(base64.b64decode(ciphertext.strip()))
             # 用公钥对密文进行解密: 指数(e)和模数(n)
@@ -164,7 +165,7 @@ class EncryUtil:
     @classmethod
     def rsa_private_decrypt(
         cls,
-        private_key_pem: str,
+        private_pem_key: str,
         ciphertext: str,
         password: str = None,
         pad_mode: Literal["OAEP", "PKCS1v15"] = "OAEP",
@@ -178,7 +179,7 @@ class EncryUtil:
              建议你换一个生成RSA的网站生成密钥, 如: https://cryptotools.net/rsagen
 
         Args:
-            private_key_pem (str): 私钥
+            private_pem_key (str): 私钥
             ciphertext (str): 密文
             password (str): 私钥密码
             pad_mode (Literal["OAEP", "PKCS1v15"]): 填充标识
@@ -193,7 +194,7 @@ class EncryUtil:
         try:
             # 加载私钥
             private_key = serialization.load_pem_private_key(
-                private_key_pem.encode(),
+                private_pem_key.encode(),
                 password=password.encode() if password else None,
                 backend=default_backend()
             )
@@ -223,7 +224,7 @@ class EncryUtil:
     @classmethod
     def rsa_public_encrypt(
         cls,
-        public_key_pem: str,
+        public_pem_key: str,
         plaintext: str,
         pad_mode: Literal["OAEP", "PKCS1v15"] = "OAEP",
         hash_alg: Literal["SHA1", "SHA256", "SHA384", "SHA512"] = "SHA1"
@@ -232,7 +233,7 @@ class EncryUtil:
         RSA公钥加密
 
         Args:
-            public_key_pem (str): 公钥
+            public_pem_key (str): 公钥
             plaintext (str): 明文
             pad_mode (Literal["OAEP", "PKCS1v15"]): 填充标识
             hash_alg (Literal["SHA1", "SHA256", "SHA384", "SHA512"]): OAEP算法
@@ -246,7 +247,7 @@ class EncryUtil:
         try:
             # 加载公钥
             public_key = serialization.load_pem_public_key(
-                public_key_pem.encode()
+                public_pem_key.encode()
             )
 
             # 使用公钥加密
@@ -275,7 +276,7 @@ class EncryUtil:
     @classmethod
     def rsa_private_encrypt(
         cls,
-        private_key_pem: str,
+        private_pem_key: str,
         plaintext: str,
         password: str = None
     ) -> str | None:
@@ -284,7 +285,7 @@ class EncryUtil:
         注意: 不需要用私钥加密,应当用公钥加密,私钥解密
 
         Args:
-            private_key_pem (str): 私钥
+            private_pem_key (str): 私钥
             plaintext (str): 明文
             password: str = None
         Returns:
@@ -296,7 +297,7 @@ class EncryUtil:
         try:
             # 加载私钥
             private_key = serialization.load_pem_private_key(
-                private_key_pem.encode(),
+                private_pem_key.encode(),
                 password=password.encode() if password else None,
                 backend=default_backend()
             )
@@ -335,3 +336,106 @@ class EncryUtil:
         except Exception as e:
             print("Rsa private encrypt error: " + str(e))
             return None
+            
+    @classmethod
+    def generate_rsa_pem(
+        cls,
+        key_size: Literal[512, 1024, 2048, 3072, 4096] = 2048,
+        password: str = None,
+        save_path: str = None,
+        file_prefix: str = "rsa",
+        public_exponent: int = 65537,
+        private_format: Literal["PKCS8", "TraditionalOpenSSL"] = "PKCS8",
+        overwrite: bool = False
+    ) -> Dict[str, str]:
+        """
+        生成RSA密钥对
+        
+        Args:
+            key_size (int): 密钥长度: 推荐2048或4096位
+            password (str): 私钥密码: 不需要可留空
+            save_path (str): 保存路径: 不指定则不保存到文件
+            file_prefix (str): 文件名前缀: 默认为rsa
+            public_exponent (int): 公钥指数:通常为65537,不建议修改
+            private_format (str): 私钥格式: PKCS8(现代标准)或TraditionalOpenSSL(传统格式)
+            overwrite (bool): 是否覆盖已存在的文件,默认为False
+            
+        Returns:
+            Dict[str, str]
+
+        Author:
+            zero
+        """
+        try:
+            # 生成私钥
+            private_key = rsa.generate_private_key(
+                public_exponent=public_exponent,
+                key_size=key_size,
+                backend=default_backend()
+            )
+
+            # 选择私钥格式
+            if private_format == "PKCS8":
+                format_type = serialization.PrivateFormat.PKCS8
+            else:
+                format_type = serialization.PrivateFormat.TraditionalOpenSSL
+            
+            # 设置私钥序列化选项
+            if password:
+                encryption_algorithm = serialization.BestAvailableEncryption(password.encode())
+            else:
+                encryption_algorithm = serialization.NoEncryption()
+            
+            # 序列化私钥为PEM格式
+            private_pem = private_key.private_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=format_type,
+                encryption_algorithm=encryption_algorithm
+            ).decode("utf-8")
+
+            # 序列化公钥为PEM格式
+            public_key = private_key.public_key()
+            public_pem = public_key.public_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=serialization.PublicFormat.SubjectPublicKeyInfo
+            ).decode("utf-8")
+            
+            # 准备返回结果
+            result = {
+                "private_key": private_pem,
+                "public_key": public_pem,
+                "key_size": key_size,
+                "private_format": private_format,
+                "has_password": password is not None
+            }
+
+            # 如果指定了保存路径,则保存到文件
+            if save_path:
+                # 确保目录存在
+                os.makedirs(save_path, exist_ok=True)
+
+                # 构建文件路径
+                private_key_path = f"{save_path}/{file_prefix}_private_key.pem"
+                public_key_path = f"{save_path}/{file_prefix}_public_key.pem"
+
+                # 检查文件是否已存在
+                if not overwrite:
+                    if os.path.exists(private_key_path):
+                        raise FileExistsError(f"The private key file already exists: {private_key_path}")
+                    if os.path.exists(public_key_path):
+                        raise FileExistsError(f"The public key file already exists: {public_key_path}")
+
+                # 保存私钥
+                with open(private_key_path, "w", encoding="utf-8") as f:
+                    f.write(private_pem)
+                    
+                # 保存公钥
+                with open(public_key_path, "w", encoding="utf-8") as f:
+                    f.write(public_pem)
+
+                # 添加文件路径到结果
+                result["private_path"] = private_key_path
+                result["public_path"] = public_key_path
+            return result
+        except Exception as e:
+            raise Exception(f"RSA key pair generation error: {str(e)}")
