@@ -16,7 +16,7 @@ import random
 import time
 import uuid
 from datetime import datetime
-from typing import Optional, Tuple
+from typing import Optional, Union, Tuple, Any
 
 
 class ToolsUtil:
@@ -70,11 +70,12 @@ class ToolsUtil:
             zero
         """
         m = hashlib.md5()
-        m.update((val + salt).encode("utf-8"))
+        v: Any = (val + salt).encode("utf-8")
+        m.update(v)
         return m.hexdigest()
 
     @classmethod
-    def make_md5_pwd(cls, pwd: str, salt: Optional[str] = None) -> Tuple[str, str] or str:
+    def make_md5_pwd(cls, pwd: str, salt: Optional[str] = None) -> Union[Tuple[str, str], str]:
         """
         生成加密后的密码。
 
@@ -83,7 +84,7 @@ class ToolsUtil:
             salt (str): 用于增加加密复杂度的盐值。
 
         Returns:
-            str or tuple: 加密后的MD5字符串 和 盐。
+            Union[Tuple[str, str], str]: 加密后的MD5字符串 和 盐。
 
         Author:
             zero

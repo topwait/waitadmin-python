@@ -12,7 +12,7 @@
 # +----------------------------------------------------------------------
 import json
 import time
-
+from typing import Any
 from common.utils.cache import RedisUtil
 from common.models.sys import SysConfigModel
 
@@ -23,17 +23,17 @@ class ConfigUtil:
     SYSTEM_CONFIG_KEY: str = "sys:config"
 
     @classmethod
-    async def get(cls, type_: str, key: str = "", default_: any = None):
+    async def get(cls, type_: str, key: str = "", default_: Any = None):
         """
         读取配置
 
         Args:
             type_ (str): 配置类型。
             key (str, optional): 配置键: 默认为空字符串。
-            default_ (any, optional): 默认值: 当无法获取配置时返回,默认为None。
+            default_ (Any, optional): 默认值: 当无法获取配置时返回,默认为None。
 
         Returns:
-            any: 返回获取到的配置值,如果无法获取则返回默认值。
+            Any: 返回获取到的配置值,如果无法获取则返回默认值。
 
         Author:
             zero
@@ -89,14 +89,14 @@ class ConfigUtil:
         return data
 
     @classmethod
-    async def set(cls, type_: str,  key: str, value: any, remarks: str = None):
+    async def set(cls, type_: str,  key: str, value: Any, remarks: str = None):
         """
         设置配置
 
         Args:
             type_ (str): 型。
             key (str): 键。
-            value (any): 值。
+            value (Any): 值。
             remarks (str, optional): 备注信息, 默认为None。
 
         Returns:

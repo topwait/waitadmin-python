@@ -11,6 +11,7 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 import re
+from typing import Any
 
 
 class ValidUtils:
@@ -78,12 +79,12 @@ class ValidUtils:
         return re.match(pattern, value)
 
     @staticmethod
-    def is_json(obj: any) -> bool:
+    def is_json(obj: Any) -> bool:
         """
         判断给定的字符串是否是有效的JSON对象。
 
         Args:
-            obj (any): 需要被判断的字符串。
+            obj (Any): 需要被判断的字符串。
 
         Returns:
             bool: 如果字符串是有效的JSON对象，返回True；否则返回False。
@@ -99,12 +100,12 @@ class ValidUtils:
             return False
 
     @staticmethod
-    def is_number(s: any) -> bool:
+    def is_number(s: Any) -> bool:
         """
         判断给定的字符串是否可以转换为数字（整数或浮点数）。
 
         Args:
-            s (any): 需要被判断的字符串。
+            s (Any): 需要被判断的字符串。
 
         Returns:
             bool: 如果字符串可以转换为数字，则返回True；否则返回False。
@@ -119,7 +120,19 @@ class ValidUtils:
             return False
 
     @staticmethod
-    def is_integer(s: any) -> bool:
+    def is_integer(s: Any) -> bool:
+        """
+        判断是不是正整数。
+
+        Args:
+            s (Any): 需要被判断的值。
+
+        Returns:
+            bool: 如果是正整数，则返回True；否则返回False。
+
+        Author:
+            zero
+        """
         try:
             import re
             return bool(re.match(r"^[1-9]\d*$", s))
@@ -127,10 +140,23 @@ class ValidUtils:
             return False
 
     @staticmethod
-    def is_datetime(date_str: any) -> bool:
+    def is_datetime(date_str: Any, formats: str = "%Y-%m-%d %H:%M:%S") -> bool:
+        """
+        判断是不是正整数。
+
+        Args:
+            date_str (Any): 日期字符串。
+            formats (str): 格式化规则。
+
+        Returns:
+            bool: 如果是日期类型，则返回True；否则返回False。
+
+        Author:
+            zero
+        """
         try:
             from datetime import datetime
-            datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+            datetime.strptime(date_str, formats)
             return True
         except ValueError:
             return False

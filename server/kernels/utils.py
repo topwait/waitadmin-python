@@ -11,6 +11,7 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 from typing import Any
+from starlette.datastructures import Headers, QueryParams
 
 class RequestUtil:
     ua: str
@@ -27,7 +28,7 @@ class RequestUtil:
     url: str
     path: str
     pathParams: dict
-    queryParams: dict
+    queryParams: QueryParams
     state: Any
-    headers: dict
+    headers: Headers
     cookies: dict
