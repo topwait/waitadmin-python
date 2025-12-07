@@ -22,9 +22,12 @@ class NoticeService:
     """ 通知配置服务类 """
 
     @classmethod
-    async def lists(cls) -> List[schema.NoticeListVo]:
+    async def lists(cls, client: int) -> List[schema.NoticeListVo]:
         """
         通知配置列表。
+
+        Args:
+            client (int): 通知端: 1=用户,2=平台
 
         Returns:
             List[schema.NoticeListVo]: 通知配置列表Vo。
@@ -32,7 +35,7 @@ class NoticeService:
         Author:
            zero
         """
-        lists = await NoticeSetting.filter().all()\
+        lists = await NoticeSetting.filter(get_client=client).all()\
             .values("id", "scene", "name", "is_captcha", "sys_template", "sms_template", "ems_template")
 
         data = []

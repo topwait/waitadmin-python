@@ -11,7 +11,11 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 from typing import Dict, Union
+from fastapi import Query
 from pydantic import BaseModel, Field
+
+class NoticeQueryIn(BaseModel):
+    client: int = Query(ge=1, le=2, default=1, description="通知平台: [1=用户,2=平台]")
 
 
 class NoticeDetailIn(BaseModel):
