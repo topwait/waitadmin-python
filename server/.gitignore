@@ -12,7 +12,8 @@
 /public/mobile.zip
 /public/admin.zip
 /public/pc.zip
-/**/__pycache__
 /public/nginx.htaccess
+/license/
+/**/__pycache__
 .qiniu_pythonsdk_hostscache.json
 scheduler.pid
