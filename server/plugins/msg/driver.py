@@ -50,6 +50,7 @@ class MsgDriver:
 
             if template["sms_template"].get("status", 0):
                 return await SmsNotice().send(scene, params, template)
+            return None
         else:
             raise AppException("通知场景不存在")
 
