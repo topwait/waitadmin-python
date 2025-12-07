@@ -65,6 +65,12 @@ class UserGroupDeleteIn(BaseModel):
     """ 用户分组删除参数 """
     id: int = Field(..., gt=0, description="文章分类ID")
 
+    @classmethod
+    def messages(cls):
+        return {
+            "id:.missing": "id参数缺失"
+        }
+
     class Config:
         json_schema_extra = {
             "example": {

@@ -39,7 +39,7 @@ class AttachService:
         Author:
             zero
         """
-        where = [Q(is_delete=0), Q(is_attach=1), Q(is_user=0)]
+        where = [Q(is_delete=False), Q(is_attach=True), Q(is_user=False)]
         if params.cid is not None and params.cid >= 0:
             where.append(Q(cid=params.cid))
         if params.type:
@@ -128,7 +128,7 @@ class AttachService:
             zero
         """
         await AttachModel.filter(id__in=post.ids).update(
-            is_delete=1,
+            is_delete=True,
             delete_time=int(time.time())
         )
 
@@ -146,7 +146,7 @@ class AttachService:
         Author:
             zero
         """
-        where = [Q(is_delete=0)]
+        where = [Q(is_delete=False)]
         if params.type:
             where.append(Q(type=params.type))
 
@@ -183,7 +183,7 @@ class AttachService:
             zero
         """
         cate = await AttachCateModel\
-            .filter(id=post.id, type=post.type, is_delete=0)\
+            .filter(id=post.id, type=post.type, is_delete=False)\
             .first().values("id")
 
         if not cate:
@@ -206,13 +206,13 @@ class AttachService:
             zero
         """
         cate = await AttachCateModel \
-            .filter(id=post.id, type=post.type, is_delete=0) \
+            .filter(id=post.id, type=post.type, is_delete=False) \
             .first().values("id")
 
         if not cate:
             raise AppException("当前分类不存在")
 
         await AttachCateModel.filter(id=post.id).update(
-            is_delete=1,
+            is_delete=True,
             delete_time=int(time.time())
         )

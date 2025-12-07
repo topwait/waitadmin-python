@@ -1,8 +1,8 @@
 <template>
     <div>
         <el-upload
-            class="flex flex-col"
             ref="uploadRef"
+            class="flex flex-col"
             :limit="1"
             :show-file-list="false"
             :auto-upload="false"
@@ -43,7 +43,7 @@
 import 'vue-cropper/dist/index.css'
 import { ElUpload, ElDialog, ElButton } from 'element-plus'
 import { VueCropper } from 'vue-cropper'
-import appApi from '@/api/app'
+import appApi from '@/api/public/app'
 
 const emits = defineEmits(['change'])
 
@@ -72,7 +72,7 @@ const handleConfirmCropper = () => {
             file: imgFile,
             data: {
                 scene: 'image',
-                is_attach: 0
+                is_attach: false
             }
         }, null)
 

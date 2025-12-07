@@ -11,18 +11,18 @@
         <div class="p-6 pb-0">
             <el-form ref="formRef" :model="formData" :rules="formRules" label-width="80px">
                 <el-form-item label="充值金额" prop="money">
-                    <el-input type="number" v-model="formData.money" placeholder="请输入充值金额" />
+                    <el-input v-model="formData.money" type="number" placeholder="请输入充值金额" />
                 </el-form-item>
                 <el-form-item label="赠送金额" prop="give_money">
-                    <el-input type="number" v-model="formData.give_money" placeholder="请输入赠送金额" />
+                    <el-input v-model="formData.give_money" type="number" placeholder="请输入赠送金额" />
                 </el-form-item>
                 <el-form-item label="排序" prop="sort" label-width="100px">
                     <el-input-number v-model="formData.sort" :min="0" :max="9999" />
                 </el-form-item>
                 <el-form-item label="状态">
-                    <el-radio-group v-model="formData.is_disable">
-                        <el-radio :value="0">正常</el-radio>
-                        <el-radio :value="1">停用</el-radio>
+                    <el-radio-group v-model="formData.is_show">
+                        <el-radio :value="true">正常</el-radio>
+                        <el-radio :value="false">停用</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
@@ -50,7 +50,7 @@ const formData: any = reactive({
     money: '',       // 充值金额
     give_money: 0,   // 赠送金额
     sort: 0,         // 排序编号
-    is_show: 0       // 是否显示:[0=否, 1=是]
+    is_show: false   // 是否显示
 })
 
 // 表单规则
@@ -62,6 +62,9 @@ const formRules: any = reactive({
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -89,6 +92,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -97,7 +101,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await rechargePackApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

@@ -1,18 +1,48 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { loadEnv } from 'vite'
 
-const envData = loadEnv(process.env.NODE_ENV!, './')
+// 加载环境变量文件
+const envData: Record<string, string> = loadEnv(process.env.NODE_ENV!, './')
 
 export default defineNuxtConfig({
-    devtools: {
-        enabled: true
-    },
+    // 源码的目录配置
+    srcDir: 'src/',
 
-    ssr: !!envData.VITE_SSR,
+    // 服务端渲染配置
+    ssr: envData.VITE_SSR === 'true',
+
+    // SPA加载模板配置
     spaLoadingTemplate: false,
 
-    css: ['@/assets/styles/index.scss'],
+    // 开发工具配置
+    devtools: {
+        enabled: envData.VITE_DEV === 'true'
+    },
 
+    // 应用基础配置
+    app: {
+        baseURL: envData.VITE_BASE_URL
+    },
+
+    // 开发服务器配置
+    devServer: {
+        port: parseInt(envData.VITE_PORT || '3000'),
+        host: String(envData.VITE_HOST || 'localhost')
+    },
+
+    // 运行时环境配置
+    runtimeConfig: {
+        public: {
+            ...envData
+        }
+    },
+
+    // 全局CSS配置
+    css: [
+        '@/assets/styles/index.scss'
+    ],
+
+    // Nuxt模块配置
     modules: [
         'nuxt-icons',
         '@pinia/nuxt',
@@ -21,43 +51,14 @@ export default defineNuxtConfig({
         '@element-plus/nuxt'
     ],
 
+    // Element Plus模块配置
     elementPlus: {
         defaultLocale: 'zh-cn'
     },
 
+    // ESLint模块配置
     eslint: {
         checker: true
-    },
-
-    app: {
-        baseURL: envData.VITE_BASE_URL
-    },
-
-    runtimeConfig: {
-        public: {
-            ...envData
-        }
-    },
-
-    vite: {
-        css: {
-            preprocessorOptions: {
-                scss: {
-                    api: 'modern-compiler'
-                }
-            }
-        },
-        plugins: [
-            {
-                name: 'vite-plugin-glob-transform',
-                transform(code: string, id: string) {
-                    if (id.includes('nuxt-icons')) {
-                        return code.replace(/as:\s*['"]raw['"]/g, 'query: "?raw", import: "default"')
-                    }
-                    return code
-                }
-            }
-        ]
     },
 
     compatibilityDate: '2024-09-19'

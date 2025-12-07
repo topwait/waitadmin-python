@@ -24,11 +24,11 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="触发规则" required>
-                    <div class="w-full" v-for="(item, index) in formData.rules" :key="index">
+                    <div v-for="(item, index) in formData.rules" :key="index" class="w-full">
                         <template v-if="formData.trigger == 'interval'">
                             <hover-close @close="handleDelRules(index)">
                                 <div class="flex">
-                                    <div class="mr-2 mb-[8px] w-[150px]">
+                                    <div class="mr-2 mb-2 w-[150px]">
                                         <el-select v-model="item.key" >
                                             <el-option label="间隔几周" value="weeks"/>
                                             <el-option label="间隔几天" value="days"/>
@@ -39,19 +39,19 @@
                                             <el-option label="结束日期" value="end_date"/>
                                         </el-select>
                                     </div>
-                                    <div class="flex-1 mb-[8px]">
+                                    <div class="flex-1 mb-2">
                                         <el-date-picker
                                             v-if="item.key === 'start_date' || item.key === 'end_date'"
-                                            type="datetime"
                                             v-model="item.value"
+                                            type="datetime"
                                             placeholder="请选择日期"
                                         />
                                         <el-input v-else
-                                                  type="number"
-                                                  v-model="item.value"
-                                                  :min="1"
-                                                  :max="9999999999"
-                                                  placeholder="请输入规则"
+                                            v-model="item.value"
+                                            type="number"
+                                            :min="1"
+                                            :max="9999999999"
+                                            placeholder="请输入规则"
                                         />
                                     </div>
                                 </div>
@@ -81,8 +81,8 @@
                         </template>
                         <template v-if="formData.trigger === 'date'">
                             <el-date-picker
-                                type="datetime"
                                 v-model="item.value"
+                                type="datetime"
                                 placeholder="请选择运行日期"
                             />
                         </template>
@@ -108,9 +108,9 @@
                 </el-form-item>
                 <el-form-item label="备注信息" prop="remarks">
                     <el-input
+                        v-model.trim="formData.remarks"
                         type="textarea"
                         :rows="4"
-                        v-model.trim="formData.remarks"
                         show-word-limit
                         :maxlength="300"
                     />
@@ -121,11 +121,13 @@
                         <el-radio :value="2">暂停执行</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="任务列表" v-if="formData.tasks.length > 0">
+                <el-form-item v-if="formData.tasks.length > 0" label="任务列表">
                     <el-table :data="formData.tasks" size="large">
                         <el-table-column label="名称" prop="id" min-width="150" show-tooltip-when-overflow />
-                        <el-table-column label="下次执行时间" prop="next_run_time" min-width="175"
-                                         show-tooltip-when-overflow />
+                        <el-table-column label="下次执行时间"
+                            prop="next_run_time"
+                            min-width="175"
+                            show-tooltip-when-overflow />
                     </el-table>
                 </el-form-item>
             </el-form>
@@ -183,6 +185,9 @@ const formRules: any = reactive({
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -212,6 +217,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -220,7 +226,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await crontabApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }
@@ -267,7 +275,7 @@ const _checkRules = (): boolean|any => {
         return feedback.msgError('之前填写一个触发规则')
     }
 
-    let coll: string[] = []
+    const coll: string[] = []
     for (let i = 0; i < formData.rules.length; i++) {
         const rules = formData.rules[0]
         if (rules?.key === undefined || rules?.value === undefined) {

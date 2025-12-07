@@ -6,8 +6,8 @@
                     :src="config.cover"
                     :width="400"
                     height="100%"
-                    borderTopLeftRadius="8px"
-                    borderBottomLeftRadius="8px"
+                    border-top-left-radius="8px"
+                    border-bottom-left-radius="8px"
                 />
             </div>
             <div class="login-card" :class="config.cover ? 'cover-style': ''">
@@ -27,8 +27,8 @@
                     <el-form-item prop="password">
                         <el-input
                             ref="passwordRef"
-                            show-password
                             v-model="formData.password"
+                            show-password
                             placeholder="请输入密码"
                             @keyup.enter="handleEnter"
                         >
@@ -51,8 +51,8 @@
                             </el-input>
                             <div class="captcha" @click="getCaptcha">
                                 <img class="w-full h-full"
-                                     :src="captcha"
-                                     alt="code"
+                                    :src="captcha"
+                                    alt="code"
                                 />
                             </div>
                         </div>
@@ -84,7 +84,7 @@ import { cacheEnum } from '@/enums/cache'
 import useAppStore from '@/stores/modules/app'
 import useUserStore from '@/stores/modules/user'
 import cacheUtil from '@/utils/cache'
-import loginApi from '@/api/login'
+import loginApi from '@/api/login/index'
 
 const route = useRoute()
 const router = useRouter()
@@ -96,10 +96,10 @@ const formRef = shallowRef<FormInstance>()
 const config = computed(() => appStore.config)
 
 // 验证码
-const captcha = ref('')
+const captcha = ref<string>('')
 
 // 记住密码
-const remAccount = ref(false)
+const remAccount = ref<boolean>(false)
 
 // 表单参数
 const formData = reactive({
@@ -124,6 +124,9 @@ const rules = {
 
 /**
  * 获取验证码
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const getCaptcha = async (): Promise<void> => {
     const data = await loginApi.captcha()
@@ -133,6 +136,9 @@ const getCaptcha = async (): Promise<void> => {
 
 /**
  * 处理回车事件
+ *
+ * @returns {any}
+ * @author zero
  */
 const handleEnter = (): any => {
     if (!formData.password) {
@@ -143,6 +149,9 @@ const handleEnter = (): any => {
 
 /**
  * 处理登录事件
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleLogin = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -162,7 +171,7 @@ const handleLogin = async (): Promise<void> => {
         const { query: { redirect } } = route
         const path = typeof redirect === 'string' ? redirect : '/'
         await router.push(path)
-    }  catch (err) {
+    }  catch {
         await getCaptcha()
     }
 }
@@ -173,6 +182,7 @@ onMounted(async () => {
     if (config.value.enable_captcha) {
         await getCaptcha()
     }
+
     const value = cacheUtil.get(cacheEnum.ACCOUNT_KEY)
     if (value?.remember) {
         remAccount.value = value.remember

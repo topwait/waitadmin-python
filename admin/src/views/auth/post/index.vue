@@ -1,12 +1,12 @@
 <template>
     <div>
         <!-- 搜索栏 -->
-        <el-card class="!border-none mb-4" shadow="never">
-            <el-form class="mb-[-16px]" :model="queryParams" :inline="true">
+        <el-card class="border-none! mb-4" shadow="never">
+            <el-form class="-mb-4" :model="queryParams" :inline="true">
                 <el-form-item label="岗位编号" prop="username">
                     <el-input
                         v-model="queryParams.code"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请输入岗位编号"
                         clearable
                         @keyup.enter="resetPaging"
@@ -15,17 +15,17 @@
                 <el-form-item label="岗位名称">
                     <el-input
                         v-model="queryParams.name"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请输入岗位名称"
                         clearable
                         @keyup.enter="resetPaging"
                     />
                 </el-form-item>
                 <el-form-item label="岗位状态">
-                    <el-select v-model="queryParams.status" class="w-[250px]">
+                    <el-select v-model="queryParams.is_disable" class="w-[150px]!">
                         <el-option value="" label="全部" />
-                        <el-option value="0" label="正常" />
-                        <el-option value="1" label="禁用" />
+                        <el-option :value="false" label="正常" />
+                        <el-option :value="true" label="禁用" />
                     </el-select>
                 </el-form-item>
                 <el-form-item>
@@ -36,8 +36,8 @@
         </el-card>
 
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
-            <el-button type="primary" v-perms="['auth:post:add']" @click="handleEditor('add')">
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
+            <el-button v-perms="['auth:post:add']" type="primary" @click="handleEditor('add')">
                 <template #icon>
                     <icon name="el-icon-Plus" />
                 </template>
@@ -51,7 +51,7 @@
                 <el-table-column label="排序" prop="sort" min-width="100" />
                 <el-table-column label="状态" prop="is_disable" min-width="80">
                     <template #default="{ row }">
-                        <el-tag v-if="row.is_disable === 0">正常</el-tag>
+                        <el-tag v-if="!row.is_disable">正常</el-tag>
                         <el-tag v-else type="danger">禁用</el-tag>
                     </template>
                 </el-table-column>
@@ -100,7 +100,7 @@ const editorRef = shallowRef<InstanceType<typeof Editor>>()
 const queryParams = reactive({
     code: '',
     name: '',
-    status: ''
+    is_disable: ''
 })
 
 // 分页参数
@@ -115,6 +115,7 @@ const { pager, queryLists, resetParams, resetPaging } = usePaging({
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true
@@ -127,6 +128,7 @@ const handleEditor = async (type: string, row?: any): Promise<void> => {
  *
  * @param {number} id
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleDelete = async (id: number): Promise<void> => {
     feedback.confirm('确定要删除此项数据吗?')

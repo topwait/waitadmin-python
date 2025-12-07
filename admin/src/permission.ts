@@ -13,16 +13,16 @@ const whiteList: string[] = [
 ]
 
 // 递归动态路由
-const addRoutesRecursively = (routes: any, parentPath = '') => {
+const addRoutesRecursively = (routes: any, parentPath: string = ''): void => {
     try {
-        routes.forEach((route: any) => {
+        routes.forEach((route: any): void => {
             // 如果路由是外部链接则不添加
             if (validateUtil.isExternal(route.path)) {
                 return
             }
 
             // 拼接父路由路径和当前路由路径
-            const fullPath = parentPath + route.path
+            const fullPath: string = parentPath + route.path
 
             // 创建路由对象确保路由的唯一性
             const routerEntry = {
@@ -40,17 +40,20 @@ const addRoutesRecursively = (routes: any, parentPath = '') => {
 
             // 递归处理子路由
             if (route.children && route.children.length > 0) {
-                addRoutesRecursively(route.children, fullPath + '/')
+                addRoutesRecursively(route.children, `${fullPath}/`)
             }
         })
     } catch (e) {
-        // eslint-disable-next-line no-console
         console.error('Error adding routes:', e)
     }
 }
 
 // 路由前置拦截
-router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext): Promise<any> => {
+router.beforeEach(async (
+    to: RouteLocationNormalized,
+    _from: RouteLocationNormalized,
+    next: NavigationGuardNext
+): Promise<any> => {
     const userStore = useUserStore()
     const tabsStore = useTabsStore()
 

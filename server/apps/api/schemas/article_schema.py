@@ -17,7 +17,8 @@ from fastapi import Query
 
 class ArticleSearchIn(BaseModel):
     """ 文章搜索参数 """
-    page: int = Query(gt=0, default=1, description="当前页码")
+    page_no: Union[int, None] = Query(gt=0, default=1, description="当前页码")
+    page_size: Union[int, None] = Query(gt=0, default=15, description="每页条数")
     cid: Union[int, None] = Query(default=None, description="所属分类")
     keyword: Union[str, None] = Query(default=None, description="搜索关键词")
 
@@ -107,7 +108,7 @@ class ArticleDetailVo(BaseModel):
     intro: str = Field(description="文章简介")
     content: str = Field(description="文章内容")
     browse: int = Field(description="访问数量")
-    is_collect: int = Field(default="是否收藏: [0=否, 1=是]")
+    is_collect: bool = Field(default="是否收藏")
     create_time: str = Field(description="创建时间")
     update_time: str = Field(description="更新时间")
     prev: Dict[str, Any] = Field(description="上一条记录")
@@ -117,11 +118,21 @@ class ArticleDetailVo(BaseModel):
         json_schema_extra = {
             "example": {
                 "id": 1,
+                "category": "技术分享",
                 "image": "https://www.xx.com/images/article.jpg",
                 "title": "this is article title",
                 "intro": "this is intro...",
                 "content": "this is content...",
                 "browse": 10,
-                "create_time": "2023-03-08 21:28:28"
+                "is_collect": False,
+                "create_time": "2023-03-08 21:28:28",
+                "prev": {
+                    "id": 8,
+                    "title": "PHP中多态性是什么意思?"
+                },
+                "next": {
+                    "id": 6,
+                    "title": "PHP如何实现不模糊包含表达式"
+                }
             }
         }

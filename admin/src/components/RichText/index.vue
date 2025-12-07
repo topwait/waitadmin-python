@@ -3,19 +3,19 @@
         <toolbar
             class="border-b border-br"
             :editor="editorRef"
-            :defaultConfig="toolbarConfig"
+            :default-config="toolbarConfig"
             :mode="mode"
         />
         <w-editor
-            class="overflow-y-auto flex-1"
             v-model="valueHtml"
-            :defaultConfig="editorConfig"
+            class="overflow-y-auto flex-1"
+            :default-config="editorConfig"
             :mode="mode"
-            @onCreated="handleCreated"
+            @on-created="handleCreated"
         />
         <material-picker
             ref="materialPickerRef"
-            :type="'image'"
+            type="image"
             :limit="-1"
             :upload-hidden="true"
             @change="selectChange"

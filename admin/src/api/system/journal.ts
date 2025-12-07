@@ -12,6 +12,8 @@ const journalApi = {
      * @param {string} [params.ip]
      * @param {string} [params.start_time]
      * @param {string} [params.end_time]
+     * @returns {Promise<SystemJournalListResponse[]>}
+     * @author zero
      */
     lists(params: {
         page_no?: number;
@@ -21,8 +23,8 @@ const journalApi = {
         ip?: string;
         start_time?: string;
         end_time?: string;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<SystemJournalListResponse[]> {
+        return request.get<SystemJournalListResponse[]>({
             url: '/system/journal/lists',
             params
         })
@@ -32,9 +34,11 @@ const journalApi = {
      * 系统日志详情
      *
      * @param {number} id
+     * @returns {Promise<SystemJournalDetailResponse>}
+     * @author zero
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<SystemJournalDetailResponse> {
+        return request.get<SystemJournalDetailResponse>({
             url: '/system/journal/detail',
             params: { id }
         })

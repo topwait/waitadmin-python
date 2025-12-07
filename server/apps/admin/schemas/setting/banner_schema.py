@@ -20,7 +20,7 @@ class BannerSearchIn(BaseModel):
     page_no: int = Query(gt=0, default=1, description="当前页码")
     page_size: int = Query(gt=0, le=200, default=15, description="每页条数")
     title: Union[str, None] = Query(default=None, description="登录账号")
-    is_disable: Union[int, str, None] = Query(default=None, description="是否禁用: [0=否, 1=是]")
+    is_disable: Union[bool, None] = Query(default=None, description="是否禁用")
 
 
 class BannerDetailIn(BaseModel):
@@ -36,7 +36,7 @@ class BannerAddIn(BaseModel):
     target: str = Field(..., min_length=1, pattern=r"^(_self|_blank|_parent|_top)$", description="跳转方式")
     url: str = Field(max_length=250, default="", description="跳转链接")
     sort: int = Field(ge=0, le=999999, default=0, description="排序编号")
-    is_disable: int = Field(ge=0, le=1, default=0, description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(default=False, description="是否禁用")
 
     @classmethod
     def messages(cls):
@@ -51,8 +51,7 @@ class BannerAddIn(BaseModel):
             "target.pattern": "不支持的跳转方式",
             "sort.ge": "排序号不能少于0",
             "sort.le": "排序号不能大于999999",
-            "is_disable.ge": "轮播图状态非合法值: [0, 1]",
-            "is_disable.le": "轮播图状态非合法值: [0, 1]"
+            "is_disable.bool_parsing": "轮播图状态必须为布尔值"
         }
 
     class Config:
@@ -64,7 +63,7 @@ class BannerAddIn(BaseModel):
                 "target": "_blank",
                 "url": "",
                 "sort": 0,
-                "is_disable": 0
+                "is_disable": False
             }
         }
 
@@ -78,24 +77,11 @@ class BannerEditIn(BaseModel):
     target: str = Field(..., min_length=1, pattern=r"^(_self|_blank|_parent|_top)$", description="跳转方式")
     url: str = Field(max_length=250, default="", description="跳转链接")
     sort: int = Field(ge=0, le=999999, default=0, description="排序编号")
-    is_disable: int = Field(ge=0, le=1, default=0, description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(default=False, description="是否禁用")
 
     @classmethod
     def messages(cls):
-        return {
-            "position.missing": "请选择轮播位置",
-            "position.ge": "轮播位置选择异常",
-            "title.min_length": "请填写轮播标题",
-            "title.max_length": "轮播标题不能超出200个字符",
-            "image.min_length": "请上传轮播图片",
-            "image.max_length": "图片链接不能超出250个字符",
-            "target.min_length": "请选择跳转方式",
-            "target.pattern": "不支持的跳转方式",
-            "sort.ge": "排序号不能少于0",
-            "sort.le": "排序号不能大于999999",
-            "is_disable.ge": "轮播图状态非合法值: [0, 1]",
-            "is_disable.le": "轮播图状态非合法值: [0, 1]"
-        }
+        return BannerAddIn.messages()
 
     class Config:
         json_schema_extra = {
@@ -107,7 +93,7 @@ class BannerEditIn(BaseModel):
                 "target": "_blank",
                 "url": "",
                 "sort": 0,
-                "is_disable": 0
+                "is_disable": False
             }
         }
 
@@ -115,6 +101,12 @@ class BannerEditIn(BaseModel):
 class BannerDeleteIn(BaseModel):
     """ 轮播图删除参数 """
     id: int = Field(gt=0, description="轮播图ID", examples=[1])
+
+    @classmethod
+    def messages(cls):
+        return {
+            "id.missing": "id参数缺失"
+        }
 
     class Config:
         json_schema_extra = {
@@ -149,7 +141,7 @@ class BannerListVo(BaseModel):
     target: str = Field(description="跳转方式")
     url: str = Field(description="跳转链接")
     sort: int = Field(description="排序编号")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(description="是否禁用")
     create_time: str = Field(description="创建时间")
     update_time: str = Field(description="更新时间")
 
@@ -163,7 +155,7 @@ class BannerListVo(BaseModel):
                 "target": "_blank",
                 "url": "",
                 "sort": 0,
-                "is_disable": 0,
+                "is_disable": False,
                 "create_time": "2023-03-12 00:32:13",
                 "update_time": "2023-03-18 15:29:50"
             }
@@ -179,7 +171,7 @@ class BannerDetailVo(BaseModel):
     target: str = Field(description="跳转方式")
     url: str = Field(description="跳转链接")
     sort: int = Field(description="轮播排序")
-    is_disable: int = Field(description="是否禁用: [0=否, 1=是]")
+    is_disable: bool = Field(description="是否禁用")
     create_time: str = Field(description="创建时间")
     update_time: str = Field(description="更新时间")
 
@@ -193,7 +185,7 @@ class BannerDetailVo(BaseModel):
                 "target": "_blank",
                 "url": "/",
                 "sort": 0,
-                "is_disable": 0,
+                "is_disable": False,
                 "create_time": "2023-03-12 00:32:13",
                 "update_time": "2023-03-18 15:29:50"
             }

@@ -1,5 +1,5 @@
 <template>
-    <el-form ref="formRef">
+    <el-form>
         <!-- 协议设置 -->
         <el-tabs type="border-card">
             <el-tab-pane label="服务协议">
@@ -14,7 +14,7 @@
         </el-tabs>
 
         <!-- 保存按钮 -->
-        <el-card shadow="never" class="!border-none mt-4">
+        <el-card shadow="never" class="border-none! mt-4">
             <el-button
                 v-perms="['setting:policy:save']"
                 :loading="loading"
@@ -46,6 +46,9 @@ const formData = reactive({
 
 /**
  * 查询配置参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const queryConfigs = async (): Promise<void> => {
     const data = await policyApi.detail()
@@ -54,6 +57,9 @@ const queryConfigs = async (): Promise<void> => {
 
 /**
  * 提交修改参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     loading.value = true

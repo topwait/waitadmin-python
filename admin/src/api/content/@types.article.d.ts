@@ -1,0 +1,59 @@
+/**
+ * 文章列表类型
+ */
+interface ContentArticleListResponse {
+    // ID
+    id: number;
+    // 封面
+    image: string;
+    // 标题
+    title: string;
+    // 分类
+    category: string;
+    // 浏览量
+    browse: number;
+    // 收藏量
+    collect: number;
+    // 排序
+    sort: number;
+    // 是否置顶
+    is_topping: boolean;
+    // 是否推荐
+    is_recommend: boolean;
+    // 是否显示
+    is_show: boolean;
+    // 创建时间
+    create_time: string;
+    // 更新时间
+    update_time: string;
+}
+
+/**
+ * 文章详情类型
+ */
+interface ContentArticleDetailResponse {
+    // ID
+    id: number;
+    // 分类ID
+    cid: number;
+    // 封面
+    image: string;
+    // 标题
+    title: string;
+    // 简介
+    intro: string;
+    // 内容
+    content: string;
+    // 浏览量
+    browse: number;
+    // 收藏量
+    collect: number;
+    // 排序
+    sort: number;
+    // 是否置顶
+    is_topping: boolean;
+    // 是否推荐
+    is_recommend: boolean;
+    // 是否显示
+    is_show: boolean;
+}

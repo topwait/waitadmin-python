@@ -11,7 +11,6 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 from typing import List
-
 from fastapi import APIRouter, Depends
 from hypertext import R, response_json
 from apps.admin.schemas.setting import notice_schema as schema
@@ -23,8 +22,8 @@ router = APIRouter(prefix="/notice", tags=["通知配置"])
 
 @router.get("/lists", summary="通知配置列表", response_model=R[List[schema.NoticeListVo]])
 @response_json
-async def lists():
-    return await NoticeService.lists()
+async def lists(params: schema.NoticeQueryIn = Depends()):
+    return await NoticeService.lists(params.client)
 
 
 @router.get("/detail", summary="通知配置详情", response_model=R[schema.NoticeDetailVo])

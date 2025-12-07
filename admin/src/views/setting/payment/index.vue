@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 表格栏 -->
-        <el-card class="!border-none" shadow="never">
+        <el-card class="border-none!" shadow="never">
             <el-table :data="dataLists" size="large" class="mt-4">
                 <el-table-column label="支付方式" prop="logo" min-width="135">
                     <template #default="{ row }">
@@ -10,14 +10,14 @@
                 </el-table-column>
                 <el-table-column label="显示图标" prop="icon" min-width="80">
                     <template #default="{ row }">
-                        <el-image :src="row.icon" class="w-[28px] h-[26px]" />
+                        <el-image :src="row.icon" class="w-7 h-[26px]" />
                     </template>
                 </el-table-column>
                 <el-table-column label="显示名称" prop="shorter" min-width="110" />
                 <el-table-column label="排序" prop="sort" min-width="80" />
                 <el-table-column label="状态" prop="status" min-width="80">
                     <template #default="{ row }">
-                        <el-tag v-if="row.status === 1">启用</el-tag>
+                        <el-tag v-if="row.status">启用</el-tag>
                         <el-tag v-else type="danger">停用</el-tag>
                     </template>
                 </el-table-column>
@@ -51,6 +51,9 @@ const dataLists = ref<Array<any>>([])
 
 /**
  * 查询支付配置列表
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const queryPaymentLists = async (): Promise<void> => {
     dataLists.value = await paymentApi.lists()
@@ -62,6 +65,7 @@ const queryPaymentLists = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true

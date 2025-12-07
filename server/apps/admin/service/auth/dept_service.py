@@ -37,7 +37,7 @@ class DeptService:
             zero
         """
         fields = ["id", "pid", "name", "is_disable"]
-        lists = await AuthDeptModel.filter(is_delete=0).order_by("-sort", "-id").all().values(*fields)
+        lists = await AuthDeptModel.filter(is_delete=False).order_by("-sort", "-id").all().values(*fields)
 
         vo_list = [TypeAdapter(schema.AuthDeptWholeVo).validate_python(item) for item in lists]
         return ArrayUtil.list_to_tree([i.__dict__ for i in vo_list], "id", "pid", "children")
@@ -62,7 +62,11 @@ class DeptService:
         }, params.__dict__)
 
         fields = AuthDeptModel.without_field("level,relation,is_delete,delete_time")
-        lists = await AuthDeptModel.filter(is_delete=0).filter(*where).order_by("-sort", "-id").all().values(*fields)
+        lists = await (AuthDeptModel
+                       .filter(is_delete=False)
+                       .filter(*where)
+                       .order_by("-sort", "-id")
+                       .all().values(*fields))
 
         for item in lists:
             item["update_time"] = TimeUtil.timestamp_to_date(item["update_time"])
@@ -101,19 +105,19 @@ class DeptService:
         """
         # 验证唯一
         if post.pid == 0:
-            _top_dept = await AuthDeptModel.filter(is_delete=0).first().values("id")
+            _top_dept = await AuthDeptModel.filter(is_delete=False).first().values("id")
             if _top_dept:
                 raise AppException("只允许存在一个顶级部门")
 
         # 验证父级
         if post.pid > 0:
-            _parent_dept = await AuthDeptModel.filter(id=post.pid, is_delete=0).first().values("id")
+            _parent_dept = await AuthDeptModel.filter(id=post.pid, is_delete=False).first().values("id")
             if not _parent_dept:
                 raise AppException("父级部门已不存在")
 
         # 创建部门
         dept = await AuthDeptModel.create(
-            **post.dict(),
+            **post.model_dump(),
             create_time=int(time.time()),
             update_time=int(time.time())
         )
@@ -123,7 +127,7 @@ class DeptService:
             relation_str = "0," + str(dept.id)
             await AuthDeptModel.filter(id=dept.id).update(level=1, relation=relation_str)
         else:
-            parent_dept = await AuthDeptModel.filter(id=post.pid, is_delete=0).first()
+            parent_dept = await AuthDeptModel.filter(id=post.pid, is_delete=False).first()
             await AuthDeptModel.filter(id=dept.id).update(
                 level=parent_dept.level + 1,
                 relation=parent_dept.relation + "," + str(dept.id)
@@ -141,20 +145,20 @@ class DeptService:
             zero
         """
         # 验证数据
-        exist_dept = await AuthDeptModel.filter(id=post.id, is_delete=0).first().values("id")
+        exist_dept = await AuthDeptModel.filter(id=post.id, is_delete=False).first().values("id")
         if not exist_dept:
             raise AppException("部门数据不存在")
 
         # 验证父级
         if post.id > 1:
-            _parent_dept = await AuthDeptModel.filter(id=post.pid, is_delete=0).first().values("id")
+            _parent_dept = await AuthDeptModel.filter(id=post.pid, is_delete=False).first().values("id")
             if not _parent_dept:
                 raise AppException("父级部门已不存在了")
 
             if post.id == post.pid:
                 raise AppException("父级部门不能是自己")
 
-        params = post.dict()
+        params = post.model_dump()
         del params["id"]
 
         # 更新部门
@@ -164,10 +168,10 @@ class DeptService:
         )
 
         # 当前部门
-        dept = await AuthDeptModel.filter(id=post.id, is_delete=0).first()
+        dept = await AuthDeptModel.filter(id=post.id, is_delete=False).first()
 
         # 父级部门
-        parent_dept = await AuthDeptModel.filter(id=post.pid, is_delete=0).first()
+        parent_dept = await AuthDeptModel.filter(id=post.pid, is_delete=False).first()
 
         # 处理关系
         if parent_dept:
@@ -199,19 +203,19 @@ class DeptService:
         Author:
             zero
         """
-        exist_dept = await AuthDeptModel.filter(id=id_, is_delete=0).first().values("id")
+        exist_dept = await AuthDeptModel.filter(id=id_, is_delete=False).first().values("id")
         if not exist_dept:
             raise AppException("部门数据不存在")
 
-        child_dept = await AuthDeptModel.filter(pid=id_, is_delete=0).first().values("id")
+        child_dept = await AuthDeptModel.filter(pid=id_, is_delete=False).first().values("id")
         if child_dept:
             raise AppException("请先删除子部门")
 
-        admin = await AuthAdminModel.filter(dept_id=id_, is_delete=0).first().values("id")
+        admin = await AuthAdminModel.filter(dept_id=id_, is_delete=False).first().values("id")
         if admin:
             raise AppException("部门已被使用不能删除")
 
         await AuthDeptModel.filter(id=id_).update(
-            is_delete=1,
+            is_delete=True,
             delete_time=int(time.time())
         )

@@ -24,6 +24,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.date import DateTrigger
+from config import get_settings
 from common.models.sys import SysCrontabModel
 from common.enums.public import CrontabEnum
 from common.utils.config import ConfigUtil
@@ -41,8 +42,9 @@ class AppEvents:
         with open("scheduler.pid", "w") as f:
             f.write(str(os.getpid()))
 
+        delay = 1 if get_settings().SERVER_WORKERS == 1 else 5
         asyncio.create_task(cls._redis_subscribe())
-        run_date = datetime.now() + timedelta(seconds=5)
+        run_date = datetime.now() + timedelta(seconds=delay)
         scheduler.add_job(cls._init_crontab, DateTrigger(run_date=run_date))
         scheduler.start()
 
@@ -56,12 +58,13 @@ class AppEvents:
         with open("scheduler.pid", "r") as f:
             pid = f.read()
             if pid != str(os.getpid()):
+                scheduler.shutdown()
                 return False
 
         await ConfigUtil.set("sys", "process_id", pid)
 
         tasks = []
-        enums = {1: "Success", 2: "Stop", 3: "kError"}
+        enums = {1: "Success", 2: "Stop", 3: "Error"}
         crontabs = await SysCrontabModel.filter(is_delete=0).order_by("-id").all()
         for crontab in crontabs:
             task = [crontab.id, crontab.name, crontab.command, crontab.concurrent]
@@ -127,6 +130,7 @@ class AppEvents:
                 template = f.read()
                 template = template.replace("{{startup_time}}", startup_time)
                 template = template.replace("{{process_id}}", str(os.getpid()))
+                print("\n")
                 print(template)
 
         for job in tasks:
@@ -143,6 +147,7 @@ class AppEvents:
             pubsub = await RedisUtil.subscribe("topical")
             async for message in pubsub.listen():
                 if message["type"] != "message":
+                    print("Startup process: " + str(os.getpid()))
                     continue
 
                 event = json.loads(str(message["data"] or "{}"))

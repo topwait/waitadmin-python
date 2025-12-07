@@ -16,6 +16,7 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 package-lock.json
+pnpm-lock.yaml
 .idea
 .DS_Store
 *.suo
@@ -30,5 +31,6 @@ components.d.ts
 .eslintrc-auto-import.json
 
 # .env
+.env
 .env.development
 .env.production

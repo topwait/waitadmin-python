@@ -34,7 +34,7 @@ class UserGroupService:
         Author:
             zero
         """
-        _lists = await UserGroupModel.filter(is_delete=0).order_by("-sort", "-id").all().values("id", "name")
+        _lists = await UserGroupModel.filter(is_delete=False).order_by("-sort", "-id").all().values("id", "name")
         return [TypeAdapter(schema.UserGroupWholeVo).validate_python(item) for item in _lists]
 
     @classmethod
@@ -55,7 +55,7 @@ class UserGroupService:
             "%like%": ["name"]
         }, params.__dict__)
 
-        _model = UserGroupModel.filter(is_delete=0).filter(*where).order_by("-sort", "-id")
+        _model = UserGroupModel.filter(is_delete=False).filter(*where).order_by("-sort", "-id")
         _pager = await UserGroupModel.paginate(
             model=_model,
             page_no=params.page_no,
@@ -94,7 +94,7 @@ class UserGroupService:
         Author:
             zero
         """
-        pn = await UserGroupModel.filter(name=post.name, is_delete=0)
+        pn = await UserGroupModel.filter(name=post.name, is_delete=False)
         if pn:
             raise AppException("用户分组名称已被占用")
 
@@ -115,11 +115,11 @@ class UserGroupService:
         Author:
             zero
         """
-        _post = await UserGroupModel.filter(id=post.id, is_delete=0).first().values("id")
+        _post = await UserGroupModel.filter(id=post.id, is_delete=False).first().values("id")
         if not _post:
             raise AppException("用户分组不存在")
 
-        _post3 = await UserGroupModel.filter(name=post.name, id__not=post.id, is_delete=0).values("id")
+        _post3 = await UserGroupModel.filter(name=post.name, id__not=post.id, is_delete=False).values("id")
         if _post3:
             raise AppException("用户分组名称已被占用")
 
@@ -142,12 +142,15 @@ class UserGroupService:
         Author:
             zero
         """
-        p = await UserGroupModel.filter(id=id_, is_delete=0).first().values("id")
+        p = await UserGroupModel.filter(id=id_, is_delete=False).first().values("id")
         if not p:
             raise AppException("用户分组不存在")
 
-        admin = await UserModel.filter(group_id=id_, is_delete=0).first().values("id")
+        admin = await UserModel.filter(group_id=id_, is_delete=False).first().values("id")
         if admin:
             raise AppException("用户分组已被使用不能删除")
 
-        await UserGroupModel.filter(id=id_).update(is_delete=1, delete_time=int(time.time()))
+        await UserGroupModel.filter(id=id_).update(
+            is_delete=True,
+            delete_time=int(time.time())
+        )

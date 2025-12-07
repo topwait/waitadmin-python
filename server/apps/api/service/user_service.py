@@ -45,37 +45,50 @@ class UserService:
         Author:
             zero
         """
-        user = await UserModel.filter(id=id_, is_delete=0).get()
+        user = await UserModel.filter(id=id_, is_delete=False).get()
         auth = await UserAuthModel.filter(
             user_id=user.id,
             terminal__in=[ClientEnum.MNP, ClientEnum.OA]
         ).first()
 
-        collect = await ArticleCollectModel.filter(user_id=user.id, is_delete=0).count()
+        collect = await ArticleCollectModel.filter(user_id=user.id, is_delete=False).count()
 
         d = user.__dict__
         d["avatar"] = await UrlUtil.to_absolute_url(user.avatar)
         d["collect"] = collect
-        d["is_wechat"] = 1 if auth else 0
-        d["is_password"] = 1 if user.password else 0
+        d["is_wechat"] = True if auth else False
+        d["is_password"] = True if user.password else False
         d["create_time"] = TimeUtil.timestamp_to_date(user.create_time)
         d["last_login_time"] = TimeUtil.timestamp_to_date(user.last_login_time)
         return TypeAdapter(schema.UserCenterVo).validate_python(d)
 
     @classmethod
-    async def collect(cls, user_id: int, params: schema.UserCollectSearchIn):
+    async def collect(cls, user_id: int, params: schema.UserCollectSearchIn) -> PagingResult[schema.UserCollectVo]:
+        """
+        收藏列表
+
+        Args:
+            user_id (int): 用户ID
+            params (schema.UserCollectSearchIn): 搜索参数
+
+        Returns:
+            PagingResult[schema.UserCollectVo]
+
+        Author:
+            zero
+        """
         offset: int = (params.page - 1) * 15
 
         COUNT_SQL = f"""__SELECT COUNT(*)
                         FROM `{ArticleCollectModel.Meta.table}` AS ac
                         JOIN `{ArticleModel.Meta.table}` AS a ON a.id=ac.article_id
-                        WHERE ac.user_id={user_id} AND ac.is_delete=0 AND a.is_delete=0;
+                        WHERE ac.user_id={user_id} AND ac.is_delete=False AND a.is_delete=False;
                     """.replace("__", "")
 
         QUERY_SQL = f"""__SELECT ac.`id`, a.`image`, a.`title`, a.`browse`, a.`collect`, ac.`create_time`
                        FROM `{ArticleCollectModel.Meta.table}` AS ac
                        JOIN `{ArticleModel.Meta.table}` AS a ON a.id=ac.article_id
-                       WHERE ac.user_id={user_id} AND ac.is_delete=0 AND a.is_delete=0
+                       WHERE ac.user_id={user_id} AND ac.is_delete=False AND a.is_delete=False
                        ORDER BY ac.id DESC
                        LIMIT {offset}, 15;
                    """.replace("__", "")
@@ -91,7 +104,7 @@ class UserService:
         return PagingResult.create(_lists, count[0]["COUNT(*)"], params.page, 15)
 
     @classmethod
-    async def edit(cls, field: str, value: str, user_id: int):
+    async def edit(cls, field: str, value: str, user_id: int) -> None:
         """
         编辑用户资料。
 
@@ -104,7 +117,7 @@ class UserService:
             zero
         """
         if field == "account":
-            user = await UserModel.filter(id__not=user_id, account=value, is_delete=0).first()
+            user = await UserModel.filter(id__not=user_id, account=value, is_delete=False).first()
             if user:
                 raise AppException("该账号已被占用")
             if len(value) < 4:
@@ -114,7 +127,7 @@ class UserService:
 
             await UserModel.filter(id=user_id).update(account=value, update_time=int(time.time()))
         elif field == "nickname":
-            user = await UserModel.filter(id__not=user_id, nickname=value, is_delete=0).first()
+            user = await UserModel.filter(id__not=user_id, nickname=value, is_delete=False).first()
             if user:
                 raise AppException("该昵称已被占用")
             if len(value) < 3:
@@ -128,7 +141,7 @@ class UserService:
                 raise AppException("请正确选择您的性别")
             await UserModel.filter(id=user_id).update(gender=value, update_time=int(time.time()))
         elif field == "avatar":
-            user = await UserModel.filter(id=user_id, is_delete=0).first()
+            user = await UserModel.filter(id=user_id, is_delete=False).first()
             if not user:
                 raise AppException("账号异常请刷新页面")
             avatar = UrlUtil.to_relative_url(value)
@@ -137,7 +150,7 @@ class UserService:
             raise AppException("不支持的场景")
 
     @classmethod
-    async def forget_pwd(cls, code: str, mobile: str, new_pwd: str):
+    async def forget_pwd(cls, code: str, mobile: str, new_pwd: str) -> None:
         """
         找回登录密码 (找回后强退账号)。
 
@@ -154,7 +167,7 @@ class UserService:
             raise AppException("验证码错误")
 
         # 查询账户
-        user = await UserModel.filter(mobile=mobile, is_delete=0).first()
+        user = await UserModel.filter(mobile=mobile, is_delete=False).first()
 
         # 验证账户
         if not user:
@@ -168,7 +181,7 @@ class UserService:
         await user.save()
 
     @classmethod
-    async def change_pwd(cls, old_pwd: str, new_pwd: str, user_id: int):
+    async def change_pwd(cls, old_pwd: str, new_pwd: str, user_id: int) -> None:
         """
         修改登录密码 (修改后强退账号)。
 
@@ -181,7 +194,7 @@ class UserService:
             zero
         """
         # 查询账户
-        user = await UserModel.filter(id=user_id, is_delete=0).first()
+        user = await UserModel.filter(id=user_id, is_delete=False).first()
 
         # 验证账户
         if not user:
@@ -203,7 +216,7 @@ class UserService:
         # todo
 
     @classmethod
-    async def bind_wechat(cls, state: str, code: str, user_id: int, terminal: int):
+    async def bind_wechat(cls, state: str, code: str, user_id: int, terminal: int) -> None:
         """
         绑定微信。
 
@@ -266,7 +279,7 @@ class UserService:
             await WechatCache.login_scan_set(state, WechatCache.SCAN_STATUS_OK)
 
     @classmethod
-    async def bind_mobile(cls, scene: str, mobile: str, code: str, user_id: int):
+    async def bind_mobile(cls, scene: str, mobile: str, code: str, user_id: int) -> None:
         """
         绑定手机。
 
@@ -291,14 +304,14 @@ class UserService:
                 raise AppException("验证码错误")
 
         # 查询用户
-        user = await UserModel.filter(id=user_id, is_delete=0).first()
+        user = await UserModel.filter(id=user_id, is_delete=False).first()
 
         # 验证用户
         if not user:
             raise AppException("用户不存在")
 
         # 验证手机
-        check_mobile = await UserModel.filter(id__eq=user_id, mobile=mobile, is_delete=0).first()
+        check_mobile = await UserModel.filter(id__eq=user_id, mobile=mobile, is_delete=False).first()
         if check_mobile:
             raise AppException("手机号已被占用")
 
@@ -310,7 +323,7 @@ class UserService:
             await MsgDriver.verify_code(n_code, code)
 
     @classmethod
-    async def bind_email(cls, scene: str, email: str, code: str, user_id: int):
+    async def bind_email(cls, scene: str, email: str, code: str, user_id: int) -> None:
         """
         绑定邮箱。
 
@@ -329,12 +342,12 @@ class UserService:
             raise AppException("验证码错误")
 
         # 验证用户
-        user = await UserModel.filter(id=user_id, is_delete=0).first()
+        user = await UserModel.filter(id=user_id, is_delete=False).first()
         if not user:
             raise AppException("用户不存在")
 
         # 验证邮箱
-        check_email = await UserModel.filter(id__not=user_id, email=email, is_delete=0).first()
+        check_email = await UserModel.filter(id__not=user_id, email=email, is_delete=False).first()
         if check_email:
             raise AppException("邮箱号已被占用")
 

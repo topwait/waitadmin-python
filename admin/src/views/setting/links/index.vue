@@ -1,12 +1,12 @@
 <template>
     <div>
         <!-- 搜索栏 -->
-        <el-card class="!border-none mb-4" shadow="never">
-            <el-form class="mb-[-16px]" :model="queryParams" :inline="true">
+        <el-card class="border-none! mb-4" shadow="never">
+            <el-form class="-mb-4" :model="queryParams" :inline="true">
                 <el-form-item label="友链名称" prop="title">
                     <el-input
                         v-model="queryParams.title"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请输入友链名称"
                         clearable
                         @keyup.enter="resetPaging"
@@ -15,7 +15,7 @@
                 <el-form-item label="跳转方式">
                     <el-select
                         v-model="queryParams.target"
-                        class="w-[250px]"
+                        class="w-[150px]!"
                         placeholder="请选择"
                     >
                         <el-option value="" label="全部" />
@@ -29,8 +29,8 @@
         </el-card>
 
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
-            <el-button type="primary" v-perms="['setting:links:add']" @click="handleEditor('add')">
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
+            <el-button v-perms="['setting:links:add']" type="primary" @click="handleEditor('add')">
                 <template #icon>
                     <icon name="el-icon-Plus" />
                 </template>
@@ -121,6 +121,7 @@ const { pager, queryLists, resetParams, resetPaging } = usePaging({
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true
@@ -133,6 +134,7 @@ const handleEditor = async (type: string, row?: any): Promise<void> => {
  *
  * @param {number} id
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleDelete = async (id: number): Promise<void> => {
     feedback.confirm('确定要删除此项数据吗?')

@@ -17,7 +17,7 @@ from .article_schema import ArticleListsVo
 
 
 class QueryPolicyIn(BaseModel):
-    """ 发送短信参数"""
+    """ 查询协议参数"""
     type: str = Query(..., description="协议类型: [service,private,payment]")
 
     class Config:
@@ -109,11 +109,12 @@ class ConfigVo(BaseModel):
         json_schema_extra = {
             "example": {
                 "login": {
-                    "is_agreement": 1,
-                    "defaults": "account",
-                    "register": ["mobile", "email"],
-                    "means": ["account", "mobile"],
-                    "oauth": ["wx"]
+                    "pc": {
+                        "is_agreement": True,
+                        "default_method": "account",
+                        "usable_channel": ["account", "mobile", "wx"],
+                        "usable_register": ["account", "mobile", "email"]
+                    }
                 },
                 "website": {
                     "icp": "",

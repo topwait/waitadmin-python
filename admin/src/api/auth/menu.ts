@@ -3,18 +3,24 @@ import request from '@/utils/request'
 const authMenuApi = {
     /**
      * 所有菜单
+     *
+     * @returns {AuthMenuWholeResponse[]}
+     * @author zero
      */
-    whole(): Promise<any> {
-        return request.get({
+    whole(): Promise<AuthMenuWholeResponse[]> {
+        return request.get<AuthMenuWholeResponse[]>({
             url: '/auth/menu/whole'
         })
     },
 
     /**
      * 菜单列表
+     *
+     * @returns {AuthMenuListResponse[]}
+     * @author zero
      */
-    lists(): Promise<any> {
-        return request.get({
+    lists(): Promise<AuthMenuListResponse[]> {
+        return request.get<AuthMenuListResponse[]>({
             url: '/auth/menu/lists'
         })
     },
@@ -23,9 +29,11 @@ const authMenuApi = {
      * 菜单详情
      *
      * @param {number} id
+     * @returns {AuthMenuDetailResponse}
+     * @author zero
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<AuthMenuDetailResponse> {
+        return request.get<AuthMenuDetailResponse>({
             url: '/auth/menu/detail',
             params: { id }
         })
@@ -44,8 +52,10 @@ const authMenuApi = {
      * @param {string} [params.params]
      * @param {string} [params.component]
      * @param {string} [params.path]
-     * @param {number} [params.is_show]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_show]
+     * @param {boolean} [params.is_disable]
+     * @returns {Promise<any>}
+     * @author zero
      */
     add(params: {
         pid: number;
@@ -57,8 +67,8 @@ const authMenuApi = {
         params?: string;
         component?: string;
         path?: string;
-        is_show?: number;
-        is_disable?: number;
+        is_show?: boolean;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/auth/menu/add',
@@ -80,8 +90,10 @@ const authMenuApi = {
      * @param {string} [params.params]
      * @param {string} [params.component]
      * @param {string} [params.path]
-     * @param {number} [params.is_show]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_show]
+     * @param {boolean} [params.is_disable]
+     * @returns {Promise<any>}
+     * @author zero
      */
     edit(params: {
         id: number;
@@ -94,8 +106,8 @@ const authMenuApi = {
         params?: string;
         component?: string;
         path?: string;
-        is_show?: number;
-        is_disable?: number;
+        is_show?: boolean;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/auth/menu/edit',
@@ -107,6 +119,8 @@ const authMenuApi = {
      * 菜单删除
      *
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     delete(id: number): Promise<any> {
         return request.post({

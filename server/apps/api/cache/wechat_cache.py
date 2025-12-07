@@ -11,7 +11,7 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 import json
-from typing import Optional
+from typing import Optional, Dict, Union
 from common.utils.cache import RedisUtil
 
 
@@ -55,15 +55,15 @@ class WechatCache:
          Args:
             state (str): 盐
             status (int): 状态
-            token (int): 登录令牌
+            token (str): 登录令牌
 
         Author:
             zero
         """
-        data = {"status": status}
+        data: Dict[str, Union[int, str]] = {"status": status}
         expire: int = cls.ttl
         if token:
-            data["token"] = token
+            data["token"] = str(token)
 
         if status != cls.SCAN_STATUS_STAY:
             ttl = await RedisUtil.ttl(cls.prefix + state)

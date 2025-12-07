@@ -1,7 +1,7 @@
 import { ElMessage, ElMessageBox, ElTree } from 'element-plus'
 import { usePaging } from '@/hooks/usePaging'
 import feedback from '@/utils/feedback'
-import attachApi from '@/api/attach'
+import attachApi from '@/api/public/attach'
 
 export function useCate(type: number): any {
     const cateId: Ref<number> = ref<number>(0)
@@ -69,6 +69,7 @@ export function useFile(
 ): any {
     // 移动的ID
     const moveId: globalThis.Ref<number> = ref<number>(0)
+
     // 移动弹窗
     const movePo: globalThis.Ref<boolean> = ref<boolean>(false)
 

@@ -17,44 +17,44 @@
                     <el-form-item label="通知业务:" style="margin: 0;">{{ formData.client }}</el-form-item>
                     <el-form-item label="通知描述:" style="margin: 0;">{{ formData.remarks }}</el-form-item>
                 </el-card>
-                <el-card class="mb-3" shadow="never" v-if="Object.keys(formData.sys_template).length > 0">
+                <el-card v-if="Object.keys(formData.sys_template).length > 0" class="mb-3" shadow="never">
                     <div class="font-medium mb-3">系统通知</div>
                     <el-form-item label="开启状态" prop="sys_template.status" required>
                         <el-radio-group v-model="formData.sys_template.status">
-                            <el-radio value="0">关闭</el-radio>
-                            <el-radio value="1">开启</el-radio>
+                            <el-radio :value="false">关闭</el-radio>
+                            <el-radio :value="true">开启</el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="通知内容" prop="sys_template.content" required>
                         <el-input
-                            type="textarea"
                             v-model="formData.sys_template.content"
+                            type="textarea"
                             :autosize="{ minRows: 5, maxRows: 5 }"
                         />
                     </el-form-item>
                 </el-card>
-                <el-card class="mb-3" shadow="never" v-if="Object.keys(formData.ems_template).length > 0">
+                <el-card v-if="Object.keys(formData.ems_template).length > 0" class="mb-3" shadow="never">
                     <div class="font-medium mb-3">邮件通知</div>
                     <el-form-item label="开启状态" prop="ems_template.status" required>
                         <el-radio-group v-model="formData.ems_template.status">
-                            <el-radio value="0">关闭</el-radio>
-                            <el-radio value="1">开启</el-radio>
+                            <el-radio :value="false">关闭</el-radio>
+                            <el-radio :value="true">开启</el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="邮件内容" prop="ems_template.content" required>
                         <el-input
-                            type="textarea"
                             v-model="formData.ems_template.content"
+                            type="textarea"
                             :autosize="{ minRows: 5, maxRows: 5 }"
                         />
                     </el-form-item>
                 </el-card>
-                <el-card shadow="never" v-if="Object.keys(formData.sms_template).length > 0">
+                <el-card v-if="Object.keys(formData.sms_template).length > 0" shadow="never">
                     <div class="font-medium mb-3">短信通知</div>
                     <el-form-item label="开启状态" prop="sms_template.status" required>
                         <el-radio-group v-model="formData.sms_template.status">
-                            <el-radio value="0">关闭</el-radio>
-                            <el-radio value="1">开启</el-radio>
+                            <el-radio :value="false">关闭</el-radio>
+                            <el-radio :value="true">开启</el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="模板编号" prop="sms_template.template_code" required>
@@ -65,8 +65,8 @@
                     </el-form-item>
                     <el-form-item label="短信内容" prop="sms_template.content" required>
                         <el-input
-                            type="textarea"
                             v-model="formData.sms_template.content"
+                            type="textarea"
                             :autosize="{ minRows: 5, maxRows: 5 }"
                         />
                     </el-form-item>
@@ -106,6 +106,9 @@ const formData = reactive({
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -128,6 +131,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -136,6 +140,7 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await noticeApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
                 // @ts-ignore
                 formData[key] = data[key]

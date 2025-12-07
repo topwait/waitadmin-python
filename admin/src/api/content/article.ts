@@ -8,19 +8,21 @@ const articleApi = {
      * @param {number} [params.page_no]
      * @param {number} [params.page_size]
      * @param {string} [params.title]
-     * @param {number} [params.status]
+     * @param {boolean} [params.is_show]
      * @param {string} [params.start_time]
      * @param {string} [params.end_time]
+     * @returns {ContentArticleListResponse[]}
+     * @author zero
      */
     lists(params: {
         page_no?: number;
         page_size?: number;
         title?: string;
-        status?: number;
+        is_show?: boolean;
         start_time?: string;
         end_time?: string;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<ContentArticleListResponse[]> {
+        return request.get<ContentArticleListResponse[]>({
             url: '/content/article/lists',
             params
         })
@@ -30,9 +32,11 @@ const articleApi = {
      * 文章详情
      *
      * @param {number} id
+     * @returns {ContentCategoryDetailResponse}
+     * @author zero
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<ContentArticleDetailResponse> {
+        return request.get<ContentArticleDetailResponse>({
             url: '/content/article/detail',
             params: { id }
         })
@@ -48,9 +52,11 @@ const articleApi = {
      * @param {string} [params.intro]
      * @param {string} [params.content]
      * @param {number} [params.sort]
-     * @param {number} [params.is_topping]
-     * @param {number} [params.is_recommend]
-     * @param {number} [params.is_show]
+     * @param {boolean} [params.is_topping]
+     * @param {boolean} [params.is_recommend]
+     * @param {boolean} [params.is_show]
+     * @returns {Promise<any>}
+     * @author zero
      */
     add(params: {
         cid: number;
@@ -59,9 +65,9 @@ const articleApi = {
         intro?: string;
         content?: string;
         sort?: number;
-        is_topping?: number;
-        is_recommend?: number;
-        is_show?: number;
+        is_topping?: boolean;
+        is_recommend?: boolean;
+        is_show?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/content/article/add',
@@ -80,9 +86,11 @@ const articleApi = {
      * @param {string} [params.intro]
      * @param {string} [params.content]
      * @param {number} [params.sort]
-     * @param {number} [params.is_topping]
-     * @param {number} [params.is_recommend]
-     * @param {number} [params.is_show]
+     * @param {boolean} [params.is_topping]
+     * @param {boolean} [params.is_recommend]
+     * @param {boolean} [params.is_show]
+     * @returns {Promise<any>}
+     * @author zero
      */
     edit(params: {
         id: number;
@@ -92,9 +100,9 @@ const articleApi = {
         intro?: string;
         content?: string;
         sort?: number;
-        is_topping?: number;
-        is_recommend?: number;
-        is_show?: number;
+        is_topping?: boolean;
+        is_recommend?: boolean;
+        is_show?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/content/article/edit',
@@ -106,6 +114,8 @@ const articleApi = {
      * 文章删除
      *
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     delete(id: number): Promise<any> {
         return request.post({

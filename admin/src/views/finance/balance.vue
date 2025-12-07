@@ -1,12 +1,12 @@
 <template>
     <div>
         <!-- 搜索栏 -->
-        <el-card class="!border-none mb-4" shadow="never">
-            <el-form class="mb-[-16px]" :model="queryParams" :inline="true">
+        <el-card class="border-none! mb-4" shadow="never">
+            <el-form class="-mb-4" :model="queryParams" :inline="true">
                 <el-form-item label="用户信息">
                     <el-input
                         v-model="queryParams.user"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请输入用户编号/昵称/手机号"
                         clearable
                         @keyup.enter="resetPaging"
@@ -15,7 +15,7 @@
                 <el-form-item label="变动类型">
                     <el-select
                         v-model="queryParams.source_type"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请选择"
                     >
                         <el-option value="" label="全部"/>
@@ -29,8 +29,8 @@
                 </el-form-item>
                 <el-form-item label="记录时间">
                     <date-picker
-                        v-model:startTime="queryParams.start_time"
-                        v-model:endTime="queryParams.end_time"
+                        v-model:start-time="queryParams.start_time"
+                        v-model:end-time="queryParams.end_time"
                     />
                 </el-form-item>
                 <el-form-item>
@@ -41,22 +41,22 @@
         </el-card>
 
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
             <el-table :data="pager.lists" size="large">
                 <el-table-column label="用户编号" prop="user.sn" min-width="100" />
                 <el-table-column label="用户信息" min-width="120">
-                    <template #default="{ row }">
+                    <template #default="scope: { row: FinanceBalanceListResponse }">
                         <div class="flex items-center">
-                            <el-avatar :size="36" :src="row.user.avatar"/>
-                            <span class="ml-2">{{ row?.user.nickname }}</span>
+                            <el-avatar :size="36" :src="scope.row.user.avatar"/>
+                            <span class="ml-2">{{ scope.row.user.nickname }}</span>
                         </div>
                     </template>
                 </el-table-column>
                 <el-table-column label="变动的金额" prop="change_amount" min-width="100" />
                 <el-table-column label="变动类型" prop="action" min-width="100">
-                    <template #default="{ row }">
-                        <span v-if="row.action === 1">+{{ row?.change_amount }}</span>
-                        <span v-else>-{{ row?.change_amount }}</span>
+                    <template #default="scope: { row: FinanceBalanceListResponse }">
+                        <span v-if="scope.row.action === 1">+{{ scope.row.change_amount }}</span>
+                        <span v-else>-{{ scope.row.change_amount }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="变动前金额" prop="before_amount" min-width="100" />

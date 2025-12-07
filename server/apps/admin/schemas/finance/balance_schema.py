@@ -21,9 +21,9 @@ class BalanceSearchIn(BaseModel):
     page_no: int = Query(gt=0, default=1, description="当前页码")
     page_size: int = Query(gt=0, le=200, default=15, description="每页条数")
     user: Union[str, None] = Query(default=None, description="用户信息")
-    source_type: Union[str, int, None] = Query(default=None, description="来源类型")
-    start_time: Union[int, str, None] = Query(default=None, description="开始时间")
-    end_time: Union[int, str, None] = Query(default=None, description="结束时间")
+    source_type: Union[int, None] = Query(default=None, description="来源类型")
+    start_time: Union[str, None] = Query(default=None, description="开始时间")
+    end_time: Union[str, None] = Query(default=None, description="结束时间")
 
 
 """--------------- Separator ---------------"""
@@ -31,7 +31,7 @@ class BalanceSearchIn(BaseModel):
 
 class BalanceListVo(BaseModel):
     """余额明细列表Vo """
-    id: int = Field(description="文章ID")
+    id: int = Field(description="ID")
     log_sn: str = Field(description="日志编号")
     action: int = Field(description="变动类型: [1=增加, 2=减少]")
     source_sn: str = Field(description="来源单号")

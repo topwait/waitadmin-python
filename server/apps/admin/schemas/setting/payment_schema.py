@@ -25,12 +25,12 @@ class PaymentDetailIn(BaseModel):
 class PaymentListVo(BaseModel):
     """ 支付配置列表Vo """
     id: int = Field(description="ID")
-    channel: int = Field(description="渠道别名")
+    channel: int = Field(description="渠道别名: [余额支付,微信支付,支付宝支付]")
     shorter: str = Field(description="简写名称")
     logo: str = Field(description="渠道图标")
     icon: str = Field(description="支付图标")
     sort: int = Field(description="排序编号")
-    status: int = Field(ge=0, le=1, description="渠道状态: [0=禁用, 1=启用]")
+    status: bool = Field(description="渠道状态")
 
     class Config:
         json_schema_extra = {
@@ -41,7 +41,7 @@ class PaymentListVo(BaseModel):
                 "name": "微信支付",
                 "logo": "https://www.xx.com/wx.png",
                 "icon": "https://www.xx.com/wx.png",
-                "status": 1
+                "status": True
             }
         }
 
@@ -49,12 +49,12 @@ class PaymentListVo(BaseModel):
 class PaymentDetailVo(BaseModel):
     """ 支付配置详情Vo """
     id: int = Field(description="ID")
-    channel: int = Field(description="渠道别名")
+    channel: int = Field(description="渠道标识: [1=余额支付,2=微信支付,3=支付宝支付]")
     shorter: str = Field(description="简写名称")
     name: str = Field(description="渠道名称")
     icon: str = Field(description="支付图标")
     sort: int = Field(description="排序编号")
-    status: int = Field(ge=0, le=1, description="渠道状态: [0=禁用, 1=启用]")
+    status: bool = Field(description="渠道状态")
     params: dict = Field(default_factory=dict, description="支付配置")
 
     class Config:
@@ -65,8 +65,7 @@ class PaymentDetailVo(BaseModel):
                 "name": "微信支付",
                 "logo": "https://www.xx.com/wx.png",
                 "icon": "https://www.xx.com/wx.png",
-                "status": 1,
+                "status": True,
                 "params": {}
             }
         }
-

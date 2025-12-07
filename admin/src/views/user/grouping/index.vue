@@ -1,12 +1,12 @@
 <template>
     <div>
         <!-- 搜索栏 -->
-        <el-card class="!border-none mb-4" shadow="never">
-            <el-form class="mb-[-16px]" :model="queryParams" :inline="true">
+        <el-card class="border-none! mb-4" shadow="never">
+            <el-form class="-mb-4" :model="queryParams" :inline="true">
                 <el-form-item label="分组名称">
                     <el-input
                         v-model="queryParams.name"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请输入分组名称"
                         clearable
                         @keyup.enter="resetPaging"
@@ -20,7 +20,7 @@
         </el-card>
 
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
             <el-button type="primary" @click="handleEditor('add')">
                 <template #icon>
                     <icon name="el-icon-Plus" />
@@ -30,8 +30,8 @@
             <el-table :data="pager.lists" size="large" class="mt-4">
                 <el-table-column label="分组名称" prop="name" min-width="100" />
                 <el-table-column label="分组备注" prop="remarks" min-width="150">
-                    <template #default="{ row }">
-                        {{ row?.remarks || '-'  }}
+                    <template #default="scope: { row: UserGroupListResponse }">
+                        {{ scope.row.remarks || '-'  }}
                     </template>
                 </el-table-column>
                 <el-table-column label="排序" prop="sort" min-width="100" />
@@ -79,6 +79,7 @@ const { pager, queryLists, resetParams, resetPaging } = usePaging({
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true
@@ -91,6 +92,7 @@ const handleEditor = async (type: string, row?: any): Promise<void> => {
  *
  * @param {number} id
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleDelete = async (id: number): Promise<void> => {
     feedback.confirm('确定要删除此项数据吗?')

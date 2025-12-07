@@ -13,18 +13,15 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, shallowRef } from 'vue'
+import { reactive, shallowRef, useAttrs } from 'vue'
 import 'vue3-video-play/dist/style.css'
 import VideoPlay from 'vue3-video-play/dist/index.mjs'
 
 const props = defineProps({
     src: {
         type: String,
-        required: true,
-    },
-    width: String,
-    height: String,
-    poster: String,
+        required: true
+    }
 })
 
 const attrs = useAttrs()
@@ -52,8 +49,6 @@ const options = reactive({
     control: true,
     // 视频名称
     title: '',
-    // 封面
-    poster: '',
     ...props,
     ...attrs
 })
@@ -83,6 +78,6 @@ const onCanplay = () => {
 
 defineExpose({
     play,
-    pause,
+    pause
 })
 </script>

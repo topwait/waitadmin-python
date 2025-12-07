@@ -1,17 +1,16 @@
 # +----------------------------------------------------------------------
-# | WaitAdmin(fastapi)快速开发后台管理系统
+# | ChatWork智能聊天办公系统
 # +----------------------------------------------------------------------
-# | 欢迎阅读学习程序代码,建议反馈是我们前进的动力
-# | 程序完全开源可支持商用,允许去除界面版权信息
-# | gitee:   https://gitee.com/wafts/waitadmin-python
-# | github:  https://github.com/topwait/waitadmin-python
-# | 官方网站: https://www.waitadmin.cn
-# | WaitAdmin团队版权所有并拥有最终解释权
+# | 软件声明: 本系统并非自由软件,未经授权任何形式的商业使用均属非法。
+# | 版权保护: 任何企业和个人不允许对程序代码以任何形式任何目的复制/分发。
+# | 授权要求: 如有商业使用需求,请务必先与版权所有者取得联系并获得正式授权。
 # +----------------------------------------------------------------------
-# | Author: WaitAdmin Team <2474369941@qq.com>
+# | Author: ChatWork Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 import logging
 import inspect
+import traceback
+
 from pydantic import ValidationError
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
@@ -58,12 +57,49 @@ def configure_exception(app: FastAPI):
     async def global_exception_handler(request: Request, exc: Exception):
         """ 处理全局系统异常 """
         logger.error("GlobalException: url=[%s]", request.url.path)
-        logger.error(exc, exc_info=True)
+        logger.error(f"SysException: {exc}")
         return JSONResponse(
             status_code=200,
             content=R.fail(
                 code=ErrorEnum.SYSTEM_UNKNOWN_ERROR.code,
                 msg=ErrorEnum.SYSTEM_UNKNOWN_ERROR.msg
+            ).__dict__)
+
+    @app.exception_handler(UnboundLocalError)
+    async def unbound_exception_handler(request: Request, exc: UnboundLocalError):
+        """ 处理全局系统异常 """
+        logger.error("UnboundLocalError: url=[%s]", request.url.path)
+        logger.error(f"UnboundLocalError: {exc}")
+        print(traceback.format_exc())
+        return JSONResponse(
+            status_code=200,
+            content=R.fail(
+                code=ErrorEnum.SYSTEM_UNKNOWN_ERROR.code,
+                msg=f"UnboundLocalError: " + str(exc)
+            ).__dict__)
+
+    @app.exception_handler(AttributeError)
+    async def attribute_exception_handler(request: Request, exc: AttributeError):
+        """ 处理全局系统异常 """
+        logger.error("AttributeError: url=[%s]", request.url.path)
+        logger.error(f"AttributeError: {exc}")
+        print(traceback.format_exc())
+        return JSONResponse(
+            status_code=200,
+            content=R.fail(
+                code=ErrorEnum.SYSTEM_UNKNOWN_ERROR.code,
+                msg=f"AttributeError: " + str(exc)
+            ).__dict__)
+
+    @app.exception_handler(KeyError)
+    async def key_exception_handler(request: Request, exc: KeyError):
+        """ Key不存在异常 """
+        logger.error("KeyError: url=[%s]", request.url.path)
+        return JSONResponse(
+            status_code=200,
+            content=R.fail(
+                code=ErrorEnum.SYSTEM_KEY_ERROR.code,
+                msg="KeyError: " + str(exc)
             ).__dict__)
 
     @app.exception_handler(ValueError)
@@ -73,8 +109,8 @@ def configure_exception(app: FastAPI):
         return JSONResponse(
             status_code=200,
             content=R.fail(
-                code=ErrorEnum.SYSTEM_PARAMS_ERROR.code,
-                msg=str(exc)
+                code=ErrorEnum.SYSTEM_VAL_ERROR.code,
+                msg="ValueError: " + str(exc)
             ).__dict__)
 
     @app.exception_handler(StarletteHTTPException)
@@ -153,6 +189,7 @@ def configure_exception(app: FastAPI):
     @app.exception_handler(AssertionError)
     async def assert_exception_handler(request: Request, exc: AssertionError):
         """ 处理断言参数异常 """
+        print("看过热库尔斯克二十")
         errs = ",".join(exc.args) if exc.args else ErrorEnum.PARAMS_ASSERT_ERROR.msg
         logger.warning("AssertionError: url=[%s], errs=[%s]", request.url.path, errs)
         return JSONResponse(
@@ -188,6 +225,7 @@ def configure_exception(app: FastAPI):
     @app.exception_handler(DoesNotExist)
     async def does(_request: Request, _exc: DoesNotExist):
         """ 处理查询数据为空异常 """
+        print("看过热库尔斯克二十")
         return JSONResponse(
             status_code=200,
             content=R.fail(

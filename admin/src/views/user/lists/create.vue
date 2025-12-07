@@ -118,6 +118,9 @@ const formRules = reactive({
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate().then(async () => {
@@ -136,6 +139,7 @@ const handleSubmit = async (): Promise<void> => {
  * 打开表单
  *
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (): Promise<void> => {
     showPop.value = true

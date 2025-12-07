@@ -18,6 +18,8 @@ logs
 .DS_Store
 .fleet
 .idea
+pnpm-lock.yaml
+package-lock.json
 
 # Local env files
 .env

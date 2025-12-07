@@ -3,9 +3,12 @@ import request from '@/utils/request'
 const basicsApi = {
     /**
      * 网站配置详情
+     *
+     * @returns {Promise<SettingBasicsResponse>}
+     * @author zero
      */
-    detail(): Promise<any> {
-        return request.get({
+    detail(): Promise<SettingBasicsResponse> {
+        return request.get<SettingBasicsResponse>({
             url: '/setting/basics/detail'
         })
     },
@@ -17,6 +20,8 @@ const basicsApi = {
      * @param {any} [params.website]
      * @param {any} [params.h5]
      * @param {any} [params.pc]
+     * @returns {Promise<any>}
+     * @author zero
      */
     save(params: {
         website?: any;

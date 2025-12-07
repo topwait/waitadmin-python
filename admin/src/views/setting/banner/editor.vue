@@ -53,8 +53,8 @@
                 </el-form-item>
                 <el-form-item label="状态">
                     <el-radio-group v-model="formData.is_disable">
-                        <el-radio :value="0">正常</el-radio>
-                        <el-radio :value="1">停用</el-radio>
+                        <el-radio :value="false">正常</el-radio>
+                        <el-radio :value="true">停用</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
@@ -78,15 +78,15 @@ const popTitle = computed<string>(() => {
 
 // 表单数据
 const loading = ref<boolean>(false)
-const formData = reactive<any>({
-    id: '',        // 管理ID
-    position: '',  // 轮播位置
-    title: '',     // 轮播标题
-    image: '',     // 轮播图片
-    target: '',    // 跳转方式
-    url: '',       // 跳转链接
-    sort: 0,       // 排序编号
-    is_disable: 0, // 是否禁用:[0=否, 1=是]
+const formData = reactive({
+    id: '',            // 管理ID
+    position: '',      // 轮播位置
+    title: '',         // 轮播标题
+    image: '',         // 轮播图片
+    target: '',        // 跳转方式
+    url: '',           // 跳转链接
+    sort: 0,           // 排序编号
+    is_disable: false  // 是否禁用
 })
 
 // 表单规则
@@ -102,7 +102,7 @@ const formRules = reactive({
         { max: 200, message: '轮播标题不能大于200个字符', trigger: 'blur' }
     ],
     target: [
-        { required: true, message: '请选择跳转方式', trigger: 'blur' },
+        { required: true, message: '请选择跳转方式', trigger: 'blur' }
     ]
 })
 
@@ -117,6 +117,9 @@ const { optionsData } = useDictOptions<{
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -144,6 +147,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -152,7 +156,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await bannerApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

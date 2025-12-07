@@ -7,7 +7,7 @@
                     :name="route.meta?.icon + ''"
                     :size="16"
                 />
-                <i v-else class="ml-[8px] mr-[5px]"></i>
+                <i v-else class="ml-2 mr-[5px]"></i>
                 <span>{{ route.meta?.title }}</span>
             </template>
             <menu-item
@@ -26,7 +26,7 @@
                         :name="route.meta?.icon + ''"
                         :size="16"
                     />
-                    <i v-else class="ml-[8px] mr-[5px]"></i>
+                    <i v-else class="ml-2 mr-[5px]"></i>
                     <template #title>
                         <span>{{ route.meta?.title }}</span>
                     </template>
@@ -39,7 +39,7 @@
                     :name="route.meta?.icon + ''"
                     :size="16"
                 />
-                <i v-else class="ml-[8px] mr-[5px]"></i>
+                <i v-else class="ml-2 mr-[5px]"></i>
                 <template #title>
                     <span>{{ route.meta?.title }}</span>
                 </template>
@@ -72,7 +72,7 @@ const queryStr = computed<string>(() => {
     try {
         const queryObj = JSON.parse(query)
         return toolsUtil.objectToQuery(queryObj)
-    } catch (error) {
+    } catch {
         return query
     }
 })

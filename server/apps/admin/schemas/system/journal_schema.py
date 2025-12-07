@@ -22,8 +22,8 @@ class JournalSearchIn(BaseModel):
     method: Union[str, None] = Query(default=None, description="请求方法: [GET, POST, PUT, DELETE, OPTION]")
     url: Union[str, None] = Query(default=None, description="访问地址")
     ip: Union[str, None] = Query(default=None, description="来源IP")
-    start_time: Union[int, str, None] = Query(default=None, description="开始时间")
-    end_time: Union[int, str, None] = Query(default=None, description="结束时间")
+    start_time: Union[str, None] = Query(default=None, description="开始时间")
+    end_time: Union[str, None] = Query(default=None, description="结束时间")
 
 
 class JournalDetailIn(BaseModel):
@@ -82,7 +82,7 @@ class JournalDetailVo(BaseModel):
     error: str = Field(description="错误信息")
     status: int = Field(description="执行状态: [1=运行, 2=失败]")
     task_time: int = Field(description="最大执行时长")
-    start_time: str = Field(description="开始执行时间")
+    start_time: str = Field(description="开始执行结束执行时间时间")
     end_time: str = Field(description="结束执行时间")
     create_time: str = Field(description="操作时间")
 

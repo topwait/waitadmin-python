@@ -1,5 +1,5 @@
 import NProgress from 'nprogress'
-import { merge } from 'lodash'
+import { merge } from 'lodash-es'
 import { ElMessage } from 'element-plus'
 import { type AxiosRequestConfig, AxiosError, RawAxiosRequestHeaders, AxiosHeaders } from 'axios'
 import { type AxiosHooks } from './type'
@@ -20,7 +20,7 @@ const axiosHooks: AxiosHooks = {
 
         if (withToken) {
             const token: string = cacheUtil.get(cacheEnum.TOKEN_KEY) || ''
-            headers.Authorization = 'Bearer ' + token
+            headers.Authorization = `Bearer ${token}`
         }
 
         if (
@@ -60,6 +60,8 @@ const axiosHooks: AxiosHooks = {
             case errorEnum.REQUEST_405_ERROR:
             case errorEnum.SYSTEM_UNKNOWN_ERROR:
             case errorEnum.SYSTEM_TIMEOUT_ERROR:
+            case errorEnum.SYSTEM_KEY_ERROR:
+            case errorEnum.SYSTEM_VAL_ERROR:
             case errorEnum.DB_OPERATIONS_ERROR:
             case errorEnum.DB_EMPTY_DATA_ERROR:
                 msg && ElMessage.error(msg)

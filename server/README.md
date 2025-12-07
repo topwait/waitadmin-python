@@ -116,6 +116,11 @@ python-alipay-sdk
     支付宝的Python SDK, 用于与支付宝API进行交互
 ```
 
+## 卸载所有已安装的包
+```shell
+pip freeze | xargs pip uninstall -y
+```
+
 ## 交流群
 QQ群：
 <a href="https://gitee.com/link?target=https://jq.qq.com/?_wv=1027&k=TRrklD6W">

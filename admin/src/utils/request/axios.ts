@@ -1,5 +1,5 @@
 import axios, { AxiosError, type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios'
-import { isFunction, merge, cloneDeep, isObject } from 'lodash'
+import { isFunction, merge, cloneDeep, isObject } from 'lodash-es'
 import type { FileParams, RequestData, RequestOptions } from './type'
 import axiosCancel from './cancel'
 
@@ -69,7 +69,7 @@ export class Axios {
 
                 if (err.code === AxiosError.ECONNABORTED || err.code === AxiosError.ERR_NETWORK) {
                     await new Promise((resolve) => setTimeout(resolve, 500))
-                    return await this.retryRequest(err)
+                    return this.retryRequest(err)
                 }
                 return Promise.reject(err)
             }

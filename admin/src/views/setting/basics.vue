@@ -1,8 +1,8 @@
 <template>
     <el-form ref="formRef" :rules="rules" :model="formData" label-width="120px">
         <!-- 基础设置 -->
-        <el-card shadow="never" class="!border-none">
-            <div class="text-xl font-medium mb-[20px]">基础设置</div>
+        <el-card shadow="never" class="border-none!">
+            <div class="text-xl font-medium mb-5">基础设置</div>
             <el-form-item label="版权信息" prop="website.copyright">
                 <div class="w-[380px]">
                     <el-input
@@ -30,9 +30,9 @@
             <el-form-item label="统计代码" prop="website.analyse">
                 <div class="w-[380px]">
                     <el-input
+                        v-model.trim="formData.website.analyse"
                         type="textarea"
                         :rows="5"
-                        v-model.trim="formData.website.analyse"
                         show-word-limit
                         placeholder="https://hm.baidu.com/hm.js?d16da1a2f..."
                     />
@@ -41,8 +41,8 @@
         </el-card>
 
         <!-- 电脑端设置 -->
-        <el-card shadow="never" class="!border-none mt-4">
-            <div class="text-xl font-medium mb-[20px]">电脑端设置</div>
+        <el-card shadow="never" class="border-none! mt-4">
+            <div class="text-xl font-medium mb-5">电脑端设置</div>
             <el-form-item prop="pc.logo">
                 <material-picker v-model="formData.pc.logo" />
                 <template v-slot:label>
@@ -121,9 +121,9 @@
             <el-form-item prop="pc.description">
                 <div class="w-[380px]">
                     <el-input
+                        v-model.trim="formData.pc.description"
                         type="textarea"
                         :rows="5"
-                        v-model.trim="formData.pc.description"
                         show-word-limit
                     />
                 </div>
@@ -140,8 +140,8 @@
         </el-card>
 
         <!-- H5端设置 -->
-        <el-card shadow="never" class="!border-none mt-4" style="display: none;">
-            <div class="text-xl font-medium mb-[20px]">H5端设置</div>
+        <el-card shadow="never" class="border-none! mt-4" style="display: none;">
+            <div class="text-xl font-medium mb-5">H5端设置</div>
             <el-form-item label="H5端logo" prop="h5.logo">
                 <material-picker v-model="formData.h5.logo" />
             </el-form-item>
@@ -161,7 +161,7 @@
                     </el-radio-group>
                 </div>
             </el-form-item>
-            <el-form-item label="关闭访问" prop="h5.close_url" v-if="formData.h5.status === 1">
+            <el-form-item v-if="formData.h5.status === 1" label="关闭访问" prop="h5.close_url">
                 <div class="w-80">
                     <el-input v-model="formData.h5.close_url" placeholder="请输入自定义链接" />
                 </div>
@@ -169,7 +169,7 @@
         </el-card>
 
         <!-- 保存按钮 -->
-        <el-card shadow="never" class="!border-none mt-4">
+        <el-card shadow="never" class="border-none! mt-4">
             <el-button
                 v-perms="['setting:basics:save']"
                 :loading="loading"
@@ -205,7 +205,7 @@ const formData = reactive({
         name: '',
         title: '',
         keywords: '',
-        description: '',
+        description: ''
     }
 })
 
@@ -213,35 +213,38 @@ const formData = reactive({
 const rules = {
     // Base
     'website.icp': [
-        { max: 500, message: 'ICP备案不能超出500个字符', trigger: ['blur'] },
+        { max: 500, message: 'ICP备案不能超出500个字符', trigger: ['blur'] }
     ],
     'website.pcp': [
-        { max: 500, message: '公安备案不能超出500个字符', trigger: ['blur'] },
+        { max: 500, message: '公安备案不能超出500个字符', trigger: ['blur'] }
     ],
     // H5
     'h5.title': [
-        { max: 200, message: 'H5端标题不能超出200个字符', trigger: ['blur'] },
+        { max: 200, message: 'H5端标题不能超出200个字符', trigger: ['blur'] }
     ],
     'h5.close_url': [
-        { max: 500, message: 'H5端关闭访问地址不能超出500个字符', trigger: ['blur'] },
+        { max: 500, message: 'H5端关闭访问地址不能超出500个字符', trigger: ['blur'] }
     ],
     // PC
     'pc.name': [
-        { max: 200, message: '网站名称不能超出200个字符', trigger: ['blur'] },
+        { max: 200, message: '网站名称不能超出200个字符', trigger: ['blur'] }
     ],
     'pc.title': [
-        { max: 200, message: '网站标题不能超出200个字符', trigger: ['blur'] },
+        { max: 200, message: '网站标题不能超出200个字符', trigger: ['blur'] }
     ],
     'pc.keyword': [
-        { max: 200, message: '网站关键词不能超出200个字符', trigger: ['blur'] },
+        { max: 200, message: '网站关键词不能超出200个字符', trigger: ['blur'] }
     ],
     'pc.description': [
-        { max: 500, message: '网站描述不能超出500个字符', trigger: ['blur'] },
+        { max: 500, message: '网站描述不能超出500个字符', trigger: ['blur'] }
     ]
 }
 
 /**
  * 查询配置参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const queryConfigs = async (): Promise<void> => {
     const data = await basicsApi.detail()
@@ -250,6 +253,9 @@ const queryConfigs = async (): Promise<void> => {
 
 /**
  * 提交修改参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()

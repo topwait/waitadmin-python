@@ -8,6 +8,7 @@ const cacheUtil: any = {
      * @param {any} value     (值)
      * @param {number} expire (时效时长: 秒)
      * @returns {boolean}
+     * @author zero
      */
     set(key: string, value: any, expire?: number): boolean {
         key = this.namespace + key
@@ -27,7 +28,7 @@ const cacheUtil: any = {
         try {
             window.localStorage.setItem(key, data)
             return true
-        } catch (e) {
+        } catch {
             return false
         }
     },
@@ -38,6 +39,7 @@ const cacheUtil: any = {
      * @param key (键)
      * @param isShowExpire (是否显示过期时间)
      * @returns {any}
+     * @author zero
      */
     get(key: string, isShowExpire: boolean = false): any {
         key = this.namespace + key
@@ -70,7 +72,7 @@ const cacheUtil: any = {
             }
 
             return data
-        } catch (e) {
+        } catch {
             return data
         }
     },
@@ -80,6 +82,7 @@ const cacheUtil: any = {
      *
      * @param key (键)
      * @returns {void}
+     * @author zero
      */
     remove(key: string): void {
         key = this.namespace + key
@@ -88,6 +91,8 @@ const cacheUtil: any = {
 
     /**
      * 清空缓存
+     *
+     * @author zero
      */
     clear(): void {
         window.localStorage.clear()

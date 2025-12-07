@@ -1,14 +1,14 @@
 <template>
     <div>
         <!-- 搜索栏 -->
-        <el-card class="!border-none mb-4" shadow="never">
-            <div class="text-xl font-medium mb-[20px]">充值配置</div>
-            <el-form class="mb-[-16px]" label-width="100px">
+        <el-card class="border-none! mb-4" shadow="never">
+            <div class="text-xl font-medium mb-5">充值配置</div>
+            <el-form class="-mb-4" label-width="100px">
                 <el-form-item label="充值状态">
                     <div>
                         <el-radio-group v-model="formData.status">
-                            <el-radio :value="0">开启</el-radio>
-                            <el-radio :value="1">关闭</el-radio>
+                            <el-radio :value="true">开启</el-radio>
+                            <el-radio :value="false">关闭</el-radio>
                         </el-radio-group>
                         <div class="form-tips">关闭充值功能后, 用户将无法进行余额充值</div>
                     </div>
@@ -37,9 +37,9 @@
         </el-card>
 
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
-            <div class="text-xl font-medium mb-[20px]">充值套餐</div>
-            <el-button type="primary" v-perms="['market:recharge:add']" @click="handleEditor('add')">
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
+            <div class="text-xl font-medium mb-5">充值套餐</div>
+            <el-button v-perms="['market:recharge:add']" type="primary" @click="handleEditor('add')">
                 <template #icon>
                     <icon name="el-icon-Plus" />
                 </template>
@@ -90,12 +90,12 @@ import feedback from '@/utils/feedback'
 import rechargePackApi from '@/api/market/recharge'
 import Editor from './editor.vue'
 
-const showEdit = ref(false)
+const showEdit = ref<boolean>(false)
 const editorRef = shallowRef<InstanceType<typeof Editor>>()
 
-const loading = ref(false)
+const loading = ref<boolean>(false)
 const formData = reactive({
-    status: 0,
+    status: false,
     min_recharge: 0
 })
 
@@ -106,6 +106,9 @@ const { pager, queryLists, resetPaging } = usePaging({
 
 /**
  * 提交修改参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     loading.value = true
@@ -125,6 +128,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true
@@ -137,6 +141,7 @@ const handleEditor = async (type: string, row?: any): Promise<void> => {
  *
  * @param {number} id
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleDelete = async (id: number): Promise<void> => {
     feedback.confirm('确定要删除此项数据吗?')

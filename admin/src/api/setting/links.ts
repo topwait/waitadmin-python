@@ -8,15 +8,17 @@ const linksApi = {
      * @param {number} [params.page_no]
      * @param {number} [params.page_size]
      * @param {string} [params.title]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
+     * @returns {Promise<SettingLinksListResponse[]>}
+     * @author zero
      */
     lists(params: {
         page_no?: number;
         page_size?: number;
         title?: string;
-        is_disable?: number;
-    }): Promise<any> {
-        return request.get({
+        is_disable?: boolean;
+    }): Promise<SettingLinksListResponse[]> {
+        return request.get<SettingLinksListResponse[]>({
             url: '/setting/links/lists',
             params
         })
@@ -26,9 +28,11 @@ const linksApi = {
      * 友链详情
      *
      * @param {number} id
+     * @returns {Promise<SettingLinksDetailResponse>}
+     * @author zero
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<SettingLinksDetailResponse> {
+        return request.get<SettingLinksDetailResponse>({
             url: '/setting/links/detail',
             params: { id }
         })
@@ -43,7 +47,9 @@ const linksApi = {
      * @param {string} [params.target]
      * @param {string} [params.url]
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
+     * @returns {Promise<any>}
+     * @author zero
      */
     add(params: {
         title: string;
@@ -51,7 +57,7 @@ const linksApi = {
         target: string;
         url?: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/setting/links/add',
@@ -69,7 +75,9 @@ const linksApi = {
      * @param {string} [params.target]
      * @param {string} [params.url]
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
+     * @returns {Promise<any>}
+     * @author zero
      */
     edit(params: {
         id: number;
@@ -78,7 +86,7 @@ const linksApi = {
         target: string;
         url?: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/setting/links/edit',
@@ -90,6 +98,8 @@ const linksApi = {
      * 友链删除
      *
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     delete(id: number): Promise<any> {
         return request.post({

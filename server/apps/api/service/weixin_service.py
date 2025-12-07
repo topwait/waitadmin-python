@@ -59,6 +59,7 @@ class WeixinService:
             )
         elif Event == "subscribe":
             pass
+        return None
 
     @classmethod
     async def _scan_login_event(cls, state: str, openid: str) -> str:

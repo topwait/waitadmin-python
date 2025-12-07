@@ -24,7 +24,7 @@
                         <el-image
                             v-if="icon"
                             :src="icon"
-                            class="w-[24px] h-[24px] mr-3"
+                            class="w-6 h-6 mr-3"
                         />
                         <div>
                             <h5>{{ title }}</h5>

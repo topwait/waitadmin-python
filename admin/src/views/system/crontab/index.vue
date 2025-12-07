@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 描述栏 -->
-        <el-card class="!border-none" shadow="never">
+        <el-card class="border-none!" shadow="never">
             <el-alert
                 type="warning"
                 title="任务调用框架: APscheduler (Advanced Python Scheduler)"
@@ -11,8 +11,8 @@
         </el-card>
 
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none mt-4" shadow="never">
-            <el-button type="primary" v-perms="['system:crontab:add']" @click="handleEditor('add')">
+        <el-card v-loading="pager.loading" class="border-none! mt-4" shadow="never">
+            <el-button v-perms="['system:crontab:add']" type="primary" @click="handleEditor('add')">
                 <template #icon>
                     <icon name="el-icon-plus" />
                 </template>
@@ -25,9 +25,9 @@
                     min-width="130"
                     show-tooltip-when-overflow
                 >
-                    <template #default="{ row }">
-                        <el-tooltip effect="dark" :content="row.remarks">
-                            {{ row.name }}
+                    <template #default="scope: { row: SystemCrontabListResponse }">
+                        <el-tooltip effect="dark" :content="scope.row.remarks">
+                            {{ scope.row.name }}
                         </el-tooltip>
                     </template>
                 </el-table-column>
@@ -71,13 +71,13 @@
                     </template>
                 </el-table-column>
                 <el-table-column label="并发数" prop="concurrent" min-width="68" >
-                    <template #default="{ row }">
-                        <el-tag type="info">{{ row.concurrent }}</el-tag>
+                    <template #default="scope: { row: SystemCrontabListResponse }">
+                        <el-tag type="info">{{ scope.row.concurrent }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="执行时长" prop="exe_time" min-width="90">
-                    <template #default="{ row }">
-                        {{ row.exe_time }}ms
+                    <template #default="scope: { row: SystemCrontabListResponse }">
+                        {{ scope.row.exe_time }}ms
                     </template>
                 </el-table-column>
                 <el-table-column label="最后执行时间" prop="last_time" min-width="175" />
@@ -132,6 +132,7 @@ const { pager, queryLists } = usePaging({
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true
@@ -144,6 +145,7 @@ const handleEditor = async (type: string, row?: any): Promise<void> => {
  *
  * @param {number} id
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleDelete = async (id: number): Promise<void> => {
     feedback.confirm('确定要删除此项数据吗?')
@@ -160,6 +162,7 @@ const handleDelete = async (id: number): Promise<void> => {
  * @param id
  * @param status
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleCrontab = async (id: number, status: number): Promise<void> => {
     let message = '您确定要「停止」当前服务吗?'

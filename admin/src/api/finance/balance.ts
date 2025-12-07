@@ -11,6 +11,8 @@ const balanceApi = {
      * @param {number} [params.source_type]
      * @param {string} [params.start_time]
      * @param {string} [params.end_time]
+     * @returns {FinanceBalanceListResponse[]}
+     * @author zero
      */
     lists(params: {
         page_no?: number;
@@ -19,8 +21,8 @@ const balanceApi = {
         source_type?: number;
         start_time?: string;
         end_time?: string;
-    }): Promise<any> {
-        return request.get({
+    }): Promise<FinanceBalanceListResponse[]> {
+        return request.get<FinanceBalanceListResponse[]>({
             url: '/finance/balance/lists',
             params
         })

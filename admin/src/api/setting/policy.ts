@@ -3,9 +3,12 @@ import request from '@/utils/request'
 const policyApi = {
     /**
      * 协议配置详情
+     *
+     * @returns {Promise<SettingPolicyResponse>}
+     * @author zero
      */
-    detail(): Promise<any> {
-        return request.get({
+    detail(): Promise<SettingPolicyResponse> {
+        return request.get<SettingPolicyResponse>({
             url: '/setting/policy/detail'
         })
     },
@@ -15,12 +18,14 @@ const policyApi = {
      *
      * @param {Object} params
      * @param {string} params.service
-     * @param {string} params.private
+     * @param {string} params.privacy
      * @param {string} params.payment
+     * @returns {Promise<any>}
+     * @author zero
      */
     save(params: {
         service: string;
-        private: string;
+        privacy: string;
         payment: string;
     }): Promise<any> {
         return request.post({

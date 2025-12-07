@@ -1,9 +1,9 @@
 <template>
     <div>
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
             <div>
-                <el-button type="primary" v-perms="['auth:menu:add']" @click="handleEditor('add')">
+                <el-button v-perms="['auth:menu:add']" type="primary" @click="handleEditor('add')">
                     <template #icon>
                         <icon name="el-icon-Plus" />
                     </template>
@@ -43,15 +43,21 @@
                     show-overflow-tooltip
                 />
                 <el-table-column label="路径" prop="path" min-width="120">
-                    <template #default="{ row }">
-                        <span v-if="row.type === 'M' && row.path">{{ row.path }}</span>
-                        <span v-if="row.type === 'C' && row.path">{{ row.path }}</span>
-                        <span v-if="row.type === 'A' && row.path" class="text-danger">{{ row.path }}</span>
+                    <template #default="scope: { row: AuthMenuListResponse }">
+                        <span v-if="scope.row.type === 'M' && scope.row.path">
+                            {{ scope.row.path }}
+                        </span>
+                        <span v-if="scope.row.type === 'C' && scope.row.path">
+                            {{ scope.row.path }}
+                        </span>
+                        <span v-if="scope.row.type === 'A' && scope.row.path" class="text-danger">
+                            {{ scope.row.path }}
+                        </span>
                     </template>
                 </el-table-column>
                 <el-table-column label="状态" prop="is_disable" min-width="100">
                     <template #default="{ row }">
-                        <el-tag v-if="row.is_disable == 0">正常</el-tag>
+                        <el-tag v-if="!row.is_disable">正常</el-tag>
                         <el-tag v-else type="danger">停用</el-tag>
                     </template>
                 </el-table-column>
@@ -109,6 +115,7 @@ const { pager, queryLists } = usePaging({
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true
@@ -121,6 +128,7 @@ const handleEditor = async (type: string, row?: any): Promise<void> => {
  *
  * @param {number} id
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleDelete = async (id: number): Promise<void> => {
     feedback.confirm('确定要删除此项数据吗?')
@@ -148,6 +156,7 @@ const handleExpand = (): void => {
  * @param {any[]} children
  * @param {boolean} unfold
  * @returns {void}
+ * @author zero
  */
 const _toggleExpand = (children: any[], unfold: boolean = true): void => {
     for (const key in children) {

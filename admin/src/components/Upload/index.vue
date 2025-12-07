@@ -1,8 +1,8 @@
 <template>
     <div class="upload">
         <el-upload
-            v-model:file-list="fileList"
             ref="uploadRefs"
+            v-model:file-list="fileList"
             v-bind="$attrs"
             :multiple="multiple"
             :limit="limit"
@@ -47,7 +47,7 @@
 import type { PropType } from 'vue'
 import type { ElUpload, UploadRequestOptions, UploadUserFile } from 'element-plus'
 import feedback from '@/utils/feedback'
-import appApi from '@/api/app'
+import appApi from '@/api/public/app'
 
 const props = defineProps({
     files: {

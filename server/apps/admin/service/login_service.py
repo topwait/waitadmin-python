@@ -71,7 +71,7 @@ class LoginService:
                 raise AppException("验证码错误")
 
         # 账户查询
-        admin = await AuthAdminModel.filter(username=post.username, is_delete=0).first()
+        admin = await AuthAdminModel.filter(username=post.username, is_delete=False).first()
 
         # 账户验证
         if not admin:

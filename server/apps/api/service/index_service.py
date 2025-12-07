@@ -26,6 +26,52 @@ class IndexService:
     """ 公共服务类 """
 
     @classmethod
+    async def config(cls) -> schema.ConfigVo:
+        """
+        全局配置
+
+        Returns:
+            schema.ConfigVo: 全局配置Vo
+
+        Author:
+            zero
+        """
+        pc = await ConfigUtil.get("pc") or {}
+        login = await ConfigUtil.get("login") or {}
+        website = await ConfigUtil.get("website") or {}
+        recharge = await ConfigUtil.get("recharge") or {}
+
+        return schema.ConfigVo(
+            login={
+                "pc": {
+                    "is_agreement": bool(login.get("pc", {}).get("is_agreement", False)),
+                    "default_method": login.get("pc", {}).get("default_method", "account"),
+                    "usable_channel": login.get("pc", {}).get("usable_channel", []),
+                    "usable_register": login.get("pc", {}).get("usable_register", [])
+                }
+            },
+            website={
+                "icp": website.get("icp", ""),
+                "pcp": website.get("pcp", ""),
+                "domain": website.get("domain", ""),
+                "analyse": website.get("analyse", ""),
+                "copyright": website.get("copyright", "")
+            },
+            pc={
+                "favicon": await UrlUtil.to_absolute_url(pc.get("favicon", "")),
+                "logo": await UrlUtil.to_absolute_url(pc.get("logo", "")),
+                "name": pc.get("name", ""),
+                "title": pc.get("title", ""),
+                "keywords": pc.get("keywords", ""),
+                "description": pc.get("description", "")
+            },
+            recharge={
+                "status": int(recharge.get("status", 0)),
+                "min_recharge": float(recharge.get("min_recharge", 0))
+            }
+        )
+
+    @classmethod
     async def homing(cls) -> schema.HomingVo:
         """
         主页数据
@@ -38,13 +84,13 @@ class IndexService:
         """
         _adv_lists = await (DevBannerModel
                             .filter(position=BannerEnum.SIDE)
-                            .filter(is_disable=0, is_delete=0)
+                            .filter(is_disable=False, is_delete=False)
                             .order_by("-sort", "-id")
                             .all())
 
         _banner_lists = await (DevBannerModel
                                .filter(position=BannerEnum.HOME)
-                               .filter(is_disable=0, is_delete=0)
+                               .filter(is_disable=False, is_delete=False)
                                .order_by("-sort", "-id")
                                .all())
 
@@ -67,51 +113,6 @@ class IndexService:
             ranking=await ArticleService.recommend("ranking"),
             topping=await ArticleService.recommend("topping"),
             everyday=await ArticleService.recommend("everyday")
-        )
-
-    @classmethod
-    async def config(cls) -> schema.ConfigVo:
-        """
-        全局配置
-
-        Returns:
-            schema.ConfigVo: 全局配置Vo
-
-        Author:
-            zero
-        """
-        pc = await ConfigUtil.get("pc") or {}
-        login = await ConfigUtil.get("login") or {}
-        website = await ConfigUtil.get("website") or {}
-        recharge = await ConfigUtil.get("recharge") or {}
-
-        return schema.ConfigVo(
-            login={
-                "is_agreement": int(login.get("is_agreement", 0)),
-                "defaults": login.get("defaults", ""),
-                "register": login.get("registers", []),
-                "means": login.get("login_modes", []),
-                "oauth": login.get("login_other", []),
-            },
-            website={
-                "icp": website.get("icp", ""),
-                "pcp": website.get("pcp", ""),
-                "domain": website.get("domain", ""),
-                "analyse": website.get("analyse", ""),
-                "copyright": website.get("copyright", "")
-            },
-            pc={
-                "favicon": await UrlUtil.to_absolute_url(pc.get("favicon", "")),
-                "logo": await UrlUtil.to_absolute_url(pc.get("logo", "")),
-                "name": pc.get("name", ""),
-                "title": pc.get("title", ""),
-                "keywords": pc.get("keywords", ""),
-                "description": pc.get("description", "")
-            },
-            recharge={
-                "status": int(recharge.get("status", 0)),
-                "min_recharge": float(recharge.get("min_recharge", 0))
-            }
         )
 
     @classmethod

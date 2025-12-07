@@ -6,8 +6,8 @@
         <el-scrollbar ref="scrollbarRef" @wheel.passive="wheelScroll" @scroll="touchScroll">
             <div ref="scrollbarContentRef" class="tab-vessels-wrap">
                 <router-link
-                    ref="tagsRefs"
                     v-for="(tag) in tabsStore.getTagsViewList"
+                    ref="tagsRefs"
                     :key="tag.fullPath"
                     :class="`tags-style-${tagsStyle}${isActive(tag) ? ' active' : ''}`"
                     :to="{ path: tag.fullPath }"

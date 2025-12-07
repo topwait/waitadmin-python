@@ -20,7 +20,7 @@ const darkConfig: any = {
 
 const themeId: string = 'theme-vars'
 
-const themeUtil: any = {
+const themeUtil = {
     /**
      * 生成变量
      * 可选值: [primary, success, warning, danger, error, info]
@@ -28,9 +28,10 @@ const themeUtil: any = {
      * @param {string} color   十六进制颜色
      * @param {string} type    颜色类型
      * @param {boolean} isDark 暗黑模式
-     * @returns objects
+     * @returns {any}
+     * @author zero
      */
-    generateVars(color: string, type: string = 'primary', isDark: boolean = false) {
+    generateVars(color: string, type: string = 'primary', isDark: boolean = false): any {
         const colors: any = {
             [`--el-color-${type}`]: color
         }
@@ -46,6 +47,7 @@ const themeUtil: any = {
      * @param {Record<string, string>} options
      * @param {boolean} isDark
      * @returns {string}
+     * @author zero
      */
     generateTheme(options: Record<string, string>, isDark: boolean = false): string {
         const varsMap: Record<string, string> = Object.keys(options).reduce((prev: any, key: string) => {
@@ -63,6 +65,7 @@ const themeUtil: any = {
      * @param {Record<string, string>} options
      * @param {isDark} isDark
      * @returns {void}
+     * @author zero
      */
     setTheme(options: Record<string, string>, isDark: boolean = false): void {
         const theme: string = this.generateTheme(options, isDark)

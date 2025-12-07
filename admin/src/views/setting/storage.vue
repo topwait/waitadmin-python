@@ -1,7 +1,7 @@
 <template>
-    <el-form ref="formRef" :model="formData" label-width="160px">
-        <el-card shadow="never" class="!border-none">
-            <div class="text-xl font-medium mb-[20px]">存储设置</div>
+    <el-form :model="formData" label-width="160px">
+        <el-card shadow="never" class="border-none!">
+            <div class="text-xl font-medium mb-5">存储设置</div>
             <el-form-item label="存储方式：" prop="drive">
                 <el-radio-group v-model="formData.drive">
                     <el-radio value="local">本地存储</el-radio>
@@ -91,7 +91,7 @@
         </el-card>
 
         <!-- 保存按钮 -->
-        <el-card shadow="never" class="!border-none mt-4">
+        <el-card shadow="never" class="border-none! mt-4">
             <el-button
                 v-perms="['setting:storage:save']"
                 :loading="loading"
@@ -109,6 +109,7 @@ import storageApi from '@/api/setting/storage'
 const loading = ref(false)
 const formData = reactive({
     drive: 'local',
+    local: {},
     qiniu: {
         bucket: '',
         domain: '',
@@ -133,6 +134,9 @@ const formData = reactive({
 
 /**
  * 查询配置参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const queryConfigs = async (): Promise<void> => {
     const data = await storageApi.detail()
@@ -141,6 +145,9 @@ const queryConfigs = async (): Promise<void> => {
 
 /**
  * 提交修改参数
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     loading.value = true

@@ -43,18 +43,18 @@
                     </el-form-item>
                     <el-form-item label="支付证书私钥" prop="params.apiclient_key">
                         <el-input
+                            v-model="formData.params.apiclient_key"
                             type="textarea"
                             :rows="3"
-                            v-model="formData.params.apiclient_key"
                             clearable
                         />
                         <span class="form-tips">微信商户证书私钥 (apiclient_key.pem)</span>
                     </el-form-item>
                     <el-form-item label="微信支付证书" prop="params.apiclient_cert">
                         <el-input
+                            v-model="formData.params.apiclient_cert"
                             type="textarea"
                             :rows="3"
-                            v-model="formData.params.apiclient_cert"
                             clearable
                         />
                         <span class="form-tips">微信商户支付证书 (apiclient_cert.pem)</span>
@@ -72,18 +72,18 @@
                     </el-form-item>
                     <el-form-item label="应用私钥" prop="params.private_key">
                         <el-input
+                            v-model="formData.params.private_key"
                             type="textarea"
                             :rows="3"
-                            v-model="formData.params.private_key"
                             clearable
                         />
                         <span class="form-tips">支付宝应用私钥RSA2（private_key） </span>
                     </el-form-item>
                     <el-form-item label="支付公钥" prop="params.public_key">
                         <el-input
+                            v-model="formData.params.public_key"
                             type="textarea"
                             :rows="3"
-                            v-model="formData.params.public_key"
                             clearable
                         />
                         <span class="form-tips">支付宝公钥RSA2（ali_public_key） </span>
@@ -94,8 +94,8 @@
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
                     <el-radio-group v-model="formData.status">
-                        <el-radio :value="1">启用</el-radio>
-                        <el-radio :value="0">停用</el-radio>
+                        <el-radio :value="true">启用</el-radio>
+                        <el-radio :value="false">停用</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
@@ -117,9 +117,21 @@ const popTitle = computed<string>(() => {
 })
 
 enum PayWayEnum {
-    BALANCE = 1,
+    // BALANCE = 1,
     WXPAY = 2,
     ALIPAY = 3
+}
+
+interface ParamsType {
+    // 微信
+    merchant_type?: string;
+    interface_version?: string;
+    mch_id?: string;
+    apiclient_key?: string;
+    apiclient_cert?: string;
+    // 支付宝
+    private_key?: string;
+    public_key?: string;
 }
 
 // 表单数据
@@ -131,8 +143,8 @@ const formData = reactive<any>({
     name: '',
     icon: '',
     sort: 0,
-    status: 0,
-    params: {}
+    status: false,
+    params: {} as ParamsType
 })
 
 // 表单规则
@@ -149,6 +161,9 @@ const formRules: any = reactive({
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -171,6 +186,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -179,7 +195,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await paymentApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

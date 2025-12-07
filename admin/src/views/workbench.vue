@@ -1,16 +1,16 @@
 <template>
     <div v-loading="pageLoading">
         <el-row :gutter="20">
-            <el-col :xs="24"
-                    :sm="12"
-                    :md="6"
-                    :lg="6"
-                    :xl="6"
-                    :span="6"
-                    v-for="(item, index) in workbenchData.today"
-                    :key="index"
+            <el-col v-for="(item, index) in workbenchData.today"
+                :key="index"
+                :xs="24"
+                :sm="12"
+                :md="6"
+                :lg="6"
+                :xl="6"
+                :span="6"
             >
-                <el-card class="mb-4 !border-none" shadow="never">
+                <el-card class="mb-4 border-none!" shadow="never">
                     <template #header>
                         <div class="flex items-center justify-between">
                             <span>{{ item.name }}</span>
@@ -18,7 +18,7 @@
                     </template>
                     <div class="flex items-center justify-between py-2">
                         <span class="text-5xl font-medium">{{ item.value }}</span>
-                        <el-image class="w-[48px] h-[48px]" :src="item.icon"  />
+                        <el-image class="w-12 h-12" :src="item.icon"  />
                     </div>
                     <div class="flex items-center mb-3">
                         <span>昨日: {{ item.total }}</span>
@@ -29,9 +29,9 @@
 
         <div class="lg:flex">
             <!-- 常用功能 -->
-            <el-card class="flex-1 lg:mr-4 mb-4 !border-none" shadow="never">
+            <el-card class="flex-1 lg:mr-4 mb-4 border-none!" shadow="never">
                 <template #header>
-                    <span>常用功能</span>
+                    <span class="p-1.5">常用功能</span>
                 </template>
                 <ul class="shortcut flex flex-wrap">
                     <li
@@ -49,7 +49,7 @@
                 </ul>
             </el-card>
             <!-- 待办事项 -->
-            <el-card class="flex-1 lg:mr-4 mb-4 !border-none" shadow="never">
+            <el-card class="flex-1 lg:mr-4 mb-4 border-none!" shadow="never">
                 <template #header>
                     <div class="flex items-center justify-between">
                         <span>待办事项</span>
@@ -65,7 +65,7 @@
                 </ul>
             </el-card>
             <!-- 版本信息 -->
-            <el-card class="mb-4 !border-none" shadow="never">
+            <el-card class="mb-4 border-none!" shadow="never">
                 <template #header>
                     <div class="flex items-center justify-between">
                         <span>版本信息</span>
@@ -79,20 +79,20 @@
                         <tbody>
                             <tr>
                                 <td>当前版本</td>
-                                <td>v{{ workbenchData.version.version }}</td>
+                                <td>v{{ workbenchData.version?.version }}</td>
                             </tr>
                             <tr>
                                 <td>基于框架</td>
-                                <td>{{ workbenchData.version.frame }}</td>
+                                <td>{{ workbenchData.version?.frame }}</td>
                             </tr>
                             <tr>
                                 <td>主要特色</td>
-                                <td>{{ workbenchData.version.tones }}</td>
+                                <td>{{ workbenchData.version?.tones }}</td>
                             </tr>
                             <tr>
                                 <td>获取渠道</td>
                                 <td>
-                                    <a :href="workbenchData.version.official" target="_blank">
+                                    <a :href="workbenchData.version?.official" target="_blank">
                                         <el-button type="primary">官方网站</el-button>
                                     </a>
                                 </td>
@@ -104,7 +104,7 @@
         </div>
 
         <div class="lg:flex">
-            <el-card class="flex-1 lg:mr-4 mb-4 !border-none" shadow="never">
+            <el-card class="flex-1 lg:mr-4 mb-4 border-none!" shadow="never">
                 <template #header>
                     <span>访问量趋势图</span>
                 </template>
@@ -114,7 +114,7 @@
                     :autoresize="true"
                 />
             </el-card>
-            <el-card class="flex-1 mb-4 !border-none" shadow="never">
+            <el-card class="flex-1 mb-4 border-none!" shadow="never">
                 <template #header>
                     <span>访问量趋势图</span>
                 </template>
@@ -130,18 +130,13 @@
 
 <script setup lang="ts">
 import vCharts from 'vue-echarts'
-import appApi from '@/api/app'
+import appApi from '@/api/public/app'
 
 // 页面加载中
-const pageLoading: Ref<boolean> = ref(true)
+const pageLoading = ref<boolean>(true)
 
 // 控制台数据
-const workbenchData: Ref<any> = ref({
-    today: [],    // 今日数据
-    shortcut: [], // 快捷方式
-    backlogs: [], // 待办事项
-    version: {},  // 版本信息
-})
+const workbenchData = ref<AppWorkbenchResponse>({} as AppWorkbenchResponse)
 
 // 趋势图配置
 const chartOption = ref({
@@ -152,9 +147,9 @@ const chartOption = ref({
             axisPointer: {
                 lineStyle: {
                     width: 1,
-                    color: '#019680',
-                },
-            },
+                    color: '#019680'
+                }
+            }
         },
         xAxis: {
             type: 'category',
@@ -165,27 +160,27 @@ const chartOption = ref({
                 lineStyle: {
                     width: 1,
                     type: 'solid',
-                    color: 'rgba(226,226,226,0.5)',
-                },
+                    color: 'rgba(226,226,226,0.5)'
+                }
             },
             axisTick: {
-                show: false,
-            },
+                show: false
+            }
         },
         yAxis: [
             {
                 type: 'value',
                 splitNumber: 4,
                 axisTick: {
-                    show: false,
+                    show: false
                 },
                 splitArea: {
                     show: true,
                     areaStyle: {
-                        color: ['rgba(255,255,255,0.2)', 'rgba(226,226,226,0.2)'],
-                    },
-                },
-            },
+                        color: ['rgba(255,255,255,0.2)', 'rgba(226,226,226,0.2)']
+                    }
+                }
+            }
         ],
         grid: { left: '1%', right: '1%', top: '2  %', bottom: 0, containLabel: true },
         series: [
@@ -195,11 +190,11 @@ const chartOption = ref({
                 type: 'line',
                 areaStyle: {},
                 itemStyle: {
-                    color: '#5ab1ef',
-                },
+                    color: '#5ab1ef'
+                }
             }
 
-        ],
+        ]
     },
     // 浏览器趋势图
     website: {
@@ -229,7 +224,13 @@ const chartOption = ref({
     }
 })
 
-const getWorkbenchData = () => {
+/**
+ * 获取控制台数据
+ *
+ * @returns {void}
+ * @author zero
+ */
+const getWorkbenchData = (): void => {
     appApi.workbench().then((res: any) => {
         workbenchData.value.today = res.today
         workbenchData.value.backlogs = res.backlogs

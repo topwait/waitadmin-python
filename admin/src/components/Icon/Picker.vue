@@ -1,8 +1,8 @@
 <template>
     <div class="icon-select">
         <el-popover
-            trigger="contextmenu"
             v-model:visible="state.popoverVisible"
+            trigger="contextmenu"
             :width="state.popoverWidth"
         >
             <div
@@ -47,16 +47,16 @@
                     placeholder="搜索图标"
                     :autofocus="false"
                     :disabled="disabled"
+                    clearable
                     @focus="handleFocus"
                     @blur="handleBlur"
-                    clearable
                 >
                     <template #prepend>
                         <div v-if="modelValue" class="flex items-center">
                             <el-tooltip class="flex-1 w-20" :content="modelValue" placement="top">
                                 <icon
-                                    class="mr-1"
                                     :key="modelValue"
+                                    class="mr-1"
                                     :name="modelValue"
                                     :size="16"
                                 />
@@ -82,8 +82,8 @@ import { ElInput } from 'element-plus'
 import { getElementIconNames, getLocalIconNames } from './index'
 
 interface Props {
-    modelValue: string
-    disabled?: boolean
+    modelValue?: string;
+    disabled?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {

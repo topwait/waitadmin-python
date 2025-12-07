@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 表格栏 -->
-        <el-card class="!border-none" shadow="never">
+        <el-card class="border-none!" shadow="never">
             <el-tabs v-model="tabsActive" @tab-change="queryNoticeLists">
                 <el-tab-pane
                     v-for="(item, index) in tabsMap"
@@ -86,9 +86,14 @@ const tabsMap = [
 
 /**
  * 查询通知渠道列表
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const queryNoticeLists = async (): Promise<void> => {
-    dataLists.value = await noticeApi.lists()
+    dataLists.value = await noticeApi.lists({
+        client: tabsActive.value
+    })
 }
 
 /**
@@ -97,6 +102,7 @@ const queryNoticeLists = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true

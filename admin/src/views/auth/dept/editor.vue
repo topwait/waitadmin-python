@@ -10,10 +10,10 @@
     >
         <div class="p-6 pb-0">
             <el-form ref="formRef" :model="formData" :rules="formRules" label-width="80px">
-                <el-form-item label="上级部门" prop="pid" v-if="formData.pid !== 0">
+                <el-form-item v-if="formData.pid !== 0" label="上级部门" prop="pid">
                     <el-tree-select
-                        class="flex-1"
                         v-model="formData.pid"
+                        class="flex-1"
                         :data="optionsData.dept"
                         clearable
                         node-key="id"
@@ -40,8 +40,8 @@
                 </el-form-item>
                 <el-form-item label="状态" prop="is_disable">
                     <el-radio-group v-model="formData.is_disable">
-                        <el-radio :value="0">正常</el-radio>
-                        <el-radio :value="1">停用</el-radio>
+                        <el-radio :value="false">正常</el-radio>
+                        <el-radio :value="true">停用</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
@@ -66,13 +66,13 @@ const popTitle = computed<string>(() => {
 // 表单数据
 const loading = ref<boolean>(false)
 const formData = reactive<any>({
-    id: 0,        // 部门ID
-    pid: '',      // 上级ID
-    name: '',     // 部门名称
-    mobile: '',   // 部门电话
-    duty: '',     // 负责人名
-    sort: 0,      // 部门排序
-    is_disable: 0 // 是否禁用:[0=否, 1=是]
+    id: 0,            // 部门ID
+    pid: '',          // 上级ID
+    name: '',         // 部门名称
+    mobile: '',       // 部门电话
+    duty: '',         // 负责人名
+    sort: 0,          // 部门排序
+    is_disable: false // 是否禁用
 })
 
 // 表单规则
@@ -105,6 +105,9 @@ const { optionsData } = useDictOptions<{
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -132,6 +135,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -140,7 +144,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await authDeptApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

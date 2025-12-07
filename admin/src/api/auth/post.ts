@@ -4,8 +4,8 @@ const authPostApi = {
     /**
      * 所有岗位
      */
-    whole(): Promise<any> {
-        return request.get({
+    whole(): Promise<AuthPostWholeResponse[]> {
+        return request.get<AuthPostWholeResponse[]>({
             url: '/auth/post/whole'
         })
     },
@@ -18,16 +18,16 @@ const authPostApi = {
      * @param {number} [params.page_size]
      * @param {string} [params.code]
      * @param {string} [params.name]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
      */
     lists(params: {
         page_no?: number;
         page_size?: number;
         code?: string;
         name?: string;
-        is_disable?: number;
-    }): Promise<any> {
-        return request.get({
+        is_disable?: boolean;
+    }): Promise<AuthPostListResponse[]> {
+        return request.get<AuthPostListResponse[]>({
             url: '/auth/post/lists',
             params
         })
@@ -38,8 +38,8 @@ const authPostApi = {
      *
      * @param {number} id
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<AuthPostDetailResponse> {
+        return request.get<AuthPostDetailResponse>({
             url: '/auth/post/detail',
             params: { id }
         })
@@ -53,14 +53,16 @@ const authPostApi = {
      * @param {string} params.name
      * @param {string} [params.remarks]
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
+     * @returns {Promise<any>}
+     * @author zero
      */
     add(params: {
         code: string;
         name: string;
         remarks?: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/auth/post/add',
@@ -77,8 +79,9 @@ const authPostApi = {
      * @param {string} params.name
      * @param {string} [params.remarks]
      * @param {number} [params.sort]
-     * @param {number} [params.is_disable]
-     *
+     * @param {boolean} [params.is_disable]
+     * @returns {Promise<any>}
+     * @author zero
      */
     edit(params: {
         id: number;
@@ -86,7 +89,7 @@ const authPostApi = {
         name: string;
         remarks?: string;
         sort?: number;
-        is_disable?: number;
+        is_disable?: boolean;
     }): Promise<any> {
         return request.post({
             url: '/auth/post/edit',
@@ -98,6 +101,8 @@ const authPostApi = {
      * 岗位删除
      *
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     delete(id: number): Promise<any> {
         return request.post({

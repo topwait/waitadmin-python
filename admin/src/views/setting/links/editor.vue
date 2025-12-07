@@ -70,7 +70,7 @@ const formData = reactive<any>({
     target: '',    // 跳转方式
     url: '',       // 跳转链接
     sort: 0,       // 排序编号
-    is_disable: 0, // 是否禁用:[0=否, 1=是]
+    is_disable: 0 // 是否禁用:[0=否, 1=是]
 })
 
 // 表单规则
@@ -80,15 +80,18 @@ const formRules = reactive({
         { max: 200, message: '友链名称不能大于200个字符', trigger: 'blur' }
     ],
     target: [
-        { required: true, message: '请选择跳转方式', trigger: 'blur' },
+        { required: true, message: '请选择跳转方式', trigger: 'blur' }
     ],
     url: [
-        { required: true, message: '请填写跳转链接', trigger: 'blur' },
+        { required: true, message: '请填写跳转链接', trigger: 'blur' }
     ]
 })
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -116,6 +119,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -124,7 +128,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await linksApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

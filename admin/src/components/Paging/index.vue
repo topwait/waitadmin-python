@@ -1,8 +1,8 @@
 <template>
     <div class="pagination">
         <el-pagination
-            v-model:currentPage="pager.page"
-            v-model:pageSize="pager.size"
+            v-model:current-page="pager.page"
+            v-model:page-size="pager.size"
             :background="background"
             :layout="layout"
             :size="size"
@@ -17,10 +17,12 @@
 </template>
 
 <script setup lang="ts">
+import type { EpPropMergeType } from 'element-plus/es/utils'
+
 interface Props {
     modelValue?: Record<string, any>
     pageSizes?: number[]
-    size?: string,
+    size?: EpPropMergeType<StringConstructor, '' | 'default' | 'small' | 'large', never>,
     layout?: string,
     pageCount?: number,
     background?: boolean

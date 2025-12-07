@@ -22,9 +22,12 @@ class NoticeService:
     """ 通知配置服务类 """
 
     @classmethod
-    async def lists(cls) -> List[schema.NoticeListVo]:
+    async def lists(cls, client: int) -> List[schema.NoticeListVo]:
         """
         通知配置列表。
+
+        Args:
+            client (int): 通知端: 1=用户,2=平台
 
         Returns:
             List[schema.NoticeListVo]: 通知配置列表Vo。
@@ -32,7 +35,7 @@ class NoticeService:
         Author:
            zero
         """
-        lists = await NoticeSetting.filter().all()\
+        lists = await NoticeSetting.filter(get_client=client).all()\
             .values("id", "scene", "name", "is_captcha", "sys_template", "sms_template", "ems_template")
 
         data = []
@@ -41,6 +44,7 @@ class NoticeService:
             ems = json.loads(item["ems_template"])
             sms = json.loads(item["sms_template"])
 
+            # 状态: [0=停用, 1=启用, 2=没有]
             sys_status = sys.get("status") if sys else 2
             ems_status = ems.get("status") if ems else 2
             sms_status = sms.get("status") if sms else 2
@@ -69,7 +73,7 @@ class NoticeService:
             zero
         """
         fields = NoticeSetting.without_field("is_delete,create_time,update_time,delete_time")
-        detail = await NoticeSetting.filter(id=id_, is_delete=0).first().values(*fields)
+        detail = await NoticeSetting.filter(id=id_, is_delete=False).first().values(*fields)
 
         if not detail:
             raise AppException("通知配置不存在")
@@ -98,7 +102,7 @@ class NoticeService:
         Author:
             zero
         """
-        detail = await NoticeSetting.filter(id=post.id, is_delete=0).first().values("id")
+        detail = await NoticeSetting.filter(id=post.id, is_delete=False).first().values("id")
         if not detail:
             raise AppException("通知配置不存在")
 

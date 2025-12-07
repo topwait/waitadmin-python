@@ -3,9 +3,12 @@ import request from '@/utils/request'
 const storageApi = {
     /**
      * 存储配置详情
+     *
+     * @returns {Promise<SettingStorageResponse>}
+     * @author zero
      */
-    detail(): Promise<any> {
-        return request.get({
+    detail(): Promise<SettingStorageResponse> {
+        return request.get<SettingStorageResponse>({
             url: '/setting/storage/detail'
         })
     },
@@ -19,6 +22,8 @@ const storageApi = {
      * @param {any} params.qiniu
      * @param {any} params.aliyun
      * @param {any} params.qcloud
+     * @returns {Promise<any>}
+     * @author zero
      */
     save(params: {
         drive: string;

@@ -1,28 +1,28 @@
 <template>
     <div>
         <!-- 搜索栏 -->
-        <el-card class="!border-none mb-4" shadow="never">
-            <el-form class="mb-[-16px]" :model="queryParams" :inline="true">
+        <el-card class="border-none! mb-4" shadow="never">
+            <el-form class="-mb-4" :model="queryParams" :inline="true">
                 <el-form-item label="文章标题" prop="title">
                     <el-input
                         v-model="queryParams.title"
-                        class="w-[250px]"
+                        class="w-[250px]!"
                         placeholder="请输入文章标题"
                         clearable
                         @keyup.enter="resetPaging"
                     />
                 </el-form-item>
                 <el-form-item label="文章状态">
-                    <el-select v-model="queryParams.status" class="w-[250px]">
+                    <el-select v-model="queryParams.is_show" class="w-[150px]!">
                         <el-option value="" label="全部" />
-                        <el-option value="1" label="显示" />
-                        <el-option value="0" label="隐藏" />
+                        <el-option :value="true" label="显示" />
+                        <el-option :value="false" label="隐藏" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="创建时间">
                     <date-picker
-                        v-model:startTime="queryParams.start_time"
-                        v-model:endTime="queryParams.end_time"
+                        v-model:start-time="queryParams.start_time"
+                        v-model:end-time="queryParams.end_time"
                     />
                 </el-form-item>
                 <el-form-item>
@@ -33,8 +33,8 @@
         </el-card>
 
         <!-- 表格栏 -->
-        <el-card v-loading="pager.loading" class="!border-none" shadow="never">
-            <el-button type="primary" v-perms="['content:article:add']" @click="handleEditor('add')">
+        <el-card v-loading="pager.loading" class="border-none!" shadow="never">
+            <el-button v-perms="['content:article:add']" type="primary" @click="handleEditor('add')">
                 <template #icon>
                     <icon name="el-icon-plus" />
                 </template>
@@ -61,19 +61,19 @@
                 <el-table-column label="排序" prop="sort" min-width="100" />
                 <el-table-column label="置顶" prop="is_topping" min-width="80">
                     <template #default="{ row }">
-                        <el-tag v-if="row.is_topping === 1">是</el-tag>
+                        <el-tag v-if="row.is_topping">是</el-tag>
                         <el-tag v-else type="danger">否</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="推荐" prop="is_recommend" min-width="80">
                     <template #default="{ row }">
-                        <el-tag v-if="row.is_recommend === 1">是</el-tag>
+                        <el-tag v-if="row.is_recommend">是</el-tag>
                         <el-tag v-else type="danger">否</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="状态" prop="is_show" min-width="80">
                     <template #default="{ row }">
-                        <el-tag v-if="row.is_show === 1">显示</el-tag>
+                        <el-tag v-if="row.is_show">显示</el-tag>
                         <el-tag v-else type="danger">隐藏</el-tag>
                     </template>
                 </el-table-column>
@@ -121,7 +121,7 @@ const editorRef = shallowRef<InstanceType<typeof Editor>>()
 // 查询参数
 const queryParams = reactive({
     title: '',
-    status: '',
+    is_show: '',
     start_time: '',
     end_time: ''
 })
@@ -138,6 +138,7 @@ const { pager, queryLists, resetParams, resetPaging } = usePaging({
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true
@@ -150,6 +151,7 @@ const handleEditor = async (type: string, row?: any): Promise<void> => {
  *
  * @param {number} id
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleDelete = async (id: number): Promise<void> => {
     feedback.confirm('确定要删除此项数据吗?')

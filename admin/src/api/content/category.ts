@@ -3,9 +3,12 @@ import request from '@/utils/request'
 const articleCateApi = {
     /**
      * 所有文章分类
+     *
+     * @returns {ContentCategoryWholeResponse[]}
+     * @author zero
      */
-    whole(): Promise<any> {
-        return request.get({
+    whole(): Promise<ContentCategoryWholeResponse[]> {
+        return request.get<ContentCategoryWholeResponse[]>({
             url: '/content/category/whole'
         })
     },
@@ -17,15 +20,17 @@ const articleCateApi = {
      * @param {number} [params.page_no]
      * @param {number} [params.page_size]
      * @param {string} [params.name]
-     * @param {number} [params.is_disable]
+     * @param {boolean} [params.is_disable]
+     * @returns {ContentCategoryListResponse[]}
+     * @author zero
      */
     lists(params: {
         page_no?: number;
         page_size?: number;
         name?: string;
-        is_disable?: number;
-    }): Promise<any> {
-        return request.get({
+        is_disable?: boolean;
+    }): Promise<ContentCategoryListResponse[]> {
+        return request.get<ContentCategoryListResponse[]>({
             url: '/content/category/lists',
             params
         })
@@ -35,9 +40,11 @@ const articleCateApi = {
      * 文章分类详情
      *
      * @param {number} id
+     * @returns {ContentCategoryDetailResponse}
+     * @author zero
      */
-    detail(id: number): Promise<any> {
-        return request.get({
+    detail(id: number): Promise<ContentCategoryDetailResponse> {
+        return request.get<ContentCategoryDetailResponse>({
             url: '/content/category/detail',
             params: { id }
         })
@@ -49,12 +56,14 @@ const articleCateApi = {
      * @param {Object} params
      * @param {string} params.name
      * @param {number} [params.sort]
-     * @param {number} params.is_disable
+     * @param {boolean} params.is_disable
+     * @returns {Promise<any>}
+     * @author zero
      */
     add(params: {
         name: string;
         sort?: number;
-        is_disable: number;
+        is_disable: boolean;
     }): Promise<any> {
         return request.post({
             url: '/content/category/add',
@@ -70,12 +79,14 @@ const articleCateApi = {
      * @param {string} params.name
      * @param {number} [params.sort]
      * @param {number} params.is_disable
+     * @returns {Promise<any>}
+     * @author zero
      */
     edit(params: {
         id: number;
         name: string;
         sort?: number;
-        is_disable: number;
+        is_disable: boolean;
     }): Promise<any> {
         return request.post({
             url: '/content/category/edit',
@@ -87,6 +98,8 @@ const articleCateApi = {
      * 文章分类删除
      *
      * @param {number} id
+     * @returns {Promise<any>}
+     * @author zero
      */
     delete(id: number): Promise<any> {
         return request.post({

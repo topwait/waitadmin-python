@@ -5,16 +5,18 @@ body {
     font-size: var(--el-font-size-base);
     color: var(--el-text-color-primary);
     background-color: var(--el-bg-color-page);
+    em, i { font-style: normal; }
 }
 
+// 焦点轮廓
 :focus-visible {
     outline: none;
 }
 
 // 清除浮动
 .clearfix::after {
-    display: block;
     clear: both;
+    display: block; 
     visibility: hidden;
     content: '';
 }

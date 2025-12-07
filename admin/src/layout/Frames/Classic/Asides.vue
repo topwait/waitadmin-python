@@ -36,7 +36,7 @@ const userStore = useUserStore()
 const confStore = useConfStore()
 
 const routes = computed(() => userStore.routes)
-const activeMenu  = computed<string>(() => (route.meta?.activeMenu || route.path) + '')
+const activeMenu  = computed<string>(() => `${route.meta?.activeMenu || route.path}`)
 const isCollapsed = computed<boolean>(() => appStore.isCollapsed)
 const isLayoutLogo = computed<boolean>(() => confStore.isLayoutLogo)
 const isUniqueOpened = computed<boolean>(() => !confStore.isUniqueOpened)

@@ -15,8 +15,8 @@
                 </el-form-item>
                 <el-form-item label="所属部门" prop="dept_id">
                     <el-tree-select
-                        class="flex-1"
                         v-model="formData.dept_id"
+                        class="flex-1"
                         :data="optionsData.dept"
                         clearable
                         node-key="id"
@@ -24,7 +24,7 @@
                             value: 'id',
                             label: 'name',
                             disabled(data: any) {
-                                return data.is_disable !== 0
+                                return data.is_disable
                             }
                         }"
                         check-strictly
@@ -70,8 +70,8 @@
                 </el-form-item>
                 <el-form-item label="登录密码" prop="password">
                     <el-input
-                        type="password"
                         v-model="formData.password"
+                        type="password"
                         placeholder="请输入登录密码"
                         maxlength="20"
                         show-password
@@ -79,8 +79,8 @@
                 </el-form-item>
                 <el-form-item label="确认密码" prop="password_confirm">
                     <el-input
-                        type="password"
                         v-model="formData.password_confirm"
+                        type="password"
                         placeholder="请输入确认密码"
                         maxlength="20"
                         show-password
@@ -94,8 +94,8 @@
                 </el-form-item>
                 <el-form-item label="状态">
                     <el-radio-group v-model="formData.is_disable">
-                        <el-radio :value="0">正常</el-radio>
-                        <el-radio :value="1">停用</el-radio>
+                        <el-radio :value="false">正常</el-radio>
+                        <el-radio :value="true">停用</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
@@ -132,9 +132,9 @@ const formData = reactive<any>({
     username: '',         // 登录账号
     password: '',         // 登录密码
     password_confirm: '', // 确认密码
-    mobile: '',            // 联系电话
+    mobile: '',           // 联系电话
     email: '',            // 电子邮箱
-    is_disable: 0         // 是否禁用:[0=否, 1=是]
+    is_disable: false     // 是否禁用
 })
 
 // 密码规则
@@ -200,6 +200,9 @@ const { optionsData } = useDictOptions<{
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -227,6 +230,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -242,7 +246,9 @@ const open = async (type: string, row?: any): Promise<void> => {
         ]
         const data = await authAdminApi.detail(row.id)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
                 if (key === 'dept_id' || key === 'post_id') {
                     formData[key] = data[key] ? data[key] : ''

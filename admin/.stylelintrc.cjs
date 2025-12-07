@@ -4,17 +4,15 @@ module.exports = {
         'stylelint-config-standard-scss',
         'stylelint-config-recommended-vue/scss'
     ],
-    plugins: [
-        'stylelint-scss',
-        'stylelint-order'
-    ],
     ignoreFiles: [
         '**/*.js',
         '**/*.ts',
         '**/*.cjs',
         '**/*.jsx',
         '**/*.tsx',
-        'index.html'
+        'index.html',
+        'dist/**',
+        'node_modules/**'
     ],
     rules: {
         'color-hex-length': 'long',
@@ -24,16 +22,23 @@ module.exports = {
         'selector-class-pattern': null,
         'rule-empty-line-before': null,
         'custom-property-pattern': null,
+        'at-rule-empty-line-before': null,
         'no-descending-specificity': null,
         'declaration-empty-line-before': null,
         'custom-property-empty-line-before': null,
         'declaration-block-single-line-max-declarations': null,
+
         'selector-pseudo-element-no-unknown': [
             true,
             {
-                ignorePseudoElements: ['v-deep', 'v-global', 'v-slotted']
+                ignorePseudoElements: [
+                    'v-deep',
+                    'v-global',
+                    'v-slotted'
+                ]
             }
         ],
+
         'scss/at-import-partial-extension': null,
         'scss/at-rule-no-unknown': [
             true,
@@ -49,7 +54,9 @@ module.exports = {
                     'each',
                     'include',
                     'mixin',
-                    'use'
+                    'use',
+                    'custom-variant',
+                    'theme'
                 ]
             }
         ]

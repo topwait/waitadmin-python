@@ -1,8 +1,8 @@
 <template>
     <div>
         <el-form :model="formData" label-width="120px">
-            <el-card shadow="never" class="!border-none">
-                <div class="text-xl font-medium mb-[20px]">清除缓存</div>
+            <el-card shadow="never" class="border-none!">
+                <div class="text-xl font-medium mb-5">清除缓存</div>
                 <el-form-item label="数据缓存：" prop="checked">
                     <el-checkbox v-model="formData.system" label="系统缓存" value="system" size="large" />
                     <el-checkbox v-model="formData.login" label="登录缓存" value="login" size="large" />

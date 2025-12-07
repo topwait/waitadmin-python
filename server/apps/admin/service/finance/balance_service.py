@@ -43,15 +43,8 @@ class BalanceService:
         }, params.__dict__)
 
         if params.user:
-            user = await (UserModel
-                          .filter(Q(sn=params.user) | Q(nickname=params.user) | Q(mobile=params.user))
-                          .filter(is_delete=0)
-                          .limit(100)
-                          .values("id"))
-
-            user_ids = [item["id"] for item in user if item["id"]]
-            if user_ids:
-                where.append(Q(user_id__in=list(set(user_ids))))
+            ids = await UserModel.search_by_keyword(params.user)
+            where.append(Q(user_id__in=list(set(ids))))
 
         _model = UserWalletModel.filter(*where).order_by("-id")
         _pager = await UserWalletModel.paginate(
@@ -60,12 +53,8 @@ class BalanceService:
             page_size=params.page_size,
         )
 
-        users = {}
         user_ids = [item["user_id"] for item in _pager.lists if item["user_id"]]
-        if user_ids:
-            user_ = await UserModel.filter(id__in=list(set(user_ids))).all().values("id", "sn", "nickname", "mobile", "avatar")
-            for item in user_:
-                users[item["id"]] = item
+        users = await UserModel.fetch_info_by_ids(user_ids)
 
         list_vo = []
         for item in _pager.lists:

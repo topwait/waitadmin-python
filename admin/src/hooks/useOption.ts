@@ -6,6 +6,12 @@ interface Options {
     }
 }
 
+/**
+ * 批量管理异步数据请求
+ *
+ * @param options
+ * @author zero
+ */
 export function useDictOptions<T = any>(options: Options): any {
     const optionsData: any = reactive({})
     const optionsKey: string[] = Object.keys(options)

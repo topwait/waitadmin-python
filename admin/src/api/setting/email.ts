@@ -3,9 +3,12 @@ import request from '@/utils/request'
 const emailApi = {
     /**
      * 邮箱配置详情
+     *
+     * @returns {Promise<SettingEmailResponse>}
+     * @author zero
      */
-    detail(): Promise<any> {
-        return request.get({
+    detail(): Promise<SettingEmailResponse> {
+        return request.get<SettingEmailResponse>({
             url: '/setting/email/detail'
         })
     },
@@ -20,6 +23,8 @@ const emailApi = {
      * @param {string} params.smtp_user
      * @param {string} params.smtp_pass
      * @param {string} params.verify_type
+     * @returns {Promise<any>}
+     * @author zero
      */
     save(params: {
         smtp_type: string;

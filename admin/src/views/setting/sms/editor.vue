@@ -48,8 +48,8 @@
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
                     <el-radio-group v-model="formData.status">
-                        <el-radio :value="1">启用</el-radio>
-                        <el-radio :value="0">停用</el-radio>
+                        <el-radio :value="true">启用</el-radio>
+                        <el-radio :value="false">停用</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
@@ -75,7 +75,7 @@ const loading = ref<boolean>(false)
 const formData = reactive<any>({
     alias: '',
     name: '',
-    status: 0,
+    status: false,
     params: {
         sign: '',
         app_id: '',
@@ -102,6 +102,9 @@ const formRules: any = reactive({
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()
@@ -124,6 +127,7 @@ const handleSubmit = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type
@@ -132,7 +136,9 @@ const open = async (type: string, row?: any): Promise<void> => {
     if (type === 'edit') {
         const data = await smsApi.detail(row.alias)
         for (const key in formData) {
+            // @ts-ignore
             if (data[key] !== null && data[key] !== undefined) {
+                // @ts-ignore
                 formData[key] = data[key]
             }
         }

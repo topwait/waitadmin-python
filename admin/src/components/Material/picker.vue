@@ -1,15 +1,15 @@
 <template>
     <!-- 选择显示 -->
     <div v-if="!uploadHidden" class="material-select">
-        <draggable class="draggable" v-model="urlsList" animation="300" item-key="id">
+        <draggable v-model="urlsList" class="draggable" animation="300" item-key="id">
             <template v-slot:item="{ element, index }">
                 <div
-                    @click="showPopup(index)"
                     class="material-preview"
                     :class="{
                         'is-disabled': disabled,
                         'is-one': limit === 1
                     }"
+                    @click="showPopup(index)"
                 >
                     <hover-close @close="handleDelete(index)">
                         <file-item :url="element" :size="size" :type="type" />
@@ -25,13 +25,13 @@
         </draggable>
         <div
             v-show="showUpload"
-            @click="showPopup(-1)"
             class="material-upload"
             :class="{
                 'is-disabled': disabled,
                 'is-one': limit == 1,
                 [uploadClass]: true
             }"
+            @click="showPopup(-1)"
         >
             <slot name="upload">
                 <div
@@ -52,7 +52,7 @@
     <popup
         :show="fileShow"
         :title="'选择' + tipsText"
-        :footerBorder="true"
+        :footer-border="true"
         width="860px"
         @close="handleClose"
         @confirm="handleConfirm"
@@ -64,7 +64,7 @@
                     size="120px"
                     :type="type"
                     :limit="limit"
-                    :filterParams="filterParams"
+                    :filter-params="filterParams"
                     @change="handleChange"
                 />
             </div>

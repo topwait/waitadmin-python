@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import {useElementSize, watchThrottled} from '@vueuse/core'
+import { useElementSize, watchThrottled } from '@vueuse/core'
 import useAppStore from '@/stores/modules/app'
 import useTabsStore from '@/stores/modules/tabs'
 import useConfStore from '@/stores/modules/conf'

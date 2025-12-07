@@ -12,8 +12,8 @@
 # +----------------------------------------------------------------------
 import json
 import time
-import typing
 import xmltodict
+from  typing import Any, Type
 from fastapi import FastAPI, Request
 from starlette.types import ASGIApp
 from starlette.responses import Response, JSONResponse
@@ -25,13 +25,14 @@ from plugins.safe.driver import SecurityDriver
 
 
 def init_middlewares(app: FastAPI):
-    logs_middleware: typing.Type[any] = LogsMiddleware
-    demo_middleware: typing.Type[any] = DemoMiddleware
+    logs_middleware: Type[any] = LogsMiddleware
+    demo_middleware: Type[any] = DemoMiddleware
     app.add_middleware(logs_middleware)
     app.add_middleware(demo_middleware)
 
 
 class LogsMiddleware(BaseHTTPMiddleware):
+    """ 系统日志中间件 """
     def __init__(self, app: ASGIApp):
         super().__init__(app)
         self.STATUS_OK = 1
@@ -40,7 +41,7 @@ class LogsMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
         # 模块验证
         module: str = get_settings().ROUTER_ALIAS.get("admin", "admin")
-        endpoint: any = request.scope.get("endpoint", lambda: None)
+        endpoint: Any = request.scope.get("endpoint", lambda: None)
         if request.state.module != module or endpoint.__module__ == "starlette.staticfiles":
             return await call_next(request)
 
@@ -55,13 +56,13 @@ class LogsMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
 
         # 静态文件
-        endpoint: any = request.scope.get("endpoint", lambda: None)
+        endpoint: Any = request.scope.get("endpoint", lambda: None)
         if endpoint.__module__ == "starlette.staticfiles":
             return await call_next(request)
 
         # 异常信息
         error: str = ""
-        errno: any = None
+        errno: Any = None
         status: int = self.STATUS_OK
         start_time: float = time.time()
 
@@ -126,10 +127,11 @@ class LogsMiddleware(BaseHTTPMiddleware):
 
 
 class DemoMiddleware(BaseHTTPMiddleware):
+    """ 演示模式中间件 """
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
         # 模块验证
         module: str = get_settings().ROUTER_ALIAS.get("admin", "admin")
-        endpoint: any = request.scope.get("endpoint", lambda: None)
+        endpoint: Any = request.scope.get("endpoint", lambda: None)
         if request.state.module != module or endpoint.__module__ == "starlette.staticfiles":
             return await call_next(request)
 
@@ -141,7 +143,7 @@ class DemoMiddleware(BaseHTTPMiddleware):
         # 演示拦截
         if get_settings().ENV_DEMO and request.method == "POST":
             admin_id = await SecurityDriver.module("admin").get_login_id()
-            if int(admin_id) != 1:
+            if int(admin_id) != 1 or not get_settings().ENV_SUPER:
                 return JSONResponse({"code": 1, "msg": "演示环境不支持修改数据!", "data": []})
 
         # 执行逻辑

@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 表格栏 -->
-        <el-card class="!border-none" shadow="never">
+        <el-card class="border-none!" shadow="never">
             <el-table :data="dataLists" size="large" class="mt-4">
                 <el-table-column label="图标" prop="image" min-width="135">
                     <template #default="{ row }">
@@ -12,7 +12,7 @@
                 <el-table-column label="渠道描述" prop="desc" min-width="180" />
                 <el-table-column label="状态" prop="status" min-width="80">
                     <template #default="{ row }">
-                        <el-tag v-if="row.status === 1">启用</el-tag>
+                        <el-tag v-if="row.status">启用</el-tag>
                         <el-tag v-else type="danger">停用</el-tag>
                     </template>
                 </el-table-column>
@@ -46,6 +46,9 @@ const dataLists = ref<Array<any>>([])
 
 /**
  * 查询短信渠道列表
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const querySmsLists = async (): Promise<void> => {
     dataLists.value = await smsApi.lists()
@@ -57,6 +60,7 @@ const querySmsLists = async (): Promise<void> => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleEditor = async (type: string, row?: any): Promise<void> => {
     showEdit.value = true

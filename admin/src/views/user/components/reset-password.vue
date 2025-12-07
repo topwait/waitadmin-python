@@ -1,7 +1,7 @@
 <template>
     <popup
         :show="true"
-        :title="'重置密码'"
+        title="重置密码"
         :loading="loading"
         :async-close="true"
         width="500px"
@@ -10,7 +10,7 @@
     >
         <el-form @submit.prevent>
             <el-form-item label="密码设置">
-                <el-input type="password" v-model="formData.password" show-password />
+                <el-input v-model="formData.password" type="password" show-password />
             </el-form-item>
         </el-form>
     </popup>
@@ -23,6 +23,7 @@ import userApi from '@/api/users/user'
 const emits = defineEmits(['close', 'success'])
 
 const props = defineProps({
+    // 用户ID
     user_id: {
         type: Number,
         default: 0
@@ -37,8 +38,11 @@ const formData = reactive({
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
-const handleSubmit = async () => {
+const handleSubmit = async (): Promise<void> => {
     loading.value = true
     await userApi.resetPassword(props.user_id, formData.password)
         .finally(() => {

@@ -54,7 +54,7 @@ class BannerService:
         Author:
             zero
         """
-        _model = DevBannerModel.filter(is_delete=0).order_by("-sort", "-id")
+        _model = DevBannerModel.filter(is_delete=False).order_by("-sort", "-id")
         _pager = await DevBannerModel.paginate(
             model=_model,
             page_no=params.page_no,
@@ -103,7 +103,7 @@ class BannerService:
         Author:
             zero
         """
-        params = post.dict()
+        params = post.model_dump()
         params["image"] = UrlUtil.to_relative_url(params["image"])
         await DevBannerModel.create(
             **params,
@@ -122,7 +122,7 @@ class BannerService:
         Author:
             zero
         """
-        params = post.dict()
+        params = post.model_dump()
         params["image"] = UrlUtil.to_relative_url(params["image"])
         del params["id"]
 
@@ -142,8 +142,8 @@ class BannerService:
         Author:
             zero
         """
-        banner = await DevBannerModel.filter(id=id_, is_delete=0).get()
-
-        banner.is_delete = 1
-        banner.delete_time = int(time.time())
-        await banner.save()
+        await DevBannerModel.filter(id=id_, is_delete=False).get()
+        await DevBannerModel.filter(id=id_, is_delete=False).update(
+            is_delete=True,
+            delete_time=int(time.time())
+        )

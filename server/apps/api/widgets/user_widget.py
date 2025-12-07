@@ -49,15 +49,15 @@ class UserWidget:
         gender: int = int(response.get("gender", 0))
 
         # 验证账号
-        if account and await UserModel.filter(account=account, is_delete=0).first():
+        if account and await UserModel.filter(account=account, is_delete=False).first():
             raise AppException("账号已被占用")
 
         # 验证手机
-        if mobile and await UserModel.filter(mobile=mobile, is_delete=0).first():
+        if mobile and await UserModel.filter(mobile=mobile, is_delete=False).first():
             raise AppException("手机已被占用")
 
         # 验证邮箱
-        if email and await UserModel.filter(email=email, is_delete=0).first():
+        if email and await UserModel.filter(email=email, is_delete=False).first():
             raise AppException("邮箱已被占用")
 
         # 密码信息
@@ -120,11 +120,11 @@ class UserWidget:
         unionid: str = response.get("unionid", "")
 
         # 查询用户
-        user_info = await UserModel.filter(id=user_id, is_delete=0).first()
+        user_info = await UserModel.filter(id=user_id, is_delete=False).first()
         user_auth = await UserAuthModel.filter(user_id=user_id, terminal=terminal).first()
 
         # 验证手机
-        if mobile and UserModel.filter(mobile=mobile, is_delete=0, id__ne=user_id).first():
+        if mobile and UserModel.filter(mobile=mobile, is_delete=False, id__ne=user_id).first():
             raise AppException("手机已被占用")
 
         try:
@@ -172,7 +172,7 @@ class UserWidget:
                 .values("id", "user_id") or {})
 
         user = (await UserModel
-                .filter(id=auth.get("user_id", 0), is_delete=0)
+                .filter(id=auth.get("user_id", 0), is_delete=False)
                 .order_by("-id")
                 .first())
 

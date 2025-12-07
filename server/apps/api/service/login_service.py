@@ -42,16 +42,15 @@ class LoginService:
         Author:
             zero
         """
-        notice_code: int = NoticeEnum.MOBILE_REG if post.scene == "mobile" else NoticeEnum.EMAIL_REG
-        field_value: str = "mobile" if post.scene == "mobile" else "email"
-
-        # 验证编码
-        if not await MsgDriver.check_code(notice_code, post.code):
-            raise AppException("验证码错误")
+        # 验证码验证
+        if post.scene != "account":
+            notice_code: int = NoticeEnum.MOBILE_REG if post.scene == "mobile" else NoticeEnum.EMAIL_REG
+            if not await MsgDriver.check_code(notice_code, post.code):
+                raise AppException("验证码错误")
 
         # 创建账号
         user_id: int = await UserWidget.create_user({
-            f"{field_value}": post.account,
+            f"{post.scene}": post.account,
             "password": post.password,
             "terminal": terminal
         })
@@ -79,7 +78,7 @@ class LoginService:
         # 查询账号
         user = await (UserModel
                       .filter(Q(account=account) | Q(mobile=account) | Q(email=account))
-                      .filter(is_delete=0)
+                      .filter(is_delete=False)
                       .first())
 
         # 验证账号
@@ -120,7 +119,7 @@ class LoginService:
             raise AppException("验证码错误")
 
         # 查询账号
-        user = await UserModel.filter(mobile=mobile, is_delete=0).first()
+        user = await UserModel.filter(mobile=mobile, is_delete=False).first()
 
         # 验证账号
         if not user:

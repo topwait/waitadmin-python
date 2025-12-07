@@ -12,10 +12,10 @@ dotenv.config()
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
 
 // SSR状态
-const isSSR = Boolean(process.env.NUXT_SSR)
+const isSSR = Boolean(process.env.VITE_SSR)
 
 // 目标的路径
-const targetRelativePath = '../server/public/pc'
+const targetRelativePath = String(process.env.VITE_PACK_PATH)
 
 // 目标根路径
 const releasePath = path.resolve(cwd, targetRelativePath)

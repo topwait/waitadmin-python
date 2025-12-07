@@ -38,7 +38,7 @@ class RechargeService:
             zero
         """
         lists = await RechargePackageModel\
-            .filter(is_show=1, is_delete=0)\
+            .filter(is_show=1, is_delete=False)\
             .order_by("-sort", "-id")\
             .all().values("id", "name", "money", "give_money")
 
@@ -69,7 +69,7 @@ class RechargeService:
 
         # 查询下套餐
         if post.package_id:
-            package = await RechargePackageModel.filter(id=post.package_id, is_delete=0).first()
+            package = await RechargePackageModel.filter(id=post.package_id, is_delete=False).first()
             if not package:
                 raise AppException("套餐不存在")
             if not package.is_show:

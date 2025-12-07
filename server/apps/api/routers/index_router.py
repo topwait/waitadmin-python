@@ -18,16 +18,16 @@ from apps.api.service.index_service import IndexService
 router = APIRouter(prefix="/index", tags=["公共接口"])
 
 
-@router.get("/homing", summary="主页数据", response_model=R[schema.ConfigVo])
-@response_json
-async def homing():
-    return await IndexService.homing()
-
-
 @router.get("/config", summary="全局配置", response_model=R[schema.ConfigVo])
 @response_json
 async def config():
     return await IndexService.config()
+
+
+@router.get("/homing", summary="主页数据", response_model=R[schema.HomingVo])
+@response_json
+async def homing():
+    return await IndexService.homing()
 
 
 @router.get("/policy", summary="协议政策", response_model=R[schema.PolicyVo])

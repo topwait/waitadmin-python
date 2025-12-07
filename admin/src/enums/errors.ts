@@ -11,6 +11,8 @@ export enum errorEnum {
     REQUEST_405_ERROR =  405,     // 请求方法错误
     SYSTEM_UNKNOWN_ERROR =  500,  // 系统未知错误
     SYSTEM_TIMEOUT_ERROR =  504,  // 请求超时错误
+    SYSTEM_KEY_ERROR =  505,      // 无效的参数值
+    SYSTEM_VAL_ERROR =  506,      // KEY参数无效
     DB_OPERATIONS_ERROR =  600,   // 数据库操作异常
     DB_EMPTY_DATA_ERROR =  601    // 查询数据不存在
 }

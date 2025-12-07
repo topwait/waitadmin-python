@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 账号信息 -->
-        <el-card class="!border-none" shadow="never">
+        <el-card class="border-none!" shadow="never">
             <el-form
                 ref="formRef"
                 :model="formData"
@@ -70,7 +70,7 @@
         </el-card>
 
         <!-- 保存按钮 -->
-        <el-card shadow="never" class="!border-none mt-4">
+        <el-card shadow="never" class="border-none! mt-4">
             <el-button
                 :loading="loading"
                 type="primary"
@@ -121,6 +121,9 @@ const rules = reactive<object>({
 
 /**
  * 获取用户
+ *
+ * @returns {void}
+ * @author zero
  */
 const getUserInfo = (): void => {
     const userInfo = userStore.users
@@ -132,6 +135,9 @@ const getUserInfo = (): void => {
 
 /**
  * 提交表单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
 const handleSubmit = async (): Promise<void> => {
     await formRef.value?.validate()

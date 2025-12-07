@@ -7,7 +7,7 @@
         @close="emits('close')"
     >
         <div class="p-6 pb-0">
-            <el-tabs type="border-card" v-model="currTabPane">
+            <el-tabs v-model="currTabPane" type="border-card">
                 <!-- 基础信息 -->
                 <el-tab-pane name="intros" label="基础信息" class="min-h-[542px]">
                     <!-- 账户 -->
@@ -50,11 +50,11 @@
                             <dd>
                                 {{ formData.account }}
                                 <popover-input
+                                    v-perms="['users:user:edit']"
                                     class="ml-[5px]"
                                     :limit="32"
                                     :value="formData.account"
                                     @confirm="handleEdit($event, 'account')"
-                                    v-perms="['users:user:edit']"
                                 >
                                     <el-button type="primary" link>
                                         <icon name="el-icon-EditPen" />
@@ -67,11 +67,11 @@
                             <dd>
                                 {{ formData.nickname }}
                                 <popover-input
+                                    v-perms="['users:user:edit']"
                                     class="ml-[5px]"
                                     :limit="32"
                                     :value="formData.nickname"
                                     @confirm="handleEdit($event, 'nickname')"
-                                    v-perms="['users:user:edit']"
                                 >
                                     <el-button type="primary" link>
                                         <icon name="el-icon-EditPen" />
@@ -84,10 +84,10 @@
                             <dd>
                                 {{ formData.mobile || '未绑定' }}
                                 <popover-input
+                                    v-perms="['users:user:edit']"
                                     class="ml-[5px]"
                                     :value="formData.mobile"
                                     @confirm="handleEdit($event, 'mobile')"
-                                    v-perms="['users:user:edit']"
                                 >
                                     <el-button type="primary" link>
                                         <icon name="el-icon-EditPen" />
@@ -100,6 +100,7 @@
                             <dd>
                                 {{ formData.gender || '未知' }}
                                 <popover-input
+                                    v-perms="['users:user:edit']"
                                     class="ml-[5px]"
                                     type="select"
                                     :value="formData.gender"
@@ -118,7 +119,6 @@
                                         }
                                     ]"
                                     @confirm="handleEdit($event, 'gender')"
-                                    v-perms="['users:user:edit']"
                                 >
                                     <el-button type="primary" link>
                                         <icon name="el-icon-EditPen" />
@@ -131,10 +131,10 @@
                             <dd>
                                 {{ formData.email || '未绑定' }}
                                 <popover-input
+                                    v-perms="['users:user:edit']"
                                     class="ml-[5px]"
                                     :value="formData.email"
                                     @confirm="handleEdit($event, 'email')"
-                                    v-perms="['users:user:edit']"
                                 >
                                     <el-button type="primary" link>
                                         <icon name="el-icon-EditPen" />
@@ -147,11 +147,11 @@
                             <dd>
                                 {{ formData.group || '未设置' }}
                                 <popover-input
+                                    v-perms="['users:user:edit']"
                                     class="ml-[5px]"
                                     type="select"
                                     :options="[]"
                                     @confirm="handleEdit($event, 'group')"
-                                    v-perms="['users:user:edit']"
                                 >
                                     <el-button type="primary" link>
                                         <icon name="el-icon-EditPen" />
@@ -164,8 +164,8 @@
                             <dd>
                                 <el-tag
                                     :type="formData.is_disable ? 'warning' : 'success'"
-                                    @click="handleBlacklist()"
                                     class="cursor-pointer"
+                                    @click="handleBlacklist()"
                                 >
                                     {{ formData.is_disable ? '已禁用' : '正常' }}
                                 </el-tag>
@@ -195,31 +195,37 @@
                     </div>
                     <el-table v-loading="sessionPager.loading" :data="sessionPager.lists" stripe>
                         <el-table-column prop="uuid" label="编号">
-                            <template #default="{ row }">
+                            <template #default="scope: { row: UserSessionResponse }">
                                 <el-tooltip
                                     class="box-item"
                                     effect="dark"
-                                    :content="row.uuid"
+                                    :content="scope.row.uuid"
                                     placement="top-start"
                                 >
-                                    <p class="line-clamp-1">{{ row?.uuid }}</p>
+                                    <p class="line-clamp-1">{{ scope.row.uuid }}</p>
                                 </el-tooltip>
                             </template>
                         </el-table-column>
                         <el-table-column prop="device" label="终端" width="120" />
                         <el-table-column prop="tips" label="状态" width="90">
-                            <template #default="{ row }">
+                            <template #default="scope: { row: UserSessionResponse }">
                                 <el-tooltip placement="top">
                                     <template #content>
-                                        <p>最后操作UA：{{ row?.last_ua_browser }}</p>
-                                        <p>最后操作IP：{{ row?.last_ip_address }}</p>
-                                        <p>最后操作时间：{{ row?.last_op_time }}</p>
-                                        <p>令牌创建时间：{{ row?.create_time }}</p>
+                                        <p>最后操作UA：{{ scope.row.last_ua_browser }}</p>
+                                        <p>最后操作IP：{{ scope.row.last_ip_address }}</p>
+                                        <p>最后操作时间：{{ scope.row.last_op_time }}</p>
+                                        <p>令牌创建时间：{{ scope.row.create_time }}</p>
                                     </template>
                                     <div class="cursor-pointer">
-                                        <el-tag v-if="row.status === 1" type="success">{{ row?.tips }}</el-tag>
-                                        <el-tag v-if="row.status === 2" type="danger">{{ row?.tips }}</el-tag>
-                                        <el-tag v-if="row.status === 3" type="warning">{{ row?.tips }}</el-tag>
+                                        <el-tag v-if="scope.row.status === 1" type="success">
+                                            {{ scope.row.tips }}
+                                        </el-tag>
+                                        <el-tag v-if="scope.row.status === 2" type="danger">
+                                            {{ scope.row.tips }}
+                                        </el-tag>
+                                        <el-tag v-if="scope.row.status === 3" type="warning">
+                                            {{ scope.row.tips }}
+                                        </el-tag>
                                     </div>
                                 </el-tooltip>
                             </template>
@@ -235,9 +241,9 @@
                     <div v-if="sessionPager.lists.length > 0" class="flex justify-end mt-4">
                         <paging
                             v-model="sessionPager"
-                            @change="sessionLists"
                             :page-sizes="[10, 20, 30, 40]"
                             :small="true"
+                            @change="sessionLists"
                         />
                     </div>
                 </el-tab-pane>
@@ -252,23 +258,27 @@
                     <el-table v-loading="walletsPager.loading" :data="walletsPager.lists" stripe>
                         <el-table-column prop="log_sn" label="编号" />
                         <el-table-column prop="change_amount" label="变动数" width="120">
-                            <template #default="{ row }">
-                                <span v-if="row.action === 1" class="text-success">+{{ row?.change_amount }}</span>
-                                <span v-if="row.action === 2" class="text-error">-{{ row?.change_amount }}</span>
+                            <template #default="scope: { row: UserWalletLogsResponse }">
+                                <span v-if="scope.row.action === 1" class="text-success">
+                                    +{{ scope.row.change_amount }}
+                                </span>
+                                <span v-if="scope.row.action === 2" class="text-error">
+                                    -{{ scope.row.change_amount }}
+                                </span>
                             </template>
                         </el-table-column>
                         <el-table-column prop="before_amount" label="变动前" width="120" />
                         <el-table-column prop="after_amount" label="变动后" width="120" />
                         <el-table-column prop="tips" label="来源类型" width="180">
-                            <template #default="{ row }">
+                            <template #default="scope: { row: UserWalletLogsResponse }">
                                 <el-tooltip placement="top">
                                     <template #content>
-                                        <p>后台操作：{{ row?.op_user || '-' }}</p>
-                                        <p>来源单号：{{ row?.source_sn || '-' }}</p>
-                                        <p>记录时间：{{ row?.create_time || '-' }}</p>
+                                        <p>后台操作：{{ scope.row.op_user || '-' }}</p>
+                                        <p>来源单号：{{ scope.row.source_sn || '-' }}</p>
+                                        <p>记录时间：{{ scope.row.create_time || '-' }}</p>
                                     </template>
                                     <el-tag effect="plain" type="info" class="cursor-pointer">
-                                        {{ row?.source_type || '无'}}
+                                        {{ scope.row.source_type || '无'}}
                                     </el-tag>
                                 </el-tooltip>
                             </template>
@@ -277,9 +287,9 @@
                     <div v-if="walletsPager.lists.length > 0" class="flex justify-end mt-4">
                         <paging
                             v-model="walletsPager"
-                            @change="walletsLists"
                             :page-sizes="[10, 20, 30, 40]"
                             :small="true"
+                            @change="walletsLists"
                         />
                     </div>
                 </el-tab-pane>
@@ -331,7 +341,7 @@ const formData = reactive({
     is_disable: 0,       // 是否禁用: [0=否, 1=是]
     last_login_ip: '',   // 最后登录IP
     last_login_time: '', // 最后登录时间
-    create_time: '',     // 用户注册时间
+    create_time: ''     // 用户注册时间
 })
 
 // 当前数据面板
@@ -372,10 +382,12 @@ const {
  *
  * @param {number} id
  * @returns {Promise<void>}
+ * @author zero
  */
 const queryDetail = async (id: number): Promise<void> => {
     const data = await userApi.detail(id)
     for (const key in formData) {
+        // @ts-ignore
         if (data[key] !== null && data[key] !== undefined) {
             // @ts-ignore
             formData[key] = data[key]
@@ -399,8 +411,11 @@ const handleEdit = async (value: string, field: string): Promise<void> => {
 
 /**
  * 拉黑名单
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
-const handleBlacklist = async () => {
+const handleBlacklist = async (): Promise<void> => {
     let messages = '您确定要禁用该用户吗? 禁用后该用户将会被限制登录。'
     if (formData.is_disable === 1) {
         messages = '您确定要解除禁用吗? 解除后该用户将恢复登录功能。'
@@ -423,6 +438,7 @@ const handleBlacklist = async () => {
  *
  * @param uuid
  * @returns {Promise<void>}
+ * @author zero
  */
 const handleKickOut = async (uuid: string): Promise<void> => {
     let messages = `您确定要强退该登录吗? (${uuid})`
@@ -438,16 +454,22 @@ const handleKickOut = async (uuid: string): Promise<void> => {
 
 /**
  * 调整账户
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
-const handleAdjustBalance = async () => {
+const handleAdjustBalance = async (): Promise<void> => {
     await queryDetail(formData.id)
     await walletsResetPaging()
 }
 
 /**
  * 刷新表格
+ *
+ * @returns {Promise<void>}
+ * @author zero
  */
-const handleRefreshTable = async () => {
+const handleRefreshTable = async (): Promise<void> => {
     switch (currTabPane.value) {
         case 'session':
             await sessionResetPaging()
@@ -463,6 +485,7 @@ const handleRefreshTable = async () => {
  * @param {string} type
  * @param {any} row
  * @returns {Promise<void>}
+ * @author zero
  */
 const open = async (type: string, row?: any): Promise<void> => {
     showMode.value = type

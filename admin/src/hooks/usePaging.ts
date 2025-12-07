@@ -9,6 +9,12 @@ interface Options {
     fetchFun: (_arg: any) => Promise<any>
 }
 
+/**
+ * 分页数据处理器
+ *
+ * @param options
+ * @author zero
+ */
 export function usePaging(options: Options): any {
     // 读取参数
     const { page = 1, size = 15, fetchFun, params = {}, firstLoading = false } = options
@@ -59,7 +65,7 @@ export function usePaging(options: Options): any {
     // 重置查询参数
     const resetParams = async (): Promise<void> => {
         Object.keys(paramsInit).forEach((item: string): void => {
-            params[item] = paramsInit[item]
+            params[item] = paramsInit[String(item)]
         })
         await queryLists()
     }
@@ -67,7 +73,7 @@ export function usePaging(options: Options): any {
     // 过滤对象空字段
     const filterNullObj = (obj: any) => {
         return Object.keys(obj).reduce((acc: any, key: string) => {
-            if (obj[key] !== '' && obj[key] !== null && obj[key] !== undefined) {
+            if (obj[key] !== '' && obj[key] !== undefined && obj[key] !== null) {
                 acc[key] = obj[key]
             }
             return acc

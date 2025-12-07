@@ -45,7 +45,7 @@ class AdminService:
         Author:
             zero
         """
-        where = [Q(is_delete=0)]
+        where = [Q(is_delete=False)]
         if params.username:
             where.append(Q(username__icontains=params.username))
         if params.mobile:
@@ -172,21 +172,21 @@ class AdminService:
         Author:
             zero
         """
-        if await AuthAdminModel.filter(nickname=post.nickname, is_delete=0).first().only("id"):
+        if await AuthAdminModel.filter(nickname=post.nickname, is_delete=False).first().only("id"):
             raise AppException("昵称已被占用")
 
-        if await AuthAdminModel.filter(username=post.nickname, is_delete=0).first().only("id"):
+        if await AuthAdminModel.filter(username=post.nickname, is_delete=False).first().only("id"):
             raise AppException("账号已被占用")
 
         if post.mobile:
-            if await AuthAdminModel.filter(mobile=post.mobile, is_delete=0).first().only("id"):
+            if await AuthAdminModel.filter(mobile=post.mobile, is_delete=False).first().only("id"):
                 raise AppException("手机号已被占用")
 
         if post.email:
-            if await AuthAdminModel.filter(email=post.email, is_delete=0).first().only("id"):
+            if await AuthAdminModel.filter(email=post.email, is_delete=False).first().only("id"):
                 raise AppException("邮箱号已被占用")
 
-        params = post.dict()
+        params = post.model_dump()
         params["salt"] = ToolsUtil.make_rand_char(6)
         params["avatar"] = UrlUtil.to_relative_url(post.avatar)
         params["password"] = ToolsUtil.make_md5_str(post.password, params["salt"])
@@ -208,7 +208,7 @@ class AdminService:
             zero
         """
         pass
-        admin = await AuthAdminModel.filter(id=post.id, is_delete=0).first()
+        admin = await AuthAdminModel.filter(id=post.id, is_delete=False).first()
         if not admin:
             raise AppException("管理员不存在")
 
@@ -216,22 +216,22 @@ class AdminService:
             raise AppException("您无权限操作")
 
         if admin.nickname != post.nickname:
-            if await AuthAdminModel.filter(id__not=admin.id, nickname=post.nickname, is_delete=0).first().only("id"):
+            if await AuthAdminModel.filter(id__not=admin.id, nickname=post.nickname, is_delete=False).first().only("id"):
                 raise AppException("昵称已被占用")
 
         if admin.username != post.username:
-            if await AuthAdminModel.filter(id__not=admin.id, username=post.nickname, is_delete=0).first().only("id"):
+            if await AuthAdminModel.filter(id__not=admin.id, username=post.nickname, is_delete=False).first().only("id"):
                 raise AppException("账号已被占用")
 
         if post.mobile:
-            if await AuthAdminModel.filter(id__not=admin.id, mobile=post.mobile, is_delete=0).first().only("id"):
+            if await AuthAdminModel.filter(id__not=admin.id, mobile=post.mobile, is_delete=False).first().only("id"):
                 raise AppException("手机号已被占用")
 
         if post.email:
-            if await AuthAdminModel.filter(id__not=admin.id, email=post.email, is_delete=0).first().only("id"):
+            if await AuthAdminModel.filter(id__not=admin.id, email=post.email, is_delete=False).first().only("id"):
                 raise AppException("邮箱号已被占用")
 
-        params = post.dict()
+        params = post.model_dump()
         params["avatar"] = UrlUtil.to_relative_url(post.avatar)
         params["update_time"] = time.time()
         params["password"] = admin.password
@@ -254,7 +254,7 @@ class AdminService:
         Author:
             zero
         """
-        admin = await AuthAdminModel.filter(id=id_, is_delete=0).first()
+        admin = await AuthAdminModel.filter(id=id_, is_delete=False).first()
         if not admin:
             raise AppException("管理员不存在")
 
@@ -264,7 +264,10 @@ class AdminService:
         if id_ == 1:
             raise AppException("系统管理员禁止删除")
 
-        await AuthAdminModel.filter(id=id_).update(is_delete=1, delete_time=int(time.time()))
+        await AuthAdminModel.filter(id=id_).update(
+            is_delete=True,
+            delete_time=int(time.time())
+        )
 
     @classmethod
     async def set_info(cls, post: schema.AuthAdminInfoIn, admin_id: int):
@@ -278,11 +281,11 @@ class AdminService:
         Author:
             zero
         """
-        admin = await AuthAdminModel.filter(id=admin_id, is_delete=0).first()
+        admin = await AuthAdminModel.filter(id=admin_id, is_delete=False).first()
         if not admin:
             raise AppException("管理员不存在")
 
-        update_dict = {"update_time": int(time.time())}
+        update_dict: dict = {"update_time": int(time.time())}
         if post.password:
             password_old = ToolsUtil.make_md5_str(post.password_old, admin.salt)
             if admin.password != password_old:
@@ -298,16 +301,16 @@ class AdminService:
             update_dict["avatar"] = UrlUtil.to_relative_url(post.avatar)
 
         if post.nickname != admin.nickname:
-            if await AuthAdminModel.filter(id__not=admin_id, nickname=post.nickname, is_delete=0).first().only("id"):
+            if await AuthAdminModel.filter(id__not=admin_id, nickname=post.nickname, is_delete=False).first().only("id"):
                 raise AppException("昵称已被占用")
             update_dict["nickname"] = post.nickname
 
         if post.mobile:
-            if await AuthAdminModel.filter(id__not=admin_id, mobile=post.mobile, is_delete=0).first().only("id"):
+            if await AuthAdminModel.filter(id__not=admin_id, mobile=post.mobile, is_delete=False).first().only("id"):
                 raise AppException("手机号已被占用")
 
         if post.email:
-            if await AuthAdminModel.filter(id__not=admin_id, email=post.email, is_delete=0).first().only("id"):
+            if await AuthAdminModel.filter(id__not=admin_id, email=post.email, is_delete=False).first().only("id"):
                 raise AppException("邮箱号已被占用")
 
         await AuthAdminModel.filter(id=admin_id).update(**update_dict)

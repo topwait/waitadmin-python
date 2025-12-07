@@ -40,7 +40,7 @@ const props = defineProps({
 })
 
 const styles = computed<CSSProperties>(() => {
-    let css: any = {
+    const css: any = {
         width: toolsUtil.addUnit(props.width),
         height: toolsUtil.addUnit(props.height)
     }

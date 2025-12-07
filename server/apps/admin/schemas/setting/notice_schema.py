@@ -10,8 +10,12 @@
 # +----------------------------------------------------------------------
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
-from typing import Dict
+from typing import Dict, Union
+from fastapi import Query
 from pydantic import BaseModel, Field
+
+class NoticeQueryIn(BaseModel):
+    client: int = Query(ge=1, le=2, default=1, description="通知平台: [1=用户,2=平台]")
 
 
 class NoticeDetailIn(BaseModel):
@@ -27,9 +31,9 @@ class NoticeListVo(BaseModel):
     scene: int = Field(description="通知场景")
     name: str = Field(description="通知场景")
     type: str = Field(description="通知类型")
-    sys_status: int = Field(ge=0, le=2, description="系统通知")
-    ems_status: int = Field(ge=0, le=2, description="邮件通知")
-    sms_status: int = Field(ge=0, le=2, description="短信通知")
+    sys_status: int = Field(ge=0, le=2, description="系统通知: [0=停用,1=启用,2=没有]")
+    ems_status: int = Field(ge=0, le=2, description="邮件通知: [0=停用,1=启用,2=没有]")
+    sms_status: int = Field(ge=0, le=2, description="短信通知: [0=停用,1=启用,2=没有]")
 
     class Config:
         json_schema_extra = {
@@ -54,9 +58,9 @@ class NoticeDetailVo(BaseModel):
     client: str = Field(description="接收端口")
     remarks: str = Field(description="场景描述")
     variable: dict = Field(description="场景描述")
-    sys_template: Dict[str, str] = Field(default_factory=dict, description="系统通知")
-    ems_template: Dict[str, str] = Field(default_factory=dict, description="邮件通知")
-    sms_template: Dict[str, str] = Field(default_factory=dict, description="短信通知")
+    sys_template: Dict[str, Union[str, int]] = Field(default_factory=dict, description="系统通知")
+    ems_template: Dict[str, Union[str, int]] = Field(default_factory=dict, description="邮件通知")
+    sms_template: Dict[str, Union[str, int]] = Field(default_factory=dict, description="短信通知")
 
     class Config:
         json_schema_extra = {
@@ -73,7 +77,7 @@ class NoticeDetailVo(BaseModel):
                 "sys_template": {},
                 "ems_template": {},
                 "sms_template": {
-                    "status": "1",
+                    "status": 1,
                     "content": "${code}",
                     "template_code": "SMS_182535543"
                 }

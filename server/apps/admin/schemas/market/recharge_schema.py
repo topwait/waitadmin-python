@@ -25,7 +25,7 @@ class RechargePackageAddIn(BaseModel):
     money: Decimal = Field(..., max_digits=10, decimal_places=2, description="充值金额")
     give_money: Decimal = Field(default=Decimal(0), max_digits=10, decimal_places=2, description="赠送金额")
     sort: int = Field(ge=0, default=0, description="排序编号")
-    is_show: int = Field(ge=0, le=1, default=0, description="是否显示: [0=否, 1=是]")
+    is_show: bool = Field(default=False, description="是否显示")
 
     @classmethod
     def messages(cls):
@@ -36,8 +36,7 @@ class RechargePackageAddIn(BaseModel):
             "give_money.max_digits": "赠送金额整数部分不能超出8位",
             "give_money.decimal_places": "赠送金额只能保留2位小数",
             "sort.ge": "排序号不能少于0",
-            "is_show.ge": "管理员状态非合法值: [0, 1]",
-            "is_show.le": "管理员状态非合法值: [0, 1]"
+            "is_show.bool_parsing": "状态必须为布尔值"
         }
 
     class Config:
@@ -46,7 +45,7 @@ class RechargePackageAddIn(BaseModel):
                 "money": 0.01,
                 "give_money": 0,
                 "sort": 10,
-                "is_show": 1
+                "is_show": True
             }
         }
 
@@ -57,7 +56,7 @@ class RechargePackageEditIn(BaseModel):
     money: Decimal = Field(..., max_digits=10, decimal_places=2, description="充值金额")
     give_money: Decimal = Field(default=Decimal(0), max_digits=10, decimal_places=2, description="赠送金额")
     sort: int = Field(ge=0, default=0, description="排序编号")
-    is_show: int = Field(ge=0, le=1, default=0, description="是否显示: [0=否, 1=是]")
+    is_show: int = Field(default=False, description="是否显示")
 
     @classmethod
     def messages(cls):
@@ -70,7 +69,7 @@ class RechargePackageEditIn(BaseModel):
                 "money": 0.01,
                 "give_money": 0,
                 "sort": 10,
-                "is_show": 1
+                "is_show": False
             }
         }
 
@@ -78,6 +77,12 @@ class RechargePackageEditIn(BaseModel):
 class RechargePackageDeleteIn(BaseModel):
     """ 充值套餐删除参数 """
     id: int = Field(gt=0, description="套餐ID", examples=[1])
+
+    @classmethod
+    def messages(cls):
+        return {
+            "id.missing": "id参数缺失"
+        }
 
     class Config:
         json_schema_extra = {
@@ -89,8 +94,17 @@ class RechargePackageDeleteIn(BaseModel):
 
 class RechargeConfigIn(BaseModel):
     """ 充值套餐配置参数 """
-    status: int = Field(ge=0, le=1, description="充值状态", examples=[1])
+    status: bool = Field(default=False, description="充值状态")
     min_recharge: Decimal = Field(..., max_digits=10, decimal_places=2, description="最低充值金额")
+
+    @classmethod
+    def messages(cls):
+        return {
+            "min_recharge.missing": "最低充值金额",
+            "min_recharge.decimal_places": "最低充值金额金额只能保留2位小数",
+            "min_recharge.max_digits": "最低充值金额整数部分不能超出8位",
+            "status.bool_parsing": "充值状态必须为布尔值"
+        }
 
     class Config:
         json_schema_extra = {
@@ -110,7 +124,7 @@ class RechargePackageListVo(BaseModel):
     money: Decimal = Field(description="充值金额")
     give_money: Decimal = Field(description="赠送金额")
     sort: int = Field(description="排序编号")
-    is_show: int = Field(description="是否显示: [0=否, 1=是]")
+    is_show: bool = Field(description="是否显示")
     create_time: str = Field(description="创建时间")
     update_time: str = Field(description="更新时间")
 
@@ -121,9 +135,9 @@ class RechargePackageListVo(BaseModel):
                 "money": 0.01,
                 "give_money": 0,
                 "sort": 10,
-                "is_show": 1,
+                "is_show": False,
                 "create_time": "2023-07-22 11:33:44",
-                "update_time": "2023-07-22 11:33:44",
+                "update_time": "2023-07-22 11:33:44"
             }
         }
 
@@ -134,7 +148,7 @@ class RechargePackageDetailVo(BaseModel):
     money: Decimal = Field(description="充值金额")
     give_money: Decimal = Field(description="所属部门")
     sort: int = Field(description="排序编号")
-    is_show: int = Field(description="是否显示: [0=否, 1=是]")
+    is_show: bool = Field(description="是否显示")
 
     class Config:
         json_schema_extra = {
@@ -143,6 +157,6 @@ class RechargePackageDetailVo(BaseModel):
                 "money": 0.01,
                 "give_money": 0,
                 "sort": 10,
-                "is_show": 1
+                "is_show": False
             }
         }

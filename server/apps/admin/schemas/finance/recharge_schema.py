@@ -22,10 +22,10 @@ class RechargeSearchIn(BaseModel):
     page_size: int = Query(gt=0, le=200, default=15, description="每页条数")
     user: Union[str, None] = Query(default=None, description="用户信息")
     order_sn: Union[str, None] = Query(default=None, description="充值单号")
-    pay_way: Union[str, int, None] = Query(default=None, description="支付方式: [2=微信, 3=支付宝]")
-    pay_status: Union[str, int, None] = Query(default=None, description="支付状态: [0=未支付, 1=已支付]")
-    start_time: Union[int, str, None] = Query(default=None, description="开始时间")
-    end_time: Union[int, str, None] = Query(default=None, description="结束时间")
+    pay_way: Union[int, None] = Query(default=None, description="支付方式: [2=微信, 3=支付宝]")
+    pay_status: Union[int, None] = Query(default=None, description="支付状态: [0=未支付, 1=已支付]")
+    start_time: Union[str, None] = Query(default=None, description="开始时间")
+    end_time: Union[str, None] = Query(default=None, description="结束时间")
 
 
 """--------------- Separator ---------------"""
@@ -37,7 +37,7 @@ class RechargeListVo(BaseModel):
     order_sn: str = Field(description="充值单号")
     paid_amount: Decimal = Field(description="充值金额")
     give_amount: Decimal = Field(description="赠送金额")
-    pay_way: str = Field(description="支付方式")
+    pay_way: str = Field(description="支付方式: [余额支付,微信支付,支付宝支付]")
     pay_status: int = Field(description="支付状态: [0=未支付, 1=已支付]")
     create_time: str = Field(description="创建时间")
     pay_time: str = Field(description="支付时间")

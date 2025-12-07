@@ -10,8 +10,8 @@
                         :class="menusIndex === index ? 'active' : ''"
                         @click="onSwitchMenu(route, index)"
                     >
-                        <icon :name="route.meta.icon" :size="14" />
-                        <cite>{{  route.meta.title }}</cite>
+                        <icon :name="String(route.meta?.icon)" :size="14" />
+                        <cite>{{  route.meta?.title }}</cite>
                     </li>
                 </ul>
             </el-scrollbar>
@@ -81,7 +81,7 @@ const initChoiceMenu = (isJump: boolean = true): void => {
         const path = routes.value[i].path
         if (activeMenu.value.startsWith(path)) {
             menusIndex.value = i
-            firstsMenu.value = path + '/'
+            firstsMenu.value = `${path}/`
             if (isJump) {
                 router.push(activeMenu.value)
             }
@@ -99,7 +99,7 @@ const initChoiceMenu = (isJump: boolean = true): void => {
 const onSwitchMenu = (route: RouteRecordRaw, index: number): void => {
     if (!validateUtil.isExternal(route.path)) {
         menusIndex.value = index
-        firstsMenu.value = route.path + '/'
+        firstsMenu.value = `${route.path}/`
         appStore.isCollapsed = false
         router.push(firstRoutes(route))
     } else {
@@ -130,7 +130,7 @@ const resolvePath = (path: string): string => {
  */
 const firstRoutes = (route: any, path: string = ''): any => {
     if (route.path) {
-        path += path ? '/' + route.path : route.path
+        path += path ? `/${route.path}` : route.path
     }
 
     if (route.children && route.children.length > 0) {

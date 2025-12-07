@@ -37,7 +37,7 @@ class RoleService:
             zero
         """
         _lists = await AuthRoleModel\
-            .filter(is_delete=0)\
+            .filter(is_delete=False)\
             .order_by("-sort", "-id")\
             .all()\
             .values("id", "name", "is_disable")
@@ -58,7 +58,7 @@ class RoleService:
         Author:
             zero
         """
-        _model = AuthRoleModel.filter(is_delete=0).order_by("-sort", "-id")
+        _model = AuthRoleModel.filter(is_delete=False).order_by("-sort", "-id")
         _pager = await AuthRoleModel.paginate(
             model=_model,
             page_no=params.page_no,
@@ -68,7 +68,7 @@ class RoleService:
         )
 
         for item in _pager.lists:
-            item.admin_sum = await AuthAdminModel.filter(role_id=item.id, is_delete=0).count()
+            item.admin_sum = await AuthAdminModel.filter(role_id=item.id, is_delete=False).count()
 
         return _pager
 
@@ -106,7 +106,7 @@ class RoleService:
         Author:
             zero
         """
-        params = post.dict()
+        params = post.model_dump()
         del params["menu_ids"]
 
         role = await AuthRoleModel.create(
@@ -132,7 +132,7 @@ class RoleService:
         Author:
             zero
         """
-        params = post.dict()
+        params = post.model_dump()
         del params["id"]
         del params["menu_ids"]
 
@@ -160,13 +160,13 @@ class RoleService:
         Author:
             zero
         """
-        role = await AuthRoleModel.filter(id=id_, is_delete=0).first()
+        role = await AuthRoleModel.filter(id=id_, is_delete=False).first()
         if not role:
             raise AppException("角色不存在")
 
-        admin = await AuthAdminModel.filter(role_id=id_, is_delete=0).first()
+        admin = await AuthAdminModel.filter(role_id=id_, is_delete=False).first()
         if admin:
             raise AppException("角色已被使用不能删除")
 
-        await AuthRoleModel.filter(id=id_).update(is_delete=1, delete_time=int(time.time()))
+        await AuthRoleModel.filter(id=id_).update(is_delete=True, delete_time=int(time.time()))
         await LoginCache.role_perms_del()
