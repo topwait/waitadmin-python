@@ -18,6 +18,7 @@ from common.models.notice import NoticeRecord
 from common.enums.notice import NoticeEnum
 from plugins.msg.engine.ems import EmsNotice
 from plugins.msg.engine.sms import SmsNotice
+from plugins.msg.engine.sys import SysNotice
 
 
 class MsgDriver:
@@ -44,12 +45,16 @@ class MsgDriver:
             template["variable"] = json.loads(notice.variable)
             template["ems_template"] = json.loads(notice.ems_template)
             template["sms_template"] = json.loads(notice.sms_template)
+            template["sys_template"] = json.loads(notice.sys_template)
 
-            if template["ems_template"].get("status", 0):
+            if template["ems_template"].get("status", 0) and params.get("email"):
                 return await EmsNotice().send(scene, params, template)
 
-            if template["sms_template"].get("status", 0):
+            if template["sms_template"].get("status", 0 and params.get("mobile")):
                 return await SmsNotice().send(scene, params, template)
+
+            if template["sys_template"].get("status", 0):
+                return await SysNotice().send(scene, params, template)
             return None
         else:
             raise AppException("通知场景不存在")
