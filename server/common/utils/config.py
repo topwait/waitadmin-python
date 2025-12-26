@@ -109,7 +109,7 @@ class ConfigUtil:
         await RedisUtil.delete(cls.SYSTEM_CONFIG_KEY)
 
         if isinstance(value, (list, dict, tuple, set)):
-            value = json.dumps(value)
+            value = json.dumps(value, ensure_ascii=False)
 
         result = await SysConfigModel.filter(type=type_, key=key).first()
         if not result:
@@ -131,4 +131,3 @@ class ConfigUtil:
                 _data["remarks"] = remarks
 
             await SysConfigModel.filter(type=type_, key=key).update(**_data)
-
