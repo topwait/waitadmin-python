@@ -20,17 +20,17 @@ from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from config import get_settings
 
 
-class EncryUtil:
+class CryptoUtil:
     """
     加密/解密工具
     温馨提示: 建议您使用【公钥加密,私钥解密】
     """
 
     MGF: Dict[str, hashes.HashAlgorithm] = {
-        "SHA1": hashes.SHA1(),       # 遗留系统[默认] (不推荐,存在弱点)
-        "SHA256":  hashes.SHA256(),  # 现代安全标准 (推荐)
-        "SHA384":  hashes.SHA384(),  # 高安全需求场景
-        "SHA512":  hashes.SHA512()   # 超高安全需求场景
+        "SHA1": hashes.SHA1(),  # 遗留系统[默认] (不推荐,存在弱点)
+        "SHA256": hashes.SHA256(),  # 现代安全标准 (推荐)
+        "SHA384": hashes.SHA384(),  # 高安全需求场景
+        "SHA512": hashes.SHA512()  # 超高安全需求场景
     }
 
     @classmethod
@@ -81,6 +81,7 @@ class EncryUtil:
                 return cls.rsa_public_decrypt(pem_key, ciphertext)
             case "private":
                 return cls.rsa_private_decrypt(pem_key, ciphertext, password, pad_mode, hash_alg)
+        return None
 
     @classmethod
     def rsa_encrypt(
@@ -111,7 +112,6 @@ class EncryUtil:
         Author:
             zero
         """
-        print(pem_key)
         if pem_key is None:
             app_path: str = get_settings().APP_PATH
             rsa_path: str = f"{app_path}/license/rsa_{method}_key.pem"
@@ -129,6 +129,7 @@ class EncryUtil:
                 return cls.rsa_public_encrypt(pem_key, plaintext, pad_mode, hash_alg)
             case "private":
                 return cls.rsa_private_encrypt(pem_key, plaintext, password)
+        return None
 
     @classmethod
     def rsa_public_decrypt(cls, public_pem_key: str, ciphertext: str) -> str | None:
@@ -215,6 +216,8 @@ class EncryUtil:
                     base64.b64decode(ciphertext),
                     padding.PKCS1v15()
                 )
+            else:
+                raise Exception("Unsupported RSA public decrypt method " + pad_mode)
 
             # 返回解密内容
             return plaintext.decode("utf-8")
@@ -266,6 +269,8 @@ class EncryUtil:
                     plaintext.encode("utf-8"),
                     padding.PKCS1v15()
                 )
+            else:
+                raise Exception("Unsupported RSA public encryption method " + pad_mode)
 
             # 返回Base64编码的密文
             buf: Any = ciphertext
@@ -336,7 +341,7 @@ class EncryUtil:
         except Exception as e:
             print("Rsa private encrypt error: " + str(e))
             return None
-            
+
     @classmethod
     def generate_rsa_pem(
         cls,
@@ -350,7 +355,7 @@ class EncryUtil:
     ) -> Dict[str, str]:
         """
         生成RSA密钥对
-        
+
         Args:
             key_size (int): 密钥长度: 推荐2048或4096位
             password (str): 私钥密码: 不需要可留空
@@ -359,7 +364,7 @@ class EncryUtil:
             public_exponent (int): 公钥指数:通常为65537,不建议修改
             private_format (str): 私钥格式: PKCS8(现代标准)或TraditionalOpenSSL(传统格式)
             overwrite (bool): 是否覆盖已存在的文件,默认为False
-            
+
         Returns:
             Dict[str, str]
 
@@ -379,13 +384,13 @@ class EncryUtil:
                 format_type = serialization.PrivateFormat.PKCS8
             else:
                 format_type = serialization.PrivateFormat.TraditionalOpenSSL
-            
+
             # 设置私钥序列化选项
             if password:
                 encryption_algorithm = serialization.BestAvailableEncryption(password.encode())
             else:
                 encryption_algorithm = serialization.NoEncryption()
-            
+
             # 序列化私钥为PEM格式
             private_pem = private_key.private_bytes(
                 encoding=serialization.Encoding.PEM,
@@ -399,7 +404,7 @@ class EncryUtil:
                 encoding=serialization.Encoding.PEM,
                 format=serialization.PublicFormat.SubjectPublicKeyInfo
             ).decode("utf-8")
-            
+
             # 准备返回结果
             result = {
                 "private_key": private_pem,
@@ -428,7 +433,7 @@ class EncryUtil:
                 # 保存私钥
                 with open(private_key_path, "w", encoding="utf-8") as f:
                     f.write(private_pem)
-                    
+
                 # 保存公钥
                 with open(public_key_path, "w", encoding="utf-8") as f:
                     f.write(public_pem)
