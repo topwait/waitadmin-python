@@ -13,9 +13,11 @@
 import os
 import time
 import inspect
-import importlib
 import operator
+import importlib
 from functools import reduce
+from zoneinfo import ZoneInfo
+from datetime import datetime
 from typing import Union, TypeVar, Type, Any, List, Tuple
 from pydantic import TypeAdapter
 from tortoise.models import Model
@@ -57,8 +59,10 @@ class DbModel(Model):
                     if item.get(s) is not None and not item.get(s):
                         item[s] = ""
                     elif item.get(s):
-                        time_array = time.localtime(item.get(s))
-                        item[s] = time.strftime(datetime_format, time_array)
+                        timestamp = item.get(s)
+                        dt_utc = datetime.fromtimestamp(timestamp, tz=ZoneInfo("UTC"))
+                        dt_shanghai = dt_utc.astimezone(ZoneInfo("Asia/Shanghai"))
+                        item[s] = dt_shanghai.strftime(datetime_format)
 
         if schema:
             _lists = [TypeAdapter(schema).validate_python(item) for item in _lists]
