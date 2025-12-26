@@ -15,91 +15,179 @@ import sys
 import gzip
 import logging
 import importlib
+from pathlib import Path
 from datetime import datetime
-from typing import Dict, List, IO, Any
+from typing import Dict, List, Optional, Union, TextIO, cast
 
+_FORMAT_F = "[%(asctime)s][%(levelname)s] [%(pathname)s:%(lineno)d] - %(message)s"
+_FORMAT_C = "[%(levelname)s]: [%(filename)s:%(lineno)d] [%(thread)d] - %(message)s"
 _LEVEL_NUM = {
-    "notset": logging.NOTSET,
-    "debug": logging.DEBUG,
-    "info": logging.INFO,
-    "warning": logging.WARNING,
-    "error": logging.ERROR,
-    "critical": logging.CRITICAL
+    "notset": logging.NOTSET,     # 0
+    "debug": logging.DEBUG,       # 10
+    "info": logging.INFO,         # 20
+    "warning": logging.WARNING,   # 30
+    "error": logging.ERROR,       # 40
+    "critical": logging.CRITICAL  # 50
 }
 
 __all__ = ["configure_logger"]
 
 
 class CompressedFileHandler(logging.FileHandler):
-    def __init__(self, filename, mode="a", encoding=None, delay=False, gzip_size=None):
+    """
+    A custom file handler that automatically compresses log files when they reach a certain size
+    and organizes logs into directories by year/month and day.
+    """
+
+    def __init__(self, filename: str, mode: str = "a", encoding: Optional[str] = None,
+                 delay: bool = False, gzip_size: Optional[Union[int, str]] = None) -> None:
+        """
+        Initialize the handler with the specified parameters.
+
+        Args:
+            filename: Path to the log file
+            mode: File opening mode
+            encoding: File encoding
+            delay: Whether to delay opening the file until the first log record is emitted
+            gzip_size: Size threshold in bytes before compressing the log file
+        """
         super().__init__(filename, mode, encoding, delay)
-        self.gzip_size: int = int(gzip_size) if gzip_size else 1024 * 1024 * 5
+        self.gzip_size: int = int(gzip_size) if gzip_size else 1024 * 1024 * 5  # 5MB default
         self.filename: str = filename
 
-    def emit(self, record):
-        """ Emit a record """
+    def emit(self, record: logging.LogRecord) -> None:
+        """
+        Emit a record with directory organization and compression support
+
+        Args:
+            record: The log record to emit
+        """
         if self.stream is None:
-            self.stream: IO = self._open()
+            self.stream = cast(TextIO, self._open())
 
         if self.stream is not None and self.do_dir():
             self.stream.close()
-            self.stream = self._open()
+            self.stream = cast(TextIO, self._open())
 
         self.do_zip()
         logging.StreamHandler.emit(self, record)
 
-    def do_dir(self):
-        """ Rebuild log directory file """
+    def do_dir(self) -> bool:
+        """
+        Reorganize log files into year/month and day-based directory structure.
+
+        Returns:
+            bool: True if a new log file was created, False if using existing file
+        """
         year: str = datetime.now().strftime("%Y%m")
         days: str = datetime.now().strftime("%d")
-        path: str = "/".join(self.baseFilename.split("/")[:-2])
-        dirs: str = f"{path}/{year}"
-        self.baseFilename = f"{dirs}/{days}.log"
+        path: str = os.path.dirname(os.path.dirname(self.baseFilename))
+        dirs: str = os.path.join(path, year)
+        self.baseFilename = os.path.join(dirs, f"{days}.log")
 
         if not os.path.exists(dirs):
-            os.makedirs(dirs)
+            os.makedirs(dirs, exist_ok=True)
 
         if not os.path.exists(self.baseFilename):
             return True
         return False
 
-    def do_zip(self):
-        """ Compress and archive logs """
-        if os.path.exists(self.baseFilename) and os.path.getsize(self.baseFilename) > self.gzip_size:
-            with open(self.baseFilename, "rb") as f_in, gzip.open(self.baseFilename + ".gz", "wb") as f_out:
-                f: Any = f_in
-                f_out.writelines(f)
-            open(self.baseFilename, "w").close()
+    def do_zip(self) -> None:
+        """
+        Compress log file if it exceeds the size threshold.
+        The original file is emptied after compression.
+        """
+        try:
+            if os.path.exists(self.baseFilename) and os.path.getsize(self.baseFilename) > self.gzip_size:
+                # Use safer file manipulation methods
+                gz_filename = f"{self.baseFilename}.gz"
+                with open(self.baseFilename, "rb") as f_in, gzip.open(gz_filename, "wb") as f_out:
+                    f_out.writelines(f_in)
+                # Clear the content of the source file
+                with open(self.baseFilename, "w") as _:
+                    pass
+        except (IOError, OSError) as e:
+            sys.stderr.write(f"Error compressing log file {self.baseFilename}: {str(e)}\n")
 
 
-def configure_logger():
-    """ Configure Logger """
+class RelativePathFormatter(logging.Formatter):
+    """
+    A custom formatter that converts absolute file paths to paths relative to the project root.
+    This makes log messages more readable by showing paths relative to the project root.
+    """
+
+    def format(self, record: logging.LogRecord) -> str:
+        """
+        Format the log record, converting absolute paths to project-relative paths.
+
+        Args:
+            record: The log record to format
+
+        Returns:
+            str: The formatted log message
+        """
+        # 取项目根目录
+        project_root = str(Path(__file__).resolve().parent.parent.parent)
+
+        # 计算相对路径
+        if hasattr(record, "pathname") and record.pathname:
+            try:
+                relative_path = os.path.relpath(record.pathname, project_root)
+                record.pathname = relative_path
+            except ValueError:
+                # 处理路径在不同驱动器的情况
+                pass
+
+        return super().format(record)
+
+
+def configure_logger() -> None:
+    """
+    Configure the application's logging system based on configuration settings.
+
+    This function sets up file and/or console logging handlers with appropriate
+    formatters and log levels. It also configures specific module loggers based
+    on the rely_levels configuration.
+
+    The logger configuration is loaded from the config module's GlobalSetting class.
+    If the configuration is not available, sensible defaults are used.
+    """
     config = __loading_logs_configs()
-    path: str = config.get("path") or "runtime/log"
-    gzip_size: int = int(config.get("gzip_size")) or 1024 * 1024 * 5
-    level_file: int = _LEVEL_NUM[config.get("level_file") or "debug"]
-    level_sole: int = _LEVEL_NUM[config.get("level_sole") or "info"]
-    enable_file: bool = config.get("enable_file") or True
-    enable_sole: bool = config.get("enable_sole") or True
-    format_file: str = (config.get("format_file")
-                        or "[%(asctime)s][%(levelname)s] [%(filename)s:%(lineno)d] [%(thread)d] - %(message)s")
-    format_sole: str = (config.get("format_sole")
-                        or "[%(levelname)s]: [%(filename)s:%(lineno)d] [%(thread)d] - %(message)s")
-    format_date: str = config.get("format_date") or "%Y-%m-%d %H:%M:%S %p"
-    rely_levels: Dict[str, List[str]] = config.get("rely_levels") or {}
+    path: str = config.get("path", "runtime/log")
+
+    # Gzip
+    gzip_size_config = config.get("gzip_size")
+    gzip_size: int = int(gzip_size_config) if gzip_size_config else 1024 * 1024 * 5
+    # Level
+    level_file: int = _LEVEL_NUM[config.get("level_file", "debug")]
+    level_sole: int = _LEVEL_NUM[config.get("level_sole", "info")]
+    # Status
+    enable_file: bool = config.get("enable_file", True)
+    enable_sole: bool = config.get("enable_sole", True)
+    # Format
+    format_file: str = config.get("format_file", _FORMAT_F)
+    format_sole: str = config.get("format_sole", _FORMAT_C)
+    format_date: str = config.get("format_date", "%Y-%m-%d %H:%M:%S %p")
+    # RELY
+    rely_levels: Dict[str, List[str]] = config.get("rely_levels", {})
 
     handlers = []
     if enable_file:
-        year: str = datetime.now().strftime("%Y%m")
-        days: str = datetime.now().strftime("%d")
-        path: str = f"{path}/{year}"
-        if not os.path.exists(path):
-            os.makedirs(path)
+        try:
+            year: str = datetime.now().strftime("%Y%m")
+            days: str = datetime.now().strftime("%d")
+            log_dir: str = os.path.join(path, year)
+            if not os.path.exists(log_dir):
+                os.makedirs(log_dir, exist_ok=True)
 
-        file_handler = CompressedFileHandler(filename=f"{path}/{days}.log", gzip_size=gzip_size)
-        file_handler.setFormatter(logging.Formatter(format_file))
-        file_handler.setLevel(level_file)
-        handlers.append(file_handler)
+            log_file = os.path.join(log_dir, f"{days}.log")
+            file_handler = CompressedFileHandler(filename=log_file, gzip_size=gzip_size)
+            file_handler.setFormatter(RelativePathFormatter(format_file, datefmt=format_date))
+            file_handler.setLevel(level_file)
+            handlers.append(file_handler)
+        except (IOError, OSError) as e:
+            sys.stderr.write(f"Error setting up file handler: {str(e)}\n")
+            enable_sole = True
 
     if enable_sole:
         console_handler = logging.StreamHandler(sys.stdout)
@@ -127,16 +215,30 @@ def configure_logger():
             logging.getLogger(module).setLevel(key)
 
 
-def __loading_logs_configs():
-    """ Load Log configuration """
+def __loading_logs_configs() -> dict:
+    """
+    Load Log configuration from config module
+
+    Returns:
+        dict: Logger configuration dictionary
+    """
     configs = {}
     try:
         package = importlib.import_module("config")
         clz = getattr(package, "GlobalSetting", None)
         if not clz:
+            sys.stderr.write("Warning: GlobalSetting class not found in config module\n")
             return configs
 
-        obj = clz().dict()
-        return obj.get("LOGGER", {})
+        try:
+            obj = clz().dict()
+            return obj.get("LOGGER", {})
+        except Exception as e:
+            sys.stderr.write(f"Error loading logger config: {str(e)}\n")
+            return configs
     except ModuleNotFoundError:
+        sys.stderr.write("Warning: config module not found\n")
+        return configs
+    except Exception as e:
+        sys.stderr.write(f"Unexpected error loading config: {str(e)}\n")
         return configs

@@ -140,7 +140,7 @@ class GlobalSetting(BaseSettings):
         # 屏幕日志级别
         "level_sole": "info",
         # 格式化文件日志
-        "format_file": "[%(asctime)s][%(levelname)s] [%(filename)s:%(lineno)d]%(pathname)s - %(message)s",
+        "format_file": "[%(asctime)s][%(levelname)s] [%(pathname)s:%(lineno)d] - %(message)s",
         # 格式化屏幕日志
         "format_sole": "[%(levelname)s]: [%(filename)s:%(lineno)d] [%(thread)d] - %(message)s",
         # 格式化日志日期

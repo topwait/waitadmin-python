@@ -157,6 +157,3 @@ class AppEvents:
                     await CrontabService.cron_subscribe(str(event["data"]))
         except Exception as e:
             print(str(e))
-
-
-

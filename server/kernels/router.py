@@ -264,8 +264,6 @@ class AutomaticRegRouter:
 
 def configure_router(app: FastAPI):
     """ Configure Router """
+    AutomaticRegRouter().load_reg_api()
     for key in router_register:
         app.include_router(router_register[key])
-
-
-AutomaticRegRouter().load_reg_api()
