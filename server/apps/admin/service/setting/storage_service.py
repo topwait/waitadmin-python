@@ -65,6 +65,6 @@ class StorageService:
             zero
         """
         await ConfigUtil.set("storage", "engine", post.drive)
-        await ConfigUtil.set("storage", "qiniu", post.qiniu.dict())
-        await ConfigUtil.set("storage", "aliyun", post.aliyun.dict())
-        await ConfigUtil.set("storage", "qcloud", post.qcloud.dict())
+        await ConfigUtil.set("storage", "qiniu", post.qiniu.model_dump())
+        await ConfigUtil.set("storage", "aliyun", post.aliyun.model_dump())
+        await ConfigUtil.set("storage", "qcloud", post.qcloud.model_dump())

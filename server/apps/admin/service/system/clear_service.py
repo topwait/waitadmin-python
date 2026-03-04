@@ -10,8 +10,8 @@
 # +----------------------------------------------------------------------
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
-from apps.admin.schemas.system import clear_schema as schema
 from common.utils.cache import RedisUtil
+from apps.admin.schemas.system import clear_schema as schema
 
 
 class ClearService:

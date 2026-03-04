@@ -16,9 +16,9 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from exception import AppException
 from config import get_settings
 from common.enums.errors import ErrorEnum
+from plugins.safe.driver import SecurityDriver
 from apps.admin.cache.login_cache import LoginCache
 from apps.admin.config import AdminConfig
-from plugins.safe.driver import SecurityDriver
 
 
 obstruction: Dict[str, List[str]] = {

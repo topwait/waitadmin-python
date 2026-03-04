@@ -18,7 +18,7 @@ import importlib
 from functools import reduce
 from zoneinfo import ZoneInfo
 from datetime import datetime
-from typing import Union, TypeVar, Type, Any, List, Tuple
+from typing import Union, TypeVar, Any, List, Tuple
 from pydantic import TypeAdapter
 from tortoise.models import Model
 from tortoise.queryset import Q
@@ -39,7 +39,7 @@ class DbModel(Model):
     @classmethod
     async def paginate(
             cls,
-            model: Type[MODEL],
+            model: Any,
             page_no: int = 1,
             page_size: int = 15,
             schema: Any = None,

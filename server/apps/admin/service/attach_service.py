@@ -17,9 +17,9 @@ from tortoise.queryset import Q
 from hypertext import PagingResult
 from exception import AppException
 from common.utils.urls import UrlUtil
-from apps.admin.schemas import attach_schema as schema
 from common.models.attach import AttachModel
 from common.models.attach import AttachCateModel
+from apps.admin.schemas import attach_schema as schema
 
 
 class AttachService:

@@ -13,10 +13,10 @@
 import time
 from pydantic import TypeAdapter
 from hypertext import PagingResult
-from apps.admin.schemas.setting import links_schema as schema
-from common.models.dev import DevLinksModel
 from common.utils.urls import UrlUtil
 from common.utils.times import TimeUtil
+from common.models.dev import DevLinksModel
+from apps.admin.schemas.setting import links_schema as schema
 
 
 class LinksService:

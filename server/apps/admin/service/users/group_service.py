@@ -99,7 +99,7 @@ class UserGroupService:
             raise AppException("用户分组名称已被占用")
 
         await UserGroupModel.create(
-            **post.dict(),
+            **post.model_dump(),
             create_time=int(time.time()),
             update_time=int(time.time())
         )
@@ -123,7 +123,7 @@ class UserGroupService:
         if _post3:
             raise AppException("用户分组名称已被占用")
 
-        params = post.dict()
+        params = post.model_dump()
         del params["id"]
 
         await UserGroupModel.filter(id=post.id).update(

@@ -47,7 +47,7 @@ class RechargeService:
 
         config = await ConfigUtil.get("recharge") or {}
         extend = schema.RechargeConfigIn(
-            status=int(config.get("status", 0)),
+            status=bool(int(config.get("status", 0))),
             min_recharge=Decimal(config.get("min_recharge", 0))
         )
 

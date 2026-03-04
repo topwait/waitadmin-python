@@ -15,18 +15,17 @@ from tortoise import Tortoise
 from pydantic import TypeAdapter
 from exception import AppException
 from hypertext import PagingResult
-from apps.api.schemas import user_schema as schema
-from apps.api.cache.wechat_cache import WechatCache
-from common.models.users import UserModel, UserAuthModel
-from common.models.article import ArticleCollectModel, ArticleModel
 from common.utils.urls import UrlUtil
 from common.utils.times import TimeUtil
 from common.utils.tools import ToolsUtil
 from common.enums.notice import NoticeEnum
 from common.enums.client import ClientEnum
+from common.models.users import UserModel, UserAuthModel
+from common.models.article import ArticleCollectModel, ArticleModel
 from plugins.msg.driver import MsgDriver
 from plugins.wechat.service import WechatService
-
+from apps.api.schemas import user_schema as schema
+from apps.api.cache.wechat_cache import WechatCache
 
 class UserService:
     """ 用户服务类 """

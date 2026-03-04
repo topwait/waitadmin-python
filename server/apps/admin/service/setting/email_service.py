@@ -10,8 +10,6 @@
 # +----------------------------------------------------------------------
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
-import json
-from exception import AppException
 from common.utils.config import ConfigUtil
 from apps.admin.schemas.setting import email_schema as schema
 

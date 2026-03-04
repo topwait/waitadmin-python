@@ -95,5 +95,5 @@ class RechargeService:
 
         return schema.RechargePlaceVo(
             order_id=order.id,
-            paid_amount=post.paid_amount
+            paid_amount=paid_amount
         )
