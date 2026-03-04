@@ -200,7 +200,7 @@ DROP TABLE IF EXISTS `wait_auth_role`;
 CREATE TABLE `wait_auth_role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(20) CHARACTER SET utf16 NOT NULL DEFAULT '' COMMENT '角色名称',
-  `describe` varchar(200) NOT NULL DEFAULT '' COMMENT '角色描述',
+  `description` varchar(200) NOT NULL DEFAULT '' COMMENT '角色描述',
   `sort` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '角色排序',
   `is_disable` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用: [0=否, 1=是]',
   `is_delete` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除: [0=否, 1=是]',

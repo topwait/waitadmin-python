@@ -42,7 +42,7 @@ class AuthAdminModel(DbModel):
 class AuthRoleModel(DbModel):
     id = fields.IntField(pk=True, description="主键")
     name = fields.CharField(null=False, max_length=20, default="", description="角色名称")
-    describe = fields.CharField(null=False, max_length=200, default="", description="角色描述")
+    description = fields.CharField(null=False, max_length=200, default="", description="角色描述")
     sort = fields.IntField(null=False, default=0, description="角色排序")
     is_disable = fields.BooleanField(null=False, default=False, description="是否禁用")
     is_delete = fields.BooleanField(null=False, default=False, description="是否删除")

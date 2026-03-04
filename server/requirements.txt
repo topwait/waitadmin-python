@@ -1,31 +1,33 @@
 # 基础依赖
-pillow==12.0.0
-python-dotenv==1.2.1
-python-multipart==0.0.20
-APScheduler==3.11.1
+pillow==12.1.1
+python-dotenv==1.2.2
+python-multipart==0.0.22
+APScheduler==3.11.2
 rsa==4.9.1
 
 # 框架依赖
-fastapi==0.124.0
+fastapi==0.135.1
 fastapi-cache2==0.2.2
-pydantic-settings==2.12.0
-tortoise-orm==0.25.1
-aiosmtplib==5.0.0
-aiofiles==24.1.0
+pydantic-settings==2.13.1
+tortoise-orm==1.1.5
+aiosmtplib==5.1.0
+aiofiles==25.1.0
 aiomysql==0.3.2
 asyncpg==0.31.0
-redis==7.1.0
+redis==7.2.1
 
 # 存储依赖
 oss2==2.19.1
 qiniu==7.17.0
-cos-python-sdk-v5==1.9.39
+cos-python-sdk-v5==1.9.41
 
 # 短信依赖
-alibabacloud-dysmsapi20170525==4.3.0
-tencentcloud-sdk-python==3.1.7
+tencentcloud-sdk-python==3.1.50
 
 # 支付依赖
-wechatpayv3==2.0.1
+wechatpayv3==2.0.2
 python-weixin==0.5.0
 python-alipay-sdk==3.4.0
+
+# 暂时解决urllib警告
+chardet==5.2.0
