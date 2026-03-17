@@ -61,5 +61,23 @@ export default defineNuxtConfig({
         checker: true
     },
 
+    // Vite配置
+    vite: {
+        optimizeDeps: {
+            include: [
+                'dayjs',
+                'dayjs/plugin/*.js',
+                'lodash-es',
+                'css-color-function',
+                '@element-plus/icons-vue',
+                '@chenfengyuan/vue-countdown',
+                '@vueuse/core',
+            ],
+            exclude: [
+                'lodash-unified'
+            ]
+        }
+    },
+
     compatibilityDate: '2024-09-19'
 })
