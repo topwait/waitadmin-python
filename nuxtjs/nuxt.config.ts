@@ -71,7 +71,7 @@ export default defineNuxtConfig({
                 'css-color-function',
                 '@element-plus/icons-vue',
                 '@chenfengyuan/vue-countdown',
-                '@vueuse/core',
+                '@vueuse/core'
             ],
             exclude: [
                 'lodash-unified'
