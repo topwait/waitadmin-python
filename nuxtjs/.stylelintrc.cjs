@@ -39,7 +39,6 @@ module.exports = {
             }
         ],
 
-        'scss/at-import-partial-extension': null,
         'scss/at-rule-no-unknown': [
             true,
             {
