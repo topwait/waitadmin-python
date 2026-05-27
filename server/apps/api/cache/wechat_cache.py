@@ -48,7 +48,7 @@ class WechatCache:
         return None
 
     @classmethod
-    async def login_scan_set(cls, state: str, status: int, token: str = None):
+    async def login_scan_set(cls, state: str, status: int, token: str = ""):
         """
         设置扫码状态
 

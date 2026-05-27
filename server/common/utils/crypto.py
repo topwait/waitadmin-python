@@ -12,7 +12,7 @@
 # +----------------------------------------------------------------------
 import os
 import base64
-from typing import Literal, Dict, Any
+from typing import Literal, Dict, Any, Union
 from rsa import core, PublicKey, transform
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization, hashes
@@ -40,9 +40,9 @@ class CryptoUtil:
         method: Literal["public", "private"] = "private",
         pad_mode: Literal["OAEP", "PKCS1v15"] = "OAEP",
         hash_alg: Literal["SHA1", "SHA256", "SHA384", "SHA512"] = "SHA1",
-        password: str = None,
-        pem_path: str = None,
-        pem_key: str = None
+        password: Union[str, None] = None,
+        pem_path: Union[str, None] = None,
+        pem_key: Union[str, None] = None
     ):
         """
         RSA解密
@@ -81,7 +81,6 @@ class CryptoUtil:
                 return cls.rsa_public_decrypt(pem_key, ciphertext)
             case "private":
                 return cls.rsa_private_decrypt(pem_key, ciphertext, password, pad_mode, hash_alg)
-        return None
 
     @classmethod
     def rsa_encrypt(
@@ -90,9 +89,9 @@ class CryptoUtil:
         method: Literal["public", "private"] = "public",
         pad_mode: Literal["OAEP", "PKCS1v15"] = "OAEP",
         hash_alg: Literal["SHA1", "SHA256", "SHA384", "SHA512"] = "SHA1",
-        password: str = None,
-        pem_path: str = None,
-        pem_key: str = None
+        password: Union[str, None] = None,
+        pem_path: Union[str, None] = None,
+        pem_key: Union[str, None] = None
     ):
         """
         RSA加密 (生成密钥网站: https://apiked.com/rsa)
@@ -129,7 +128,6 @@ class CryptoUtil:
                 return cls.rsa_public_encrypt(pem_key, plaintext, pad_mode, hash_alg)
             case "private":
                 return cls.rsa_private_encrypt(pem_key, plaintext, password)
-        return None
 
     @classmethod
     def rsa_public_decrypt(cls, public_pem_key: str, ciphertext: str) -> str | None:
@@ -168,7 +166,7 @@ class CryptoUtil:
         cls,
         private_pem_key: str,
         ciphertext: str,
-        password: str = None,
+        password: Union[str, None] = None,
         pad_mode: Literal["OAEP", "PKCS1v15"] = "OAEP",
         hash_alg: Literal["SHA1", "SHA256", "SHA384", "SHA512"] = "SHA1"
     ) -> str | None:
@@ -202,7 +200,7 @@ class CryptoUtil:
 
             # 使用私钥解密
             if pad_mode == "OAEP":
-                alg: hashes.HashAlgorithm = cls.MGF.get(hash_alg)
+                alg: Union[hashes.HashAlgorithm, Any] = cls.MGF.get(hash_alg)
                 plaintext = private_key.decrypt(
                     base64.b64decode(ciphertext),
                     padding.OAEP(
@@ -255,7 +253,7 @@ class CryptoUtil:
 
             # 使用公钥加密
             if pad_mode == "OAEP":
-                alg: hashes.HashAlgorithm = cls.MGF.get(hash_alg)
+                alg: Union[hashes.HashAlgorithm, Any] = cls.MGF.get(hash_alg)
                 ciphertext = public_key.encrypt(
                     plaintext.encode("utf-8"),
                     padding.OAEP(
@@ -283,7 +281,7 @@ class CryptoUtil:
         cls,
         private_pem_key: str,
         plaintext: str,
-        password: str = None
+        password: Union[str, None] = None
     ) -> str | None:
         """
         RSA私钥加密 (私钥加密仅支持 PKCS1v15)
@@ -346,13 +344,13 @@ class CryptoUtil:
     def generate_rsa_pem(
         cls,
         key_size: Literal[512, 1024, 2048, 3072, 4096] = 2048,
-        password: str = None,
-        save_path: str = None,
+        password: Union[str, None] = None,
+        save_path: Union[str, None] = None,
         file_prefix: str = "rsa",
         public_exponent: int = 65537,
         private_format: Literal["PKCS8", "TraditionalOpenSSL"] = "PKCS8",
         overwrite: bool = False
-    ) -> Dict[str, str]:
+    ) -> Dict[str, Any]:
         """
         生成RSA密钥对
 

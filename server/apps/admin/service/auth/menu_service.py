@@ -41,7 +41,8 @@ class MenuService:
 
         vo_list = [TypeAdapter(schema.AuthMenuWholeVo).validate_python(item) for item in lists]
         vo_dict = [i.__dict__ for i in vo_list]
-        return ArrayUtil.list_to_tree(vo_dict, "id", "pid", "children")
+        tree_data = ArrayUtil.list_to_tree(vo_dict, "id", "pid", "children")
+        return [TypeAdapter(schema.AuthMenuWholeVo).validate_python(item) for item in tree_data]
 
     @classmethod
     async def routes(cls, admin_id: int, role_id: int) -> List[schema.AuthMenuRoutesVo]:
@@ -70,7 +71,8 @@ class MenuService:
 
         vo_list = [TypeAdapter(schema.AuthMenuRoutesVo).validate_python(item) for item in menus]
         vo_dict: List[Dict] = [i.__dict__ for i in vo_list]
-        return ArrayUtil.list_to_tree(vo_dict, "id", "pid", "children")
+        tree_data = ArrayUtil.list_to_tree(vo_dict, "id", "pid", "children")
+        return [TypeAdapter(schema.AuthMenuRoutesVo).validate_python(item) for item in tree_data]
 
     @classmethod
     async def lists(cls) -> List[schema.AuthMenuListVo]:
@@ -86,12 +88,13 @@ class MenuService:
         fields = AuthMenuModel.without_field("is_delete,delete_time")
         lists = await AuthMenuModel.filter(is_delete=False).order_by("-sort", "id").all().values(*fields)
         for item in lists:
-            item["create_time"] = TimeUtil.timestamp_to_date(item["create_time"])
-            item["update_time"] = TimeUtil.timestamp_to_date(item["update_time"])
+            item["create_time"] = TimeUtil.timestamp_to_date(int(item["create_time"]))
+            item["update_time"] = TimeUtil.timestamp_to_date(int(item["update_time"]))
 
         vo_list = [TypeAdapter(schema.AuthMenuListVo).validate_python(item) for item in lists]
         vo_dict = [i.__dict__ for i in vo_list]
-        return ArrayUtil.list_to_tree(vo_dict, "id", "pid", "children")
+        tree_data = ArrayUtil.list_to_tree(vo_dict, "id", "pid", "children")
+        return [TypeAdapter(schema.AuthMenuListVo).validate_python(item) for item in tree_data]
 
     @classmethod
     async def detail(cls, id_: int) -> schema.AuthMenuDetailVo:

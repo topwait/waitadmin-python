@@ -50,7 +50,7 @@ class UploadService:
         fileExt: str = file_in.filename.split(".")[-1].lower()
         if limits.get(scene):
             where = limits.get(scene, {})
-            _size = where.get("size")
+            _size = int(where.get("size", 0))
             _ext = where.get("ext")
             if _size and fileExt not in _ext:
                 raise AppException(msg="不被支持的文件扩展: %s" % fileExt)

@@ -50,8 +50,8 @@ class NoticeService:
             sms_status = sms.get("status") if sms else 2
 
             data.append(schema.NoticeListVo(
-                id=item["id"],
-                scene=item["scene"],
+                id=int(item["id"]),
+                scene=int(item["scene"]),
                 name=item["name"],
                 type="验证码" if item["is_captcha"] else "通知型",
                 sys_status=sys_status,

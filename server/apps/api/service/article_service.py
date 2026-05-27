@@ -135,8 +135,8 @@ class ArticleService:
         for item in _lists:
             item["image"] = await UrlUtil.to_absolute_url(item["image"])
             item["category"] = _category.get(item["cid"], "")
-            item["create_time"] = TimeUtil.timestamp_to_date(item["create_time"])
-            item["update_time"] = TimeUtil.timestamp_to_date(item["update_time"])
+            item["create_time"] = TimeUtil.timestamp_to_date(int(item["create_time"]))
+            item["update_time"] = TimeUtil.timestamp_to_date(int(item["update_time"]))
             vo = TypeAdapter(schema.ArticleListsVo).validate_python(item)
             _results.append(vo)
 
@@ -216,11 +216,13 @@ class ArticleService:
                            .order_by("-sort", "-id")
                            .all().values("title", "image", "target", "url"))
 
+        lists = []
         for adv in adv_lists:
             adv["image"] = await UrlUtil.to_absolute_url(adv["image"])
+            lists.append(adv)
 
         return schema.ArticlePagesVo(
-            adv=adv_lists,
+            adv=lists,
             topping=await cls.recommend("topping"),
             ranking=await cls.recommend("ranking")
         )
@@ -256,6 +258,7 @@ class ArticleService:
 
             article = await ArticleModel.filter(id=id_).first()
             if article:
-                article.collect = max(0, (article.collect + 1) if collect.is_delete else (article.collect - 1))
+                collect_num: int = int(str(article.collect or 0))
+                article.collect = max(0, (collect_num + 1) if collect.is_delete else (collect_num - 1))
                 article.update_time = int(time.time())
                 await article.save()

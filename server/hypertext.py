@@ -66,7 +66,7 @@ def response_json(func: Callable[..., T]) -> Callable[..., T]:
             resp = func(*args, **kwargs) or []
         return JSONResponse(
             content=jsonable_encoder(
-                R.success(data=resp).dict(),
+                R.success(data=resp).model_dump(),
                 by_alias=False
             ),
             media_type="application/json;charset=utf-8"

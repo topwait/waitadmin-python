@@ -17,7 +17,7 @@ import json
 import asyncio
 import logging
 import importlib
-from typing import List, Dict
+from typing import List, Dict, Any
 from datetime import datetime, timedelta
 from fastapi import FastAPI
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -98,16 +98,16 @@ class AppEvents:
                 continue
 
             rules: List[dict] = json.loads(crontab.rules or "[]")
-            params: Dict[str, any] = json.loads(crontab.params or "{}")
+            params: Dict[str, Any] = json.loads(crontab.params or "{}")
 
             condition = {}
             for item in rules:
                 if crontab.trigger == "interval" and item.get("key") not in ["start_date", "end_date"]:
-                    condition[item.get("key")] = int(item.get("value"))
+                    condition[item.get("key")] = int(item.get("value", 0))
                 else:
                     condition[item.get("key")] = item.get("value")
 
-            _trigger_fun = None
+            _trigger_fun: Any = None
             if crontab.trigger == "interval":
                 _trigger_fun = IntervalTrigger(**condition)
             elif crontab.trigger == "cron":

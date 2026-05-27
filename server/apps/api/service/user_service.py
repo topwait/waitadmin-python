@@ -162,7 +162,7 @@ class UserService:
             zero
         """
         # 短信验证
-        if not MsgDriver.check_code(NoticeEnum.FORGET_PWD, code):
+        if not await MsgDriver.check_code(NoticeEnum.FORGET_PWD, code):
             raise AppException("验证码错误")
 
         # 查询账户
@@ -200,7 +200,7 @@ class UserService:
             raise AppException("账号不存在")
 
         # 验证密码
-        org_pwd: str = ToolsUtil.make_md5_pwd(old_pwd, user.salt)
+        org_pwd: str = str(ToolsUtil.make_md5_pwd(old_pwd, user.salt))
         if org_pwd != user.password:
             raise AppException("原始密码不正确")
 
@@ -299,7 +299,7 @@ class UserService:
         else:
             # 短信验证
             n_code = NoticeEnum.MOBILE_CHANGE if scene == "change" else NoticeEnum.MOBILE_BIND
-            if not MsgDriver.check_code(n_code, code):
+            if not await MsgDriver.check_code(n_code, code):
                 raise AppException("验证码错误")
 
         # 查询用户

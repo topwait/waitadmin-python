@@ -21,7 +21,7 @@ __all__ = ["configure_static"]
 
 def __loading_static_configs():
     """ Load Static configuration """
-    configs = {}
+    configs: List[tuple] = []
     try:
         package = importlib.import_module("config")
         clz = getattr(package, "GlobalSetting", None)
@@ -29,7 +29,7 @@ def __loading_static_configs():
             return configs
 
         obj = clz().dict()
-        static_config = obj.get("STATIC_DIR", [])
+        static_config: List[tuple] = obj.get("STATIC_DIR", [])
         return static_config
     except ModuleNotFoundError:
         return configs

@@ -78,7 +78,7 @@ class ArticleListsVo(BaseModel):
 
 class ArticlePagesVo(BaseModel):
     """ 文章页面Vo """
-    adv: List[Dict[str, str]] = Field(description="轮播广告")
+    adv: List[Dict[str, Any]] = Field(description="轮播广告")
     topping: List[ArticleListsVo] = Field(description="推荐文章")
     ranking: List[ArticleListsVo] = Field(description="排名文章")
 

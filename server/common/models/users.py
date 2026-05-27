@@ -12,7 +12,7 @@
 # +----------------------------------------------------------------------
 import time
 from decimal import Decimal
-from typing import List, Dict
+from typing import List, Dict, Union, Any
 from tortoise import fields
 from tortoise.expressions import Q
 from kernels.model import DbModel
@@ -45,7 +45,7 @@ class UserModel(DbModel):
         table = DbModel.table_prefix("user")
 
     @classmethod
-    async def fetch_info_by_ids(cls, ids: List[int], field: List[str] = None) -> Dict[int, dict]:
+    async def fetch_info_by_ids(cls, ids: List[int], field: Union[List[str], None] = None) -> Dict[int, Any]:
         """
         获取用户信息ID映射
 
@@ -63,7 +63,7 @@ class UserModel(DbModel):
         if ids:
             field = ["id", "sn", "nickname", "avatar", "mobile"] if not field else field
             users = await (cls.filter(id__in=list(set(ids))).all().values(*field))
-            dicts = {item["id"]: item for item in users}
+            dicts = {int(item["id"]): item for item in users}
         return dicts
 
     @classmethod

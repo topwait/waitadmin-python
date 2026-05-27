@@ -11,7 +11,7 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 import xmltodict
-from typing import Dict
+from typing import Dict, Any
 from fastapi import APIRouter, Request
 from fastapi.responses import Response
 from weixin.client import WeixinMpAPI
@@ -43,6 +43,6 @@ async def reply(request: Request):
             return Response(content="fail", media_type="application/xml")
 
         xml_json = await request.body()
-        xml_dict = xmltodict.parse(xml_json).get("xml")
+        xml_dict: Any = xmltodict.parse(xml_json).get("xml")
         messages = await WeixinService.reply(xml_dict)
         return Response(content=messages, media_type="application/xml")

@@ -112,11 +112,11 @@ class BasisMiddleware(BaseHTTPMiddleware):
         req_module: str = str(request.url.path.strip("/").split("/")[0])
         request.state.module = req_module
         RequestUtil.ua = to_user_agent(user_agent)
-        RequestUtil.port = request.url.port
+        RequestUtil.port = int(request.url.port or 80)
         RequestUtil.host = request.client.host
         RequestUtil.token = user_token
         RequestUtil.module = req_module
-        RequestUtil.scheme = request.scope.get("scheme")
+        RequestUtil.scheme = request.scope.get("scheme", "http")
         RequestUtil.method = request.method
         RequestUtil.userAgent = user_agent
         RequestUtil.remotePort = request.client.port

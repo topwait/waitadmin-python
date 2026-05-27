@@ -17,7 +17,7 @@ import json
 import logging
 import asyncio
 import importlib
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Union
 from pydantic import TypeAdapter
 from tortoise.models import in_transaction
 from apscheduler.triggers.interval import IntervalTrigger
@@ -147,7 +147,7 @@ class CrontabService:
         while True:
             await asyncio.sleep(0.01)
             key: str = f"{cls.REDIS_CRON_TASKS}{str(cron.id)}@{cron.command}"
-            res: str = await RedisUtil.get(key)
+            res: Union[str, None] = await RedisUtil.get(key)
             if res is not None or index >= 10:
                 tasks = json.loads(res or "[]")
                 await RedisUtil.delete(key)
@@ -179,7 +179,7 @@ class CrontabService:
             del params["id"]
         if params.get("params"):
             try:
-                json.loads(params.get("params"))
+                json.loads(params.get("params") or "")
             except Exception as e:
                 raise AppException(f"附带参数格式异常: {e}")
 
@@ -374,7 +374,7 @@ class CrontabService:
                 crontab = await SysCrontabModel.filter(id=cron_id).first()
                 if not crontab or crontab.status != CrontabEnum.CRON_ING:
                     return False
-                params: Dict[str, any] = json.loads(crontab.params or "{}") if crontab.params else {}
+                params: Dict[str, Any] = json.loads(crontab.params or "{}") if crontab.params else {}
                 func, trigger_fun = cls.__cron_trigger(crontab.trigger, crontab.command, crontab.rules)
                 for i in range(crontab.concurrent):
                     job = crontab.command + "." + str(i + 1)
@@ -405,7 +405,7 @@ class CrontabService:
             logger.error("Error: cron_subscribe " + str(e))
 
     @classmethod
-    def __check_rules(cls, trigger: str, rules: List[Dict[str, any]]):
+    def __check_rules(cls, trigger: str, rules: List[Dict[str, Any]]):
         """
         检测定时任务规则参数。
 
@@ -439,9 +439,9 @@ class CrontabService:
                 raise AppException("不被支持的触发类型: " + key)
 
             if key in ["start_date", "end_date"] and not ValidUtils.is_datetime(val):
-                raise AppException("触发规则要求是日期格式,而您的是: " + val)
+                raise AppException("触发规则要求是日期格式,而您的是: " + str(val))
             elif trigger == "interval" and not ValidUtils.is_integer(val):
-                raise AppException("触发规则的值要求正则数,而您的是: " + val)
+                raise AppException("触发规则的值要求正则数,而您的是: " + str(val))
 
     @classmethod
     def __check_module(cls, command: str):
@@ -494,7 +494,7 @@ class CrontabService:
         rules: List[dict] = json.loads(rules)
         for item in rules:
             if trigger == "interval" and item.get("key") not in ["start_date", "end_date"]:
-                condition[item.get("key")] = int(item.get("value"))
+                condition[item.get("key")] = int(item.get("value", 0))
             else:
                 condition[item.get("key")] = item.get("value")
 

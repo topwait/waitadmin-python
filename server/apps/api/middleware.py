@@ -13,6 +13,8 @@
 import time
 import json
 import typing
+from typing import Any
+
 import xmltodict
 from fastapi import FastAPI, Request
 from starlette.types import ASGIApp
@@ -39,7 +41,7 @@ class LogsMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
         # 模块验证
         module: str = get_settings().ROUTER_ALIAS.get("api", "api")
-        endpoint: any = request.scope.get("endpoint", lambda: None)
+        endpoint: Any = request.scope.get("endpoint", lambda: None)
         if request.state.module != module or endpoint.__module__ == "starlette.staticfiles":
             return await call_next(request)
 
@@ -54,7 +56,7 @@ class LogsMiddleware(BaseHTTPMiddleware):
 
         # 异常信息
         error: str = ""
-        errno: any = None
+        errno: Any = None
         status: int = self.STATUS_OK
         start_time: float = time.time()
 
@@ -77,7 +79,7 @@ class LogsMiddleware(BaseHTTPMiddleware):
             args = str(request.query_params)
 
         # 执行方法
-        response = None
+        response: Any = None
         try:
             response = await call_next(request)
         except Exception as e:

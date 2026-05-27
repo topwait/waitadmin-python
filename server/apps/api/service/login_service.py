@@ -52,7 +52,7 @@ class LoginService:
         user_id: int = await UserWidget.create_user({
             f"{post.scene}": post.account,
             "password": post.password,
-            "terminal": terminal
+            "terminal": str(terminal)
         })
 
         # # 授权令牌
@@ -115,7 +115,7 @@ class LoginService:
             zero
         """
         # 短信验证
-        if not MsgDriver.check_code(NoticeEnum.LOGIN, code):
+        if not await MsgDriver.check_code(NoticeEnum.LOGIN, code):
             raise AppException("验证码错误")
 
         # 查询账号
@@ -211,8 +211,8 @@ class LoginService:
             await WechatCache.login_scan_del(state)
 
         return schema.LoginTicketVo(
-            status=int(result.get("status")),
-            expire=int(result.get("expire")),
+            status=int(result.get("status", 0)),
+            expire=int(result.get("expire", 0)),
             token=result.get("token", "")
         )
 

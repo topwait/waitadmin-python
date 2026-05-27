@@ -40,7 +40,8 @@ class DeptService:
         lists = await AuthDeptModel.filter(is_delete=False).order_by("-sort", "-id").all().values(*fields)
 
         vo_list = [TypeAdapter(schema.AuthDeptWholeVo).validate_python(item) for item in lists]
-        return ArrayUtil.list_to_tree([i.__dict__ for i in vo_list], "id", "pid", "children")
+        tree_data = ArrayUtil.list_to_tree([i.__dict__ for i in vo_list], "id", "pid", "children")
+        return [TypeAdapter(schema.AuthDeptWholeVo).validate_python(item) for item in tree_data]
 
     @classmethod
     async def lists(cls, params: schema.AuthDeptSearchIn) -> List[schema.AuthDeptListVo]:
@@ -69,11 +70,12 @@ class DeptService:
                        .all().values(*fields))
 
         for item in lists:
-            item["update_time"] = TimeUtil.timestamp_to_date(item["update_time"])
-            item["create_time"] = TimeUtil.timestamp_to_date(item["create_time"])
+            item["update_time"] = TimeUtil.timestamp_to_date(int(item["update_time"]))
+            item["create_time"] = TimeUtil.timestamp_to_date(int(item["create_time"]))
 
         vo_list = [TypeAdapter(schema.AuthDeptListVo).validate_python(item) for item in lists]
-        return ArrayUtil.list_to_tree([i.__dict__ for i in vo_list], "id", "pid", "children")
+        tree_data = ArrayUtil.list_to_tree([i.__dict__ for i in vo_list], "id", "pid", "children")
+        return [TypeAdapter(schema.AuthDeptListVo).validate_python(item) for item in tree_data]
 
     @classmethod
     async def detail(cls, id_: int) -> schema.AuthDeptDetailVo:

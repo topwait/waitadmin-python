@@ -40,14 +40,17 @@ class DbModel(Model):
     async def paginate(
             cls,
             model: Any,
-            page_no: int = 1,
-            page_size: int = 15,
+            page_no: Union[int, None] = 1,
+            page_size: Union[int, None] = 15,
             schema: Any = None,
-            fields: List = None,
-            auto_timestamp: bool = True,
-            datetime_field: List = None,
+            fields: Union[List, None] = None,
+            auto_timestamp: Union[bool, None] = True,
+            datetime_field: Union[List, None] = None,
             datetime_format: str = "%Y-%m-%d %H:%M:%S",
     ):
+        page_no = 1 if page_no is None else int(page_no)
+        page_size = 15 if page_size is None else int(page_size)
+
         fields = [] if not fields else fields
         _count = await model.filter().count()
         _lists = await model.filter().limit(page_size).offset((page_no - 1) * page_size).values(*fields)
@@ -124,11 +127,11 @@ class DbModel(Model):
 
                 elif whereType == "datetime":
                     d = key.split("|")
-                    s_: str = d[0] if len(d) >= 2 else key
-                    e_: str = d[1] if len(d) >= 2 else None
+                    s_: Union[str, None] = d[0] if len(d) >= 2 else key
+                    e_: Union[str, None] = d[1] if len(d) >= 2 else None
                     # StartTime
                     if s_ and params.get(s_):
-                        value = params.get(s_)
+                        value = params.get(s_, "")
                         if not is_number(value):
                             formats = "%Y-%m-%d %H:%M:%S" if len(value.split(" ")) >= 2 else "%Y-%m-%d"
                             time_array = time.strptime(value, formats)
@@ -136,7 +139,7 @@ class DbModel(Model):
                         where.append(Q(**{field + "__gte": value}))
                     # EndTime
                     if e_ and params.get(e_):
-                        value = params.get(e_)
+                        value = params.get(e_, "")
                         if not is_number(value):
                             formats = "%Y-%m-%d %H:%M:%S" if len(value.split(" ")) >= 2 else "%Y-%m-%d"
                             time_array = time.strptime(value, formats)
@@ -146,7 +149,7 @@ class DbModel(Model):
         return where
 
     @classmethod
-    def table_prefix(cls, table: str = "", engine: str = None):
+    def table_prefix(cls, table: str = "", engine: Union[str, None] = None):
         if not cls.DB_CONFIGS:
             cls.DB_CONFIGS = loading_db_configs()
             if not cls.DB_CONFIGS or not cls.DB_CONFIGS.get("connections") or not cls.DB_CONFIGS.get("apps"):

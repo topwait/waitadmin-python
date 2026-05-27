@@ -126,7 +126,7 @@ class UserService:
                 op_user=admins_.get(item["admin_id"], ""),
                 action=item["action"],
                 log_sn=item["log_sn"],
-                source_type=WalletEnum.get_source_type_msg(item["source_type"]),
+                source_type=str(WalletEnum.get_source_type_msg(item["source_type"])),
                 source_sn=item["source_sn"],
                 change_amount=item["change_amount"],
                 before_amount=item["before_amount"],
@@ -227,7 +227,7 @@ class UserService:
             "account": post.account,
             "mobile": post.account,
             "password": post.password,
-            "terminal": ClientEnum.PC
+            "terminal": str(ClientEnum.PC)
         })
 
     @classmethod

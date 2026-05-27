@@ -1,16 +1,20 @@
 # +----------------------------------------------------------------------
-# | ChatWork智能聊天办公系统
+# | WaitAdmin(fastapi)快速开发后台管理系统
 # +----------------------------------------------------------------------
-# | 软件声明: 本系统并非自由软件,未经授权任何形式的商业使用均属非法。
-# | 版权保护: 任何企业和个人不允许对程序代码以任何形式任何目的复制/分发。
-# | 授权要求: 如有商业使用需求,请务必先与版权所有者取得联系并获得正式授权。
+# | 欢迎阅读学习程序代码,建议反馈是我们前进的动力
+# | 程序完全开源可支持商用,允许去除界面版权信息
+# | gitee:   https://gitee.com/wafts/waitadmin-python
+# | github:  https://github.com/topwait/waitadmin-python
+# | 官方网站: https://www.waitadmin.cn
+# | WaitAdmin团队版权所有并拥有最终解释权
 # +----------------------------------------------------------------------
-# | Author: ChatWork Team <2474369941@qq.com>
+# | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 import logging
 import inspect
 import traceback
 
+from typing import Union
 from pydantic import ValidationError
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
@@ -29,15 +33,22 @@ logger = logging.getLogger(__name__)
 
 class AppException(Exception):
     """ 自定义操作异常 """
-    def __init__(self, msg: str = None, code: int = None, args=None, echo_exc: bool = False, **kwargs):
+    def __init__(
+        self,
+        msg: Union[str, None] = None,
+        code: Union[int, None] = None,
+        args=None,
+        echo_exc: bool = False,
+        **kwargs
+    ):
         super().__init__()
-        _args = args if args is not None else []
+        _args = args if args is not None else ()
         _code = code if code is not None else ErrorEnum.FAILED.code
         _message = msg if msg is not None else ErrorEnum.FAILED.msg
         self._code = _code
         self._message = _message
         self.echo_exc = echo_exc
-        self.args = _args or []
+        self.args = _args
         self.kwargs = kwargs or {}
 
     @property
@@ -70,7 +81,6 @@ def configure_exception(app: FastAPI):
         """ 处理全局系统异常 """
         logger.error("UnboundLocalError: url=[%s]", request.url.path)
         logger.error(f"UnboundLocalError: {exc}")
-        print(traceback.format_exc())
         return JSONResponse(
             status_code=200,
             content=R.fail(
@@ -83,7 +93,7 @@ def configure_exception(app: FastAPI):
         """ 处理全局系统异常 """
         logger.error("AttributeError: url=[%s]", request.url.path)
         logger.error(f"AttributeError: {exc}")
-        print(traceback.format_exc())
+        logger.error(traceback.format_exc())
         return JSONResponse(
             status_code=200,
             content=R.fail(
@@ -95,6 +105,7 @@ def configure_exception(app: FastAPI):
     async def key_exception_handler(request: Request, exc: KeyError):
         """ Key不存在异常 """
         logger.error("KeyError: url=[%s]", request.url.path)
+        logger.error(traceback.format_exc())
         return JSONResponse(
             status_code=200,
             content=R.fail(
@@ -102,10 +113,23 @@ def configure_exception(app: FastAPI):
                 msg="KeyError: " + str(exc)
             ).__dict__)
 
+    @app.exception_handler(TypeError)
+    async def type_exception_handler(request: Request, exc: TypeError):
+        """ 类型错误异常 """
+        logger.error("TypeError: url=[%s]", request.url.path)
+        logger.error(traceback.format_exc())
+        return JSONResponse(
+            status_code=200,
+            content=R.fail(
+                code=ErrorEnum.SYSTEM_UNKNOWN_ERROR.code,
+                msg="ValueError: " + str(exc)
+            ).__dict__)
+
     @app.exception_handler(ValueError)
     async def value_exception_handler(request: Request, exc: ValueError):
         """ 无效参数值异常 """
         logger.error("ValueError: url=[%s]", request.url.path)
+        logger.error(traceback.format_exc())
         return JSONResponse(
             status_code=200,
             content=R.fail(
@@ -117,7 +141,7 @@ def configure_exception(app: FastAPI):
     async def http_exception_handler(request: Request, exc: StarletteHTTPException):
         """ 处理客户端请求异常 """
         code: int = ErrorEnum.SYSTEM_UNKNOWN_ERROR.code
-        errs: str = exc.detail
+        errs: str = str(exc.detail)
         if exc.status_code == 403:
             code = ErrorEnum.TOKEN_EMPTY.code
             errs = ErrorEnum.TOKEN_EMPTY.msg
@@ -162,11 +186,12 @@ def configure_exception(app: FastAPI):
         print(error)
 
         logger.warning("RequestValidationError: url=[%s], errs=[%s]", request.url.path, error)
+        e = error[0]
         return JSONResponse(
             status_code=200,
             content=R.fail(
                 code=ErrorEnum.PARAMS_VALID_ERROR.code,
-                msg=error[0].get("err", error[0].get("msg"))
+                msg=e.get("err", "") or e.get("msg", "")
             ).__dict__)
 
     @app.exception_handler(ValidationError)
@@ -189,7 +214,6 @@ def configure_exception(app: FastAPI):
     @app.exception_handler(AssertionError)
     async def assert_exception_handler(request: Request, exc: AssertionError):
         """ 处理断言参数异常 """
-        print("看过热库尔斯克二十")
         errs = ",".join(exc.args) if exc.args else ErrorEnum.PARAMS_ASSERT_ERROR.msg
         logger.warning("AssertionError: url=[%s], errs=[%s]", request.url.path, errs)
         return JSONResponse(
@@ -225,7 +249,6 @@ def configure_exception(app: FastAPI):
     @app.exception_handler(DoesNotExist)
     async def does(_request: Request, _exc: DoesNotExist):
         """ 处理查询数据为空异常 """
-        print("看过热库尔斯克二十")
         return JSONResponse(
             status_code=200,
             content=R.fail(

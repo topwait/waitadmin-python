@@ -77,7 +77,7 @@ class RechargeService:
             give_amount = package.give_money
             paid_amount = package.money
         else:
-            if config.get("min_recharge") and paid_amount < config.get("min_recharge"):
+            if config.get("min_recharge") and paid_amount < config.get("min_recharge", 0):
                 raise AppException(f"最低充值金额不能少于: " + str(config.get("min_recharge")))
 
         # 创建订单

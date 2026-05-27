@@ -17,7 +17,7 @@ import logging
 import importlib
 from pathlib import Path
 from datetime import datetime
-from typing import Dict, List, Optional, Union, TextIO, cast
+from typing import Dict, List, Optional, Union, TextIO, cast, Any
 
 _FORMAT_F = "[%(asctime)s][%(levelname)s] [%(pathname)s:%(lineno)d] - %(message)s"
 _FORMAT_C = "[%(levelname)s]: [%(filename)s:%(lineno)d] [%(thread)d] - %(message)s"
@@ -63,11 +63,13 @@ class CompressedFileHandler(logging.FileHandler):
             record: The log record to emit
         """
         if self.stream is None:
-            self.stream = cast(TextIO, self._open())
+            stream: Any = cast(TextIO, self._open())
+            self.stream = stream
 
         if self.stream is not None and self.do_dir():
             self.stream.close()
-            self.stream = cast(TextIO, self._open())
+            stream: Any = cast(TextIO, self._open())
+            self.stream = stream
 
         self.do_zip()
         logging.StreamHandler.emit(self, record)
@@ -156,7 +158,7 @@ def configure_logger() -> None:
     path: str = config.get("path", "runtime/log")
 
     # Gzip
-    gzip_size_config = config.get("gzip_size")
+    gzip_size_config = config.get("gzip_size", 0)
     gzip_size: int = int(gzip_size_config) if gzip_size_config else 1024 * 1024 * 5
     # Level
     level_file: int = _LEVEL_NUM[config.get("level_file", "debug")]
@@ -171,7 +173,7 @@ def configure_logger() -> None:
     # RELY
     rely_levels: Dict[str, List[str]] = config.get("rely_levels", {})
 
-    handlers = []
+    handlers: List[logging.Handler] = []
     if enable_file:
         try:
             year: str = datetime.now().strftime("%Y%m")
@@ -195,12 +197,19 @@ def configure_logger() -> None:
         console_handler.setLevel(level_sole)
         handlers.append(console_handler)
 
-    logging.basicConfig(
-        level=logging.NOTSET,
-        format=format_file,
-        datefmt=format_date,
-        handlers=handlers if handlers else None
-    )
+    if handlers:
+        logging.basicConfig(
+            level=logging.NOTSET,
+            format=format_file,
+            datefmt=format_date,
+            handlers=handlers
+        )
+    else:
+        logging.basicConfig(
+            level=logging.NOTSET,
+            format=format_file,
+            datefmt=format_date
+        )
 
     logging.getLogger("asyncio").setLevel(logging.ERROR)
     logging.getLogger("tortoise").setLevel(logging.ERROR)

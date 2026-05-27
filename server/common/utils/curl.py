@@ -15,11 +15,20 @@ import json
 import asyncio
 import aiofiles
 import aiohttp
+from typing import Union
 
 
 class CurlUtil:
     @classmethod
-    async def curl(cls, method: str, url: str, headers: dict = None, data: dict = None, timeout=60, ssl=False):
+    async def curl(
+        cls,
+        method: str,
+        url: str,
+        headers: Union[dict, None] = None,
+        data: Union[dict, None] = None,
+        timeout: int = 60,
+        ssl: bool = False
+    ):
         """
         发起CURL请求
 
@@ -61,7 +70,14 @@ class CurlUtil:
                 raise Exception(err.status, err.message)
 
     @classmethod
-    async def curl_get(cls, url: str, headers: dict = None, data: dict = None, timeout=60, ssl=False):
+    async def curl_get(
+        cls,
+        url: str,
+        headers: Union[dict, None] = None,
+        data:  Union[dict, None] = None,
+        timeout: int = 60,
+        ssl: bool = False
+    ):
         """
         发起GET请求
 
@@ -78,7 +94,13 @@ class CurlUtil:
         return await cls.curl(method="GET", url=url, headers=headers, data=data, timeout=timeout, ssl=ssl)
 
     @classmethod
-    async def curl_put(cls, url: str, headers: dict = None, data: dict = None, timeout=60, ssl=False):
+    async def curl_put(
+        cls,
+        url: str,
+        headers: Union[dict, None] =
+        None, data: Union[dict, None] = None,
+        timeout: int = 60, ssl: bool = False
+    ):
         """
         发起PUT请求
 
@@ -95,7 +117,14 @@ class CurlUtil:
         return await cls.curl(method="PUT", url=url, headers=headers, data=data, timeout=timeout, ssl=ssl)
 
     @classmethod
-    async def curl_post(cls, url: str, headers: dict = None, data: dict = None, timeout=60, ssl=False):
+    async def curl_post(
+        cls,
+        url: str,
+        headers: Union[dict, None] = None,
+        data: Union[dict, None] = None,
+        timeout: int = 60,
+        ssl: bool = False
+    ):
         """
         发起POST请求
 
@@ -112,7 +141,14 @@ class CurlUtil:
         return await cls.curl(method="POST", url=url, headers=headers, data=data, timeout=timeout, ssl=ssl)
 
     @classmethod
-    async def curl_patch(cls, url: str, headers: dict = None, data: dict = None, timeout=60, ssl=False):
+    async def curl_patch(
+        cls,
+        url: str,
+        headers: Union[dict, None] = None,
+        data: Union[dict, None] = None,
+        timeout: int = 60,
+        ssl: bool = False
+    ):
         """
         发起PATCH请求
 
@@ -129,7 +165,14 @@ class CurlUtil:
         return await cls.curl(method="PATCH", url=url, headers=headers, data=data, timeout=timeout, ssl=ssl)
 
     @classmethod
-    async def curl_delete(cls, url: str, headers: dict = None, data: dict = None, timeout=60, ssl=False):
+    async def curl_delete(
+        cls,
+        url: str,
+        headers: Union[dict, None] = None,
+        data: Union[dict, None] = None,
+        timeout: int = 60,
+        ssl: bool = False
+    ):
         """
         发起DELETE请求
 

@@ -12,7 +12,7 @@
 # +----------------------------------------------------------------------
 import os
 import importlib
-from typing import List, Dict
+from typing import List, Dict, Any
 from fastapi import APIRouter, FastAPI, Depends
 
 __all__ = ["configure_router"]
@@ -27,8 +27,8 @@ class AutomaticRegRouter:
         self.root_path: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + os.sep
         self.apps_path: str = os.path.join(self.root_path, self.app_module)
 
-        self.router_filters: Dict[str, any] = {}
-        self.router_interceptor: Dict[str, any] = {}
+        self.router_filters: Dict[str, Any] = {}
+        self.router_interceptor: Dict[str, Any] = {}
 
         self.single_app_flag: bool = os.path.exists(os.path.join(self.apps_path, self.controller))
 
@@ -53,7 +53,7 @@ class AutomaticRegRouter:
 
             # Determine whether to register application routing
             if not router_register.get(app_name):
-                prefix = setting.get("ROUTER_ALIAS").get(app_name)  # Set alias
+                prefix = setting.get("ROUTER_ALIAS").get(app_name) or ""  # Set alias
                 prefix = "" if prefix == "" else ("/"+prefix if prefix else "/"+app_name)
                 router_register[app_name] = APIRouter(prefix=prefix)
 
@@ -113,7 +113,7 @@ class AutomaticRegRouter:
     @classmethod
     def __get_config(cls):
         """ Obtain routing configuration """
-        configs = {
+        configs: Dict[str, Any] = {
             # Module alias
             "ROUTER_ALIAS": {},
             # Routing remarks
@@ -135,7 +135,7 @@ class AutomaticRegRouter:
             configs["ROUTER_REMARK"] = obj.get("ROUTER_REMARK") or {}
             configs["ROUTER_GROUPS"] = obj.get("ROUTER_GROUPS") or "app"
             configs["ROUTER_STYLES"] = obj.get("ROUTER_STYLES") or "line"
-            configs["ROUTER_REPAIR"] = obj.get("ROUTER_REPAIR") or True
+            configs["ROUTER_REPAIR"] = bool(int(obj.get("ROUTER_REPAIR", 1)))
             return configs
         except ModuleNotFoundError:
             return configs
@@ -243,7 +243,7 @@ class AutomaticRegRouter:
         if not isinstance(obstruction, dict):
             raise Exception("The interceptor [obstruction] attribute must be of List type")
 
-        waylays: Dict[str, any] = {}
+        waylays: Dict[str, Any] = {}
         filters: Dict[str, List[str]] = {}
         for key, value in obstruction.items():
             interceptor_class = getattr(module, key, None)

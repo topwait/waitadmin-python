@@ -22,7 +22,7 @@ from apps.admin.schemas.market import recharge_schema as schema
 class RechargeService:
 
     @classmethod
-    async def lists(cls) -> Dict[str, Union[schema.RechargeConfigIn, schema.RechargePackageListVo]]:
+    async def lists(cls) -> Dict[str, Union[schema.RechargeConfigIn, List[schema.RechargePackageListVo]]]:
         """
         充值套餐详情
 

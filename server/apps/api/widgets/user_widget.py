@@ -113,8 +113,8 @@ class UserWidget:
             zero
         """
         # 接收参数
-        user_id: int = int(response.get("user_id"))
-        terminal: int = int(response.get("terminal"))
+        user_id: int = int(response.get("user_id", 0))
+        terminal: int = int(response.get("terminal", 4))
         mobile: str = response.get("mobile", "")
         openid: str = response.get("openid", "")
         unionid: str = response.get("unionid", "")

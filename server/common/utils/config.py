@@ -12,7 +12,7 @@
 # +----------------------------------------------------------------------
 import json
 import time
-from typing import Any
+from typing import Any, Union
 from common.utils.cache import RedisUtil
 from common.models.sys import SysConfigModel
 
@@ -89,7 +89,7 @@ class ConfigUtil:
         return data
 
     @classmethod
-    async def set(cls, type_: str,  key: str, value: Any, remarks: str = None):
+    async def set(cls, type_: str,  key: str, value: Any, remarks: Union[str, None] = None):
         """
         设置配置
 

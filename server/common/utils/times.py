@@ -315,7 +315,7 @@ class TimeUtil:
             zero
         """
         if t is None:
-            return None
+            return ""
 
         dt_utc = datetime.datetime.fromtimestamp(t, tz=ZoneInfo("UTC"))
         dt_shanghai = dt_utc.astimezone(cls.TIMEZONE)

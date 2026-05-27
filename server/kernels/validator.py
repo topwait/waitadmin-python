@@ -10,7 +10,7 @@
 # +----------------------------------------------------------------------
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
-from typing import Dict, List
+from typing import Dict, List, Any
 
 __all__ = ["CustomValidate"]
 
@@ -20,7 +20,7 @@ class CustomValidate:
         self.messages: dict = messages
         self.model_fields: dict = model_fields
 
-    def format_error(self, errors: Dict[str, any]) -> List[Dict[str, any]]:
+    def format_error(self, errors: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
         将错误字典格式化为带有自定义错误描述信息的列表。
 
@@ -37,9 +37,9 @@ class CustomValidate:
 
         Author zero
         """
-        loc: tuple = errors.get("loc")
-        rules: dict = errors.get("ctx")
-        types: str = errors.get("type")
+        loc: tuple = errors.get("loc", ())
+        rules: dict = errors.get("ctx", {})
+        types: str = errors.get("type", "")
         field: str = loc[1] if len(loc) >= 2 else loc[0]
 
         # 返回指定错误描述
@@ -64,7 +64,7 @@ class CustomValidate:
         if error_rule_msg:
             error_rule_msg = error_rule_msg.replace(":attribute", remark)
             if rules and rules.get(key) is not None:
-                error_rule_msg = error_rule_msg.replace(":rule", str(rules.get(key)))
+                error_rule_msg = error_rule_msg.replace(":rule", str(rules.get(key, "")))
             errors["err"] = error_rule_msg
 
         return [errors]

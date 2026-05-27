@@ -11,10 +11,10 @@
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
 import os
+from typing import List, Dict, Any
 from functools import lru_cache
 from dotenv import load_dotenv, find_dotenv
 from pydantic_settings import BaseSettings
-from typing import List, Dict
 
 __all__ = ["get_settings"]
 
@@ -150,7 +150,7 @@ class GlobalSetting(BaseSettings):
     }
 
     # 上传配置
-    UPLOAD: Dict[str, object] = {
+    UPLOAD: Dict[str, Any] = {
         # 磁盘路径
         "root": "public",
         # 对外路径

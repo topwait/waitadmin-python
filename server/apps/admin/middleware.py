@@ -68,7 +68,7 @@ class LogsMiddleware(BaseHTTPMiddleware):
 
         # 请求参数
         if request.method == "POST":
-            content_type: str = request.headers.get("content-type")
+            content_type: str = request.headers.get("content-type", "")
             if content_type.startswith("multipart/form-data"):
                 args = ""
             elif content_type.startswith("application/xml"):
@@ -85,7 +85,7 @@ class LogsMiddleware(BaseHTTPMiddleware):
             args = str(request.query_params)
 
         # 执行方法
-        response = None
+        response: Any = None
         try:
             response = await call_next(request)
         except Exception as e:

@@ -10,7 +10,6 @@
 # +----------------------------------------------------------------------
 # | Author: WaitAdmin Team <2474369941@qq.com>
 # +----------------------------------------------------------------------
-import time
 from tortoise import fields
 from kernels.model import DbModel
 

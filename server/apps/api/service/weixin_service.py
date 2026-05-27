@@ -36,9 +36,9 @@ class WeixinService:
         Author:
             zero
         """
-        Event: str = messages.get("Event")
-        ToUserName: str = messages.get("ToUserName")      # account
-        FromUserName: str = messages.get("FromUserName")  # openid
+        Event: str = messages.get("Event", "")
+        ToUserName: str = messages.get("ToUserName", "")      # account
+        FromUserName: str = messages.get("FromUserName", "")  # openid
 
         if Event == "SCAN":
             EventKey: List[str] = messages.get("EventKey").split(":")
